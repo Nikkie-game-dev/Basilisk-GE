@@ -75,7 +75,7 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)res\" "$(OutDir)res\" /i/y/s
+      <Command>xcopy "$(ProjectDir)res\assets\" "$(OutDir)res\" /i/y/s
 xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -102,7 +102,7 @@ xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)res\" "$(OutDir)res\" /i/y/s
+      <Command>xcopy "$(ProjectDir)res\assets\" "$(OutDir)res\" /i/y/s
 xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -113,9 +113,6 @@ xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
     <Folder Include="res\assets\" />
     <Folder Include="res\raw\" />
     <Folder Include="src\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="FileName.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

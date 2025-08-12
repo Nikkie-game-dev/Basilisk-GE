@@ -87,9 +87,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="lib\" />
     <Folder Include="obj\" />

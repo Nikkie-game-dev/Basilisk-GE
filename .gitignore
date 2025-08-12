@@ -45,3 +45,6 @@
 
 # VCX 
 *.vcxproj.user
+
+Engine/obj/
+Engine/bin/

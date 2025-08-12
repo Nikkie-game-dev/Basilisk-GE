@@ -43,3 +43,7 @@
 # IDE
 .idea
 .vs
+
+
+# VCX 
+*.vcxproj.user

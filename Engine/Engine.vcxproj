@@ -112,10 +112,9 @@ xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
     <Folder Include="obj\" />
     <Folder Include="res\assets\" />
     <Folder Include="res\raw\" />
-    <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Export.h" />
+    <ClInclude Include="src\Export.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -62,7 +62,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BASILISK_EXPORT;WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)lib\GLFW\include;$(ProjectDir)obj\$(Configuration)\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -113,6 +113,9 @@ xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
     <Folder Include="res\assets\" />
     <Folder Include="res\raw\" />
     <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Export.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

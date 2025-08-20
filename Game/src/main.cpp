@@ -14,10 +14,21 @@ int main()
 
     /*Buffers*/
     GLuint vao; // Vertex Array Object
-    
+    GLuint vbo; // Vertex Buffer Object
+
     /* Initialize the library */
     if (!glfwInit())
         return -1;
+    
+    
+    /*vertices of triangle */
+    float vertices[] =
+    {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f
+    };
+    
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -40,6 +51,11 @@ int main()
     /*VAO gen*/
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
+
+    /*Gen, bind, and populate vbo*/
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     
     /* Loop until the user closes the window */

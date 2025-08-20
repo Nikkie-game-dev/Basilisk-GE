@@ -23,7 +23,12 @@ int main()
         "{\n"
         " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
         "}\0";
-
+    const char* fragShaderSource = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "}\n";
 
     /* Initialize the library */
     if (!glfwInit())
@@ -40,6 +45,7 @@ int main()
 
     /*Vertex Shader Object*/
     unsigned int vertexShader;
+    unsigned int fragmentShader;
 
 
     /* Create a windowed mode window and its OpenGL context */
@@ -82,9 +88,15 @@ int main()
     }
 
 
-    
+    /*Create and compile frag shader*/
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
+    glCompileShader(fragmentShader);
+
     /*Deletion*/
     glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
 
     /*Vertex Attribute*/
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);

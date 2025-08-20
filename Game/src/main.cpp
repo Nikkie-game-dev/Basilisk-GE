@@ -47,6 +47,9 @@ int main()
     unsigned int vertexShader;
     unsigned int fragmentShader;
 
+    /*Shader Program*/
+    unsigned int shaderProgram;
+
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -93,6 +96,19 @@ int main()
     glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
     glCompileShader(fragmentShader);
 
+    /*Shader program creation, attachment and linking*/
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+
+    if (!success)
+    {
+        abort();
+    }
+
     /*Deletion*/
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
@@ -107,7 +123,6 @@ int main()
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
-
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

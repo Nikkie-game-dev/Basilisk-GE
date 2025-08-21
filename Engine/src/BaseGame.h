@@ -1,6 +1,7 @@
 #pragma once
 #define GLFW_INCLUDE_NONE
 
+#include <glad/gl.h>
 #include <exception>
 
 #include "Export.h"
@@ -60,9 +61,14 @@ namespace basilisk
     class ShaderCompileError : std::exception
     {
     public:
-        explicit ShaderCompileError(const std::string& errorLog)
+        explicit ShaderCompileError(const ShaderProc shader)
         {
-            Error = "Shader failed to compile: \n" + errorLog;
+            constexpr int infoBufferSize = 512;
+            
+            char infoLog[infoBufferSize];
+            glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
+
+            Error = "Shader failed to compile: \n" + std::string(infoLog);
         }
         [[nodiscard]] char const* what() const override
         {

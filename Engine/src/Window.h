@@ -21,6 +21,7 @@ namespace basilisk
         
     };
 
+    BASILISK_API
     class FailedWindowCreation : std::exception
     {
     public:

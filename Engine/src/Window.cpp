@@ -6,7 +6,7 @@ namespace basilisk
     {
         /* Create a windowed mode window and its OpenGL context */
         this->WindowP = glfwCreateWindow(size.X, size.Y, windowName.c_str(), nullptr, nullptr);
-        if (!WindowP)
+        if (!this->WindowP)
         {
             glfwTerminate();
             throw FailedWindowCreation();
@@ -19,6 +19,6 @@ namespace basilisk
 
     GLFWwindow* Window::GetWindow() const
     {
-        return WindowP;
+        return this->WindowP;
     }
 }

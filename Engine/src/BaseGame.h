@@ -21,9 +21,9 @@ namespace basilisk
         BaseGame(const std::string& windowName, math::Vec2<int> size);
 
         void StartDraw() const;
-        void Draw();
-        void EndDraw();
-        void Close();
+        void Draw() const;
+        void EndDraw() const;
+        void Close() const;
 
     private:
         void PopulateVbo();

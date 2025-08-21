@@ -33,6 +33,37 @@ namespace basilisk
 
 
 
+    void BaseGame::StartDraw() const
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glUseProgram(this->ShaderProg);
+    }
+
+
+
+    void BaseGame::Draw() const
+    {
+        glBindVertexArray(this->Vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+    }
+
+
+
+    void BaseGame::EndDraw() const
+    {
+        glfwSwapBuffers(this->Window.GetWindow());
+        glfwPollEvents();
+    }
+
+
+
+    void BaseGame::Close() const
+    {
+        glfwTerminate();
+    }
+
+
+
     void BaseGame::PopulateVbo()
     {
         // todo: recieve by param

@@ -1,8 +1,9 @@
 #pragma once
 #define GLFW_INCLUDE_NONE
 
-#include "Export.h"
+#include <exception>
 
+#include "Export.h"
 #include "Window.h"
 
 namespace basilisk
@@ -27,5 +28,16 @@ namespace basilisk
         Window Window;
         BufferProc Vbo;
         BufferProc Vao;
+    };
+
+
+    BASILISK_API
+    class CouldNotStartGlfw : std::exception
+    {
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized GLFW";
+        }
     };
 } // basilisk 

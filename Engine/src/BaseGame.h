@@ -40,4 +40,15 @@ namespace basilisk
             return "Could not initialized GLFW";
         }
     };
+
+
+    BASILISK_API
+    class CouldNotStartGlad : std::exception
+    {
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized Glad";
+        }
+    };
 } // basilisk 

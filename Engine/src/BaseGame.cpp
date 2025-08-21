@@ -68,7 +68,7 @@ namespace basilisk
 
         const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        const SPProc shaderProgram = glCreateProgram();
+        this->ShaderProg = glCreateProgram();
 
         GLint hasCompiled; //GL_TRUE OR GL_FALSE
 
@@ -93,14 +93,14 @@ namespace basilisk
         }
 
         /*Shader program attachment and linking*/
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-        glLinkProgram(shaderProgram);
+        glAttachShader(this->ShaderProg, vertexShader);
+        glAttachShader(this->ShaderProg, fragmentShader);
+        glLinkProgram(this->ShaderProg);
 
-        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &hasCompiled);
+        glGetProgramiv(this->ShaderProg, GL_LINK_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(shaderProgram);
+            throw ShaderCompileError(this->ShaderProg);
         }
 
         /*Deletion*/

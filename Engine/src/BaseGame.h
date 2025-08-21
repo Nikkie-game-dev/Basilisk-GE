@@ -20,7 +20,7 @@ namespace basilisk
     public:
         BaseGame(const std::string& windowName, math::Vec2<int> size);
 
-        void StartDraw();
+        void StartDraw() const;
         void Draw();
         void EndDraw();
         void Close();
@@ -32,6 +32,7 @@ namespace basilisk
         Window Window;
         BufferProc Vbo;
         BufferProc Vao;
+        SPProc ShaderProg;
     };
 
 

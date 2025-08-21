@@ -9,7 +9,7 @@
 namespace basilisk
 {
     using BufferProc = unsigned int;
-    using VsoProc = unsigned int;
+    using ShaderProc = unsigned int;
     using SPProc = unsigned int;
 
 
@@ -54,4 +54,22 @@ namespace basilisk
             return "Could not initialized Glad";
         }
     };
+
+
+    BASILISK_API
+    class ShaderCompileError : std::exception
+    {
+    public:
+        explicit ShaderCompileError(const std::string& errorLog)
+        {
+            Error = "Shader failed to compile: \n" + errorLog;
+        }
+        [[nodiscard]] char const* what() const override
+        {
+            return Error.c_str();
+        }
+    private:
+        std::string Error;
+    };
+    
 } // basilisk 

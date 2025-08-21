@@ -12,12 +12,13 @@ namespace basilisk
     class Window
     {
     public:
-        explicit Window(const std::string& windowName, math::Vec2<int> size);
+        Window() = default;
+        Window(const std::string& windowName, math::Vec2<int> size);
 
         [[nodiscard]] GLFWwindow* GetWindow() const;
 
     private:
-        GLFWwindow* WindowP;
+        GLFWwindow* WindowP = nullptr;
         
     };
 

@@ -7,6 +7,11 @@ namespace basilisk::math
 {
     template<typename T> concept Number = std::is_arithmetic_v<T>;
 
+
+    /**
+     * @brief 2D vector object
+     * @tparam N Type of vector members
+     */
     template<Number N>
     BASILISK_API
     class Vec2

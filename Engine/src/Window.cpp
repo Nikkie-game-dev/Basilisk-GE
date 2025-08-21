@@ -11,6 +11,8 @@ namespace basilisk
             glfwTerminate();
             throw FailedWindowCreation();
         }
+        glfwMakeContextCurrent(this->WindowP);
+
     }
 
 

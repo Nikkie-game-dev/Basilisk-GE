@@ -115,6 +115,8 @@ xcopy "$(ProjectDir)lib\dlls\" "$(OutDir)" /i/y/s</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Export.h" />
+    <ClInclude Include="src\math\Vec2.h" />
+    <ClInclude Include="src\math\Vec2.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

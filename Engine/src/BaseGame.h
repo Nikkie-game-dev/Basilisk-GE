@@ -25,6 +25,9 @@ namespace basilisk
         void Close();
 
     private:
+        void PopulateVbo();
+        void CompileShaders();
+
         Window Window;
         BufferProc Vbo;
         BufferProc Vao;

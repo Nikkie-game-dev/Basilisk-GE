@@ -22,13 +22,18 @@ namespace basilisk
         // Generate VAO
         glGenVertexArrays(1, &this->Vao);
         glBindVertexArray(this->Vao);
-
+        
         //Generate VBO
         glGenBuffers(1, &this->Vbo);
         glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
-
+        
         PopulateVbo();
 
+        /*Vertex Attribute*/
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(0);
+
+        glBindVertexArray(0);
     }
 
 

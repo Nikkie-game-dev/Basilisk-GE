@@ -18,6 +18,13 @@ void Renderer::InitGL() const
     if (!gladLoadGL(glfwGetProcAddress))
         throw CouldNotStartGlad();
 }
+
+void Renderer::EndDraw() const
+{
+    glfwSwapBuffers(glfwGetCurrentContext());
+    glfwPollEvents();
+}
+
 {
     GenerateVAO();
     GenerateVBO();

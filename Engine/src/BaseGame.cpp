@@ -18,12 +18,6 @@ namespace basilisk
         }
 
         Renderer.GenerateVBs();
-        
-        //Generate VBO
-        glGenBuffers(1, &this->Vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
-        
-        PopulateVbo();
 
         /*Vertex Attribute*/
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));

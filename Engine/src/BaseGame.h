@@ -47,27 +47,5 @@ namespace basilisk
             return "Could not initialized Glad";
         }
     };
-
-
-    BASILISK_API
-    class ShaderCompileError : std::exception
-    {
-    public:
-        explicit ShaderCompileError(const ShaderProc shader)
-        {
-            constexpr int infoBufferSize = 512;
-            
-            char infoLog[infoBufferSize];
-            glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-
-            Error = "Shader failed to compile: \n" + std::string(infoLog);
-        }
-        [[nodiscard]] char const* what() const override
-        {
-            return Error.c_str();
-        }
-    private:
-        std::string Error;
-    };
     
 } // basilisk 

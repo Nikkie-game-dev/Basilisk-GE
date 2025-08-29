@@ -1,6 +1,12 @@
 #pragma once
+#define GLFW_INCLUDE_NONE
+
 #include "Export.h"
+
 #include "glad/gl.h"
+#include <GLFW/glfw3.h>
+#include <exception>
+#include <string>
 
 namespace basilisk
 {
@@ -51,4 +57,25 @@ namespace basilisk
     private:
         std::string Error;
     };
-} // basilisk
+
+    BASILISK_API
+    class CouldNotStartGlfw : std::exception
+    {
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized GLFW";
+        }
+    };
+
+
+    BASILISK_API
+    class CouldNotStartGlad : std::exception
+    {
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized Glad";
+        }
+    };
+} // namespace basilisk

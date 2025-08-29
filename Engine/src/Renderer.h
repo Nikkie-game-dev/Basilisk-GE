@@ -15,26 +15,30 @@ namespace basilisk
     {
     public:
         Renderer();
-        void GenerateVBs() const;
+        void InitGLFW();
+        void InitGL() const;
+        void GenerateVBs();
         void Draw() const;
         void StartDraw() const;
+        void EndDraw() const;
+
     private:
         using BufferProc = unsigned int;
         using ShaderProc = unsigned int;
         using SPProc = unsigned int;
-        BufferProc* Vbo;
-        BufferProc* Vao;
+        BufferProc Vbo;
+        BufferProc Vao;
         SPProc ShaderProg;
-        void PopulateVbo() const;
+        void PopulateVBO() const;
         void UpdateVertexAttributes() const;
         void BindVertexBuffer() const;
         void BindVertexBuffer(BufferProc vao) const;
-        void GenerateVAO() const;
-        void GenerateVBO() const;
-        void CompileShaders();
+        void GenerateVAO();
+        void GenerateVBO();
+        void BuildShaders();
     };
 
-     BASILISK_API
+    BASILISK_API
     class ShaderCompileError : std::exception
     {
     public:

@@ -1,5 +1,6 @@
 #include "Window.h"
 
+
 namespace basilisk
 {
     Window::Window(const std::string& windowName, const math::Vec2<int> size)

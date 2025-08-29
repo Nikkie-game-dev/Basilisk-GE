@@ -1,5 +1,4 @@
 #pragma once
-#define GLFW_INCLUDE_NONE
 
 #include <glad/gl.h>
 #include <exception>
@@ -15,10 +14,7 @@ namespace basilisk
     {
     public:
         BaseGame(const std::string& windowName, math::Vec2<int> size);
-
-        void StartDraw() const;
         void Draw() const;
-        void EndDraw() const;
         void Close() const;
 
     private:

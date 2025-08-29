@@ -15,29 +15,10 @@ namespace basilisk
         Renderer.GenerateVBs();
     }
 
-
-
-    void BaseGame::StartDraw() const
-    {
-        Renderer.StartDraw();
-    }
-
-
-
     void BaseGame::Draw() const
     {
         Renderer.Draw();
     }
-
-
-
-    void BaseGame::EndDraw() const
-    {
-        glfwSwapBuffers(this->Window.GetWindow());
-        glfwPollEvents();
-    }
-
-
 
     void BaseGame::Close() const
     {

@@ -25,29 +25,30 @@ void Renderer::EndDraw() const
     glfwPollEvents();
 }
 
+void Renderer::GenerateVBs()
 {
     GenerateVAO();
     GenerateVBO();
-    PopulateVbo();
+    PopulateVBO();
     UpdateVertexAttributes();
 }
 
 
-void Renderer::GenerateVAO() const
+void Renderer::GenerateVAO()
 {
-    glGenVertexArrays(1, this->Vao);
-    glBindVertexArray(*this->Vao);
+    glGenVertexArrays(1, &this->Vao);
+    glBindVertexArray(this->Vao);
 }
 
 
-void Renderer::GenerateVBO() const
+void Renderer::GenerateVBO()
 {
-    glGenBuffers(1, this->Vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, *this->Vbo);
+    glGenBuffers(1, &this->Vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
 }
 
 
-void Renderer::PopulateVbo() const
+void Renderer::PopulateVBO() const
 {
     // todo: receive by param
     float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
@@ -77,7 +78,7 @@ void Renderer::BindVertexBuffer(BufferProc vao) const
 
 void Renderer::Draw() const
 {
-    glBindVertexArray(*this->Vao);
+    glBindVertexArray(this->Vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
@@ -88,7 +89,7 @@ void Renderer::StartDraw() const
 }
 
 
-void Renderer::CompileShaders()
+void Renderer::BuildShaders()
 {
     const char* vertexShaderSource = "#version 330 core\n"
                                      "layout (location = 0) in vec3 aPos;\n"
@@ -144,4 +145,6 @@ void Renderer::CompileShaders()
     /*Deletion*/
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+
+    glUseProgram(this->ShaderProg);
 }

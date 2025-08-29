@@ -6,6 +6,7 @@
 
 #include "Export.h"
 #include "Window.h"
+#include "Renderer.h"
 
 namespace basilisk
 {

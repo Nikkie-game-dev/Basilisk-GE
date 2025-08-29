@@ -9,11 +9,6 @@
 
 namespace basilisk
 {
-    using BufferProc = unsigned int;
-    using ShaderProc = unsigned int;
-    using SPProc = unsigned int;
-
-
     BASILISK_API
     class BaseGame
     {

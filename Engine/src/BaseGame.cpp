@@ -2,22 +2,15 @@
 
 namespace basilisk
 {
-
     BaseGame::BaseGame(const std::string& windowName, const math::Vec2<int> size)
     {
-        if (!glfwInit())
-        {
-            throw CouldNotStartGlfw();
-        }
+        this->Renderer = basilisk::Renderer();
+        
+        Renderer.InitGLFW();
+        Renderer.InitGL();
 
         this->Window = basilisk::Window(windowName, size);
-        this->Renderer = basilisk::Renderer();
 
-
-        if (!gladLoadGL(glfwGetProcAddress))
-        {
-            throw CouldNotStartGlad();
-        }
 
         Renderer.GenerateVBs();
     }

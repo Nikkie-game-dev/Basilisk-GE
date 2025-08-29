@@ -2,14 +2,22 @@
 
 using namespace basilisk;
 
-
 Renderer::Renderer()
 {
-    glUseProgram(this->ShaderProg);
+
 }
 
+void Renderer::InitGLFW()
+{
+    if (!glfwInit())
+        throw CouldNotStartGlfw();
+}
 
-void Renderer::GenerateVBs() const
+void Renderer::InitGL() const
+{
+    if (!gladLoadGL(glfwGetProcAddress))
+        throw CouldNotStartGlad();
+}
 {
     GenerateVAO();
     GenerateVBO();

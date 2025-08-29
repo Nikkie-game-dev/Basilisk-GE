@@ -8,7 +8,6 @@ namespace basilisk::math
     BASILISK_EXTERN
     template<typename T> concept Number = std::is_arithmetic_v<T>;
 
-
     /**
      * @brief 2D vector object
      * @tparam N Type of vector members

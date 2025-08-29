@@ -11,6 +11,8 @@ namespace basilisk
         }
 
         this->Window = basilisk::Window(windowName, size);
+        this->Renderer = basilisk::Renderer();
+
 
         if (!gladLoadGL(glfwGetProcAddress))
         {
@@ -24,16 +26,14 @@ namespace basilisk
 
     void BaseGame::StartDraw() const
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(this->ShaderProg);
+        Renderer.StartDraw();
     }
 
 
 
     void BaseGame::Draw() const
     {
-        glBindVertexArray(this->Vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        Renderer.Draw();
     }
 
 

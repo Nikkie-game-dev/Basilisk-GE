@@ -1,7 +1,5 @@
 #include "BaseGame.h"
 
-#include "glad/gl.h"
-
 namespace basilisk
 {
 
@@ -19,9 +17,7 @@ namespace basilisk
             throw CouldNotStartGlad();
         }
 
-        // Generate VAO
-        glGenVertexArrays(1, &this->Vao);
-        glBindVertexArray(this->Vao);
+        Renderer.GenerateVBs();
         
         //Generate VBO
         glGenBuffers(1, &this->Vbo);

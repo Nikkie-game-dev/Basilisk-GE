@@ -21,11 +21,8 @@ namespace basilisk
         void Close() const;
 
     private:
-
         Window Window;
-        BufferProc Vbo;
-        BufferProc Vao;
-        SPProc ShaderProg;
+        Renderer Renderer;
     };
 
 

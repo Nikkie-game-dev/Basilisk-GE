@@ -33,20 +33,17 @@ void Renderer::GenerateVBs()
     UpdateVertexAttributes();
 }
 
-
 void Renderer::GenerateVAO()
 {
     glGenVertexArrays(1, &this->Vao);
     glBindVertexArray(this->Vao);
 }
 
-
 void Renderer::GenerateVBO()
 {
     glGenBuffers(1, &this->Vbo);
     glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
 }
-
 
 void Renderer::PopulateVBO() const
 {
@@ -56,25 +53,21 @@ void Renderer::PopulateVBO() const
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 }
 
-
 void Renderer::UpdateVertexAttributes() const
 {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(0);
 }
 
-
 void Renderer::BindVertexBuffer() const
 {
     glBindVertexArray(0);
 }
 
-
 void Renderer::BindVertexBuffer(BufferProc vao) const
 {
     glBindVertexArray(vao);
 }
-
 
 void Renderer::Draw() const
 {
@@ -82,12 +75,10 @@ void Renderer::Draw() const
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-
 void Renderer::StartDraw() const
 {
     glClear(GL_COLOR_BUFFER_BIT);
 }
-
 
 void Renderer::BuildShaders()
 {

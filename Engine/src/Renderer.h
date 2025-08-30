@@ -1,12 +1,10 @@
 #pragma once
-#define GLFW_INCLUDE_NONE
 
-#include "Export.h"
-
-#include "glad/gl.h"
-#include <GLFW/glfw3.h>
 #include <exception>
 #include <string>
+
+#include "Export.h"
+#include "GL/glew.h"
 
 namespace basilisk
 {

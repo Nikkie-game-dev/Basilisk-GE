@@ -1,5 +1,8 @@
 #include "Renderer.h"
 
+#include <GLFW/glfw3.h>
+
+
 using namespace basilisk;
 
 Renderer::Renderer()
@@ -15,7 +18,7 @@ void Renderer::InitGLFW()
 
 void Renderer::InitGL() const
 {
-    if (!gladLoadGL(glfwGetProcAddress))
+    if (!glewInit())
         throw CouldNotStartGlad();
 }
 

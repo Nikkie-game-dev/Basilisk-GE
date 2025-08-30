@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/gl.h>
-#include <exception>
 
 #include "Export.h"
 #include "Window.h"

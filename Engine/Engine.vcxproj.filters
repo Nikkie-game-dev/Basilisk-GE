@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lib\src\gl.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\BaseGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\include\glad\gl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\BaseGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>

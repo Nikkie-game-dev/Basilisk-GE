@@ -72,7 +72,7 @@ namespace basilisk
 
 
     BASILISK_API
-    class CouldNotStartGlad : std::exception
+    class CouldNotStartGlew : std::exception
     {
     public:
         [[nodiscard]] char const* what() const override

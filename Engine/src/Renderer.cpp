@@ -19,7 +19,7 @@ void Renderer::InitGLFW()
 void Renderer::InitGL() const
 {
     if (!glewInit())
-        throw CouldNotStartGlad();
+        throw CouldNotStartGlew();
 }
 
 void Renderer::EndDraw() const
@@ -103,7 +103,7 @@ void Renderer::BuildShaders()
     const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     this->ShaderProg = glCreateProgram();
 
-    GLint hasCompiled; // GL_TRUE OR GL_FALSE
+    GLint hasCompiled;
 
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
@@ -140,5 +140,6 @@ void Renderer::BuildShaders()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
+    /*Build*/
     glUseProgram(this->ShaderProg);
 }

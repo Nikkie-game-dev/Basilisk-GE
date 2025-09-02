@@ -20,6 +20,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
+Game/lib/Basilisk-GE.dll
 
 # Fortran module files
 *.mod

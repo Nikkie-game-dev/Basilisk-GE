@@ -1,12 +1,55 @@
-#include <glfw3.h>
+#define GLFW_INCLUDE_NONE
 
-int main(void)
+#include <glad/gl.h> // needed because glfw3 only includes opengl 1.2
+#include <GLFW/glfw3.h>
+#include <iostream>
+
+
+
+int main()
 {
     GLFWwindow* window;
+    int success;
+
+
+    /*Buffers*/
+    GLuint vao; // Vertex Array Object
+    GLuint vbo; // Vertex Buffer Object
+
+    /*Shaders*/
+    const char* vertexShaderSource = "#version 330 core\n"
+        "layout (location = 0) in vec3 aPos;\n"
+        "void main()\n"
+        "{\n"
+        " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "}\0";
+    const char* fragShaderSource = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "}\n";
 
     /* Initialize the library */
     if (!glfwInit())
         return -1;
+    
+    
+    /*vertices of triangle */
+    float vertices[] =
+    {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f
+    };
+
+    /*Vertex Shader Object*/
+    unsigned int vertexShader;
+    unsigned int fragmentShader;
+
+    /*Shader Program*/
+    unsigned int shaderProgram;
+
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -19,12 +62,71 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    /*Init glad*/
+    if (!gladLoadGL(glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+    
+    /*VAO gen*/
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    /*Gen, bind, and populate vbo*/
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    /*Create vso and compile*/
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+    if (!success)
+    {
+        abort();
+    }
+
+
+    /*Create and compile frag shader*/
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
+    glCompileShader(fragmentShader);
+
+    /*Shader program creation, attachment and linking*/
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+
+    if (!success)
+    {
+        abort();
+    }
+
+    /*Deletion*/
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+
+    /*Vertex Attribute*/
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
-
+        glUseProgram(shaderProgram);
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 

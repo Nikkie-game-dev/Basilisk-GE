@@ -22,6 +22,11 @@ void Renderer::InitGL() const
         throw CouldNotStartGlew();
 }
 
+void Renderer::StartDraw() const
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Renderer::EndDraw() const
 {
     glfwSwapBuffers(glfwGetCurrentContext());
@@ -39,7 +44,7 @@ void Renderer::GenerateVBs()
 void Renderer::GenerateVAO()
 {
     glGenVertexArrays(1, &this->Vao);
-    glBindVertexArray(this->Vao);
+    glBindVertexArray(this->Vao); 
 }
 
 void Renderer::GenerateVBO()
@@ -62,25 +67,20 @@ void Renderer::UpdateVertexAttributes() const
     glEnableVertexAttribArray(0);
 }
 
-void Renderer::BindVertexBuffer() const
+void Renderer::UnbindVertexArray() const
 {
     glBindVertexArray(0);
 }
 
-void Renderer::BindVertexBuffer(BufferProc vao) const
+void Renderer::BindVertexArray(BufferProc vao) const
 {
     glBindVertexArray(vao);
 }
 
 void Renderer::Draw() const
 {
-    glBindVertexArray(this->Vao);
+    /*BindVertexArray(this->Vao);*/
     glDrawArrays(GL_TRIANGLES, 0, 3);
-}
-
-void Renderer::StartDraw() const
-{
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Renderer::BuildShaders()

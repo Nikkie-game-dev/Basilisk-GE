@@ -29,8 +29,8 @@ namespace basilisk
         SPProc ShaderProg;
         void PopulateVBO() const;
         void UpdateVertexAttributes() const;
-        void BindVertexBuffer() const;
-        void BindVertexBuffer(BufferProc vao) const;
+        void UnbindVertexArray() const;
+        void BindVertexArray(BufferProc vao) const;
         void GenerateVAO();
         void GenerateVBO();
         void BuildShaders();

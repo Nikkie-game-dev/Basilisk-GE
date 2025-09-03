@@ -8,25 +8,34 @@
 
 namespace basilisk
 {
-    BASILISK_API
-    class Renderer
+
+    using BufferProc = unsigned int;
+    using ShaderProc = unsigned int;
+    using SPProc = unsigned int;
+
+    class BASILISK_API Renderer
     {
     public:
-        Renderer();
         void InitGLFW();
         void InitGL() const;
         void GenerateVBs();
         void Draw() const;
         void StartDraw() const;
         void EndDraw() const;
+        static Renderer& GetInstance();
 
+        Renderer(const Renderer& other) = delete;            // copy constructor
+        Renderer(Renderer&& other) = delete;                 // move constructor
+        Renderer& operator=(const Renderer& other) = delete; // copy assignment
+        Renderer& operator=(Renderer&& other) = delete;      // move assignment
+        
     private:
-        using BufferProc = unsigned int;
-        using ShaderProc = unsigned int;
-        using SPProc = unsigned int;
+        Renderer() = default;
+        ~Renderer() = default;
         BufferProc Vbo;
         BufferProc Vao;
         SPProc ShaderProg;
+
         void PopulateVBO() const;
         void UpdateVertexAttributes() const;
         void UnbindVertexArray() const;

@@ -101,9 +101,6 @@ void Renderer::BindVertexArray(BufferProc vao) const
 
 void Renderer::Draw() const
 {
-    /*BindVertexArray(this->Vao);*/
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Ebo);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

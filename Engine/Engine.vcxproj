@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame.h" />
+    <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Export.h" />
     <ClInclude Include="src\math\Vec2.h" />
     <ClInclude Include="src\math\Vec2.tpp" />

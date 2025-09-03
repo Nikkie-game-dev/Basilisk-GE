@@ -45,7 +45,6 @@ namespace basilisk
         void BuildShaders();
     };
 
-    BASILISK_API
     class ShaderCompileError : std::exception
     {
     public:
@@ -68,8 +67,7 @@ namespace basilisk
     private:
         std::string Error;
     };
-
-    BASILISK_API
+    
     class CouldNotStartGlfw : std::exception
     {
     public:
@@ -80,7 +78,6 @@ namespace basilisk
     };
 
 
-    BASILISK_API
     class CouldNotStartGlew : std::exception
     {
     public:

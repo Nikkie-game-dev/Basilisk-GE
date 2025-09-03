@@ -38,6 +38,8 @@ void Renderer::GenerateVBs()
     GenerateVAO();
     GenerateVBO();
     PopulateVBO();
+    GenerateEBO();
+    PopulateEBO();
     UpdateVertexAttributes();
 }
 
@@ -53,12 +55,32 @@ void Renderer::GenerateVBO()
     glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
 }
 
+void Renderer::GenerateEBO()
+{
+    glGenBuffers(1, &this->Ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
+}
+
 void Renderer::PopulateVBO() const
 {
-    // todo: receive by param
-    float vertices[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
+    float vertices[] = {
+        0.5f,  0.5f,  0.0f, // top right
+        0.5f,  -0.5f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f // top left
+    };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+}
+
+void Renderer::PopulateEBO() const
+{
+    unsigned int indices[] = {
+        // note that we start from 0!
+        0, 1, 3, // first triangle
+        1, 2, 3 // second triangle
+    };
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
 void Renderer::UpdateVertexAttributes() const
@@ -79,8 +101,8 @@ void Renderer::BindVertexArray(BufferProc vao) const
 
 void Renderer::Draw() const
 {
-    /*BindVertexArray(this->Vao);*/
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Ebo);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void Renderer::BuildShaders()

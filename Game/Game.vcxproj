@@ -111,7 +111,6 @@
     <Folder Include="res\raw\" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lib\src\gl.c" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

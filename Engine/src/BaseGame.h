@@ -17,7 +17,6 @@ namespace basilisk
 
     private:
         Window Window;
-        Renderer Renderer;
     };
     
 } // basilisk 

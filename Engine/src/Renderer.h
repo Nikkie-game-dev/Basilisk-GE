@@ -26,13 +26,16 @@ namespace basilisk
         using SPProc = unsigned int;
         BufferProc Vbo;
         BufferProc Vao;
+        BufferProc Ebo;
         SPProc ShaderProg;
         void PopulateVBO() const;
+        void PopulateEBO() const;
         void UpdateVertexAttributes() const;
         void UnbindVertexArray() const;
         void BindVertexArray(BufferProc vao) const;
         void GenerateVAO();
         void GenerateVBO();
+        void GenerateEBO();
         void BuildShaders();
     };
 

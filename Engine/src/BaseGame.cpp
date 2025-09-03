@@ -4,20 +4,20 @@ namespace basilisk
 {
     BaseGame::BaseGame(const std::string& windowName, const math::Vec2<int> size)
     {
-        this->Renderer = basilisk::Renderer();
+        auto& renderInstance = Renderer::GetInstance();
         
-        Renderer.InitGLFW();
-        Renderer.InitGL();
+        renderInstance.InitGLFW();
+        renderInstance.InitGL();
 
         this->Window = basilisk::Window(windowName, size);
 
 
-        Renderer.GenerateVBs();
+        renderInstance.GenerateVBs();
     }
 
     void BaseGame::Draw() const
     {
-        Renderer.Draw();
+        Renderer::GetInstance().Draw();
     }
 
     void BaseGame::Close() const

@@ -7,8 +7,7 @@
 
 namespace basilisk
 {
-    BASILISK_API
-    class BaseGame
+    class BASILISK_API BaseGame
     {
     public:
         BaseGame(const std::string& windowName, math::Vec2<int> size);
@@ -17,7 +16,6 @@ namespace basilisk
 
     private:
         Window Window;
-        Renderer Renderer;
     };
     
 } // basilisk 

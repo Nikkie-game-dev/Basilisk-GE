@@ -8,8 +8,7 @@
 
 namespace basilisk
 {
-    BASILISK_API
-    class Window
+    class BASILISK_API Window
     {
     public:
         Window() = default;
@@ -22,7 +21,6 @@ namespace basilisk
         
     };
 
-    BASILISK_API
     class FailedWindowCreation : std::exception
     {
     public:

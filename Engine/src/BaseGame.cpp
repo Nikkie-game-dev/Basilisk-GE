@@ -12,7 +12,7 @@ namespace basilisk
         renderInstance.InitGLFW();
         renderInstance.InitGL();
 
-        Window = new basilisk::Window(windowName, sizeX, sizeY);
+        this->Window = new basilisk::Window(windowName, sizeX, sizeY);
 
 
         renderInstance.GenerateVBs();
@@ -20,7 +20,7 @@ namespace basilisk
 
     BaseGame::~BaseGame()
     {
-        delete Window;
+        delete this->Window;
     }
 
     void BaseGame::Draw() const

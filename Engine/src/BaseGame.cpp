@@ -1,18 +1,26 @@
 #include "BaseGame.h"
+#include "Renderer.h"
+#include "Window.h"
 
 namespace basilisk
 {
-    BaseGame::BaseGame(const std::string& windowName, const math::Vec2<int> size)
+
+    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY)
     {
         auto& renderInstance = Renderer::GetInstance();
         
         renderInstance.InitGLFW();
         renderInstance.InitGL();
 
-        this->Window = basilisk::Window(windowName, size);
+        this->Window = new basilisk::Window(windowName, sizeX, sizeY);
 
 
         renderInstance.GenerateVBs();
+    }
+
+    BaseGame::~BaseGame()
+    {
+        delete this->Window;
     }
 
     void BaseGame::Draw() const

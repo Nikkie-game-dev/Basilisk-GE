@@ -41,7 +41,7 @@ namespace basilisk
         void PopulateEBO() const;
         void UpdateVertexAttributes() const;
         void UnbindVertexArray() const;
-        void BindVertexArray(BufferProc vao) const;
+        void BindVertexArray() const;
         void GenerateVAO();
         void GenerateVBO();
         void GenerateEBO();

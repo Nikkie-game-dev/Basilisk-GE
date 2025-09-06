@@ -18,6 +18,7 @@
 namespace basilisk
 {
     class Window;
+    class Renderer;
 
     class BASILISK_API BaseGame
     {
@@ -25,10 +26,12 @@ namespace basilisk
         BaseGame(const std::string& windowName, int sizeX, int sizeY);
         ~BaseGame();
         void Draw() const;
+        void Draw();
         void Close() const;
 
     private:
         Window* Window;
+        Renderer& Renderer;
     };
 
 } // basilisk 

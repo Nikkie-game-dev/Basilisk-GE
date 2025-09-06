@@ -17,6 +17,7 @@ namespace basilisk
     {
     public:
         void InitGLFW();
+        void SetGlVersion();
         void InitGL() const;
         void GenerateVBs();
         void Draw() const;

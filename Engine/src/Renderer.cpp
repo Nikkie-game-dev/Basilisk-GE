@@ -12,6 +12,12 @@ namespace basilisk
             throw CouldNotStartGlfw();
         }
     }
+    void Renderer::SetGlVersion()
+    {
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    }
 
     void Renderer::InitGL() const
     {

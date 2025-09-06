@@ -5,10 +5,11 @@
 namespace basilisk
 {
 
-    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY)
+    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) :
+        X(sizeX), Y(sizeY)
     {
         auto& renderInstance = Renderer::GetInstance();
-        
+
         renderInstance.InitGLFW();
         renderInstance.InitGL();
 

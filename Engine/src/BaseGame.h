@@ -29,6 +29,9 @@ namespace basilisk
 
     private:
         Window* Window;
+        std::string WindowName;
+        int X;
+        int Y;
     };
 
 } // basilisk 

@@ -14,6 +14,7 @@ namespace basilisk
         Window(const std::string& windowName, int sizeX, int sizeY);
 
         [[nodiscard]] GLFWwindow* GetWindow() const;
+        bool WindowShouldClose() const;
 
     private:
         GLFWwindow* WindowP = nullptr;

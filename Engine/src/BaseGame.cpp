@@ -29,6 +29,22 @@ namespace basilisk
     {
         Renderer.Draw();
     }
+    void BaseGame::StartDraw()
+    {
+        Renderer.StartDraw();
+    }
+    void BaseGame::EndDraw()
+    {
+        Renderer.EndDraw();
+    }
+    void BaseGame::BuildShader()
+    {
+        Renderer.BuildShaders();
+    }
+    bool BaseGame::WindowShouldClose() const
+    {
+        return Window->WindowShouldClose();
+    }
 
     void BaseGame::Close() const
     {

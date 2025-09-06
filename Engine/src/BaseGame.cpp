@@ -4,7 +4,6 @@
 
 namespace basilisk
 {
-    static Window* window;
 
     BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY)
     {
@@ -13,7 +12,7 @@ namespace basilisk
         renderInstance.InitGLFW();
         renderInstance.InitGL();
 
-        window = new Window(windowName, sizeX, sizeY);
+        Window = new basilisk::Window(windowName, sizeX, sizeY);
 
 
         renderInstance.GenerateVBs();
@@ -21,7 +20,7 @@ namespace basilisk
 
     BaseGame::~BaseGame()
     {
-        delete window;
+        delete Window;
     }
 
     void BaseGame::Draw() const

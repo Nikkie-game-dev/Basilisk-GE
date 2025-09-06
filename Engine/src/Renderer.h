@@ -24,12 +24,14 @@ namespace basilisk
         void StartDraw() const;
         void EndDraw() const;
         static Renderer& GetInstance();
+        void BuildShaders();
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
         Renderer& operator=(const Renderer& other) = delete; // copy assignment
         Renderer& operator=(Renderer&& other) = delete;      // move assignment
-        
+
+
     private:
         Renderer() = default;
         ~Renderer() = default;
@@ -46,7 +48,6 @@ namespace basilisk
         void GenerateVAO();
         void GenerateVBO();
         void GenerateEBO();
-        void BuildShaders();
     };
 
     class ShaderCompileError : std::exception

@@ -3,11 +3,7 @@
 xcopy "%~3res\assets\" "%~2res\" /i/y/s
 
 @echo "Copying dlls"
-xcopy "%~3lib\dlls\" "%~2" /i/y/s
-
-@echo "Copying engine binaries and headers"
-mkdir "%~1Game\lib\Basilisk\"
-mkdir "%~1Game\lib\Basilisk\include
+xcopy "%~3lib\*.dll" "%~2" /i/y/s
 
 xcopy "%~3bin\%~4\res\" "%~1Game\lib\" /i/y/s
 xcopy "%~3bin\%~4\*.lib" "%~1Game\lib\" /i/y/s

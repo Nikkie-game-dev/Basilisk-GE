@@ -18,6 +18,7 @@
 namespace basilisk
 {
     class Window;
+    class Renderer;
 
     class BASILISK_API BaseGame
     {
@@ -29,7 +30,11 @@ namespace basilisk
         BaseGame& operator=(const BaseGame& other); // copy assignment
         BaseGame& operator=(BaseGame&& other) noexcept; // move assignment
 
-        void Draw() const;
+        void Draw();
+        void StartDraw();
+        void EndDraw();
+        void BuildShader();
+        bool WindowShouldClose() const;
         void Close() const;
 
     private:
@@ -37,6 +42,7 @@ namespace basilisk
         std::string WindowName;
         int X;
         int Y;
+        Renderer& Renderer;
     };
 
 } // basilisk 

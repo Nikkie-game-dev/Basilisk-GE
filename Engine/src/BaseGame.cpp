@@ -6,17 +6,18 @@ namespace basilisk
 {
 
     BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) :
-        X(sizeX), Y(sizeY)
+        X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
     {
-        auto& renderInstance = Renderer::GetInstance();
+        Renderer.InitGLFW();
 
-        renderInstance.InitGLFW();
-        renderInstance.InitGL();
+        Renderer.SetGlVersion();
 
         this->Window = new basilisk::Window(windowName, sizeX, sizeY);
+        
+        Renderer.InitGL();
 
 
-        renderInstance.GenerateVBs();
+        Renderer.GenerateVBs();
     }
 
     BaseGame::~BaseGame()
@@ -73,9 +74,25 @@ namespace basilisk
         return *this;
     }
 
-    void BaseGame::Draw() const
+    void BaseGame::Draw()
     {
-        Renderer::GetInstance().Draw();
+        Renderer.Draw();
+    }
+    void BaseGame::StartDraw()
+    {
+        Renderer.StartDraw();
+    }
+    void BaseGame::EndDraw()
+    {
+        Renderer.EndDraw();
+    }
+    void BaseGame::BuildShader()
+    {
+        Renderer.BuildShaders();
+    }
+    bool BaseGame::WindowShouldClose() const
+    {
+        return Window->WindowShouldClose();
     }
 
     void BaseGame::Close() const

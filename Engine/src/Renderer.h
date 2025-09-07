@@ -17,18 +17,21 @@ namespace basilisk
     {
     public:
         void InitGLFW();
+        void SetGlVersion();
         void InitGL() const;
         void GenerateVBs();
         void Draw() const;
         void StartDraw() const;
         void EndDraw() const;
         static Renderer& GetInstance();
+        void BuildShaders();
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
         Renderer& operator=(const Renderer& other) = delete; // copy assignment
         Renderer& operator=(Renderer&& other) = delete;      // move assignment
-        
+
+
     private:
         Renderer() = default;
         ~Renderer() = default;
@@ -41,11 +44,10 @@ namespace basilisk
         void PopulateEBO() const;
         void UpdateVertexAttributes() const;
         void UnbindVertexArray() const;
-        void BindVertexArray(BufferProc vao) const;
+        void BindVertexArray() const;
         void GenerateVAO();
         void GenerateVBO();
         void GenerateEBO();
-        void BuildShaders();
     };
 
     class ShaderCompileError : std::exception

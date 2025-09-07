@@ -19,4 +19,9 @@ namespace basilisk
     {
         return this->WindowP;
     }
+    
+    bool Window::WindowShouldClose() const
+    {
+        return glfwWindowShouldClose(this->WindowP);
+    }
 }

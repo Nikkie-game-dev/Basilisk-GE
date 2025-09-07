@@ -76,20 +76,29 @@ namespace basilisk
 
     void BaseGame::Run()
     {
-        BuildShader();
+        Init();
 
         while (!WindowShouldClose())
         {
-            StartDraw();
+            Update();
             Draw();
-            EndDraw();
         }
+
+        Close();
     }
 
     void BaseGame::Draw()
     {
+        StartDraw();
         Renderer.Draw();
+        EndDraw();
     }
+
+    void BaseGame::Init()
+    {
+        BuildShader();
+    }
+
     void BaseGame::StartDraw()
     {
         Renderer.StartDraw();
@@ -111,4 +120,4 @@ namespace basilisk
     {
         glfwTerminate();
     }
-}
+} // namespace basilisk

@@ -12,7 +12,6 @@
 #endif
 #pragma endregion
 
-
 #include <string>
 
 namespace basilisk

@@ -1,21 +1,20 @@
 #include "BaseGame.h"
+#include <glm/glm.hpp>
 #include "Renderer.h"
 #include "Window.h"
 
 namespace basilisk
 {
 
-    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) :
-        X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) : X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
     {
         Renderer.InitGLFW();
 
         Renderer.SetGlVersion();
 
-        this->Window = new basilisk::Window(windowName, sizeX, sizeY);
-        
-        Renderer.InitGL();
+        this->Window = new basilisk::Window(windowName, glm::vec2(sizeX, sizeY));
 
+        Renderer.InitGL();
 
         Renderer.GenerateVBs();
     }
@@ -25,16 +24,14 @@ namespace basilisk
         delete this->Window;
     }
 
-    BaseGame::BaseGame(const BaseGame& other) : 
-        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(const BaseGame& other) : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
-        this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+        this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
         Renderer::GetInstance().GenerateVBs();
     }
 
-    BaseGame::BaseGame(BaseGame&& other) noexcept : 
-        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(BaseGame&& other) noexcept : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
         this->Window = other.Window;
@@ -51,7 +48,7 @@ namespace basilisk
             this->X = other.X;
             this->Y = other.Y;
             this->WindowName = other.WindowName;
-            this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
             Renderer::GetInstance().GenerateVBs();
         }
         return *this;
@@ -78,18 +75,22 @@ namespace basilisk
     {
         Renderer.Draw();
     }
+
     void BaseGame::StartDraw()
     {
         Renderer.StartDraw();
     }
+
     void BaseGame::EndDraw()
     {
         Renderer.EndDraw();
     }
+
     void BaseGame::BuildShader()
     {
         Renderer.BuildShaders();
     }
+
     bool BaseGame::WindowShouldClose() const
     {
         return Window->WindowShouldClose();
@@ -99,4 +100,4 @@ namespace basilisk
     {
         glfwTerminate();
     }
-}
+} // namespace basilisk

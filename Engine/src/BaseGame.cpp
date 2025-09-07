@@ -74,6 +74,18 @@ namespace basilisk
         return *this;
     }
 
+    void BaseGame::Run()
+    {
+        BuildShader();
+
+        while (!WindowShouldClose())
+        {
+            StartDraw();
+            Draw();
+            EndDraw();
+        }
+    }
+
     void BaseGame::Draw()
     {
         Renderer.Draw();

@@ -111,10 +111,14 @@
     <Folder Include="res\raw\" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

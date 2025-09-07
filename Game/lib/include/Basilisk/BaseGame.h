@@ -32,9 +32,10 @@ namespace basilisk
 
         void Run();
 
-protected:
-
-        void Draw();
+    protected:
+        virtual void Draw();
+        virtual void Init();
+        virtual void Update() = 0;
         void StartDraw();
         void EndDraw();
         void BuildShader();
@@ -42,11 +43,11 @@ protected:
         void Close() const;
 
     private:
-        Window* Window;
         std::string WindowName;
         int X;
         int Y;
+        Window* Window;
         Renderer& Renderer;
     };
 
-} // basilisk 
+} // namespace basilisk

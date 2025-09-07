@@ -114,8 +114,9 @@ namespace basilisk
 
     void Renderer::Draw() const
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Ebo);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glUseProgram(this->ShaderProg);
+        glBindVertexArray(this->Vao);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
     void Renderer::BuildShaders()
@@ -174,8 +175,5 @@ namespace basilisk
         /*Deletion*/
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
-
-        /*Build*/
-        glUseProgram(this->ShaderProg);
     }
 }

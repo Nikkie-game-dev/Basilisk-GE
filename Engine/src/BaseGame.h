@@ -25,8 +25,11 @@ namespace basilisk
     public:
         BaseGame(const std::string& windowName, int sizeX, int sizeY);
         ~BaseGame();
-        void Draw() const;
         void Draw();
+        void StartDraw();
+        void EndDraw();
+        void BuildShader();
+        bool WindowShouldClose() const;
         void Close() const;
 
     private:

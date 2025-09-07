@@ -10,9 +10,7 @@ namespace basilisk
     {
         Renderer.InitGLFW();
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        Renderer.SetGlVersion();
 
         this->Window = new basilisk::Window(windowName, sizeX, sizeY);
         
@@ -30,6 +28,22 @@ namespace basilisk
     void BaseGame::Draw()
     {
         Renderer.Draw();
+    }
+    void BaseGame::StartDraw()
+    {
+        Renderer.StartDraw();
+    }
+    void BaseGame::EndDraw()
+    {
+        Renderer.EndDraw();
+    }
+    void BaseGame::BuildShader()
+    {
+        Renderer.BuildShaders();
+    }
+    bool BaseGame::WindowShouldClose() const
+    {
+        return Window->WindowShouldClose();
     }
 
     void BaseGame::Close() const

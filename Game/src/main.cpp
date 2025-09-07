@@ -1,7 +1,8 @@
-#include "Basilisk/BaseGame.h"
+#include "Game.h"
 
 int main()
 {
-    auto engine = basilisk::BaseGame("Test", 600, 600);
-    engine.Run();
+    auto engine = new Game("Test", 600, 600);
+    engine->Run();
+    delete engine;
 }

@@ -25,6 +25,11 @@ namespace basilisk
     public:
         BaseGame(const std::string& windowName, int sizeX, int sizeY);
         ~BaseGame();
+        BaseGame(const BaseGame& other); // copy constructor
+        BaseGame(BaseGame&& other) noexcept; // move constructor
+        BaseGame& operator=(const BaseGame& other); // copy assignment
+        BaseGame& operator=(BaseGame&& other) noexcept; // move assignment
+
         void Draw();
         void StartDraw();
         void EndDraw();
@@ -34,6 +39,9 @@ namespace basilisk
 
     private:
         Window* Window;
+        std::string WindowName;
+        int X;
+        int Y;
         Renderer& Renderer;
     };
 

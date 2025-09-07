@@ -6,7 +6,7 @@ namespace basilisk
 {
 
     BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) :
-        Renderer(Renderer::GetInstance())
+        X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
     {
         Renderer.InitGLFW();
 
@@ -23,6 +23,55 @@ namespace basilisk
     BaseGame::~BaseGame()
     {
         delete this->Window;
+    }
+
+    BaseGame::BaseGame(const BaseGame& other) :
+        X(other.X), Y(other.Y)
+    {
+        this->WindowName = other.WindowName;
+        this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+        Renderer::GetInstance().GenerateVBs();
+    }
+
+    BaseGame::BaseGame(BaseGame&& other) noexcept :
+        X(other.X), Y(other.Y)
+    {
+        this->WindowName = other.WindowName;
+        this->Window = other.Window;
+        other.Window = nullptr;
+        other.X = 0;
+        other.Y = 0;
+        other.WindowName = "";
+    }
+
+    BaseGame& BaseGame::operator=(const BaseGame& other)
+    {
+        if (this != &other)
+        {
+            this->X = other.X;
+            this->Y = other.Y;
+            this->WindowName = other.WindowName;
+            this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+            Renderer::GetInstance().GenerateVBs();
+        }
+        return *this;
+    }
+
+    BaseGame& BaseGame::operator=(BaseGame&& other) noexcept
+    {
+        if (this != &other)
+        {
+            this->X = other.X;
+            this->Y = other.Y;
+            this->WindowName = other.WindowName;
+            this->Window = other.Window;
+
+            other.Window = nullptr;
+            other.X = 0;
+            other.Y = 0;
+            other.WindowName = "";
+        }
+        return *this;
     }
 
     void BaseGame::Draw()

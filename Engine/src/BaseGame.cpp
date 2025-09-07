@@ -25,16 +25,16 @@ namespace basilisk
         delete this->Window;
     }
 
-    BaseGame::BaseGame(const BaseGame& other) :
-        X(other.X), Y(other.Y)
+    BaseGame::BaseGame(const BaseGame& other) : 
+        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
         this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
         Renderer::GetInstance().GenerateVBs();
     }
 
-    BaseGame::BaseGame(BaseGame&& other) noexcept :
-        X(other.X), Y(other.Y)
+    BaseGame::BaseGame(BaseGame&& other) noexcept : 
+        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
         this->Window = other.Window;

@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <string>
+#include <glm/glm.hpp>
 
 #include "Export.h"
 
@@ -11,7 +12,7 @@ namespace basilisk
     {
     public:
         Window() = default;
-        Window(const std::string& windowName, int sizeX, int sizeY);
+        Window(const std::string& windowName, glm::vec2 windowSize);
 
         [[nodiscard]] GLFWwindow* GetWindow() const;
         bool WindowShouldClose() const;

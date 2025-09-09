@@ -1,4 +1,5 @@
 #include "BaseGame.h"
+#include <glm/glm.hpp>
 #include "Renderer.h"
 #include "Window.h"
 
@@ -11,7 +12,7 @@ namespace basilisk
 
         Renderer.SetGlVersion();
 
-        this->Window = new basilisk::Window(windowName, sizeX, sizeY);
+        this->Window = new basilisk::Window(windowName, glm::vec2(sizeX, sizeY));
 
         Renderer.InitGL();
 
@@ -26,7 +27,7 @@ namespace basilisk
     BaseGame::BaseGame(const BaseGame& other) : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
-        this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+        this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
         Renderer::GetInstance().GenerateVBs();
     }
 
@@ -47,7 +48,7 @@ namespace basilisk
             this->X = other.X;
             this->Y = other.Y;
             this->WindowName = other.WindowName;
-            this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
+            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
             Renderer::GetInstance().GenerateVBs();
         }
         return *this;

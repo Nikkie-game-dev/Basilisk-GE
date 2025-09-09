@@ -5,17 +5,15 @@
 namespace basilisk
 {
 
-    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) :
-        X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) : X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
     {
         Renderer.InitGLFW();
 
         Renderer.SetGlVersion();
 
         this->Window = new basilisk::Window(windowName, sizeX, sizeY);
-        
-        Renderer.InitGL();
 
+        Renderer.InitGL();
 
         Renderer.GenerateVBs();
     }
@@ -25,16 +23,14 @@ namespace basilisk
         delete this->Window;
     }
 
-    BaseGame::BaseGame(const BaseGame& other) : 
-        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(const BaseGame& other) : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
         this->Window = new basilisk::Window(other.WindowName, other.X, other.Y);
         Renderer::GetInstance().GenerateVBs();
     }
 
-    BaseGame::BaseGame(BaseGame&& other) noexcept : 
-        X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(BaseGame&& other) noexcept : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
     {
         this->WindowName = other.WindowName;
         this->Window = other.Window;
@@ -74,22 +70,30 @@ namespace basilisk
         return *this;
     }
 
+    void BaseGame::Run()
+    {
+        Init();
+
+        while (!WindowShouldClose())
+        {
+            Update();
+            Renderer.StartDraw();
+            Draw();
+            Renderer.EndDraw();
+        }
+
+        Close();
+    }
+
     void BaseGame::Draw()
     {
         Renderer.Draw();
     }
-    void BaseGame::StartDraw()
+
+    void BaseGame::Init()
     {
-        Renderer.StartDraw();
     }
-    void BaseGame::EndDraw()
-    {
-        Renderer.EndDraw();
-    }
-    void BaseGame::BuildShader()
-    {
-        Renderer.BuildShaders();
-    }
+
     bool BaseGame::WindowShouldClose() const
     {
         return Window->WindowShouldClose();
@@ -99,4 +103,4 @@ namespace basilisk
     {
         glfwTerminate();
     }
-}
+} // namespace basilisk

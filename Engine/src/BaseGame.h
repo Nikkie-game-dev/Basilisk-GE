@@ -30,19 +30,21 @@ namespace basilisk
         BaseGame& operator=(const BaseGame& other); // copy assignment
         BaseGame& operator=(BaseGame&& other) noexcept; // move assignment
 
-        void Draw();
-        void StartDraw();
-        void EndDraw();
-        void BuildShader();
+        void Run();
+
+    protected:
+        virtual void Draw() = 0;
+        virtual void Init() = 0;
+        virtual void Update() = 0;
         bool WindowShouldClose() const;
         void Close() const;
+        Renderer& Renderer;
 
     private:
-        Window* Window;
         std::string WindowName;
         int X;
         int Y;
-        Renderer& Renderer;
+        Window* Window;
     };
 
-} // basilisk 
+} // namespace basilisk

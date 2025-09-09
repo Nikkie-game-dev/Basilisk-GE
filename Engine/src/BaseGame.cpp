@@ -96,7 +96,6 @@ namespace basilisk
 
     void BaseGame::Init()
     {
-        BuildShader();
     }
 
     void BaseGame::StartDraw()
@@ -106,10 +105,6 @@ namespace basilisk
     void BaseGame::EndDraw()
     {
         Renderer.EndDraw();
-    }
-    void BaseGame::BuildShader()
-    {
-        Renderer.BuildShaders();
     }
     bool BaseGame::WindowShouldClose() const
     {

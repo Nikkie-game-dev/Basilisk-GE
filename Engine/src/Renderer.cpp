@@ -27,8 +27,9 @@ namespace basilisk
         }
     }
 
-    void Renderer::StartDraw() const
+    void Renderer::StartDraw()
     {
+        BuildShaders();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 

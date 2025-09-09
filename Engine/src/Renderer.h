@@ -21,7 +21,7 @@ namespace basilisk
         void InitGL() const;
         void GenerateVBs();
         void Draw() const;
-        void StartDraw() const;
+        void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
         void BuildShaders();

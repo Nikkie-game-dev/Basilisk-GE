@@ -38,16 +38,15 @@ namespace basilisk
         virtual void Update() = 0;
         void StartDraw();
         void EndDraw();
-        void BuildShader();
         bool WindowShouldClose() const;
         void Close() const;
+        Renderer& Renderer;
 
     private:
         std::string WindowName;
         int X;
         int Y;
         Window* Window;
-        Renderer& Renderer;
     };
 
 } // namespace basilisk

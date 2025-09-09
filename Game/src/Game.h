@@ -13,5 +13,5 @@ private:
     virtual void Init() override;
     virtual void Update() override;
     virtual void Draw() override;
-    basilisk::Renderer* Renderer;
+    basilisk::Renderer& Renderer;
 };

@@ -102,10 +102,12 @@ namespace basilisk
     {
         Renderer.StartDraw();
     }
+
     void BaseGame::EndDraw()
     {
         Renderer.EndDraw();
     }
+
     bool BaseGame::WindowShouldClose() const
     {
         return Window->WindowShouldClose();

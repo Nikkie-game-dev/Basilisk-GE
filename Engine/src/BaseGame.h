@@ -33,8 +33,8 @@ namespace basilisk
         void Run();
 
     protected:
-        virtual void Draw();
-        virtual void Init();
+        virtual void Draw() = 0;
+        virtual void Init() = 0;
         virtual void Update() = 0;
         bool WindowShouldClose() const;
         void Close() const;

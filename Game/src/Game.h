@@ -1,5 +1,6 @@
 #pragma once
 #include "Basilisk/BaseGame.h"
+#include "Basilisk/Renderer.h"
 
 using namespace basilisk;
 
@@ -12,4 +13,5 @@ private:
     virtual void Init() override;
     virtual void Update() override;
     virtual void Draw() override;
+    basilisk::Renderer* Renderer;
 };

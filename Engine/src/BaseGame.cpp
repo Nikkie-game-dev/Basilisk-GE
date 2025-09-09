@@ -16,7 +16,6 @@ namespace basilisk
         
         Renderer.InitGL();
 
-
         Renderer.GenerateVBs();
     }
 
@@ -89,23 +88,11 @@ namespace basilisk
 
     void BaseGame::Draw()
     {
-        StartDraw();
         Renderer.Draw();
-        EndDraw();
     }
 
     void BaseGame::Init()
     {
-    }
-
-    void BaseGame::StartDraw()
-    {
-        Renderer.StartDraw();
-    }
-
-    void BaseGame::EndDraw()
-    {
-        Renderer.EndDraw();
     }
 
     bool BaseGame::WindowShouldClose() const

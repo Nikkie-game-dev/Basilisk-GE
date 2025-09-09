@@ -36,8 +36,6 @@ namespace basilisk
         virtual void Draw();
         virtual void Init();
         virtual void Update() = 0;
-        void StartDraw();
-        void EndDraw();
         bool WindowShouldClose() const;
         void Close() const;
         Renderer& Renderer;

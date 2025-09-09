@@ -1,10 +1,16 @@
 #pragma once
 
-#include <exception>
 #include <string>
 
-#include "Export.h"
-#include "GL/glew.h"
+#ifdef _WIN32
+#ifdef BASILISK_EXPORT
+#define BASILISK_API __declspec(dllexport)
+#define BASILISK_EXTERN
+#else
+#define BASILISK_API __declspec(dllimport)
+#define BASILISK_EXTERN extern
+#endif
+#endif
 
 namespace basilisk
 {
@@ -50,45 +56,5 @@ namespace basilisk
         void GenerateEBO();
     };
 
-    class ShaderCompileError : std::exception
-    {
-    public:
-        using ShaderProc = unsigned int;
-
-        explicit ShaderCompileError(const ShaderProc shader)
-        {
-            constexpr int infoBufferSize = 512;
-
-            char infoLog[infoBufferSize];
-            glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-
-            Error = "Shader failed to compile: \n" + std::string(infoLog);
-        }
-        [[nodiscard]] char const* what() const override
-        {
-            return Error.c_str();
-        }
-
-    private:
-        std::string Error;
-    };
     
-    class CouldNotStartGlfw : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Could not initialized GLFW";
-        }
-    };
-
-
-    class CouldNotStartGlew : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Could not initialized Glad";
-        }
-    };
 } // namespace basilisk

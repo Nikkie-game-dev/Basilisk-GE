@@ -1,7 +1,7 @@
 #include "Game.h"
 
 Game::Game(const std::string& windowName, int sizeX, int sizeY) : 
-	BaseGame(windowName, sizeX, sizeY)
+	BaseGame(windowName, sizeX, sizeY), Renderer(&Renderer::GetInstance())
 {
 }
 
@@ -16,5 +16,7 @@ void Game::Update()
 
 void Game::Draw()
 {
+    Renderer->StartDraw();
     BaseGame::Draw();
+    Renderer->EndDraw();
 }

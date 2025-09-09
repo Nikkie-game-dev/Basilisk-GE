@@ -1,14 +1,8 @@
-#include "Basilisk/BaseGame.h"
+#include "Game.h"
 
 int main()
 {
-    auto engine = basilisk::BaseGame("Test", 600, 600);
-    engine.BuildShader();
-    
-    while (!engine.WindowShouldClose())
-    {
-        engine.StartDraw();
-        engine.Draw();
-        engine.EndDraw();
-    }
+    auto game = new Game("Test", 600, 600);
+    game->Run();
+    delete game;
 }

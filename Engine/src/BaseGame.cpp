@@ -71,24 +71,28 @@ namespace basilisk
         return *this;
     }
 
+    void BaseGame::Run()
+    {
+        Init();
+
+        while (!WindowShouldClose())
+        {
+            Update();
+            Renderer.StartDraw();
+            Draw();
+            Renderer.EndDraw();
+        }
+
+        Close();
+    }
+
     void BaseGame::Draw()
     {
         Renderer.Draw();
     }
 
-    void BaseGame::StartDraw()
+    void BaseGame::Init()
     {
-        Renderer.StartDraw();
-    }
-
-    void BaseGame::EndDraw()
-    {
-        Renderer.EndDraw();
-    }
-
-    void BaseGame::BuildShader()
-    {
-        Renderer.BuildShaders();
     }
 
     bool BaseGame::WindowShouldClose() const

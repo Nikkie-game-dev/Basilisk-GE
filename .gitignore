@@ -51,3 +51,6 @@ Engine/obj/
 Engine/bin/
 Game/obj/
 Game/bin/
+Game/lib/Basilisk-GE.lib
+
+Game/lib/.void

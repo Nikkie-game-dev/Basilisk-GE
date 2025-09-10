@@ -1,10 +1,16 @@
 #pragma once
 
-#include <exception>
 #include <string>
 
-#include "Export.h"
-#include "GL/glew.h"
+#ifdef _WIN32
+#ifdef BASILISK_EXPORT
+#define BASILISK_API __declspec(dllexport)
+#define BASILISK_EXTERN
+#else
+#define BASILISK_API __declspec(dllimport)
+#define BASILISK_EXTERN extern
+#endif
+#endif
 
 namespace basilisk
 {
@@ -17,18 +23,21 @@ namespace basilisk
     {
     public:
         void InitGLFW();
+        void SetGlVersion();
         void InitGL() const;
         void GenerateVBs();
         void Draw() const;
-        void StartDraw() const;
+        void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
+        void BuildShaders();
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
         Renderer& operator=(const Renderer& other) = delete; // copy assignment
         Renderer& operator=(Renderer&& other) = delete;      // move assignment
-        
+
+
     private:
         Renderer() = default;
         ~Renderer() = default;
@@ -41,52 +50,11 @@ namespace basilisk
         void PopulateEBO() const;
         void UpdateVertexAttributes() const;
         void UnbindVertexArray() const;
-        void BindVertexArray(BufferProc vao) const;
+        void BindVertexArray() const;
         void GenerateVAO();
         void GenerateVBO();
         void GenerateEBO();
-        void BuildShaders();
     };
 
-    class ShaderCompileError : std::exception
-    {
-    public:
-        using ShaderProc = unsigned int;
-
-        explicit ShaderCompileError(const ShaderProc shader)
-        {
-            constexpr int infoBufferSize = 512;
-
-            char infoLog[infoBufferSize];
-            glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-
-            Error = "Shader failed to compile: \n" + std::string(infoLog);
-        }
-        [[nodiscard]] char const* what() const override
-        {
-            return Error.c_str();
-        }
-
-    private:
-        std::string Error;
-    };
     
-    class CouldNotStartGlfw : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Could not initialized GLFW";
-        }
-    };
-
-
-    class CouldNotStartGlew : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Could not initialized Glad";
-        }
-    };
 } // namespace basilisk

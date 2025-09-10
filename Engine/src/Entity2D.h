@@ -1,35 +1,38 @@
 #pragma once
-#include "src/Entity.h"
-#include "src/math/Vec2.h"
+#include <glm/glm.hpp>
+
+#include "Entity.h"
 
 namespace basilisk
 {
-    enum class Axis
+    enum class Axis: char
     {
         X,
         Y,
     };
-    
+
     class BASILISK_API Entity2D : Entity
     {
     public:
         void Rotate(float angle);
         void Scale(float scale, Axis scalingAxis);
 
-        [[nodiscard]] float GetRotation() const
+        // Getters:
+        
+        [[nodiscard]] glm::vec2 GetRotation() const
         {
             return Rotation;
         }
-        
-        [[nodiscard]] math::Vec2<float> GetScale() const
+
+        [[nodiscard]] glm::vec2 GetScale() const
         {
             return Scaling;
         }
-        
-        math::Vec2<float> Position = {0,0};
-        
+
+        glm::vec2 Position = {0, 0};
+
     private:
-        math::Vec2<float> Scaling = {1,1};
-        float Rotation = 0;
+        glm::vec2 Scaling = {1, 1};
+        glm::vec2 Rotation = {0,0};
     };
 } // basilisk 

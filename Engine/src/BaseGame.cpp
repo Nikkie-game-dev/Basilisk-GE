@@ -16,7 +16,6 @@ namespace basilisk
 
         Renderer.InitGL();
 
-        Renderer.GenerateVBs();
     }
 
     BaseGame::~BaseGame()
@@ -28,7 +27,6 @@ namespace basilisk
     {
         this->WindowName = other.WindowName;
         this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-        Renderer::GetInstance().GenerateVBs();
     }
 
     BaseGame::BaseGame(BaseGame&& other) noexcept : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
@@ -49,7 +47,6 @@ namespace basilisk
             this->Y = other.Y;
             this->WindowName = other.WindowName;
             this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-            Renderer::GetInstance().GenerateVBs();
         }
         return *this;
     }

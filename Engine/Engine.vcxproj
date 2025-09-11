@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGame.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Entity2D.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>

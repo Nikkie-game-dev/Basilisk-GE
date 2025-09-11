@@ -11,27 +11,23 @@ namespace basilisk
         Y,
     };
 
-    class BASILISK_API Entity2D : Entity
+    class BASILISK_API Entity2D : public Entity
     {
     public:
-        void Rotate(float angle);
-        void Scale(float scale, Axis scalingAxis);
+        virtual ~Entity2D() = default;
 
-        // Getters:
+        [[nodiscard]] glm::vec2 GetRotation() const;
+        [[nodiscard]] glm::vec2 GetScale() const;
+        [[nodiscard]] glm::vec2 GetPosition() const;
+
+        void SetRotation(float angle);
+        void SetRotation(glm::vec2 rotation);
+        void SetScaling(glm::vec2 scaling);
+        void SetScaling(float scale, Axis scalingAxis);
+        void SetPosition(glm::vec2 newPosition);
         
-        [[nodiscard]] glm::vec2 GetRotation() const
-        {
-            return Rotation;
-        }
-
-        [[nodiscard]] glm::vec2 GetScale() const
-        {
-            return Scaling;
-        }
-
-        glm::vec2 Position = {0, 0};
-
     private:
+        glm::vec2 Position = {0, 0};
         glm::vec2 Scaling = {1, 1};
         glm::vec2 Rotation = {0,0};
     };

@@ -25,7 +25,7 @@ namespace basilisk
         void InitGLFW();
         void SetGlVersion();
         void InitGL() const;
-        void GenerateVBs();
+        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices);
         void Draw() const;
         void StartDraw();
         void EndDraw() const;

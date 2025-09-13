@@ -14,6 +14,7 @@
 
 namespace basilisk
 {
+    class Color;
 
     using BufferProc = unsigned int;
     using ShaderProc = unsigned int;
@@ -26,7 +27,8 @@ namespace basilisk
         void SetGlVersion();
         void InitGL() const;
         void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices);
-        void Draw() const;
+        void Draw(SPProc ShaderProg) const;
+        void Draw(SPProc ShaderProg, Color color) const;
         void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();

@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "RenderException.h"
@@ -30,7 +31,6 @@ namespace basilisk
 
     void Renderer::StartDraw()
     {
-        BuildShaders();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
@@ -102,9 +102,18 @@ namespace basilisk
     {
     }
 
-    void Renderer::Draw() const
+    void Renderer::Draw(SPProc ShaderProg) const
     {
-        glUseProgram(this->ShaderProg);
+        glUseProgram(ShaderProg);
+        glBindVertexArray(this->Vao);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    }
+    
+    void Renderer::Draw(const SPProc shaderProg, const Color color) const
+    {
+        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
+        glUseProgram(shaderProg);
+        glUniform4f(vertexColorLocation, color.R, color.G, color.B, color.A);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Engine/src/Entity2D.h"
+#include "Basilisk/Entity2D.h"
 
 namespace game
 {

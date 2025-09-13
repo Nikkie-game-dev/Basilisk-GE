@@ -1,6 +1,6 @@
 #pragma once
-#include "Basilisk/BaseGame.h"
-#include "Basilisk/Renderer.h"
+#include "BaseGame.h"
+#include "Renderer.h"
 #include "Square.h"
 
 

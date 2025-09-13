@@ -9,14 +9,6 @@ namespace basilisk
         delete[] this->Vertices;
         delete[] this->Indices;
     }
-
-    void Entity::Draw() const
-    {
-        if (this->Vertices && this->Indices)
-        {
-           Renderer::GetInstance().Draw();
-        }
-    }
     
     void Entity::UpdateBuffers() const
     {

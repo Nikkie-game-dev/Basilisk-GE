@@ -13,8 +13,7 @@ namespace basilisk
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        
-        void Draw() const;
+        virtual void Draw() = 0;
         
         void UpdateBuffers() const;
         void FillVertices(float vertices[], int amountVertices);

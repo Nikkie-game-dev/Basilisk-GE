@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Export.h"
+#include "Material.h"
 
 namespace basilisk
 {
@@ -21,6 +22,9 @@ namespace basilisk
         
         bool IsActive = true;
 
+    protected:
+        Material Mat = Material();
+        
     private:
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;

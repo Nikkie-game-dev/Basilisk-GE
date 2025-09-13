@@ -30,7 +30,7 @@ namespace basilisk
         void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
-        void BuildShaders();
+        [[deprecated]] void BuildShaders();
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
@@ -44,7 +44,6 @@ namespace basilisk
         BufferProc Vbo;
         BufferProc Vao;
         BufferProc Ebo;
-        SPProc ShaderProg;
 
         void PopulateVBO() const;
         void PopulateEBO() const;

@@ -8,29 +8,24 @@ namespace basilisk
 {
     using ShaderProc = unsigned int;
 
-    void Material::BuildShader()
+    void Material::BuildShader(bool isSolid)
     {
-        const auto* vertexShaderSource = "#version 330 core\n"
-                                         "layout (location = 0) in vec3 aPos;\n"
-                                         "void main()\n"
-                                         "{\n"
-                                         " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                         "}\0";
-        const auto* fragShaderSource = "#version 330 core\n"
-                                       "out vec4 FragColor;\n"
-                                       "void main()\n"
-                                       "{\n"
-                                       "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                       "}\n";
-
-
         const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        
         this->ShaderProgram = glCreateProgram();
 
         GLint hasCompiled;
 
-        glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+        if (isSolid)
+        {
+            glShaderSource(vertexShader, 1, &VertexShaderSolid, nullptr);
+        }
+        else
+        {
+            //TODO
+        }
+        
         glCompileShader(vertexShader);
 
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
@@ -41,7 +36,14 @@ namespace basilisk
 
 
         /*Compile frag shader*/
-        glShaderSource(fragmentShader, 1, &fragShaderSource, nullptr);
+        if (isSolid)
+        {
+            glShaderSource(fragmentShader, 1, &FragShaderSolid, nullptr);
+        }
+        {
+            //TODO
+        }
+        
         glCompileShader(fragmentShader);
 
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);

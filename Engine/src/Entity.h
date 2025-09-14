@@ -28,9 +28,9 @@ namespace basilisk
         void FillVertices(float vertices[], int amountVertices);
         void FillIndices(unsigned int indices[], int amountIndices);
         void SetRotation(float angle, Axis rotationAxis);
-        void SetScaling(glm::vec3 scaling);
+        void SetScaling(const glm::vec3& scaling);
         void SetScaling(float scale, Axis scalingAxis);
-        void SetPosition(glm::vec3 newPosition);
+        void SetPosition(const glm::vec3& newPosition);
 
         bool IsActive = true;
         glm::mat4 GetModelMatrix() const;

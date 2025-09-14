@@ -1,8 +1,6 @@
 #include "Entity.h"
-#include "GL/glew.h"
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
-#include "Entity2D.h"
 
 namespace basilisk
 {
@@ -10,16 +8,6 @@ namespace basilisk
     {
         delete[] this->Vertices;
         delete[] this->Indices;
-    }
-
-    void Entity::Draw() const
-    {
-        if (this->Vertices && this->Indices)
-        {
-            Renderer::GetInstance().UpdateModelMatrix(this->ModelMatrix);
-
-            Renderer::GetInstance().Draw(this->AmountIndices);
-        }
     }
 
     void Entity::UpdateBuffers() const
@@ -63,20 +51,19 @@ namespace basilisk
     /// <summary>
     /// Negative values rotate counter clockwise
     /// </summary>
-    /// <param name="rotation"></param>
-    void Entity::SetRotation(float angle, Axis rotationAxis)
+    /// <param name="angle"></param>
+    /// <param name="rotationAxis"></param>
+    void Entity::SetRotation(const float angle, const Axis rotationAxis)
     {
         switch (rotationAxis)
         {
-        case basilisk::Axis::X:
+        case Axis::X:
             this->Rotation.x = angle;
             break;
-        case basilisk::Axis::Y:
+        case Axis::Y:
             this->Rotation.y = angle;
             break;
-        case basilisk::Axis::Z:
-            this->Rotation.z = angle;
-            break;
+        case Axis::Z: __fallthrough
         default:
             this->Rotation.z = angle;
             break;
@@ -86,28 +73,27 @@ namespace basilisk
         UpdateModelMatrix();
     }
 
-    void Entity::SetScaling(glm::vec3 scaling)
+    void Entity::SetScaling(const glm::vec3& scaling)
     {
         this->Scaling = scaling;
         this->ScaleMatrix = glm::scale(glm::mat4(1.0f), this->Scaling);
         UpdateModelMatrix();
     }
 
-    void Entity::SetScaling(float scale, Axis scalingAxis)
+    void Entity::SetScaling(const float scale, const Axis scalingAxis)
     {
         switch (scalingAxis)
         {
-        case basilisk::Axis::X:
+        case Axis::X:
             this->Scaling.x = scale;
             break;
-        case basilisk::Axis::Y:
+        case Axis::Y:
             this->Scaling.y = scale;
             break;
-        case basilisk::Axis::Z:
+        case Axis::Z:
             this->Scaling.z = scale;
             break;
-        default:
-            break;
+
         }
 
         SetScaling(this->Scaling);
@@ -117,7 +103,7 @@ namespace basilisk
     /// Position is the top left corner of the entity
     /// </summary>
     /// <param name="newPosition"></param>
-    void Entity::SetPosition(glm::vec3 newPosition)
+    void Entity::SetPosition(const glm::vec3& newPosition)
     {
         this->Position = newPosition;
 
@@ -147,9 +133,9 @@ namespace basilisk
     {
         this->ModelMatrix = this->TranslateMatrix * this->RotationMatrix * this->ScaleMatrix;
         this->Position = glm::vec3(this->ModelMatrix[3]);
-        auto rotation = glm::quat_cast(this->ModelMatrix);
+        const auto rotation = glm::quat_cast(this->ModelMatrix);
         this->Rotation = glm::eulerAngles(rotation);
-        this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])), 
+        this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])),
                          glm::length(glm::vec3(this->ModelMatrix[1])),
                          glm::length(glm::vec3(this->ModelMatrix[2]))};
     }

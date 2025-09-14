@@ -34,9 +34,4 @@ namespace basilisk
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }
 
-    void Entity2D::Update()
-    {
-        //Renderer::GetInstance().UpdateModelMatrix(this->GetModelMatrix());
-    }
-
 } // namespace basilisk

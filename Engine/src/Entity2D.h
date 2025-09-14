@@ -16,8 +16,6 @@ namespace basilisk
         virtual void SetRotation(float angle);
         virtual void SetScaling(glm::vec2 scaling);
         virtual void SetPosition(glm::vec2 newPosition);
-
-        virtual void Update() override;
-
+        
     };
 } // namespace basilisk

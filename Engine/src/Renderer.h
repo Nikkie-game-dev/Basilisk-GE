@@ -32,7 +32,7 @@ namespace basilisk
         void EndDraw() const;
         static Renderer& GetInstance();
         void BuildShaders();
-        void UpdateModelMatrix(glm::mat4 modelMatrix);
+        void UpdateModelMatrix(glm::mat4 modelMatrix) const;
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor

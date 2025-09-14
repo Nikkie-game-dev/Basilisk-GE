@@ -31,7 +31,6 @@ namespace basilisk
 
     void Renderer::StartDraw()
     {
-        //UpdateModelMatrix();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
@@ -83,7 +82,6 @@ namespace basilisk
                                          "void main()\n"
                                          "{\n"
                                          " gl_Position = model * vec4(aPos, 1.0);\n"
-                                         //" gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"    
                                          "}\0";
         const char* fragShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
@@ -135,14 +133,14 @@ namespace basilisk
         glDeleteShader(fragmentShader);
     }
 
-    void Renderer::UpdateModelMatrix(glm::mat4 modelMatrix)
+    void Renderer::UpdateModelMatrix(glm::mat4 modelMatrix) const
     {
-        GLuint shader = this->ShaderProg;
+        const GLuint shader = this->ShaderProg;
         glUseProgram(shader);
 
-        GLuint loc = glGetUniformLocation(shader, "model");
+        const GLuint location = glGetUniformLocation(shader, "model");
 
-        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     }
 
 } // namespace basilisk

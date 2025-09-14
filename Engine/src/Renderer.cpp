@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "RenderException.h"
@@ -26,11 +27,13 @@ namespace basilisk
         {
             throw CouldNotStartGlew();
         }
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     void Renderer::StartDraw()
     {
-        BuildShaders();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
@@ -46,124 +49,52 @@ namespace basilisk
         return instance;
     }
 
-    void Renderer::GenerateVBs(float vertices[], unsigned int indices[], const int amountVertices, const int amountIndices)
+    void Renderer::GenerateVBs(float vertices[], unsigned int indices[], const int amountVertices, const int amountIndices, const bool isSolid)
     {
         glGenVertexArrays(1, &this->Vao);
         glBindVertexArray(this->Vao);
 
         glGenBuffers(1, &this->Vbo);
         glGenBuffers(1, &this->Ebo);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
         glBufferData(GL_ARRAY_BUFFER, amountVertices, vertices, GL_STATIC_DRAW);
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountIndices, indices, GL_STATIC_DRAW);
-        
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
-        
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float) , static_cast<void*>(nullptr));
         glEnableVertexAttribArray(0);
+
+        if (!isSolid)
+        {
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+            glEnableVertexAttribArray(1);
+        }
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 
-    void Renderer::GenerateVAO()
-    {
-    }
 
-    void Renderer::GenerateVBO()
+    void Renderer::Draw(SPProc ShaderProg) const
     {
-    }
-
-    void Renderer::GenerateEBO()
-    {
-    }
-
-    void Renderer::PopulateVBO() const
-    {
-    }
-
-    void Renderer::PopulateEBO() const
-    {
-        
-    }
-
-    void Renderer::UpdateVertexAttributes() const
-    {
-        
-    }
-
-    void Renderer::UnbindVertexArray() const
-    {
-    }
-
-    void Renderer::BindVertexArray() const
-    {
-    }
-
-    void Renderer::Draw() const
-    {
-        glUseProgram(this->ShaderProg);
+        glUseProgram(ShaderProg);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
-    void Renderer::BuildShaders()
+    void Renderer::Draw(const SPProc shaderProg, const Color color) const
     {
-        const char* vertexShaderSource = "#version 330 core\n"
-                                         "layout (location = 0) in vec3 aPos;\n"
-                                         "void main()\n"
-                                         "{\n"
-                                         " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                         "}\0";
-        const char* fragShaderSource = "#version 330 core\n"
-                                       "out vec4 FragColor;\n"
-                                       "void main()\n"
-                                       "{\n"
-                                       "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                       "}\n";
-
-
-        const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        this->ShaderProg = glCreateProgram();
-
-        GLint hasCompiled;
-
-        glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-        glCompileShader(vertexShader);
-
-        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
-        if (!hasCompiled)
-        {
-            throw ShaderCompileError(vertexShader);
-        }
-
-
-        /*Compile frag shader*/
-        glShaderSource(fragmentShader, 1, &fragShaderSource, nullptr);
-        glCompileShader(fragmentShader);
-
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
-        if (!hasCompiled)
-        {
-            throw ShaderCompileError(fragmentShader);
-        }
-
-        /*Shader program attachment and linking*/
-        glAttachShader(this->ShaderProg, vertexShader);
-        glAttachShader(this->ShaderProg, fragmentShader);
-        glLinkProgram(this->ShaderProg);
-
-        glGetProgramiv(this->ShaderProg, GL_LINK_STATUS, &hasCompiled);
-        if (!hasCompiled)
-        {
-            throw ShaderCompileError(this->ShaderProg);
-        }
-
-        /*Deletion*/
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
+        glUseProgram(shaderProg);
+        glUniform4f(vertexColorLocation,
+                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
+                    color.A);
+        glBindVertexArray(this->Vao);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
+
 } // namespace basilisk

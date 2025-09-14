@@ -83,15 +83,6 @@ namespace basilisk
         Close();
     }
 
-    void BaseGame::Draw()
-    {
-        Renderer.Draw();
-    }
-
-    void BaseGame::Init()
-    {
-    }
-
     bool BaseGame::WindowShouldClose() const
     {
         return Window->WindowShouldClose();

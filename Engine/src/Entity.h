@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Export.h"
+#include "Material.h"
 
 namespace basilisk
 {
     class BASILISK_API Entity
     {
     public:
-        Entity() = default;
+        explicit Entity(bool isSolidColor);
         virtual ~Entity();
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        
-        void Draw() const;
+        virtual void Draw() = 0;
         
         void UpdateBuffers() const;
         void FillVertices(float vertices[], int amountVertices);
@@ -21,6 +21,9 @@ namespace basilisk
         
         bool IsActive = true;
 
+    protected:
+        Material Mat;
+        
     private:
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #ifdef _WIN32
 #ifdef BASILISK_EXPORT
 #define BASILISK_API __declspec(dllexport)
@@ -14,6 +12,7 @@
 
 namespace basilisk
 {
+    class Color;
 
     using BufferProc = unsigned int;
     using ShaderProc = unsigned int;
@@ -25,13 +24,13 @@ namespace basilisk
         void InitGLFW();
         void SetGlVersion();
         void InitGL() const;
-        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices);
-        void Draw() const;
+        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
+        void Draw(SPProc ShaderProg) const;
+        void Draw(SPProc ShaderProg, Color color) const;
         void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
-        void BuildShaders();
-
+        
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
         Renderer& operator=(const Renderer& other) = delete; // copy assignment
@@ -44,16 +43,6 @@ namespace basilisk
         BufferProc Vbo;
         BufferProc Vao;
         BufferProc Ebo;
-        SPProc ShaderProg;
-
-        void PopulateVBO() const;
-        void PopulateEBO() const;
-        void UpdateVertexAttributes() const;
-        void UnbindVertexArray() const;
-        void BindVertexArray() const;
-        void GenerateVAO();
-        void GenerateVBO();
-        void GenerateEBO();
     };
 
     

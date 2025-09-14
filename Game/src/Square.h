@@ -7,7 +7,6 @@ namespace game
     {
     public:
         Square(glm::vec2 topLeftPos, glm::vec2 size);
-        ~Square();
         void Init() override;
         void Update() override;
         glm::vec2 Position;
@@ -16,8 +15,8 @@ namespace game
     private:
         int vertexCount = 12;
         int indexCount = 6;
-        float* vertices;
-        unsigned int* indices;
+        float vertices;
+        unsigned int indices;
 
     };
 } // namespace game

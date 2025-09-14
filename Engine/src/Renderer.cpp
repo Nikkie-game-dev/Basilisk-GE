@@ -53,54 +53,21 @@ namespace basilisk
 
         glGenBuffers(1, &this->Vbo);
         glGenBuffers(1, &this->Ebo);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
         glBufferData(GL_ARRAY_BUFFER, amountVertices, vertices, GL_STATIC_DRAW);
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountIndices, indices, GL_STATIC_DRAW);
-        
+
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
-        
+
         glEnableVertexAttribArray(0);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
-
-    void Renderer::GenerateVAO()
-    {
-    }
-
-    void Renderer::GenerateVBO()
-    {
-    }
-
-    void Renderer::GenerateEBO()
-    {
-    }
-
-    void Renderer::PopulateVBO() const
-    {
-    }
-
-    void Renderer::PopulateEBO() const
-    {
-        
-    }
-
-    void Renderer::UpdateVertexAttributes() const
-    {
-        
-    }
-
-    void Renderer::UnbindVertexArray() const
-    {
-    }
-
-    void Renderer::BindVertexArray() const
-    {
-    }
+    
 
     void Renderer::Draw(SPProc ShaderProg) const
     {
@@ -108,7 +75,7 @@ namespace basilisk
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
-    
+
     void Renderer::Draw(const SPProc shaderProg, const Color color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
@@ -121,9 +88,5 @@ namespace basilisk
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
-
-    void Renderer::BuildShaders()
-    {
-        
-    }
+    
 } // namespace basilisk

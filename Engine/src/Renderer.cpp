@@ -113,7 +113,11 @@ namespace basilisk
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);
-        glUniform4f(vertexColorLocation, color.R, color.G, color.B, color.A);
+        glUniform4f(vertexColorLocation,
+                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
+                    color.A);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

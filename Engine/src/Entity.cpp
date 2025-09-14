@@ -14,7 +14,7 @@ namespace basilisk
     {
         if (this->Vertices && this->Indices)
         {
-           Renderer::GetInstance().Draw();
+           Renderer::GetInstance().Draw(this->AmountVertices);
         }
     }
     

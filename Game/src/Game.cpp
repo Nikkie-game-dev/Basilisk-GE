@@ -3,7 +3,7 @@
 namespace game
 {
     Game::Game(const std::string& windowName, int sizeX, int sizeY) : 
-        BaseGame(windowName, sizeX, sizeY), Test(Square())
+        BaseGame(windowName, sizeX, sizeY), Test({1,0})
     {
     }
 
@@ -19,6 +19,5 @@ namespace game
     void Game::Draw()
     {
         Test.Draw();
-        //BaseGame::Draw();
     }
 }

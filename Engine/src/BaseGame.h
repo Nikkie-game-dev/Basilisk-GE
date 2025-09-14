@@ -23,7 +23,8 @@ namespace basilisk
     {
     public:
         BaseGame(const std::string& windowName, int sizeX, int sizeY);
-        ~BaseGame();
+        virtual ~BaseGame();
+        
         BaseGame(const BaseGame& other); // copy constructor
         BaseGame(BaseGame&& other) noexcept; // move constructor
         BaseGame& operator=(const BaseGame& other); // copy assignment

@@ -1,19 +1,24 @@
 #include "Game.h"
 
-Game::Game(const std::string& windowName, int sizeX, int sizeY) : 
-	BaseGame(windowName, sizeX, sizeY), Renderer(Renderer::GetInstance())
+namespace game
 {
-}
+    Game::Game(const std::string& windowName, int sizeX, int sizeY) : 
+        BaseGame(windowName, sizeX, sizeY), Test(Square())
+    {
+    }
 
-void Game::Init()
-{
-}
+    void Game::Init()
+    {
+        Test.Init();
+    }
 
-void Game::Update()
-{
-}
+    void Game::Update()
+    {
+    }
 
-void Game::Draw()
-{
-    BaseGame::Draw();
+    void Game::Draw()
+    {
+        Test.Draw();
+        //BaseGame::Draw();
+    }
 }

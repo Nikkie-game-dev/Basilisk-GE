@@ -1,17 +1,21 @@
 #pragma once
-#include "Basilisk/BaseGame.h"
-#include "Basilisk/Renderer.h"
+#include "BaseGame.h"
+#include "Renderer.h"
+#include "Square.h"
 
-using namespace basilisk;
 
-class Game : public BaseGame
+namespace game
 {
-public:
-    Game(const std::string& windowName, int sizeX, int sizeY);
+    class Game : public basilisk::BaseGame
+    {
+    public:
+        Game(const std::string& windowName, int sizeX, int sizeY);
 
-private:
-    virtual void Init() override;
-    virtual void Update() override;
-    virtual void Draw() override;
-    basilisk::Renderer& Renderer;
-};
+    private:
+        void Init() override;
+        void Update() override;
+        void Draw() override;
+
+        Square Test;
+    };
+}

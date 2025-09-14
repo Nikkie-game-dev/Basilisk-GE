@@ -46,32 +46,24 @@ namespace basilisk
         return instance;
     }
 
-    void Renderer::GenerateVBs()
+    void Renderer::GenerateVBs(float vertices[], unsigned int indices[], const int amountVertices, const int amountIndices)
     {
-        //TODO: move to entity
-        float vertices[] = {
-            0.5f,  0.5f,  0.0f, // top right
-            0.5f,  -0.5f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, // bottom left
-            -0.5f, 0.5f,  0.0f // top left
-        };
-
-        unsigned int indices[] = {
-            // note that we start from 0!
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
-        };
-
         glGenVertexArrays(1, &this->Vao);
         glBindVertexArray(this->Vao);
+
         glGenBuffers(1, &this->Vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glGenBuffers(1, &this->Ebo);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
+        glBufferData(GL_ARRAY_BUFFER, amountVertices, vertices, GL_STATIC_DRAW);
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountIndices, indices, GL_STATIC_DRAW);
+        
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+        
         glEnableVertexAttribArray(0);
+        
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }

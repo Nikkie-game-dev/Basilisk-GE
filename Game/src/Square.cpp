@@ -45,8 +45,8 @@ namespace game
 
     void Square::Update()
     {
-        SetPosition({0.6f, -0.4f});
-        SetScaling({1.2f, 1.2f});
+        SetPosition({-0.6f, -0.4f});
+        SetScaling({0.2f, 0.2f});
         SetRotation(-20.0f);
 
         Entity2D::Update();

@@ -85,7 +85,7 @@ namespace basilisk
 
     void BaseGame::Draw()
     {
-        Renderer.Draw();
+        //Renderer.Draw();
     }
 
     void BaseGame::Init()

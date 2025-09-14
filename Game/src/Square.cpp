@@ -45,30 +45,10 @@ namespace game
 
     void Square::Update()
     {
-        SetPosition({-0.3f, 0.5f});
-        SetScaling({1.0f, 1.0f});
-        SetRotation(0.0f);
+        SetPosition({0.6f, -0.4f});
+        SetScaling({1.2f, 1.2f});
+        SetRotation(-20.0f);
 
         Entity2D::Update();
     }
-
-    void Square::SetRotation(float rotation)
-    {
-        basilisk::Entity2D::SetRotation(rotation);
-
-    }
-    void Square::SetScaling(glm::vec2 scaling)
-    {
-        basilisk::Entity2D::SetScaling(scaling);
-    }
-    void Square::SetScaling(float scale, basilisk::Axis scalingAxis)
-    {
-        basilisk::Entity2D::SetScaling(scale, scalingAxis);
-    }
-    void Square::SetPosition(glm::vec2 newPosition)
-    {
-        basilisk::Entity2D::SetPosition(newPosition);
-    }
-
-    
 }

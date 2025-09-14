@@ -10,11 +10,6 @@ namespace game
         ~Square();
         void Init() override;
         void Update() override;
-        void SetRotation(float rotation);
-        void SetScaling(glm::vec2 scaling);
-        void SetScaling(float scale, basilisk::Axis scalingAxis);
-        void SetPosition(glm::vec2 newPosition);
-        
         glm::vec2 Position;
         glm::vec2 Size;
 

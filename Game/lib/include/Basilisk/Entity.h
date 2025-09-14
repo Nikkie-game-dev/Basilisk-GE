@@ -23,8 +23,10 @@ namespace basilisk
         bool IsActive = true;
         glm::mat4 GetModelMatrix() const;
 
-    private:
+    protected:
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
+
+    private:
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;
         int AmountVertices = 0;

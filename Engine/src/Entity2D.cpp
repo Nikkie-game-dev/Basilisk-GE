@@ -82,8 +82,7 @@ namespace basilisk
 
     void Entity2D::Update()
     {
-        Renderer::GetInstance().UpdateModelMatrix(this->GetModelMatrix());
-        //Renderer::GetInstance().BuildShaders();
+        //Renderer::GetInstance().UpdateModelMatrix(this->GetModelMatrix());
     }
 
 } // namespace basilisk

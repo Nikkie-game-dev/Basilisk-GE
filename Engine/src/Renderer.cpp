@@ -70,7 +70,7 @@ namespace basilisk
 
     void Renderer::Draw(int verticesAmount) const
     {
-        //glUseProgram(this->ShaderProg);
+        glUseProgram(this->ShaderProg);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

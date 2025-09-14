@@ -3,7 +3,7 @@
 
 namespace basilisk
 {
-    enum class Axis: char
+    enum class Axis : char
     {
         X,
         Y,
@@ -23,12 +23,13 @@ namespace basilisk
         virtual void SetScaling(float scale, Axis scalingAxis);
         virtual void SetPosition(glm::vec2 newPosition);
         virtual void Update() override;
-        
+
+    
+
     private:
         glm::vec2 Position = {0, 0};
         glm::vec2 Scaling = {1, 1};
         float Rotation = 0.0f;
-        glm::mat4 ModelMatrix = glm::mat4(1.0f);
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
@@ -36,4 +37,4 @@ namespace basilisk
         void UpdateTranslateMatrix();
         void UpdateModelMatrix();
     };
-} // basilisk 
+} // namespace basilisk

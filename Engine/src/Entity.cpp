@@ -4,6 +4,9 @@
 
 namespace basilisk
 {
+    Entity::Entity(const bool isSolidColor) : Mat(isSolidColor)
+    {}
+    
     Entity::~Entity()
     {
         delete[] this->Vertices;
@@ -12,7 +15,7 @@ namespace basilisk
     
     void Entity::UpdateBuffers() const
     {
-        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices);
+        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices, Mat.GetIsSolid());
     }
     
     void Entity::FillVertices(float vertices[], const int amountVertices)

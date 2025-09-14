@@ -4,10 +4,9 @@
 
 namespace basilisk
 {
-
-
+    
     Shape::Shape(const basilisk::Color color, const glm::vec2 size, const glm::vec2 position, const glm::vec2 rotation) :
-        Color(color)
+        Entity2D(false), Color(color)
     {
         this->Scaling = size;
         this->Position = position;
@@ -17,14 +16,14 @@ namespace basilisk
     void Shape::Init()
     {
         float vertices[] = {
-            0.5f,  0.5f,  0.0f, // top right
-            0.5f,  -0.5f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, // bottom left
-            -0.5f, 0.5f,  0.0f // top left
+            //    POSITION            |        COLOR
+            0.5f,  0.5f,  0.0f,       1.0f, 0.0f, 0.0f, 1.0f,  // top right
+            0.5f,  -0.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
+            -0.5f, 0.5f,  0.0f,       1.0f, 1.0f, 1.0f, 0.0f   // top left
         };
 
         unsigned int indices[] = {
-            // note that we start from 0!
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
@@ -34,12 +33,12 @@ namespace basilisk
 
         UpdateBuffers();
 
-        Mat.BuildShader(true);
+        Mat.BuildShader();
     }
     
     void Shape::Draw()
     {
-        Renderer::GetInstance().Draw(Mat.GetShaderProgram(), Color);
+        Renderer::GetInstance().Draw(Mat.GetShaderProgram());
     }
     
 }// basilisk

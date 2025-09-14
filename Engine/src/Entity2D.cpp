@@ -2,6 +2,9 @@
 
 namespace basilisk
 {
+
+    Entity2D::Entity2D(const bool isSolid) : Entity(isSolid)
+    {}
     
     glm::vec2 Entity2D::GetRotation() const
     {

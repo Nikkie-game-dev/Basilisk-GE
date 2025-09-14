@@ -24,7 +24,7 @@ namespace basilisk
         void InitGLFW();
         void SetGlVersion();
         void InitGL() const;
-        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices);
+        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
         void Draw(SPProc ShaderProg) const;
         void Draw(SPProc ShaderProg, Color color) const;
         void StartDraw();

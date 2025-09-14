@@ -9,11 +9,14 @@ namespace basilisk
     class BASILISK_API Material
     {
     public:
-        void BuildShader(bool isSolid);
+        Material(bool isSolid);
+        void BuildShader();
         
         [[nodiscard]] SPProc GetShaderProgram() const;
-
+        bool GetIsSolid() const;
+        
     private:
+        bool IsSolid;
         SPProc ShaderProgram = 0;
         static const char* VertexShaderSolid;
         static const char* FragShaderSolid;

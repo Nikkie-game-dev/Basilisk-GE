@@ -8,7 +8,7 @@ namespace basilisk
     class BASILISK_API Entity
     {
     public:
-        Entity() = default;
+        explicit Entity(bool isSolidColor);
         virtual ~Entity();
 
         virtual void Init() = 0;
@@ -22,7 +22,7 @@ namespace basilisk
         bool IsActive = true;
 
     protected:
-        Material Mat = Material();
+        Material Mat;
         
     private:
         float* Vertices = nullptr;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "glm/glm.hpp"
 
 #ifdef _WIN32
 #ifdef BASILISK_EXPORT
@@ -31,6 +32,7 @@ namespace basilisk
         void EndDraw() const;
         static Renderer& GetInstance();
         void BuildShaders();
+        void UpdateModelMatrix(glm::mat4 modelMatrix);
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
@@ -45,15 +47,7 @@ namespace basilisk
         BufferProc Vao;
         BufferProc Ebo;
         SPProc ShaderProg;
-
-        void PopulateVBO() const;
-        void PopulateEBO() const;
-        void UpdateVertexAttributes() const;
-        void UnbindVertexArray() const;
-        void BindVertexArray() const;
-        void GenerateVAO();
-        void GenerateVBO();
-        void GenerateEBO();
+        glm::mat4 ModelMatrix = glm::mat4(1.0f);
     };
 
     

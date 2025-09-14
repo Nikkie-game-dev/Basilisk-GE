@@ -1,6 +1,4 @@
 #pragma once
-#include "glm/glm.hpp"
-
 #include "Entity.h"
 
 namespace basilisk
@@ -24,6 +22,7 @@ namespace basilisk
         virtual void SetScaling(glm::vec2 scaling);
         virtual void SetScaling(float scale, Axis scalingAxis);
         virtual void SetPosition(glm::vec2 newPosition);
+        virtual void Update() override;
         
     private:
         glm::vec2 Position = {0, 0};
@@ -35,6 +34,6 @@ namespace basilisk
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
-        virtual void UpdateModelMatrix();
+        void UpdateModelMatrix();
     };
 } // basilisk 

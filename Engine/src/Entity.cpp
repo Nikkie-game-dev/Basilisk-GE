@@ -14,13 +14,20 @@ namespace basilisk
     {
         if (this->Vertices && this->Indices)
         {
-           Renderer::GetInstance().Draw(this->AmountVertices);
+            Renderer::GetInstance().UpdateModelMatrix(this->ModelMatrix);
+
+            Renderer::GetInstance().Draw(this->AmountIndices);
         }
     }
     
     void Entity::UpdateBuffers() const
     {
         Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices);
+    }
+
+    glm::mat4 Entity::GetModelMatrix() const
+    {
+        return this->ModelMatrix;
     }
     
     void Entity::FillVertices(float vertices[], const int amountVertices)

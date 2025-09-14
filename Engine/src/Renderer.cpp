@@ -3,6 +3,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "RenderException.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
@@ -30,7 +31,7 @@ namespace basilisk
 
     void Renderer::StartDraw()
     {
-        BuildShaders();
+        //UpdateModelMatrix();
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
@@ -69,7 +70,7 @@ namespace basilisk
 
     void Renderer::Draw(int verticesAmount) const
     {
-        glUseProgram(this->ShaderProg);
+        //glUseProgram(this->ShaderProg);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
@@ -78,9 +79,11 @@ namespace basilisk
     {
         const char* vertexShaderSource = "#version 330 core\n"
                                          "layout (location = 0) in vec3 aPos;\n"
+                                         "uniform mat4 model;\n"
                                          "void main()\n"
                                          "{\n"
-                                         " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                         " gl_Position = model * vec4(aPos, 1.0);\n"
+                                         //" gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"    
                                          "}\0";
         const char* fragShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
@@ -131,4 +134,15 @@ namespace basilisk
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
     }
+
+    void Renderer::UpdateModelMatrix(glm::mat4 modelMatrix)
+    {
+        GLuint shader = this->ShaderProg;
+        glUseProgram(shader);
+
+        GLuint loc = glGetUniformLocation(shader, "model");
+
+        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    }
+
 } // namespace basilisk

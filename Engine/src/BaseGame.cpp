@@ -16,6 +16,7 @@ namespace basilisk
 
         Renderer.InitGL();
 
+        Renderer.BuildShaders();
     }
 
     BaseGame::~BaseGame()
@@ -81,15 +82,6 @@ namespace basilisk
         }
 
         Close();
-    }
-
-    void BaseGame::Draw()
-    {
-        //Renderer.Draw();
-    }
-
-    void BaseGame::Init()
-    {
     }
 
     bool BaseGame::WindowShouldClose() const

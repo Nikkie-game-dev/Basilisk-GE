@@ -1,10 +1,10 @@
 #include "Entity2D.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "GL/glew.h"
+#include "Renderer.h"
 
 namespace basilisk
 {
-
     float Entity2D::GetRotation() const
     {
         return this->Rotation;
@@ -58,7 +58,6 @@ namespace basilisk
 
         UpdateTranslateMatrix();
         UpdateModelMatrix();
-
     }
 
     void Entity2D::UpdateRotationMatrix()
@@ -79,8 +78,12 @@ namespace basilisk
         auto rotation = glm::quat_cast(this->ModelMatrix);
         this->Rotation = glm::eulerAngles(rotation).z;
         this->Scaling = glm::vec2(glm::length(glm::vec2(this->ModelMatrix[0])), glm::length(glm::vec2(this->ModelMatrix[1])));
-    
-        
+    }
+
+    void Entity2D::Update()
+    {
+        Renderer::GetInstance().UpdateModelMatrix(this->GetModelMatrix());
+        //Renderer::GetInstance().BuildShaders();
     }
 
 } // namespace basilisk

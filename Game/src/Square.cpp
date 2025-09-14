@@ -29,6 +29,7 @@ namespace game
         this->Size = size;
         this->Position = topLeftPos;
 
+        UpdateBuffers();
     }
 
     Square::~Square()
@@ -44,6 +45,11 @@ namespace game
 
     void Square::Update()
     {
+        SetPosition({-0.3f, 0.5f});
+        SetScaling({1.0f, 1.0f});
+        SetRotation(0.0f);
+
+        Entity2D::Update();
     }
 
     void Square::SetRotation(float rotation)
@@ -62,8 +68,6 @@ namespace game
     void Square::SetPosition(glm::vec2 newPosition)
     {
         basilisk::Entity2D::SetPosition(newPosition);
-
-        for (int i = 0; i < vertexCount; i += 3)
     }
 
     

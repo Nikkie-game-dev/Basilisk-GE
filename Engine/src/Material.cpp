@@ -67,7 +67,7 @@ namespace basilisk
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
     }
-    
+
     SPProc Material::GetShaderProgram() const
     {
         return this->ShaderProgram;
@@ -75,12 +75,12 @@ namespace basilisk
 
     const char* Material::VertexShaderSolid =
         "#version 330 core\n"
-        "layout (location = 0) in vec3 aPos;\n"
+        "layout (location = 0) in vec3 Pos;\n"
         "void main()\n"
         "{\n"
-        " gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
         "}\0";
-    
+
     const char* Material::FragShaderSolid =
         "#version 330 core\n"
         "out vec4 FragColor;\n"
@@ -88,5 +88,25 @@ namespace basilisk
         "void main()\n"
         "{\n"
         "FragColor = SolidColor;\n"
+        "}\n";
+
+    const char* Material::VertexShaderNotSolid =
+        "#version 330 core\n"
+        "layout (location = 0) in vec3 Pos;\n"
+        "layout (location = 1) in vec4 Color;\n"
+        "out vec4 OutColor;\n"
+        "void main()\n"
+        "{\n"
+        " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
+        " OutColor = Color;\n"
+        "}\0";
+
+    const char* Material::FragShaderNotSolid =
+        "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "in vec4 OutColor;\n"
+        "void main()\n"
+        "{\n"
+        "FragColor = OutColor;\n"
         "}\n";
 } // namespace basilisk

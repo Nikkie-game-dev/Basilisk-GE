@@ -17,5 +17,7 @@ namespace basilisk
         SPProc ShaderProgram = 0;
         static const char* VertexShaderSolid;
         static const char* FragShaderSolid;
+        static const char* VertexShaderNotSolid;
+        static const char* FragShaderNotSolid;
     };
 } // namespace basilisk 

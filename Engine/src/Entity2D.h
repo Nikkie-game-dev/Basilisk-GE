@@ -26,7 +26,7 @@ namespace basilisk
         void SetScaling(float scale, Axis scalingAxis);
         void SetPosition(glm::vec2 newPosition);
         
-    private:
+    protected:
         glm::vec2 Position = {0, 0};
         glm::vec2 Scaling = {1, 1};
         glm::vec2 Rotation = {0,0};

@@ -1,9 +1,20 @@
-#include "Square.h"
+#include "Shape.h"
 
-namespace game
+#include "Renderer.h"
+
+namespace basilisk
 {
 
-    void Square::Init()
+
+    Shape::Shape(const basilisk::Color color, const glm::vec2 size, const glm::vec2 position, const glm::vec2 rotation) :
+        Color(color)
+    {
+        this->Scaling = size;
+        this->Position = position;
+        this->Rotation = rotation;
+    }
+
+    void Shape::Init()
     {
         float vertices[] = {
             0.5f,  0.5f,  0.0f, // top right
@@ -22,9 +33,13 @@ namespace game
         FillVertices(vertices, sizeof(vertices));
 
         UpdateBuffers();
+
+        Mat.BuildShader(true);
     }
     
-    void Square::Update()
+    void Shape::Draw()
     {
+        Renderer::GetInstance().Draw(Mat.GetShaderProgram(), Color);
     }
-}
+    
+}// basilisk

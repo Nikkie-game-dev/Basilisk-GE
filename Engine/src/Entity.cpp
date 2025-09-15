@@ -67,7 +67,6 @@ namespace basilisk
         case Axis::Y:
             this->Rotation.y = angle;
             break;
-        case Axis::Z: __fallthrough
         default:
             this->Rotation.z = angle;
             break;

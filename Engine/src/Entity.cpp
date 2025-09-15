@@ -1,18 +1,22 @@
 #include "Entity.h"
+
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
+    Entity::Entity(const bool isSolidColor) : Mat(isSolidColor)
+    {}
+    
     Entity::~Entity()
     {
         delete[] this->Vertices;
         delete[] this->Indices;
     }
-
+    
     void Entity::UpdateBuffers() const
     {
-        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices);
+        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices, Mat.GetIsSolid());
     }
 
     glm::mat4 Entity::GetModelMatrix() const

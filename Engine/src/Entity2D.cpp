@@ -1,9 +1,10 @@
 #include "Entity2D.h"
 
-#include "Renderer.h"
-
 namespace basilisk
 {
+    Entity2D::Entity2D(const bool isSolid) : Entity(isSolid)
+    {}
+    
     float Entity2D::GetRotation() const
     {
         return this->Rotation.z;
@@ -19,7 +20,7 @@ namespace basilisk
         return this->Position;
     }
 
-    void Entity2D::SetRotation(float angle)
+    void Entity2D::SetRotation(const float angle)
     {
         this->Entity::SetRotation(angle, Axis::Z);
     }

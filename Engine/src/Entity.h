@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Export.h"
+#include "Material.h"
 #include "glm/glm.hpp"
 
 namespace basilisk
@@ -16,13 +17,12 @@ namespace basilisk
     class BASILISK_API Entity
     {
     public:
-        Entity() = default;
+        explicit Entity(bool isSolidColor);
         virtual ~Entity();
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        
-        void Draw() const;
+        virtual void Draw() = 0;
         
         void UpdateBuffers() const;
         void FillVertices(float vertices[], int amountVertices);
@@ -43,7 +43,8 @@ namespace basilisk
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
-
+        Material Mat;
+        
     private:
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "glm/glm.hpp"
 
 #ifdef _WIN32
@@ -15,6 +14,7 @@
 
 namespace basilisk
 {
+    class Color;
 
     using BufferProc = unsigned int;
     using ShaderProc = unsigned int;
@@ -26,12 +26,12 @@ namespace basilisk
         void InitGLFW();
         void SetGlVersion();
         void InitGL() const;
-        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices);
-        void Draw(int verticesAmount) const;
+        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
+        void Draw(SPProc ShaderProg) const;
+        void Draw(SPProc ShaderProg, Color color) const;
         void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
-        void BuildShaders();
         void UpdateModelMatrix(glm::mat4 modelMatrix) const;
 
         Renderer(const Renderer& other) = delete;            // copy constructor

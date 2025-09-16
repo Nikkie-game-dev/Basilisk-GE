@@ -15,6 +15,6 @@ namespace game
     
     void OrangeSquare::Update()
     {
-        
+        Square::Update();
     }
 }

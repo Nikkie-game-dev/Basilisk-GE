@@ -141,5 +141,6 @@ namespace basilisk
         this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])),
                          glm::length(glm::vec3(this->ModelMatrix[1])),
                          glm::length(glm::vec3(this->ModelMatrix[2]))};
+
     }
 } // namespace basilisk

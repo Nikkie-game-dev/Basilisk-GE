@@ -98,14 +98,6 @@ namespace basilisk
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
-    void Renderer::UpdateModelMatrix(glm::mat4 modelMatrix) const
-    {
-        const GLuint shader = this->ShaderProg;
-        glUseProgram(shader);
-
-        const GLuint location = glGetUniformLocation(shader, "model");
-
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-    }
+    
 
 } // namespace basilisk

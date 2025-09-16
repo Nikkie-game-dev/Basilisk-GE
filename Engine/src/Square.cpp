@@ -64,20 +64,18 @@ namespace basilisk
     }
     void Square::Update()
     {
-        SetPosition({-0.6f, -0.4f});
+        SetPosition({0.7f, 0.0f});
         SetScaling({0.2f, 0.2f});
         SetRotation(-20.0f);
+
     }
     void Square::Draw()
     {
-        if (this->Mat.GetIsSolid())
-        {
-            Renderer::GetInstance().Draw(Mat.GetShaderProgram(), this->Color);
-        }
-        else
-        {
-            Renderer::GetInstance().Draw(Mat.GetShaderProgram());
+        this->Mat.UpdateModelMatrix(this->ModelMatrix);
 
-        }
+        if (this->Mat.GetIsSolid())
+            Renderer::GetInstance().Draw(Mat.GetShaderProgram(), this->Color);
+        else
+            Renderer::GetInstance().Draw(Mat.GetShaderProgram());
     }
 }

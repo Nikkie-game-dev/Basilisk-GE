@@ -4,7 +4,7 @@ namespace game
 {
 
     OrangeSquare::OrangeSquare(const glm::vec2& size, const glm::vec2& position, const float rotation) : 
-        Square(position, size, true, basilisk::Color::Red)
+        Square(position, size, true, basilisk::Color::Purple)
     {
     }
 

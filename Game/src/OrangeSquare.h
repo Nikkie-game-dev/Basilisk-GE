@@ -1,6 +1,6 @@
 
 #pragma once
-#include "../../Engine/src/Square.h"
+#include "Basilisk\Square.h"
 
 namespace game
 {

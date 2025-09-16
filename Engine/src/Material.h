@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Export.h"
+#include "glm/glm.hpp"
 
 namespace basilisk
 {
@@ -14,6 +15,8 @@ namespace basilisk
         
         [[nodiscard]] SPProc GetShaderProgram() const;
         bool GetIsSolid() const;
+        void UpdateModelMatrix(glm::mat4 modelMatrix) const;
+
         
     private:
         bool IsSolid;

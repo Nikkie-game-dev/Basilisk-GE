@@ -16,6 +16,7 @@ namespace basilisk
 
         Renderer.InitGL();
 
+        //Renderer.BuildShaders();
     }
 
     BaseGame::~BaseGame()

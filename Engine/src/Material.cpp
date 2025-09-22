@@ -3,16 +3,19 @@
 #include <GL/glew.h>
 
 #include "RenderException.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
     using ShaderProc = unsigned int;
 
     Material::Material(const bool isSolid) : IsSolid(isSolid)
-    {}
+    {
+    }
 
     void Material::BuildShader()
     {
+
         const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -54,52 +57,62 @@ namespace basilisk
         /*Deletion*/
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
+
     }
 
     SPProc Material::GetShaderProgram() const
     {
         return this->ShaderProgram;
     }
-    
+
     bool Material::GetIsSolid() const
     {
         return IsSolid;
     }
 
-    const char* Material::VertexShaderSolid =
-        "#version 330 core\n"
-        "layout (location = 0) in vec3 Pos;\n"
-        "void main()\n"
-        "{\n"
-        " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
-        "}\0";
+    void Material::UpdateModelMatrix(glm::mat4 modelMatrix) const
+    {
+        const GLuint shader = this->ShaderProgram;
+        glUseProgram(shader);
 
-    const char* Material::FragShaderSolid =
-        "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "uniform vec4 SolidColor;\n"
-        "void main()\n"
-        "{\n"
-        "FragColor = SolidColor;\n"
-        "}\n";
+        const GLuint location = glGetUniformLocation(shader, "model");
 
-    const char* Material::VertexShaderNotSolid =
-        "#version 330 core\n"
-        "layout (location = 0) in vec3 Pos;\n"
-        "layout (location = 1) in vec4 Color;\n"
-        "out vec4 OutColor;\n"
-        "void main()\n"
-        "{\n"
-        " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
-        " OutColor = Color;\n"
-        "}\0";
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    }
 
-    const char* Material::FragShaderNotSolid =
-        "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "in vec4 OutColor;\n"
-        "void main()\n"
-        "{\n"
-        "FragColor = OutColor;\n"
-        "}\n";
+    const char* Material::VertexShaderSolid = "#version 330 core\n"
+
+                                              "layout (location = 0) in vec3 Pos;\n"
+                                              "uniform mat4 model;\n"
+                                              "void main()\n"
+                                              "{\n"
+                                              " gl_Position = model * vec4(Pos, 1.0);\n"
+                                              "}\0";
+
+
+    const char* Material::FragShaderSolid = "#version 330 core\n"
+                                            "out vec4 FragColor;\n"
+                                            "uniform vec4 SolidColor;\n"
+                                            "void main()\n"
+                                            "{\n"
+                                            "FragColor = SolidColor;\n"
+                                            "}\n";
+
+    const char* Material::VertexShaderNotSolid = "#version 330 core\n"
+                                                 "layout (location = 0) in vec3 Pos;\n"
+                                                 "layout (location = 1) in vec4 Color;\n"
+                                                 "out vec4 OutColor;\n"
+                                                 "void main()\n"
+                                                 "{\n"
+                                                 " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
+                                                 " OutColor = Color;\n"
+                                                 "}\0";
+
+    const char* Material::FragShaderNotSolid = "#version 330 core\n"
+                                               "out vec4 FragColor;\n"
+                                               "in vec4 OutColor;\n"
+                                               "void main()\n"
+                                               "{\n"
+                                               "FragColor = OutColor;\n"
+                                               "}\n";
 } // namespace basilisk

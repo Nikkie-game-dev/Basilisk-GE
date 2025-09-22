@@ -1,13 +1,13 @@
 
 #pragma once
-#include "../../Engine/src/Shape.h"
+#include "Basilisk\Square.h"
 
 namespace game
 {
-    class OrangeSquare final : public basilisk::Shape
+    class OrangeSquare final : public basilisk::Square
     {
     public:
-        OrangeSquare(const glm::vec2& size, const glm::vec2& position, const glm::vec2& rotation);
+        OrangeSquare(const glm::vec2& size, const glm::vec2& position, const float rotation);
         OrangeSquare(const glm::vec2& size);
         void Update() override;
 

@@ -15,8 +15,6 @@ namespace basilisk
         this->Window = new basilisk::Window(windowName, glm::vec2(sizeX, sizeY));
 
         Renderer.InitGL();
-
-        //Renderer.BuildShaders();
     }
 
     BaseGame::~BaseGame()
@@ -30,7 +28,7 @@ namespace basilisk
         this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
     }
 
-    BaseGame::BaseGame(BaseGame&& other) noexcept : X(other.X), Y(other.Y), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(BaseGame&& other) noexcept : Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y)
     {
         this->WindowName = other.WindowName;
         this->Window = other.Window;
@@ -73,6 +71,8 @@ namespace basilisk
     {
         Init();
 
+        Renderer.LoadProjectionMatrix();
+        
         while (!WindowShouldClose())
         {
             Update();

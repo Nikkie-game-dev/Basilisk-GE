@@ -23,14 +23,21 @@ namespace basilisk
     class BASILISK_API Renderer
     {
     public:
+        
+#pragma region Loading
         void InitGLFW();
         void SetGlVersion();
         void InitGL() const;
+#pragma endregion
+        
+#pragma region Drawing
         void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
         void Draw(SPProc shaderProg) const;
         void Draw(SPProc shaderProg, Color color) const;
         void StartDraw();
         void EndDraw() const;
+#pragma endregion
+        
         static Renderer& GetInstance();
 
         Renderer(const Renderer& other) = delete;            // copy constructor

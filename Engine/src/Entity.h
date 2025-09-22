@@ -32,17 +32,21 @@ namespace basilisk
         void SetScaling(float scale, Axis scalingAxis);
         void SetPosition(const glm::vec3& newPosition);
 
-        bool IsActive = true;
         glm::mat4 GetModelMatrix() const;
+        
+        bool IsActive = true;
 
     protected:
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
-        glm::vec3 Position = {0, 0, 0};
-        glm::vec3 Scaling = {1, 1, 1};
-        glm::vec3 Rotation = {0, 0, 0};
+
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
+        
+        glm::vec3 Position = {0, 0, 0};
+        glm::vec3 Scaling = {1, 1, 1};
+        glm::vec3 Rotation = {0, 0, 0};
+
         Material Mat;
         
     private:
@@ -53,6 +57,7 @@ namespace basilisk
 
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
+        
         void UpdateModelMatrix();
     };
 } // basilisk 

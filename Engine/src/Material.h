@@ -10,11 +10,11 @@ namespace basilisk
     class BASILISK_API Material
     {
     public:
-        Material(bool isSolid);
+        explicit Material(bool isSolid);
         void BuildShader();
         
         [[nodiscard]] SPProc GetShaderProgram() const;
-        bool GetIsSolid() const;
+        [[nodiscard]] bool GetIsSolid() const;
         void UpdateGLModel(glm::mat4 modelMatrix) const;
 
         

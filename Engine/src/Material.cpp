@@ -82,10 +82,14 @@ namespace basilisk
     const char* Material::VertexShaderSolid = "#version 330 core\n"
 
                                               "layout (location = 0) in vec3 Pos;\n"
+    
                                               "uniform mat4 model;\n"
+                                              "uniform mat4 view;\n"
+                                              "uniform mat4 projection;\n"
+    
                                               "void main()\n"
                                               "{\n"
-                                              " gl_Position = model * vec4(Pos, 1.0);\n"
+                                              " gl_Position = projection * view *  model * vec4(Pos, 1.0);\n"
                                               "}\0";
 
 
@@ -100,10 +104,16 @@ namespace basilisk
     const char* Material::VertexShaderNotSolid = "#version 330 core\n"
                                                  "layout (location = 0) in vec3 Pos;\n"
                                                  "layout (location = 1) in vec4 Color;\n"
+    
                                                  "out vec4 OutColor;\n"
+    
+                                                 "uniform mat4 model;\n"
+                                                 "uniform mat4 view;\n"
+                                                 "uniform mat4 projection;\n"
+    
                                                  "void main()\n"
                                                  "{\n"
-                                                 " gl_Position = vec4(Pos.x, Pos.y, Pos.z, 1.0);\n"
+                                                 " gl_Position = projection * view *  model * vec4(Pos, 1.0);\n"
                                                  " OutColor = Color;\n"
                                                  "}\0";
 
@@ -112,6 +122,6 @@ namespace basilisk
                                                "in vec4 OutColor;\n"
                                                "void main()\n"
                                                "{\n"
-                                               "FragColor = OutColor;\n"
+                                               " FragColor = OutColor;\n"
                                                "}\n";
 } // namespace basilisk

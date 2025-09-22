@@ -1,9 +1,13 @@
 #include "Renderer.h"
 
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "RenderException.h"
+#include "Window.h"
 
 namespace basilisk
 {
@@ -27,7 +31,7 @@ namespace basilisk
         {
             throw CouldNotStartGlew();
         }
-        
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
@@ -35,6 +39,8 @@ namespace basilisk
     void Renderer::StartDraw()
     {
         glClear(GL_COLOR_BUFFER_BIT);
+
+        UpdateViewMatrix();
     }
 
     void Renderer::EndDraw() const
@@ -49,7 +55,53 @@ namespace basilisk
         return instance;
     }
 
-    void Renderer::GenerateVBs(float vertices[], unsigned int indices[], const int amountVertices, const int amountIndices, const bool isSolid)
+
+    glm::vec3 Renderer::GetCameraUp() const
+    {
+        return this->CameraUp;
+    }
+
+    glm::vec3 Renderer::GetCameraTarget() const
+    {
+        return this->CameraTarget;
+    }
+    glm::vec3 Renderer::GetCameraPos() const
+    {
+        return this->CameraPos;
+    }
+
+    void Renderer::SetWindowRef(basilisk::Window& window)
+    {
+        this->Window = &window;
+    }
+
+
+    Renderer::Renderer() :
+        Vbo(0),
+        Vao(0),
+        Ebo(0),
+        CameraPos(0, 0, 3.0f),
+        CameraUp(0, 1.0f, 0),
+        CameraTarget(0, 0, 0),
+        Window(nullptr)
+    {
+    }
+
+    void Renderer::LoadProjectionMatrix()
+    {
+        const auto size = this->Window->GetSize();
+        this->ProjectionMatrix = glm::ortho(0.0f, size.x, 0.0f, size.y, 0.1f, 100.0f);
+    }
+    void Renderer::UpdateViewMatrix()
+    {
+        this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);
+    }
+
+    void Renderer::GenerateVBs(float vertices[],
+                               unsigned int indices[],
+                               const int amountVertices,
+                               const int amountIndices,
+                               const bool isSolid)
     {
         glGenVertexArrays(1, &this->Vao);
         glBindVertexArray(this->Vao);
@@ -63,7 +115,7 @@ namespace basilisk
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountIndices, indices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float) , static_cast<void*>(nullptr));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float), static_cast<void*>(nullptr));
         glEnableVertexAttribArray(0);
 
         if (!isSolid)
@@ -71,7 +123,7 @@ namespace basilisk
             glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
             glEnableVertexAttribArray(1);
         }
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
@@ -97,6 +149,5 @@ namespace basilisk
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
-    
 
 } // namespace basilisk

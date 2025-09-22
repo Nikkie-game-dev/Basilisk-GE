@@ -71,7 +71,7 @@ namespace basilisk
     }
     void Square::Draw()
     {
-        this->Mat.UpdateModelMatrix(this->ModelMatrix);
+        this->Mat.UpdateGLModel(this->ModelMatrix);
 
         if (this->Mat.GetIsSolid())
             Renderer::GetInstance().Draw(Mat.GetShaderProgram(), this->Color);

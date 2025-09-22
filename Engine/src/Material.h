@@ -15,7 +15,7 @@ namespace basilisk
         
         [[nodiscard]] SPProc GetShaderProgram() const;
         bool GetIsSolid() const;
-        void UpdateModelMatrix(glm::mat4 modelMatrix) const;
+        void UpdateGLModel(glm::mat4 modelMatrix) const;
 
         
     private:

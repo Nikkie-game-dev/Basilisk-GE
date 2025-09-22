@@ -4,7 +4,6 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "RenderException.h"
-#include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {

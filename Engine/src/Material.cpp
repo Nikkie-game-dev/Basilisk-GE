@@ -70,12 +70,11 @@ namespace basilisk
         return IsSolid;
     }
 
-    void Material::UpdateModelMatrix(glm::mat4 modelMatrix) const
+    void Material::UpdateGLModel(glm::mat4 modelMatrix) const
     {
-        const GLuint shader = this->ShaderProgram;
-        glUseProgram(shader);
+        glUseProgram(this->ShaderProgram);
 
-        const GLuint location = glGetUniformLocation(shader, "model");
+        const GLint location = glGetUniformLocation(this->ShaderProgram, "model");
 
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     }

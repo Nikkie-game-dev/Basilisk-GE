@@ -78,9 +78,9 @@ namespace basilisk
     }
 
 
-    void Renderer::Draw(SPProc ShaderProg) const
+    void Renderer::Draw(const SPProc shaderProg) const
     {
-        glUseProgram(ShaderProg);
+        glUseProgram(shaderProg);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }

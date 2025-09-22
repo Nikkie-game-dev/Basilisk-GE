@@ -27,12 +27,11 @@ namespace basilisk
         void SetGlVersion();
         void InitGL() const;
         void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
-        void Draw(SPProc ShaderProg) const;
-        void Draw(SPProc ShaderProg, Color color) const;
+        void Draw(SPProc shaderProg) const;
+        void Draw(SPProc shaderProg, Color color) const;
         void StartDraw();
         void EndDraw() const;
         static Renderer& GetInstance();
-        void UpdateModelMatrix(glm::mat4 modelMatrix) const;
 
         Renderer(const Renderer& other) = delete;            // copy constructor
         Renderer(Renderer&& other) = delete;                 // move constructor
@@ -46,7 +45,6 @@ namespace basilisk
         BufferProc Vbo;
         BufferProc Vao;
         BufferProc Ebo;
-        SPProc ShaderProg;
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
     };
 

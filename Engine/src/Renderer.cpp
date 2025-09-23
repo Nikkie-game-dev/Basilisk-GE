@@ -25,7 +25,7 @@ namespace basilisk
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     }
 
-    void Renderer::InitGL() const
+    void Renderer::InitGL(const glm::ivec2 windowSize) const
     {
         if (glewInit() != GLEW_OK)
         {

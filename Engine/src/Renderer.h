@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Entity.h"
+#include "Entity.h"
+#include "Entity.h"
+#include "Entity.h"
 #include "glm/glm.hpp"
 
 #ifdef _WIN32
@@ -28,7 +32,7 @@ namespace basilisk
 #pragma region Loading
         void InitGLFW();
         void SetGlVersion();
-        void InitGL() const;
+        void InitGL(glm::ivec2 windowSize) const;
         void LoadProjectionMatrix();
         
 #pragma endregion

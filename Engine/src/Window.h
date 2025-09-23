@@ -12,15 +12,15 @@ namespace basilisk
     {
     public:
         Window() = default;
-        Window(const std::string& windowName, glm::vec2 size);
+        Window(const std::string& windowName, glm::ivec2 size);
 
         [[nodiscard]] GLFWwindow* GetWindow() const;
-        bool WindowShouldClose() const;
-        glm::vec2 GetSize() const;
+        [[nodiscard]] bool WindowShouldClose() const;
+        [[nodiscard]] glm::ivec2 GetSize() const;
     
     private:
         GLFWwindow* WindowP = nullptr;
-        glm::vec2 Size;
+        glm::ivec2 Size;
         
     };
 

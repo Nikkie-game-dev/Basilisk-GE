@@ -6,15 +6,15 @@
 namespace basilisk
 {
 
-    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) : X(sizeX), Y(sizeY), Renderer(Renderer::GetInstance())
+    BaseGame::BaseGame(const std::string& windowName, int sizeX, int sizeY) : Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY)
     {
         Renderer.InitGLFW();
 
         Renderer.SetGlVersion();
 
-        this->Window = new basilisk::Window(windowName, glm::vec2(sizeX, sizeY));
+        this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
 
-        Renderer.InitGL();
+        Renderer.InitGL(glm::ivec2(sizeX, sizeY));
     }
 
     BaseGame::~BaseGame()

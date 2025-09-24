@@ -90,7 +90,7 @@ namespace basilisk
     void Renderer::LoadProjectionMatrix()
     {
         const auto size = this->Window->GetSize();
-        this->ProjectionMatrix = glm::ortho(0.0f, size.x, 0.0f, size.y, 0.1f, 100.0f);
+        this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
     void Renderer::UpdateViewMatrix()
     {

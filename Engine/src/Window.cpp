@@ -29,7 +29,7 @@ namespace basilisk
     {
         return glfwWindowShouldClose(this->WindowP);
     }
-    glm::vec2 Window::GetSize() const
+    glm::ivec2 Window::GetSize() const
     {
         return this->Size;
     }

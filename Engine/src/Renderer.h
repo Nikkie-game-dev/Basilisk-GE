@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Entity.h"
-#include "Entity.h"
-#include "Entity.h"
-#include "Entity.h"
 #include "glm/glm.hpp"
 
 #ifdef _WIN32

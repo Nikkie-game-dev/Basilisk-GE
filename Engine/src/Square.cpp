@@ -59,10 +59,19 @@ namespace basilisk
 
     void Square::Init()
     {
+        const auto mat = this->GetMaterial();
         this->UpdateBuffers();
-        this->GetMaterial()->BuildShader();
         
+        mat->BuildShader();
+        
+        if (!mat->IsProjectionSent)
+        {
+            Renderer::GetInstance().LoadProjectionMatrix();
+            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
+            mat->IsProjectionSent = true;
+        }
     }
+    
     void Square::Update()
     {
         this->SetPosition({0.7f, 0.0f});
@@ -73,16 +82,20 @@ namespace basilisk
     void Square::Draw()
     {
         const auto mat = this->GetMaterial();
+        auto& renderer =  Renderer::GetInstance();
         
-        mat->UpdateGLModel(this->ModelMatrix);
+        mat->UpdateGLMatrix(this->ModelMatrix, "model");
+
+        renderer.UpdateViewMatrix();
+        mat->UpdateGLMatrix(renderer.GetProjectionMatrix(), "view");
         
         if (mat->GetIsSolid())
         {
-            Renderer::GetInstance().Draw(mat->GetShaderProgram(), this->Color);
+           renderer.Draw(mat->GetShaderProgram(), this->Color);
         }
         else
         {
-            Renderer::GetInstance().Draw(mat->GetShaderProgram());
+            renderer.Draw(mat->GetShaderProgram());
         }
     }
 }

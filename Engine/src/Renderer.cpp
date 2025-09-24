@@ -39,8 +39,6 @@ namespace basilisk
     void Renderer::StartDraw()
     {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        UpdateViewMatrix();
     }
 
     void Renderer::EndDraw() const
@@ -70,6 +68,16 @@ namespace basilisk
         return this->CameraPos;
     }
 
+    glm::mat4 Renderer::GetProjectionMatrix() const
+    {
+        return this->ProjectionMatrix;
+    }
+    
+    glm::mat4 Renderer::GetViewMatrix() const
+    {
+        return this->ViewMatrix;
+    }
+
     void Renderer::SetWindowRef(basilisk::Window& window)
     {
         this->Window = &window;
@@ -92,6 +100,7 @@ namespace basilisk
         const auto size = this->Window->GetSize();
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
+    
     void Renderer::UpdateViewMatrix()
     {
         this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);

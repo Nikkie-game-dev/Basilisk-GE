@@ -121,9 +121,7 @@ namespace basilisk
         try
         {
             Init();
-
-            Renderer.LoadProjectionMatrix();
-
+            
             while (!WindowShouldClose())
             {
                 Update();

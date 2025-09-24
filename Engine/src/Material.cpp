@@ -77,13 +77,13 @@ namespace basilisk
         return IsSolid;
     }
 
-    void Material::UpdateGLModel(glm::mat4 modelMatrix) const
+    void Material::UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const
     {
         glUseProgram(this->ShaderProgram);
 
-        const GLint location = glGetUniformLocation(this->ShaderProgram, "model");
+        const GLint location = glGetUniformLocation(this->ShaderProgram, name.c_str());
 
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
     const char* Material::VertexShaderSolid = "#version 330 core\n"
@@ -96,7 +96,7 @@ namespace basilisk
 
         "void main()\n"
         "{\n"
-        " gl_Position = projection * view *  model * vec4(Pos, 1.0);\n"
+        " gl_Position =  projection * view * model * vec4(Pos, 1.0);\n"
         "}\0";
 
 

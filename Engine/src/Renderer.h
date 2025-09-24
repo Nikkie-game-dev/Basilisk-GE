@@ -48,6 +48,8 @@ namespace basilisk
         [[nodiscard]] glm::vec3 GetCameraUp() const;
         [[nodiscard]] glm::vec3 GetCameraTarget() const;
         [[nodiscard]] glm::vec3 GetCameraPos() const;
+        [[nodiscard]] glm::mat4 GetProjectionMatrix() const;
+        [[nodiscard]] glm::mat4 GetViewMatrix() const;
 #pragma endregion
 
 #pragma region Setters

@@ -6,7 +6,7 @@ namespace basilisk
 {
 
     Square::Square(glm::vec2 topLeftPos, glm::vec2 size, bool isSolidColor, basilisk::Color color = basilisk::Color(0, 0, 0)) :
-        Shape(isSolidColor, color)
+        Shape(color)
     {
         auto topRight = glm::vec2(topLeftPos.x + size.x, topLeftPos.y);
         auto bottomLeft = glm::vec2(topLeftPos.x, topLeftPos.y - size.y);
@@ -14,11 +14,11 @@ namespace basilisk
 
         if (isSolidColor)
         {
-            SetVerticesSolid(topLeftPos, topRight, bottomLeft, bottomRight);
+            this->SetVerticesSolid(topLeftPos, topRight, bottomLeft, bottomRight);
         }
         else
         {
-            SetVertices(topLeftPos, topRight, bottomLeft, bottomRight);
+            this->SetVertices(topLeftPos, topRight, bottomLeft, bottomRight);
         }
 
         unsigned int indices[]{
@@ -26,12 +26,11 @@ namespace basilisk
             1, 2, 3 // second triangle
         };
 
-        FillIndices(indices, sizeof(indices));
+        this->FillIndices(indices, sizeof(indices));
 
         this->Scaling = glm::vec3(size.x, size.y, 1.0f);
         this->Position = glm::vec3(topLeftPos.x, topLeftPos.y, 0.0f);
 
-        UpdateBuffers();
     }
 
     void Square::SetVerticesSolid(const glm::vec2 topLeftPos, const glm::vec2 topRight, const glm::vec2 bottomLeft, const glm::vec2 bottomRight)
@@ -43,7 +42,7 @@ namespace basilisk
             topLeftPos.x, topLeftPos.y, 0.0f // top left
         };
 
-        FillVertices(vertices, sizeof(vertices));
+        this->FillVertices(vertices, sizeof(vertices));
 
     }
     void Square::SetVertices(const glm::vec2 topLeftPos, const glm::vec2 topRight, const glm::vec2 bottomLeft, const glm::vec2 bottomRight)
@@ -55,27 +54,35 @@ namespace basilisk
             topLeftPos.x, topLeftPos.y, 0.0f,    1.0f, 1.0f, 1.0f, 0.0f   // top left
         };
 
-        FillVertices(vertices, sizeof(vertices));
+        this->FillVertices(vertices, sizeof(vertices));
     }
 
     void Square::Init()
     {
-        Mat.BuildShader();
+        this->UpdateBuffers();
+        this->GetMaterial()->BuildShader();
+        
     }
     void Square::Update()
     {
-        SetPosition({0.7f, 0.0f});
-        SetScaling({0.2f, 0.2f});
-        SetRotation(-20.0f);
+        this->SetPosition({0.7f, 0.0f});
+        this->SetScaling({0.2f, 0.2f});
+        this->SetRotation(-20.0f);
 
     }
     void Square::Draw()
     {
-        this->Mat.UpdateGLModel(this->ModelMatrix);
-
-        if (this->Mat.GetIsSolid())
-            Renderer::GetInstance().Draw(Mat.GetShaderProgram(), this->Color);
+        const auto mat = this->GetMaterial();
+        
+        mat->UpdateGLModel(this->ModelMatrix);
+        
+        if (mat->GetIsSolid())
+        {
+            Renderer::GetInstance().Draw(mat->GetShaderProgram(), this->Color);
+        }
         else
-            Renderer::GetInstance().Draw(Mat.GetShaderProgram());
+        {
+            Renderer::GetInstance().Draw(mat->GetShaderProgram());
+        }
     }
 }

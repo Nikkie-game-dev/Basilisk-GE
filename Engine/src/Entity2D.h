@@ -7,7 +7,7 @@ namespace basilisk
     class BASILISK_API Entity2D : public Entity
     {
     public:
-        Entity2D(bool isSolid);
+        Entity2D() = default;
         virtual ~Entity2D() = default;
 
         [[nodiscard]] float GetRotation() const;

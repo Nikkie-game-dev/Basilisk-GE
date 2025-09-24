@@ -17,7 +17,7 @@ namespace basilisk
     class BASILISK_API Entity
     {
     public:
-        explicit Entity(bool isSolidColor);
+        Entity() = default;
         virtual ~Entity();
 
         virtual void Init() = 0;
@@ -25,14 +25,19 @@ namespace basilisk
         virtual void Draw() = 0;
         
         void UpdateBuffers() const;
+        
         void FillVertices(float vertices[], int amountVertices);
         void FillIndices(unsigned int indices[], int amountIndices);
+        
         void SetRotation(float angle, Axis rotationAxis);
         void SetScaling(const glm::vec3& scaling);
         void SetScaling(float scale, Axis scalingAxis);
         void SetPosition(const glm::vec3& newPosition);
+        
+        void SetMaterial(const std::shared_ptr<Material>& material);
 
-        glm::mat4 GetModelMatrix() const;
+        [[nodiscard]] std::shared_ptr<Material> GetMaterial() const;
+        [[nodiscard]] glm::mat4 GetModelMatrix() const;
         
         bool IsActive = true;
 
@@ -47,9 +52,10 @@ namespace basilisk
         glm::vec3 Scaling = {1, 1, 1};
         glm::vec3 Rotation = {0, 0, 0};
 
-        Material Mat;
         
     private:
+        std::shared_ptr<Material> Mat = nullptr;
+
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;
         int AmountVertices = 0;

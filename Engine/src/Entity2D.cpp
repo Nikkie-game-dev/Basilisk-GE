@@ -2,9 +2,6 @@
 
 namespace basilisk
 {
-    Entity2D::Entity2D(const bool isSolid) : Entity(isSolid)
-    {}
-    
     float Entity2D::GetRotation() const
     {
         return this->Rotation.z;

@@ -1,22 +1,21 @@
 #include "Entity.h"
 
+#include "RenderException.h"
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
-    Entity::Entity(const bool isSolidColor) : Mat(isSolidColor)
-    {}
-    
+
     Entity::~Entity()
     {
         delete[] this->Vertices;
         delete[] this->Indices;
     }
-    
+
     void Entity::UpdateBuffers() const
     {
-        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices, Mat.GetIsSolid());
+        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices, this->GetMaterial()->GetIsSolid());
     }
 
     glm::mat4 Entity::GetModelMatrix() const
@@ -112,6 +111,23 @@ namespace basilisk
 
         UpdateTranslateMatrix();
         UpdateModelMatrix();
+    }
+
+    void Entity::SetMaterial(const std::shared_ptr<Material>& material)
+    {
+        // When shared_ptr is in rhs, it inits the shared_ptr in lhs and increments one ref count. When ref count == 0, the object referenced
+        // is deleted.
+        this->Mat = material;
+    }
+
+    std::shared_ptr<Material> Entity::GetMaterial() const
+    {
+        if (!Mat)
+        {
+            throw MaterialUnassigned();
+        }
+        return Mat;
+
     }
 
     void Entity::UpdateRotationMatrix()

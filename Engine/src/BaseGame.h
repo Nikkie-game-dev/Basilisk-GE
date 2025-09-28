@@ -58,17 +58,17 @@ namespace basilisk
 
     protected:
         /// <summary>
-        /// Abstract function to be implemented by entities. Called last in engine loop, between EndDraw and StartDraw
+        /// Abstract function to be implemented by Game. Called last in engine loop, between EndDraw and StartDraw
         /// </summary>
         virtual void Draw() = 0;
 
         /// <summary>
-        /// Abstract function to be implemented by entities. Called before the engine loop
+        /// Abstract function to be implemented by Game. Called before the engine loop
         /// </summary>
         virtual void Init() = 0;
 
         /// <summary>
-        /// Abstract function to be implemented by entities. Called before Draw() in engine loop
+        /// Abstract function to be implemented by Game. Called before Draw() in engine loop
         /// </summary>
         virtual void Update() = 0;
 

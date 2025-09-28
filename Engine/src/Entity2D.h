@@ -18,7 +18,7 @@ namespace basilisk
         virtual void SetRotation(float angle);
         virtual void SetScaling(glm::vec2 scaling);
         virtual void SetPosition(glm::vec2 newPosition);
-
+    protected:
         void Draw(Color color = Color::Red) override;
         
     };

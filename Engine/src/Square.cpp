@@ -5,20 +5,21 @@
 namespace basilisk
 {
 
-    Square::Square(glm::vec2 topLeftPos, glm::vec2 size, bool isSolidColor, basilisk::Color color = basilisk::Color(0, 0, 0)) :
+    Square::Square(glm::vec2 center, glm::vec2 size, bool isSolidColor, basilisk::Color color = basilisk::Color(0, 0, 0)) :
         Shape(color)
     {
-        auto topRight = glm::vec2(topLeftPos.x + size.x, topLeftPos.y);
-        auto bottomLeft = glm::vec2(topLeftPos.x, topLeftPos.y - size.y);
-        auto bottomRight = glm::vec2(topLeftPos.x + size.x, topLeftPos.y - size.y);
+        auto topLeft = glm::vec2(center.x - size.x / 2, center.y + size.y);
+        auto topRight = glm::vec2(topLeft.x + size.x, topLeft.y);
+        auto bottomLeft = glm::vec2(topLeft.x, topLeft.y - size.y);
+        auto bottomRight = glm::vec2(topLeft.x + size.x, topLeft.y - size.y);
 
         if (isSolidColor)
         {
-            this->SetVerticesSolid(topLeftPos, topRight, bottomLeft, bottomRight);
+            this->SetVerticesSolid(topLeft, topRight, bottomLeft, bottomRight);
         }
         else
         {
-            this->SetVertices(topLeftPos, topRight, bottomLeft, bottomRight);
+            this->SetVertices(topLeft, topRight, bottomLeft, bottomRight);
         }
 
         unsigned int indices[]{
@@ -29,7 +30,7 @@ namespace basilisk
         this->FillIndices(indices, sizeof(indices));
 
         this->Scaling = glm::vec3(size.x, size.y, 1.0f);
-        this->Position = glm::vec3(topLeftPos.x, topLeftPos.y, 0.0f);
+        this->Position = glm::vec3(center.x, center.y, 0.0f);
 
     }
 

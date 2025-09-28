@@ -13,7 +13,13 @@ namespace basilisk
         void Draw();
 
     private:
-        void SetVerticesSolid(glm::vec2 topLeftPos, glm::vec2 topRight, glm::vec2 bottomLeft, glm::vec2 bottomRight);
-        void SetVertices(glm::vec2 topLeftPos, glm::vec2 topRight, glm::vec2 bottomLeft, glm::vec2 bottomRight);
+        void CalculateVertices(glm::vec2 center, glm::vec2 size) override;
+        void SetVertices() override;
+        
+        glm::vec2 TopLeft;
+        glm::vec2 TopRight;
+        glm::vec2 BottomLeft;
+        glm::vec2 BottomRight;
+
     };
 } // basilisk 

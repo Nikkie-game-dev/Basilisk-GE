@@ -2,8 +2,8 @@
 
 namespace basilisk
 {
-    Shape::Shape(const basilisk::Color color) :
-        Color(color)
+    Shape::Shape(const basilisk::Color color, const bool isSolid) :
+        Color(color), IsSolid(isSolid)
     {
     }
 }

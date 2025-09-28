@@ -34,7 +34,7 @@ namespace basilisk
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }
 
-    void Entity2D::Draw(const Color color)
+    void Entity2D::Draw()
     {
         const auto mat = this->GetMaterial();
         auto& renderer = Renderer::GetInstance();
@@ -45,7 +45,7 @@ namespace basilisk
 
         if (mat->GetIsSolid())
         {
-            renderer.Draw(mat->GetShaderProgram(), color);
+            renderer.Draw(mat->GetShaderProgram(), this->Color);
         }
         else
         {

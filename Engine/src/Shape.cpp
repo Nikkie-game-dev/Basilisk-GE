@@ -1,14 +1,27 @@
 #include "Shape.h"
 
+#include "Renderer.h"
+
 namespace basilisk
 {
-    void Shape::Draw()
+    void Shape::Init()
     {
-        Entity2D::Draw(this->Color);
+        const auto mat = this->GetMaterial();
+        this->UpdateBuffers();
+
+        mat->BuildShader();
+
+        if (!mat->IsProjectionSent)
+        {
+            Renderer::GetInstance().LoadProjectionMatrix();
+            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
+            mat->IsProjectionSent = true;
+        }
     }
     
     Shape::Shape(const basilisk::Color color, const bool isSolid) :
-        Color(color), IsSolid(isSolid)
+        IsSolid(isSolid)
     {
+        this->Color = color;
     }
 }

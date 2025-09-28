@@ -15,13 +15,14 @@ namespace basilisk
         virtual void SetRotation(float angle);
         virtual void SetScaling(glm::vec2 scaling);
         virtual void SetPosition(glm::vec2 newPosition);
-        
+
+        void Draw() override;
+
     protected:
         Entity2D() = default;
         virtual ~Entity2D() = default;
 
-        void Draw(Color color = Color::Red) override;
-
+        Color Color = Color::Red;
     private:
         [[nodiscard]] glm::vec3 GetPosition() const override;
         [[nodiscard]] glm::vec3 GetScale() const override;

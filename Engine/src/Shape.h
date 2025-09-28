@@ -11,17 +11,13 @@ namespace basilisk
     {
     public:
         virtual ~Shape() = default;
-        
-        using Shape::Draw;
-        void Draw();
+        void Init() override;
 
     protected:
-        explicit Shape(Color color, bool isSolid);
+        explicit Shape(basilisk::Color color, bool isSolid);
 
         virtual void CalculateVertices(glm::vec2 center, glm::vec2 size) = 0;
         virtual void SetVertices() = 0;
-
-        Color Color;
         bool IsSolid;
     };
 } // basilisk 

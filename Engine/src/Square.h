@@ -7,9 +7,6 @@ namespace basilisk
 {
     class BASILISK_API Square : public Shape
     {
-    public:
-        void Init() override;
-
     protected:
         Square(glm::vec2 center, glm::vec2 size, bool isSolidColor, basilisk::Color color);
 

@@ -53,21 +53,7 @@ namespace basilisk
             this->FillVertices(vertices, sizeof(vertices));
         }
     }
-
-    void Square::Init()
-    {
-        const auto mat = this->GetMaterial();
-        this->UpdateBuffers();
-
-        mat->BuildShader();
-
-        if (!mat->IsProjectionSent)
-        {
-            Renderer::GetInstance().LoadProjectionMatrix();
-            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
-            mat->IsProjectionSent = true;
-        }
-    }
+    
 
     void Square::CalculateVertices(const glm::vec2 center, const glm::vec2 size)
     {

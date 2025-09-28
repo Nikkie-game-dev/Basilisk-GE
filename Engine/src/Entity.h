@@ -23,7 +23,7 @@ namespace basilisk
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        virtual void Draw(Color color = Color::Red) = 0;
+        virtual void Draw() = 0;
         
         void SetRotation(float angle, Axis rotationAxis);
         void SetScaling(const glm::vec3& scaling);

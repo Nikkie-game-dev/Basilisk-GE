@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Colors.h"
 #include "Export.h"
 #include "Material.h"
 #include "glm/glm.hpp"
@@ -17,35 +18,45 @@ namespace basilisk
     class BASILISK_API Entity
     {
     public:
-        explicit Entity(bool isSolidColor);
+        Entity() = default;
         virtual ~Entity();
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        virtual void Draw() = 0;
+        virtual void Draw(Color color = Color::Red) = 0;
         
         void UpdateBuffers() const;
+        
         void FillVertices(float vertices[], int amountVertices);
         void FillIndices(unsigned int indices[], int amountIndices);
+        
         void SetRotation(float angle, Axis rotationAxis);
         void SetScaling(const glm::vec3& scaling);
         void SetScaling(float scale, Axis scalingAxis);
         void SetPosition(const glm::vec3& newPosition);
+        
+        void SetMaterial(const std::shared_ptr<Material>& material);
 
+        [[nodiscard]] std::shared_ptr<Material> GetMaterial() const;
+        [[nodiscard]] glm::mat4 GetModelMatrix() const;
+        
         bool IsActive = true;
-        glm::mat4 GetModelMatrix() const;
 
     protected:
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
-        glm::vec3 Position = {0, 0, 0};
-        glm::vec3 Scaling = {1, 1, 1};
-        glm::vec3 Rotation = {0, 0, 0};
+
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
-        Material Mat;
+        
+        glm::vec3 Position = {0, 0, 0};
+        glm::vec3 Scaling = {1, 1, 1};
+        glm::vec3 Rotation = {0, 0, 0};
+
         
     private:
+        std::shared_ptr<Material> Mat = nullptr;
+
         float* Vertices = nullptr;
         unsigned int* Indices = nullptr;
         int AmountVertices = 0;
@@ -53,6 +64,7 @@ namespace basilisk
 
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
+        
         void UpdateModelMatrix();
     };
 } // basilisk 

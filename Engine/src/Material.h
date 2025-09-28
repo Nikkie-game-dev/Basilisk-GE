@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <string>
+
 #include "Export.h"
 #include "glm/glm.hpp"
 
@@ -10,13 +13,16 @@ namespace basilisk
     class BASILISK_API Material
     {
     public:
-        Material(bool isSolid);
+        explicit Material(bool isSolid);
+        static std::shared_ptr<Material> New(bool isSolid);
         void BuildShader();
-        
-        [[nodiscard]] SPProc GetShaderProgram() const;
-        bool GetIsSolid() const;
-        void UpdateModelMatrix(glm::mat4 modelMatrix) const;
 
+        [[nodiscard]] SPProc GetShaderProgram() const;
+        [[nodiscard]] bool GetIsSolid() const;
+        void UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const;
+
+        bool IsProjectionSent = false;
+        bool IsViewSent = false;
         
     private:
         bool IsSolid;

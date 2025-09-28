@@ -45,3 +45,13 @@ public:
         return "Could not initialized Glad";
     }
 };
+
+
+class MaterialUnassigned : std::exception
+{
+public:
+    [[nodiscard]] char const* what() const override
+    {
+        return "Material has not been assigned yet. Create a new one or reference shared_ptr.";
+    }
+};

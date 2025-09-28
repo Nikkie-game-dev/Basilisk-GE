@@ -2,13 +2,14 @@
 
 namespace game
 {
-    Game::Game(const std::string& windowName, int sizeX, int sizeY) : 
-        BaseGame(windowName, sizeX, sizeY), Test(OrangeSquare({1.0f, 1.0f}, {0.0f, 0.0f}, 20.0f))
+    Game::Game(const std::string& windowName, int sizeX, int sizeY) :
+        BaseGame(windowName, sizeX, sizeY), Test(OrangeSquare({10000.0f, 10000.0f}, {-100,100}, 0))
     {
     }
 
     void Game::Init()
     {
+        Test.SetMaterial(basilisk::Material::New(true));
         Test.Init();
     }
 

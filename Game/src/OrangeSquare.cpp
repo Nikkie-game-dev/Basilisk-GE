@@ -4,12 +4,12 @@ namespace game
 {
 
     OrangeSquare::OrangeSquare(const glm::vec2& size, const glm::vec2& position, const float rotation) : 
-        Square(position, size, true, basilisk::Color::Purple)
+        Triangle(position, size, true, basilisk::Color::Purple)
     {
     }
 
     OrangeSquare::OrangeSquare(const glm::vec2& size) : 
-        Square({0.0f, 0.0f}, size, true, basilisk::Color::Yellow)
+        Triangle({0.0f, 0.0f}, size, true, basilisk::Color::Yellow)
     {
     }
     

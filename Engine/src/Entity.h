@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Colors.h"
 #include "Export.h"
 #include "Material.h"
 #include "glm/glm.hpp"
@@ -22,7 +23,7 @@ namespace basilisk
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        virtual void Draw() = 0;
+        virtual void Draw(Color color = Color::Red) = 0;
         
         void UpdateBuffers() const;
         

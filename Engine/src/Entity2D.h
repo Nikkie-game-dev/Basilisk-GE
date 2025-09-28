@@ -1,4 +1,5 @@
 #pragma once
+#include "Colors.h"
 #include "Entity.h"
 
 namespace basilisk
@@ -17,6 +18,8 @@ namespace basilisk
         virtual void SetRotation(float angle);
         virtual void SetScaling(glm::vec2 scaling);
         virtual void SetPosition(glm::vec2 newPosition);
+
+        void Draw(Color color = Color::Red) override;
         
     };
 } // namespace basilisk

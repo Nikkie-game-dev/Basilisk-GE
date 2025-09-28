@@ -77,27 +77,6 @@ namespace basilisk
     
     void Square::Draw()
     {
-        const auto mat = this->GetMaterial();
-        auto& renderer = Renderer::GetInstance();
-
-        /*mat->UpdateGLMatrix(this->ModelMatrix, "model");
-
-        renderer.UpdateViewMatrix();
-        mat->UpdateGLMatrix(renderer.GetProjectionMatrix(), "view");*/
-
-        renderer.UpdateViewMatrix();
-        auto view = renderer.GetViewMatrix();
-        auto project = renderer.GetProjectionMatrix();
-        auto matrix = project * view * this->ModelMatrix;
-        mat->UpdateGLMatrix(matrix, "model");
-
-        if (mat->GetIsSolid())
-        {
-            renderer.Draw(mat->GetShaderProgram(), this->Color);
-        }
-        else
-        {
-            renderer.Draw(mat->GetShaderProgram());
-        }
+        Entity2D::Draw(this->Color);
     }
 }

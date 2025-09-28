@@ -10,7 +10,7 @@ namespace basilisk
     public:
         Square(glm::vec2 topLeftPos, glm::vec2 size, bool isSolidColor, basilisk::Color color);
         void Init() override;
-        void Draw() override;
+        void Draw();
 
     private:
         void SetVerticesSolid(glm::vec2 topLeftPos, glm::vec2 topRight, glm::vec2 bottomLeft, glm::vec2 bottomRight);

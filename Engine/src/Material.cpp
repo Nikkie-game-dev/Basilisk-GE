@@ -90,13 +90,11 @@ namespace basilisk
 
         "layout (location = 0) in vec3 Pos;\n"
 
-        "uniform mat4 model;\n"
-        "uniform mat4 view;\n"
-        "uniform mat4 projection;\n"
+        "uniform mat4 matrix;\n"
 
         "void main()\n"
         "{\n"
-        " gl_Position = model * vec4(Pos, 1.0);\n"
+        " gl_Position = matrix * vec4(Pos, 1.0);\n"
         "}\0";
 
 
@@ -114,13 +112,11 @@ namespace basilisk
 
         "out vec4 OutColor;\n"
 
-        "uniform mat4 model;\n"
-        "uniform mat4 view;\n"
-        "uniform mat4 projection;\n"
+        "uniform mat4 matrix;\n"
 
         "void main()\n"
         "{\n"
-        " gl_Position = projection * view *  model * vec4(Pos, 1.0);\n"
+        " gl_Position = matrix * vec4(Pos, 1.0);\n"
         " OutColor = Color;\n"
         "}\0";
 

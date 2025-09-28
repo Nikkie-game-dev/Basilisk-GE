@@ -8,9 +8,10 @@ namespace basilisk
     class BASILISK_API Square : public Shape
     {
     public:
-        Square(glm::vec2 center, glm::vec2 size, bool isSolidColor, basilisk::Color color);
         void Init() override;
-        void Draw();
+
+    protected:
+        Square(glm::vec2 center, glm::vec2 size, bool isSolidColor, basilisk::Color color);
 
     private:
         void CalculateVertices(glm::vec2 center, glm::vec2 size) override;

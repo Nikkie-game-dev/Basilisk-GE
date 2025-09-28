@@ -69,11 +69,6 @@ namespace basilisk
         }
     }
 
-    void Square::Draw()
-    {
-        Entity2D::Draw(this->Color);
-    }
-
     void Square::CalculateVertices(const glm::vec2 center, const glm::vec2 size)
     {
         this->TopLeft = glm::vec2(center.x - size.x / 2, center.y + size.y);

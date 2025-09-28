@@ -96,7 +96,7 @@ namespace basilisk
 
         "void main()\n"
         "{\n"
-        " gl_Position =  projection * view * model * vec4(Pos, 1.0);\n"
+        " gl_Position = model * vec4(Pos, 1.0);\n"
         "}\0";
 
 

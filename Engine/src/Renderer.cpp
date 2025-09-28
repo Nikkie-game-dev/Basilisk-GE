@@ -89,10 +89,12 @@ namespace basilisk
         Vao(0),
         Ebo(0),
         CameraPos(0, 0, 3.0f),
-        CameraUp(0, 1.0f, 0),
         CameraTarget(0, 0, 0),
         Window(nullptr)
     {
+        const auto invDirection = glm::normalize(CameraPos - CameraTarget);
+        const auto right = glm::normalize(glm::cross(glm::vec3(0,1.0,0), invDirection));
+        this->CameraUp = glm::cross(invDirection, right);
     }
 
     void Renderer::LoadProjectionMatrix()
@@ -159,4 +161,4 @@ namespace basilisk
     }
 
 
-} // namespace basilisk
+} // basilisk

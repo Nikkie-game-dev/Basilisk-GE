@@ -119,6 +119,21 @@ namespace basilisk
         // is deleted.
         this->Mat = material;
     }
+    
+    glm::vec3 Entity::GetPosition() const
+    {
+        return this->Position;
+    }
+    
+    glm::vec3 Entity::GetScale() const
+    {
+        return this->Scaling;
+    }
+    
+    glm::vec3 Entity::GetRotation() const
+    {
+        return this->Rotation;
+    }
 
     std::shared_ptr<Material> Entity::GetMaterial() const
     {

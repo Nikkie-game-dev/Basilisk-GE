@@ -26,7 +26,7 @@ namespace basilisk
         virtual void Draw() = 0;
         virtual void Init() = 0;
         virtual void Update() = 0;
-        bool WindowShouldClose() const;
+        [[nodiscard]] bool WindowShouldClose() const;
         void Close() const;
         Renderer& Renderer;
 

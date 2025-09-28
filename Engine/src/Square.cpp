@@ -11,7 +11,7 @@ namespace basilisk
                    const basilisk::Color color = basilisk::Color(0, 0, 0)) :
         Shape(color, isSolidColor)
     {
-
+        
         Square::CalculateVertices(center, size);
         Square::SetVertices();
 
@@ -22,8 +22,7 @@ namespace basilisk
 
         this->FillIndices(indices, sizeof(indices));
 
-        this->Scaling = glm::vec3(size.x, size.y, 1.0f);
-        this->Position = glm::vec3(center.x, center.y, 0.0f);
+        Square::SetPosition(center);
 
     }
 
@@ -52,7 +51,6 @@ namespace basilisk
             };
             //@formatter:on
             this->FillVertices(vertices, sizeof(vertices));
-
         }
     }
 
@@ -83,5 +81,5 @@ namespace basilisk
         this->BottomLeft = glm::vec2(this->TopLeft.x, this->TopLeft.y - size.y);
         this->BottomRight = glm::vec2(this->TopLeft.x + size.x, this->TopLeft.y - size.y);
     }
-
+    
 }

@@ -12,12 +12,7 @@ namespace basilisk
         delete[] this->Vertices;
         delete[] this->Indices;
     }
-
-    /// <summary>
-    /// Negative values rotate counter clockwise
-    /// </summary>
-    /// <param name="angle"></param>
-    /// <param name="rotationAxis"></param>
+    
     void Entity::SetRotation(const float angle, const Axis rotationAxis)
     {
         switch (rotationAxis)
@@ -62,11 +57,7 @@ namespace basilisk
 
         SetScaling(this->Scaling);
     }
-
-    /// <summary>
-    /// Position is the top left corner of the entity
-    /// </summary>
-    /// <param name="newPosition"></param>
+    
     void Entity::SetPosition(const glm::vec3& newPosition)
     {
         this->Position = newPosition;

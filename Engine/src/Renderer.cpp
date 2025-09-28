@@ -42,23 +42,19 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::GenerateVBs(float vertices[],
-                               unsigned int indices[],
-                               const int amountVertices,
-                               const int amountIndices,
-                               const bool isSolid)
+    void Renderer::GenerateVBs(Buffers &buffers, const bool isSolid)
     {
-        glGenVertexArrays(1, &this->Vao);
-        glBindVertexArray(this->Vao);
+        glGenVertexArrays(1, &buffers.Vao);
+        glBindVertexArray(buffers.Vao);
 
-        glGenBuffers(1, &this->Vbo);
-        glGenBuffers(1, &this->Ebo);
+        glGenBuffers(1, &buffers.Vbo);
+        glGenBuffers(1, &buffers.Ebo);
 
-        glBindBuffer(GL_ARRAY_BUFFER, this->Vbo);
-        glBufferData(GL_ARRAY_BUFFER, amountVertices, vertices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers.Vbo);
+        glBufferData(GL_ARRAY_BUFFER, buffers.amountVertices, buffers.vertices, GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->Ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountIndices, indices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.Ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffers.amountIndices, buffers.indices, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float), static_cast<void*>(nullptr));
         glEnableVertexAttribArray(0);
@@ -73,15 +69,15 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg) const
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& Vao, const int amountIndices) const
     {
         glUseProgram(shaderProg);
-        glBindVertexArray(this->Vao);
+        glBindVertexArray(Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
 
-    void Renderer::Draw(const SPProc shaderProg, const Color color) const
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& Vao, const int amountIndices, const Color color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);
@@ -90,8 +86,8 @@ namespace basilisk
                     static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
                     static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
                     color.A);
-        glBindVertexArray(this->Vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        glBindVertexArray(Vao);
+        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
     }
 
     void Renderer::StartDraw()
@@ -148,9 +144,6 @@ namespace basilisk
     }
 
     Renderer::Renderer() :
-        Vbo(0),
-        Vao(0),
-        Ebo(0),
         CameraPos(0, 0, 3.0f),
         CameraTarget(0, 0, 0),
         Window(nullptr)

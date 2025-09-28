@@ -45,11 +45,11 @@ namespace basilisk
 
         if (mat->GetIsSolid())
         {
-            renderer.Draw(mat->GetShaderProgram(), this->Color);
+            renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.amountIndices, this->Color);
         }
         else
         {
-            renderer.Draw(mat->GetShaderProgram());
+            renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.amountIndices);
         }
 
     }

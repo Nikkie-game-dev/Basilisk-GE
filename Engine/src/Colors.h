@@ -3,9 +3,20 @@
 
 namespace basilisk
 {
+    /// <summary>
+    /// Handles color values
+    /// </summary>
     class BASILISK_API Color
     {
     public:
+        /// <summary>
+        /// Constructor for Color, with a transparency value. All values are from 0 to 255, except the transparency value that has a maximum
+        /// of 1.0f, and a minimum of 0.0f.
+        /// </summary>
+        /// <param name="r">Red value</param>
+        /// <param name="g">Green value</param>
+        /// <param name="b">Blue vaue</param>
+        /// <param name="a">Transparency value</param>
         Color(const unsigned char r, const unsigned char g, const unsigned char b, const float a)
         {
             this->R = r;
@@ -26,6 +37,12 @@ namespace basilisk
             }
         }
 
+        /// <summary>
+        /// Constructor for Color, without a transparency value. All values are from 0 to 255.
+        /// </summary>
+        /// <param name="r">Red value</param>
+        /// <param name="g">Green value</param>
+        /// <param name="b">Blue value</param>
         Color(const unsigned char r, const unsigned char g, const unsigned char b) :
             R(r), G(g), B(b), A(1.0)
         {

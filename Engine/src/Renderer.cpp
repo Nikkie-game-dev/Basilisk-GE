@@ -36,76 +36,10 @@ namespace basilisk
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    void Renderer::StartDraw()
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-
-    void Renderer::EndDraw() const
-    {
-        glfwSwapBuffers(glfwGetCurrentContext());
-        glfwPollEvents();
-    }
-
-    Renderer& Renderer::GetInstance()
-    {
-        static Renderer instance;
-        return instance;
-    }
-
-
-    glm::vec3 Renderer::GetCameraUp() const
-    {
-        return this->CameraUp;
-    }
-
-    glm::vec3 Renderer::GetCameraTarget() const
-    {
-        return this->CameraTarget;
-    }
-    glm::vec3 Renderer::GetCameraPos() const
-    {
-        return this->CameraPos;
-    }
-
-    glm::mat4 Renderer::GetProjectionMatrix() const
-    {
-        return this->ProjectionMatrix;
-    }
-    
-    glm::mat4 Renderer::GetViewMatrix() const
-    {
-        return this->ViewMatrix;
-    }
-
-    void Renderer::SetWindowRef(basilisk::Window& window)
-    {
-        this->Window = &window;
-    }
-
-
-    Renderer::Renderer() :
-        Vbo(0),
-        Vao(0),
-        Ebo(0),
-        CameraPos(0, 0, 3.0f),
-        CameraTarget(0, 0, 0),
-        Window(nullptr)
-    {
-        const auto invDirection = glm::normalize(CameraPos - CameraTarget);
-        const auto right = glm::normalize(glm::cross(glm::vec3(0,1.0,0), invDirection));
-        this->CameraUp = glm::cross(invDirection, right);
-    }
-
     void Renderer::LoadProjectionMatrix()
     {
         const auto size = this->Window->GetSize();
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
-    }
-    
-    void Renderer::UpdateViewMatrix()
-    {
-        this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);
     }
 
     void Renderer::GenerateVBs(float vertices[],
@@ -139,13 +73,13 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-
     void Renderer::Draw(const SPProc shaderProg) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
+
 
     void Renderer::Draw(const SPProc shaderProg, const Color color) const
     {
@@ -158,6 +92,72 @@ namespace basilisk
                     color.A);
         glBindVertexArray(this->Vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    }
+
+    void Renderer::StartDraw()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+    void Renderer::EndDraw() const
+    {
+        glfwSwapBuffers(glfwGetCurrentContext());
+        glfwPollEvents();
+    }
+
+    void Renderer::UpdateViewMatrix()
+    {
+        this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);
+    }
+    
+    Renderer& Renderer::GetInstance()
+    {
+        static Renderer instance;
+        return instance;
+    }
+
+    glm::vec3 Renderer::GetCameraUp() const
+    {
+        return this->CameraUp;
+    }
+
+
+    glm::vec3 Renderer::GetCameraTarget() const
+    {
+        return this->CameraTarget;
+    }
+
+    glm::vec3 Renderer::GetCameraPos() const
+    {
+        return this->CameraPos;
+    }
+    
+    glm::mat4 Renderer::GetProjectionMatrix() const
+    {
+        return this->ProjectionMatrix;
+    }
+
+    glm::mat4 Renderer::GetViewMatrix() const
+    {
+        return this->ViewMatrix;
+    }
+
+
+    void Renderer::SetWindowRef(basilisk::Window& window)
+    {
+        this->Window = &window;
+    }
+
+    Renderer::Renderer() :
+        Vbo(0),
+        Vao(0),
+        Ebo(0),
+        CameraPos(0, 0, 3.0f),
+        CameraTarget(0, 0, 0),
+        Window(nullptr)
+    {
+        const auto invDirection = glm::normalize(CameraPos - CameraTarget);
+        const auto right = glm::normalize(glm::cross(glm::vec3(0,1.0,0), invDirection));
+        this->CameraUp = glm::cross(invDirection, right);
     }
 
 

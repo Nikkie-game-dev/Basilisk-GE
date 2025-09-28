@@ -26,6 +26,15 @@ namespace basilisk
 
     }
 
+    void Square::CalculateVertices(const glm::vec2 center, const glm::vec2 size)
+    {
+        this->TopLeft = glm::vec2(center.x - size.x / 2, center.y + size.y);
+        this->TopRight = glm::vec2(this->TopLeft.x + size.x, this->TopLeft.y);
+        this->BottomLeft = glm::vec2(this->TopLeft.x, this->TopLeft.y - size.y);
+        this->BottomRight = glm::vec2(this->TopLeft.x + size.x, this->TopLeft.y - size.y);
+    }
+    
+
     void Square::SetVertices()
     {
         if (!this->IsSolid)
@@ -52,15 +61,6 @@ namespace basilisk
             //@formatter:on
             this->FillVertices(vertices, sizeof(vertices));
         }
-    }
-    
-
-    void Square::CalculateVertices(const glm::vec2 center, const glm::vec2 size)
-    {
-        this->TopLeft = glm::vec2(center.x - size.x / 2, center.y + size.y);
-        this->TopRight = glm::vec2(this->TopLeft.x + size.x, this->TopLeft.y);
-        this->BottomLeft = glm::vec2(this->TopLeft.x, this->TopLeft.y - size.y);
-        this->BottomRight = glm::vec2(this->TopLeft.x + size.x, this->TopLeft.y - size.y);
     }
     
 }

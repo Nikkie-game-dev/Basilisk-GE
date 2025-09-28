@@ -3,14 +3,14 @@
 #include "RenderException.h"
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "Buffers.h"
 
 namespace basilisk
 {
-
     Entity::~Entity()
     {
-        delete[] this->Vertices;
-        delete[] this->Indices;
+        delete[] this->buffers.vertices;
+        delete[] this->buffers.indices;
     }
 
     /// <summary>
@@ -112,37 +112,38 @@ namespace basilisk
         return this->ModelMatrix;
     }
     
-    void Entity::UpdateBuffers() const
+    void Entity::UpdateBuffers()
     {
-        Renderer::GetInstance().GenerateVBs(this->Vertices, this->Indices, this->AmountVertices, this->AmountIndices, this->GetMaterial()->GetIsSolid());
+        Renderer::GetInstance().GenerateVBs(buffers, this->GetMaterial()->GetIsSolid());
+        
     }
     
     void Entity::FillVertices(float vertices[], const int amountVertices)
     {
-        delete[] this->Vertices;
+        delete[] this->buffers.vertices;
 
-        this->Vertices = new float[amountVertices];
+        this->buffers.vertices = new float[amountVertices];
 
         for (int i = 0; i < amountVertices; ++i)
         {
-            this->Vertices[i] = vertices[i];
+            this->buffers.vertices[i] = vertices[i];
         }
 
-        this->AmountVertices = amountVertices;
+        this->buffers.amountVertices = amountVertices;
     }
 
     void Entity::FillIndices(unsigned int indices[], const int amountIndices)
     {
-        delete[] this->Indices;
+        delete[] buffers.indices;
 
-        this->Indices = new unsigned int[amountIndices];
+        this->buffers.indices = new unsigned int[amountIndices];
 
         for (int i = 0; i < amountIndices; ++i)
         {
-            this->Indices[i] = indices[i];
+            this->buffers.indices[i] = indices[i];
         }
 
-        this->AmountIndices = amountIndices;
+        this->buffers.amountIndices = amountIndices;
     }
 
     void Entity::UpdateRotationMatrix()

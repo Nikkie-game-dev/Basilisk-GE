@@ -23,12 +23,7 @@ namespace basilisk
 
         virtual void Init() = 0;
         virtual void Update() = 0;
-        virtual void Draw(Color color = Color::Red) = 0;
-        
-        void UpdateBuffers() const;
-        
-        void FillVertices(float vertices[], int amountVertices);
-        void FillIndices(unsigned int indices[], int amountIndices);
+        virtual void Draw() = 0;
         
         void SetRotation(float angle, Axis rotationAxis);
         void SetScaling(const glm::vec3& scaling);
@@ -37,21 +32,27 @@ namespace basilisk
         
         void SetMaterial(const std::shared_ptr<Material>& material);
 
+        [[nodiscard]] virtual glm::vec3 GetPosition() const;
+        [[nodiscard]] virtual glm::vec3 GetScale() const;
+        [[nodiscard]] virtual glm::vec3 GetRotation() const;
+
         [[nodiscard]] std::shared_ptr<Material> GetMaterial() const;
         [[nodiscard]] glm::mat4 GetModelMatrix() const;
         
         bool IsActive = true;
 
     protected:
+        void UpdateBuffers() const;
+        
+        void FillVertices(float vertices[], int amountVertices);
+        void FillIndices(unsigned int indices[], int amountIndices);
+        
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
 
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
-        
-        glm::vec3 Position = {0, 0, 0};
-        glm::vec3 Scaling = {1, 1, 1};
-        glm::vec3 Rotation = {0, 0, 0};
+    
 
         
     private:
@@ -66,5 +67,9 @@ namespace basilisk
         void UpdateTranslateMatrix();
         
         void UpdateModelMatrix();
+
+        glm::vec3 Position = {0, 0, 0};
+        glm::vec3 Scaling = {1, 1, 1};
+        glm::vec3 Rotation = {0, 0, 0};
     };
 } // basilisk 

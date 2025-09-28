@@ -4,19 +4,19 @@
 
 namespace basilisk
 {
-    float Entity2D::GetRotation() const
+    float Entity2D::GetRotation2D() const
     {
-        return this->Rotation.z;
+        return GetRotation().z;
     }
 
-    glm::vec2 Entity2D::GetScale() const
+    glm::vec2 Entity2D::GetScale2D() const
     {
-        return this->Scaling;
+        return GetScale();
     }
 
-    glm::vec2 Entity2D::GetPosition() const
+    glm::vec2 Entity2D::GetPosition2D() const
     {
-        return this->Position;
+        return GetPosition();
     }
 
     void Entity2D::SetRotation(const float angle)
@@ -33,8 +33,8 @@ namespace basilisk
     {
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }
-    
-    void Entity2D::Draw(const Color color)
+
+    void Entity2D::Draw()
     {
         const auto mat = this->GetMaterial();
         auto& renderer = Renderer::GetInstance();
@@ -45,13 +45,28 @@ namespace basilisk
 
         if (mat->GetIsSolid())
         {
-            renderer.Draw(mat->GetShaderProgram(), color);
+            renderer.Draw(mat->GetShaderProgram(), this->Color);
         }
         else
         {
             renderer.Draw(mat->GetShaderProgram());
         }
 
+    }
+    
+    glm::vec3 Entity2D::GetPosition() const
+    {
+        return Entity::GetPosition();
+    }
+    
+    glm::vec3 Entity2D::GetScale() const
+    {
+        return Entity::GetScale();
+    }
+    
+    glm::vec3 Entity2D::GetRotation() const
+    {
+        return Entity::GetRotation();
     }
 
 } // namespace basilisk

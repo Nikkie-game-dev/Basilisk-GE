@@ -6,8 +6,10 @@
 
 namespace basilisk
 {
-    class ShaderCompileError :
-        std::exception
+    /// <summary>
+    /// The Shader could not compile. Call What() for error message.
+    /// </summary>
+    class ShaderCompileError : std::exception
     {
     public:
         using ShaderProc = unsigned int;
@@ -30,6 +32,9 @@ namespace basilisk
         std::string Error;
     };
 
+    /// <summary>
+    /// GLFW Would not be initialized.
+    /// </summary>
     class CouldNotStartGlfw : std::exception
     {
     public:
@@ -39,7 +44,9 @@ namespace basilisk
         }
     };
 
-
+    /// <summary>
+    /// GLEW could not be initialized.
+    /// </summary>
     class CouldNotStartGlew : std::exception
     {
     public:
@@ -49,7 +56,9 @@ namespace basilisk
         }
     };
 
-
+    /// <summary>
+    /// Material has not been assigned to an object that is trying to render.
+    /// </summary>
     class MaterialUnassigned : std::exception
     {
     public:

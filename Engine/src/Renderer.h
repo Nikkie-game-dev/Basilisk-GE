@@ -3,13 +3,13 @@
 #include "Entity.h"
 #include "Export.h"
 #include "glm/glm.hpp"
+#include "Buffers.h"
 
 namespace basilisk
 {
     class Window;
     class Color;
 
-    using BufferProc = unsigned int;
     using ShaderProc = unsigned int;
     using SPProc = unsigned int;
 
@@ -26,9 +26,10 @@ namespace basilisk
 #pragma endregion
         
 #pragma region Drawing
-        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
-        void Draw(SPProc shaderProg) const;
-        void Draw(SPProc shaderProg, Color color) const;
+        void GenerateVBs(Buffers& buffers, const bool isSolid);
+
+        void Draw(SPProc shaderProg, unsigned int& Vao, const int amountIndices) const;
+        void Draw(const SPProc shaderProg, unsigned int& Vao, const int amountIndices, const Color color) const;
         void StartDraw();
         void EndDraw() const;
         void UpdateViewMatrix();
@@ -57,10 +58,6 @@ namespace basilisk
         Renderer();
         ~Renderer() = default;
         
-        BufferProc Vbo;
-        BufferProc Vao;
-        BufferProc Ebo;
-
         glm::vec3 CameraPos;
         glm::vec3 CameraUp;
         glm::vec3 CameraTarget;

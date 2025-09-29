@@ -20,7 +20,7 @@ namespace basilisk
 
             this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
 
-            Renderer.InitGL(glm::ivec2(sizeX, sizeY));
+            Renderer.InitGL();
 
             Renderer.SetWindowRef(*this->Window);
         }

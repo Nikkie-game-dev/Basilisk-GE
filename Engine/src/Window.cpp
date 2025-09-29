@@ -17,7 +17,6 @@ namespace basilisk
         }
         glfwMakeContextCurrent(this->WindowP);
         
-
     }
 
     GLFWwindow* Window::GetWindow() const

@@ -4,54 +4,67 @@
 #include <string>
 #include "GL/glew.h"
 
-class ShaderCompileError : std::exception
+namespace basilisk
 {
-public:
-    using ShaderProc = unsigned int;
-
-    explicit ShaderCompileError(const ShaderProc shader)
+    /// <summary>
+    /// The Shader could not compile. Call What() for error message.
+    /// </summary>
+    class ShaderCompileError : std::exception
     {
-        constexpr int infoBufferSize = 512;
+    public:
+        using ShaderProc = unsigned int;
 
-        char infoLog[infoBufferSize];
-        glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
+        explicit ShaderCompileError(const ShaderProc shader)
+        {
+            constexpr int infoBufferSize = 512;
 
-        Error = "Shader failed to compile: \n" + std::string(infoLog);
-    }
-    [[nodiscard]] char const* what() const override
+            char infoLog[infoBufferSize];
+            glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
+
+            Error = "Shader failed to compile: \n" + std::string(infoLog);
+        }
+        [[nodiscard]] char const* what() const override
+        {
+            return Error.c_str();
+        }
+
+    private:
+        std::string Error;
+    };
+
+    /// <summary>
+    /// GLFW Would not be initialized.
+    /// </summary>
+    class CouldNotStartGlfw : std::exception
     {
-        return Error.c_str();
-    }
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized GLFW";
+        }
+    };
 
-private:
-    std::string Error;
-};
-
-class CouldNotStartGlfw : std::exception
-{
-public:
-    [[nodiscard]] char const* what() const override
+    /// <summary>
+    /// GLEW could not be initialized.
+    /// </summary>
+    class CouldNotStartGlew : std::exception
     {
-        return "Could not initialized GLFW";
-    }
-};
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Could not initialized Glad";
+        }
+    };
 
-
-class CouldNotStartGlew : std::exception
-{
-public:
-    [[nodiscard]] char const* what() const override
+    /// <summary>
+    /// Material has not been assigned to an object that is trying to render.
+    /// </summary>
+    class MaterialUnassigned : std::exception
     {
-        return "Could not initialized Glad";
-    }
-};
-
-
-class MaterialUnassigned : std::exception
-{
-public:
-    [[nodiscard]] char const* what() const override
-    {
-        return "Material has not been assigned yet. Create a new one or reference shared_ptr.";
-    }
-};
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            return "Material has not been assigned yet. Create a new one or reference shared_ptr.";
+        }
+    };
+}

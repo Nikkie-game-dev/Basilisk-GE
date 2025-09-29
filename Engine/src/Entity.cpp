@@ -9,15 +9,10 @@ namespace basilisk
 {
     Entity::~Entity()
     {
-        delete[] this->buffers.vertices;
-        delete[] this->buffers.indices;
+        delete[] this->buffers.Vertices;
+        delete[] this->buffers.Indices;
     }
-
-    /// <summary>
-    /// Negative values rotate counter clockwise
-    /// </summary>
-    /// <param name="angle"></param>
-    /// <param name="rotationAxis"></param>
+    
     void Entity::SetRotation(const float angle, const Axis rotationAxis)
     {
         switch (rotationAxis)
@@ -62,11 +57,7 @@ namespace basilisk
 
         SetScaling(this->Scaling);
     }
-
-    /// <summary>
-    /// Position is the top left corner of the entity
-    /// </summary>
-    /// <param name="newPosition"></param>
+    
     void Entity::SetPosition(const glm::vec3& newPosition)
     {
         this->Position = newPosition;
@@ -120,30 +111,30 @@ namespace basilisk
     
     void Entity::FillVertices(float vertices[], const int amountVertices)
     {
-        delete[] this->buffers.vertices;
+        delete[] this->buffers.Vertices;
 
-        this->buffers.vertices = new float[amountVertices];
+        this->buffers.Vertices = new float[amountVertices];
 
         for (int i = 0; i < amountVertices; ++i)
         {
-            this->buffers.vertices[i] = vertices[i];
+            this->buffers.Vertices[i] = vertices[i];
         }
 
-        this->buffers.amountVertices = amountVertices;
+        this->buffers.AmountVertices = amountVertices;
     }
 
     void Entity::FillIndices(unsigned int indices[], const int amountIndices)
     {
-        delete[] buffers.indices;
+        delete[] buffers.Indices;
 
-        this->buffers.indices = new unsigned int[amountIndices];
+        this->buffers.Indices = new unsigned int[amountIndices];
 
         for (int i = 0; i < amountIndices; ++i)
         {
-            this->buffers.indices[i] = indices[i];
+            this->buffers.Indices[i] = indices[i];
         }
 
-        this->buffers.amountIndices = amountIndices;
+        this->buffers.AmountIndices = amountIndices;
     }
 
     void Entity::UpdateRotationMatrix()

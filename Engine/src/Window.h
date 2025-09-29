@@ -14,8 +14,20 @@ namespace basilisk
         Window() = default;
         Window(const std::string& windowName, glm::ivec2 size);
 
+        /// <summary>
+        /// Getter for the window pointer
+        /// </summary>
+        /// <returns>The window pointer</returns>
         [[nodiscard]] GLFWwindow* GetWindow() const;
+        /// <summary>
+        /// Checks if the window should close given the current conditions.
+        /// </summary>
+        /// <returns>True if it should close, false if it should not</returns>
         [[nodiscard]] bool WindowShouldClose() const;
+        /// <summary>
+        /// Getter for the size of the window
+        /// </summary>
+        /// <returns>The size of the window (x = width, y = height)</returns>
         [[nodiscard]] glm::ivec2 GetSize() const;
     
     private:
@@ -24,6 +36,9 @@ namespace basilisk
         
     };
 
+    /// <summary>
+    /// Window could not be created.
+    /// </summary>
     class FailedWindowCreation : std::exception
     {
     public:

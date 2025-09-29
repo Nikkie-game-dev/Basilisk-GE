@@ -8,9 +8,9 @@ namespace basilisk
     Square::Square(const glm::vec2 center,
                    const glm::vec2 size,
                    const bool isSolidColor,
-                   const basilisk::Color color = basilisk::Color(0, 0, 0)) :
+                   const basilisk::Color color = basilisk::Color(0, 0, 0)) : Shape(color, isSolidColor)
     {
-        
+
         Square::CalculateVertices(center, size);
         Square::SetVertices();
 

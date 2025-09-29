@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseGame.h"
 #include "OrangeSquare.h"
+#include "GreenSquare.h"
 #include "Renderer.h"
 
 
@@ -17,6 +18,7 @@ namespace game
         void Draw() override;
 
         OrangeSquare Test;
+        GreenSquare Test2;
 
     };
 }

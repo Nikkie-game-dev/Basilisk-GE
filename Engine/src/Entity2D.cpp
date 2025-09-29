@@ -49,7 +49,7 @@ namespace basilisk
         }
         else
         {
-            renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.amountIndices);
+            renderer.Draw(mat->GetShaderProgram(), buffers.Vao);
         }
 
     }

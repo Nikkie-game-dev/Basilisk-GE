@@ -3,13 +3,13 @@
 #include "Entity.h"
 #include "Export.h"
 #include "glm/glm.hpp"
+#include "Buffers.h"
 
 namespace basilisk
 {
     class Window;
     class Color;
 
-    using BufferProc = unsigned int;
     using ShaderProc = unsigned int;
     using SPProc = unsigned int;
 
@@ -47,25 +47,25 @@ namespace basilisk
         /// <summary>
         /// Generates vertex array object, vertex buffer object and elements buffer object.
         /// </summary>
-        /// <param name="vertices">Array with Vertex data</param>
-        /// <param name="indices">Array with index data</param>
-        /// <param name="amountVertices">Amount of vertices to pass to OpenGl</param>
-        /// <param name="amountIndices">Amount of Indices to pass to OpenGl</param>
+        /// <param name="buffers">Buffers to pass to OpenGl</param>
         /// <param name="isSolid">Whether the object being drawn is a solid color or the vertex data includes per vertex color data</param>
-        void GenerateVBs(float vertices[], unsigned int indices[], int amountVertices, int amountIndices, bool isSolid);
-
+        void GenerateVBs(Buffers& buffers, bool isSolid);
+        
         /// <summary>
         /// Draws non-solid color objects.
         /// </summary>
         /// <param name="shaderProg">Process ID from the shader program</param>
-        void Draw(SPProc shaderProg) const;
-
+        /// <param name="vao">Vertex Array Object</param>
+        void Draw(SPProc shaderProg, unsigned int& vao) const;
+        
         /// <summary>
         /// Draws solid color objects.
         /// </summary>
         /// <param name="shaderProg">Process ID from the shader program</param>
+        /// <param name="vao">Vertex Array Object</param>
+        /// <param name="amountIndices">Amount of indices</param>
         /// <param name="color">Solid Color of object</param>
-        void Draw(SPProc shaderProg, Color color) const;
+        void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices, Color color) const;
 
         /// <summary>
         /// Makes Pre-draw calls.
@@ -141,10 +141,6 @@ namespace basilisk
         Renderer();
         ~Renderer() = default;
         
-        BufferProc Vbo;
-        BufferProc Vao;
-        BufferProc Ebo;
-
         glm::vec3 CameraPos;
         glm::vec3 CameraUp;
         glm::vec3 CameraTarget;

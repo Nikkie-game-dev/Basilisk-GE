@@ -69,15 +69,15 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& Vao, const int amountIndices) const
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao) const
     {
         glUseProgram(shaderProg);
-        glBindVertexArray(Vao);
+        glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     }
 
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& Vao, const int amountIndices, const Color color) const
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices, const Color color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);
@@ -86,7 +86,7 @@ namespace basilisk
                     static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
                     static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
                     color.A);
-        glBindVertexArray(Vao);
+        glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
     }
 

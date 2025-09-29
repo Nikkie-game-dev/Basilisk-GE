@@ -113,7 +113,7 @@ namespace basilisk
         /// <summary>
         /// Regenerates buffers with data
         /// </summary>
-        void UpdateBuffers() const;
+        void UpdateBuffers();
 
         /// <summary>
         /// Generates an array of fixed size in runtime for vertices.

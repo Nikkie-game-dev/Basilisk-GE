@@ -10,9 +10,10 @@ namespace game
 
     void Game::Init()
     {
-        Test2.SetMaterial(basilisk::Material::New(true));
+        auto mat = basilisk::Material::New(true);
+        Test2.SetMaterial(mat);
         Test2.Init();
-        Test.SetMaterial(basilisk::Material::New(true));
+        Test.SetMaterial(mat);
         Test.Init();
     }
 

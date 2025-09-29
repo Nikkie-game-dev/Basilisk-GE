@@ -3,6 +3,7 @@
 #include "Export.h"
 #include "Material.h"
 #include "glm/glm.hpp"
+#include "Buffers.h"
 
 namespace basilisk
 {
@@ -12,7 +13,6 @@ namespace basilisk
         Y,
         Z
     };
-
 
     class BASILISK_API Entity
     {
@@ -134,9 +134,8 @@ namespace basilisk
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
-    
+        Buffers buffers;
 
-        
     private:
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
@@ -145,13 +144,9 @@ namespace basilisk
         
         std::shared_ptr<Material> Mat = nullptr;
 
-        float* Vertices = nullptr;
-        unsigned int* Indices = nullptr;
-        int AmountVertices = 0;
-        int AmountIndices = 0;
-
         glm::vec3 Position = {0, 0, 0};
         glm::vec3 Scaling = {1, 1, 1};
         glm::vec3 Rotation = {0, 0, 0};
+
     };
 } // basilisk 

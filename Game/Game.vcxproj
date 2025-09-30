@@ -111,18 +111,16 @@
     <Folder Include="res\raw\" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BlueSquare.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GreenSquare.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\OrangeSquare.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BlueSquare.h" />
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GreenSquare.h" />
-    <ClInclude Include="src\OrangeSquare.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

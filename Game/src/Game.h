@@ -1,9 +1,6 @@
 #pragma once
-#include "BaseGame.h"
-#include "OrangeSquare.h"
-#include "GreenSquare.h"
-#include "Renderer.h"
-
+#include "Basilisk/BaseGame.h"
+#include "BlueSquare.h"
 
 namespace game
 {
@@ -17,8 +14,6 @@ namespace game
         void Update() override;
         void Draw() override;
 
-        OrangeSquare Test;
-        GreenSquare Test2;
-
+        BlueSquare Blue;
     };
 }

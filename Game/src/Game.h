@@ -1,8 +1,8 @@
 #pragma once
-#include "BaseGame.h"
+#include "Basilisk/BaseGame.h"
 #include "OrangeSquare.h"
 #include "GreenSquare.h"
-#include "Renderer.h"
+#include "Basilisk/Renderer.h"
 
 
 namespace game

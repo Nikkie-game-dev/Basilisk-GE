@@ -1,6 +1,6 @@
 #pragma once
 #include "Basilisk/BaseGame.h"
-#include "OrangeSquare.h"
+#include "TestTriangle.h"
 #include "GreenSquare.h"
 #include "Basilisk/Renderer.h"
 
@@ -17,7 +17,7 @@ namespace game
         void Update() override;
         void Draw() override;
 
-        OrangeSquare Test;
+        TestTriangle Test;
         GreenSquare Test2;
 
     };

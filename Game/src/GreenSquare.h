@@ -6,8 +6,7 @@ namespace game
     class GreenSquare : public basilisk::Square
     {
     public:
-        GreenSquare(const glm::vec2& size, const glm::vec2& position, float rotation);
-        GreenSquare(const glm::vec2& size);
+        GreenSquare(const glm::vec2& size, const glm::vec2& position);
         void Update() override;
     };
 } // namespace game

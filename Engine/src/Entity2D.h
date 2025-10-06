@@ -12,7 +12,7 @@ namespace basilisk
         /// Getter for rotation angle.
         /// </summary>
         /// <returns>Returns angle with X axis. Clockwise is positive.</returns>
-        [[nodiscard]] float GetRotation2D() const;
+        [[nodiscard]] float GetRotation2D(bool isRads = false) const;
 
         /// <summary>
         /// Getter for scale vector
@@ -30,7 +30,8 @@ namespace basilisk
         /// Setter for rotation angle.
         /// </summary>
         /// <param name="angle">Angle to rotate entity. Clockwise is positive.</param>
-        virtual void SetRotation(float angle);
+        /// <param name="isRads">True if is in radians, false if is in degrees</param>
+        virtual void SetRotation(float angle, bool isRads = false);
         /// <summary>
         /// Setter for scale vector.
         /// </summary>
@@ -53,6 +54,6 @@ namespace basilisk
         // These functions are private to make 2D entities use 2D corresponding functions
         [[nodiscard]] glm::vec3 GetPosition() const override;
         [[nodiscard]] glm::vec3 GetScale() const override;
-        [[nodiscard]] glm::vec3 GetRotation() const override;
+        [[nodiscard]] glm::vec3 GetRotation(bool isRads = false) const override;
     };
 } // namespace basilisk

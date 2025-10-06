@@ -8,7 +8,9 @@ namespace basilisk
     Triangle::Triangle(const glm::vec2 center, const glm::vec2 size, const bool isSolid, const basilisk::Color& color) :
         Shape(color, isSolid)
     {
-        Triangle::CalculateVertices(center, size);
+        this->Entity2D::SetPosition(center);
+        this->Entity2D::SetScaling(size);
+
         Triangle::SetVertices();
 
         unsigned int indices[]{
@@ -20,22 +22,15 @@ namespace basilisk
         Triangle::SetPosition(center);
     }
 
-    void Triangle::CalculateVertices(const glm::vec2 center, const glm::vec2 size)
-    {
-        this->Top = glm::vec2(center.x, center.y  + size.y / 2);
-        this->BottomRight = glm::vec2(center.x + size.x / 2, center.y - size.y / 2);
-        this->BottomLeft = glm::vec2(center.x - size.x / 2, center.y - size.y / 2);
-    }
-    
     void Triangle::SetVertices()
     {
         if (!this->IsSolid)
         {
             //@formatter:off
             float vertices[]{
-                this->Top.x,         this->Top.y,         0.0f,        1.0f, 0.0f, 0.0f, 1.0f,  // top right
-                this->BottomRight.x, this->BottomRight.y, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
-                this->BottomLeft.x,  this->BottomLeft.y,  0.0f,        0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
+                0.0f,  0.5f,  0.0f,        1.0f, 0.0f, 0.0f, 1.0f,  // top right
+                0.5f,  -0.5f, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
+                -0.5f, -0.5f, 0.0f,        0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
             };
             //@formatter:on
             this->FillVertices(vertices, sizeof(vertices));
@@ -44,9 +39,9 @@ namespace basilisk
         {
             //@formatter:off
             float vertices[]{
-                this->Top.x,         this->Top.y,         0.0f,  // top right
-                this->BottomRight.x, this->BottomRight.y, 0.0f,  // bottom right
-                this->BottomLeft.x,  this->BottomLeft.y,  0.0f,  // bottom left
+                0.0f,  0.5f,  0.0f,  // top right
+                0.5f,  -0.5f, 0.0f,  // bottom right
+                -0.5f, -0.5f, 0.0f,  // bottom left
             };
             //@formatter:on
             this->FillVertices(vertices, sizeof(vertices));

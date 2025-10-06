@@ -13,8 +13,13 @@ namespace basilisk
         delete[] this->buffers.Indices;
     }
     
-    void Entity::SetRotation(const float angle, const Axis rotationAxis)
+    void Entity::SetRotation(float angle, const Axis rotationAxis, const bool isRads)
     {
+        if (!isRads)
+        {
+            angle = glm::radians(angle) ;         
+        }
+        
         switch (rotationAxis)
         {
         case Axis::X:
@@ -83,8 +88,12 @@ namespace basilisk
         return this->Scaling;
     }
 
-    glm::vec3 Entity::GetRotation() const
+    glm::vec3 Entity::GetRotation(const bool isRads) const
     {
+        if (!isRads)
+        {
+            return glm::degrees(this->Rotation);
+        }
         return this->Rotation;
     }
 
@@ -158,12 +167,5 @@ namespace basilisk
     void Entity::UpdateModelMatrix()
     {
         this->ModelMatrix = this->TranslateMatrix * this->RotationMatrix * this->ScaleMatrix;
-        this->Position = glm::vec3(this->ModelMatrix[3]);
-        const auto rotation = glm::quat_cast(this->ModelMatrix);
-        this->Rotation = glm::eulerAngles(rotation);
-        this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])),
-                         glm::length(glm::vec3(this->ModelMatrix[1])),
-                         glm::length(glm::vec3(this->ModelMatrix[2]))};
-
     }
 } // namespace basilisk

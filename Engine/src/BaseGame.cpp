@@ -1,5 +1,6 @@
 #include "BaseGame.h"
 
+#include <chrono>
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -122,13 +123,20 @@ namespace basilisk
         try
         {
             Init();
+            auto old = std::chrono::system_clock::now();
             
             while (!WindowShouldClose())
             {
+                auto now = std::chrono::system_clock::now();
+                
+                Delta = std::chrono::duration<float>(now - old).count();
+                
                 Update();
                 Renderer.StartDraw();
                 Draw();
                 Renderer.EndDraw();
+                
+                old = std::chrono::system_clock::now();
             }
 
             Close();
@@ -147,5 +155,10 @@ namespace basilisk
     void BaseGame::Close() const
     {
         glfwTerminate();
+    }
+    
+    float BaseGame::GetDelta()
+    {
+        return this->Delta;
     }
 } // namespace basilisk

@@ -1,12 +1,13 @@
 #include "Entity2D.h"
 
+#include "Entity.h"
 #include "Renderer.h"
 
 namespace basilisk
 {
-    float Entity2D::GetRotation2D() const
+    float Entity2D::GetRotation2D(const bool isRads) const
     {
-        return GetRotation().z;
+        return GetRotation(isRads).z;
     }
 
     glm::vec2 Entity2D::GetScale2D() const
@@ -19,9 +20,9 @@ namespace basilisk
         return GetPosition();
     }
 
-    void Entity2D::SetRotation(const float angle)
+    void Entity2D::SetRotation(const float angle, const bool isRads)
     {
-        this->Entity::SetRotation(angle, Axis::Z);
+        this->Entity::SetRotation(angle, Axis::Z, isRads);
     }
 
     void Entity2D::SetScaling(glm::vec2 scaling)
@@ -64,9 +65,9 @@ namespace basilisk
         return Entity::GetScale();
     }
     
-    glm::vec3 Entity2D::GetRotation() const
+    glm::vec3 Entity2D::GetRotation(const bool isRads) const
     {
-        return Entity::GetRotation();
+        return Entity::GetRotation(isRads);
     }
 
 } // namespace basilisk

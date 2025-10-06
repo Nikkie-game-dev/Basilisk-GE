@@ -44,7 +44,8 @@ namespace basilisk
         /// </summary>
         /// <param name="angle">Angle to rotate the entity, clockwise</param>
         /// <param name="rotationAxis">Axis to which rotate</param> 
-        void SetRotation(float angle, Axis rotationAxis);
+        /// <param name="isRads">True if angle is in radians, false if in degrees</param>
+        void SetRotation(float angle, Axis rotationAxis, bool isRads);
 
         /// <summary>
         /// Sets scale vector and scales accordingly.
@@ -91,7 +92,7 @@ namespace basilisk
         /// Getter for the Rotation vector.
         /// </summary>
         /// <returns>Rotation vector</returns>
-        [[nodiscard]] virtual glm::vec3 GetRotation() const;
+        [[nodiscard]] virtual glm::vec3 GetRotation(bool isRads = false) const;
 
         /// <summary>
         /// Returns a Shared pointer to a material object

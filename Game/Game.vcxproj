@@ -114,7 +114,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GreenSquare.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\OrangeSquare.cpp" />
+    <ClCompile Include="src\TestTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build.bat" />
@@ -122,7 +122,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GreenSquare.h" />
-    <ClInclude Include="src\OrangeSquare.h" />
+    <ClInclude Include="src\TestTriangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

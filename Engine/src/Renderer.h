@@ -57,6 +57,8 @@ namespace basilisk
         /// <param name="shaderProg">Process ID from the shader program</param>
         /// <param name="vao">Vertex Array Object</param>
         void Draw(SPProc shaderProg, unsigned int& vao) const;
+        /// <param name="amountIndices">Amount of indices</param>
+        void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices) const;
         
         /// <summary>
         /// Draws solid color objects.

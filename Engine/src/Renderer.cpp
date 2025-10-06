@@ -69,11 +69,11 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao) const
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
     }
 
 

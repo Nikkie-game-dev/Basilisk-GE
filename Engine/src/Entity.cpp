@@ -168,8 +168,6 @@ namespace basilisk
     {
         this->ModelMatrix = this->TranslateMatrix * this->RotationMatrix * this->ScaleMatrix;
         this->Position = glm::vec3(this->ModelMatrix[3]);
-        const auto rotation = glm::quat_cast(this->ModelMatrix);
-        this->Rotation = glm::eulerAngles(rotation);
         this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])),
                          glm::length(glm::vec3(this->ModelMatrix[1])),
                          glm::length(glm::vec3(this->ModelMatrix[2]))};

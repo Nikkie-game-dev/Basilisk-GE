@@ -84,12 +84,15 @@ namespace basilisk
         /// </summary>
         void Close() const;
 
+        float GetDelta();
+        
         Renderer& Renderer;
-
+        
     private:
         std::string WindowName;
         int X;
         int Y;
+        float Delta = 0;
         Window* Window;
     };
 

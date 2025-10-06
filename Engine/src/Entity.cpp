@@ -167,10 +167,5 @@ namespace basilisk
     void Entity::UpdateModelMatrix()
     {
         this->ModelMatrix = this->TranslateMatrix * this->RotationMatrix * this->ScaleMatrix;
-        this->Position = glm::vec3(this->ModelMatrix[3]);
-        this->Scaling = {glm::length(glm::vec3(this->ModelMatrix[0])),
-                         glm::length(glm::vec3(this->ModelMatrix[1])),
-                         glm::length(glm::vec3(this->ModelMatrix[2]))};
-
     }
 } // namespace basilisk

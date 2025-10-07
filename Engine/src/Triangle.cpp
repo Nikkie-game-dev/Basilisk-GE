@@ -15,7 +15,7 @@ namespace basilisk
 
         unsigned int indices[]
         {
-            0, 1, 2, // first triangle
+            0, 1, 2, // triangle
         };
 
         this->FillIndices(indices, sizeof(indices));

@@ -42,7 +42,7 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::GenerateVBs(Buffers &buffers, const bool isSolid)
+    void Renderer::GenerateVBs(Buffers& buffers, bool isSolid)
     {
         glGenVertexArrays(1, &buffers.Vao);
         glBindVertexArray(buffers.Vao);
@@ -69,7 +69,40 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices) const
+    void Renderer::GenerateVBs(Buffers& buffers, const bool isSolid, const bool isTextured)
+    {
+        glGenVertexArrays(1, &buffers.Vao);
+        glBindVertexArray(buffers.Vao);
+
+        glGenBuffers(1, &buffers.Vbo);
+        glGenBuffers(1, &buffers.Ebo);
+
+        glBindBuffer(GL_ARRAY_BUFFER, buffers.Vbo);
+        glBufferData(GL_ARRAY_BUFFER, buffers.AmountVertices, buffers.Vertices, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.Ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffers.AmountIndices, buffers.Indices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float), static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(0);
+
+        if (!isSolid)
+        {
+            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+            glEnableVertexAttribArray(1);
+        }
+
+        if (isTextured)
+        {
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+            glEnableVertexAttribArray(2);
+        }
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+    }
+
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao,     const int amountIndices) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(vao);

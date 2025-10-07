@@ -9,4 +9,4 @@ namespace basilisk
         Sprite();
     };
 
-} // namespace Basilisk
+} // namespace basilisk

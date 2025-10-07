@@ -13,13 +13,12 @@ namespace basilisk
 
         Triangle::SetVertices();
 
-        unsigned int indices[]{
+        unsigned int indices[]
+        {
             0, 1, 2, // first triangle
         };
 
         this->FillIndices(indices, sizeof(indices));
-
-        Triangle::SetPosition(center);
     }
 
     void Triangle::SetVertices()
@@ -27,7 +26,8 @@ namespace basilisk
         if (!this->IsSolid)
         {
             //@formatter:off
-            float vertices[]{
+            float vertices[]
+            {
                 0.0f,  0.5f,  0.0f,        1.0f, 0.0f, 0.0f, 1.0f,  // top right
                 0.5f,  -0.5f, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
                 -0.5f, -0.5f, 0.0f,        0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
@@ -38,7 +38,8 @@ namespace basilisk
         else
         {
             //@formatter:off
-            float vertices[]{
+            float vertices[]
+            {
                 0.0f,  0.5f,  0.0f,  // top right
                 0.5f,  -0.5f, 0.0f,  // bottom right
                 -0.5f, -0.5f, 0.0f,  // bottom left

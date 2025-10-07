@@ -21,21 +21,21 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OrangeSquare.cpp">
+    <ClCompile Include="src\GreenSquare.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GreenSquare.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="src\TestTriangle.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\OrangeSquare.h">
+    <ClInclude Include="src\GreenSquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GreenSquare.h">
+    <ClInclude Include="src\TestTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

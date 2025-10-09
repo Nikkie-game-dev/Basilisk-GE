@@ -31,7 +31,6 @@ namespace game
         else
         {
             SetScaling({scale.x - 1, scale.y - 1});
-            
         }
     }
 }

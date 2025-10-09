@@ -124,18 +124,19 @@ namespace basilisk
         {
             Init();
             auto old = std::chrono::system_clock::now();
-            
+            std::chrono::time_point<std::chrono::system_clock> now = old;
+
             while (!WindowShouldClose())
             {
-                auto now = std::chrono::system_clock::now();
-                
+
                 Delta = std::chrono::duration<float>(now - old).count();
-                
+                now = std::chrono::system_clock::now();
+
                 Update();
                 Renderer.StartDraw();
                 Draw();
                 Renderer.EndDraw();
-                
+
                 old = std::chrono::system_clock::now();
             }
 
@@ -156,7 +157,7 @@ namespace basilisk
     {
         glfwTerminate();
     }
-    
+
     float BaseGame::GetDelta()
     {
         return this->Delta;

@@ -7,13 +7,12 @@ namespace basilisk
     class BASILISK_API TextureImporter
     {
     public:
-        TextureImporter();
         static unsigned int GetTexture(std::string imageDir);
 
     private:
-        unsigned char* ImportImage(std::string imageDir, int& width, int& height);
-        unsigned int GenTexture(unsigned char* data, int& width, int& height);
-        void FreeImage(unsigned char* data);
+        static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height);
+        static unsigned int GenTexture(unsigned char* data, int& width, int& height);
+        static void FreeImage(unsigned char* data);
     };
 
     class FailedTextureLoading : std::exception

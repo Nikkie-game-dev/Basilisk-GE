@@ -2,25 +2,22 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "GL/glew.h"
-#include "GLFW/glfw3.h"
 
 namespace basilisk
 {
-    TextureImporter::TextureImporter()
-    {
-    }
 
     unsigned int TextureImporter::GetTexture(std::string imageDir)
     {
         int width;
         int height;
-        auto data = ImportImage(imageDir, width, height);
-        auto texture = GenTexture(data, width, height);
+        const auto data = ImportImage(imageDir, width, height);
+        const auto texture = GenTexture(data, width, height);
 
         FreeImage(data);
+        return texture;
     }
 
-    unsigned char* TextureImporter::ImportImage(std::string imageDir, int& width, int& height)
+    unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height)
     {
         int colorChannelsAmount;
         auto* data = stbi_load(imageDir.c_str(), &width, &height, &colorChannelsAmount, 0);

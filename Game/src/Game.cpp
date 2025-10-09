@@ -19,6 +19,7 @@ namespace game
 
     void Game::Update()
     {
+        Test2.Delta = this->GetDelta();
         Test2.Update();
         Test.Update();
     }

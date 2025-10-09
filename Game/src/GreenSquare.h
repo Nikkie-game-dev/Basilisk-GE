@@ -8,5 +8,7 @@ namespace game
     public:
         GreenSquare(const glm::vec2& size, const glm::vec2& position);
         void Update() override;
+
+        float Delta = 0;
     };
 } // namespace game

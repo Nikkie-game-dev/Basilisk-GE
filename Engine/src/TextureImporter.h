@@ -21,7 +21,7 @@ namespace basilisk
     public:
         [[nodiscard]] char const* what() const override
         {
-            return "Tried and failed load a texture";
+            return "Tried and failed to load a texture";
         }
     };
 } // namespace basilisk

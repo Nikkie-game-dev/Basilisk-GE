@@ -4,6 +4,9 @@
 
 namespace basilisk
 {
+    /// <summary>
+    /// Static class for texture loading
+    /// </summary>
     class BASILISK_API TextureImporter
     {
     public:

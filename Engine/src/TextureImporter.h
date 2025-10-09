@@ -7,6 +7,11 @@ namespace basilisk
     class BASILISK_API TextureImporter
     {
     public:
+        /// <summary>
+        /// Loads a texture to GPU from an image directory.
+        /// </summary>
+        /// <param name="imageDir">Relative path to image directory</param>
+        /// <returns>Id of loaded texture</returns>
         static unsigned int GetTexture(std::string imageDir);
 
     private:

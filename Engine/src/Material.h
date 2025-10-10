@@ -57,9 +57,7 @@ namespace basilisk
     private:
         bool IsSolid;
         SPProc ShaderProgram = 0;
-        static const char* VertexShaderSolid;
-        static const char* FragShaderSolid;
-        static const char* VertexShaderNotSolid;
-        static const char* FragShaderNotSolid;
+        static const char* VertexShader;
+        static const char* FragShader;
     };
 } // namespace basilisk 

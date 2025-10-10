@@ -30,8 +30,7 @@ namespace basilisk
 
         GLint hasCompiled;
 
-        glShaderSource(vertexShader, 1, this->IsSolid ? &VertexShaderSolid : &VertexShaderNotSolid, nullptr);
-
+        glShaderSource(vertexShader, 1, &VertexShader, nullptr);
         glCompileShader(vertexShader);
 
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
@@ -40,8 +39,7 @@ namespace basilisk
             throw ShaderCompileError(vertexShader);
         }
 
-        glShaderSource(fragmentShader, 1, this->IsSolid ? &FragShaderSolid : &FragShaderNotSolid, nullptr);
-
+        glShaderSource(fragmentShader, 1, &FragShader, nullptr);
         glCompileShader(fragmentShader);
 
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
@@ -85,28 +83,8 @@ namespace basilisk
 
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
-
-    const char* Material::VertexShaderSolid = "#version 330 core\n"
-
-        "layout (location = 0) in vec3 Pos;\n"
-
-        "uniform mat4 matrix;\n"
-
-        "void main()\n"
-        "{\n"
-        " gl_Position = matrix * vec4(Pos, 1.0);\n"
-        "}\0";
-
-
-    const char* Material::FragShaderSolid = "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "uniform vec4 SolidColor;\n"
-        "void main()\n"
-        "{\n"
-        "FragColor = SolidColor;\n"
-        "}\n";
-
-    const char* Material::VertexShaderNotSolid = "#version 330 core\n"
+    
+    const char* Material::VertexShader = "#version 330 core\n"
         "layout (location = 0) in vec3 Pos;\n"
         "layout (location = 1) in vec4 Color;\n"
 
@@ -120,7 +98,7 @@ namespace basilisk
         " OutColor = Color;\n"
         "}\0";
 
-    const char* Material::FragShaderNotSolid = "#version 330 core\n"
+    const char* Material::FragShader = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "in vec4 OutColor;\n"
         "void main()\n"

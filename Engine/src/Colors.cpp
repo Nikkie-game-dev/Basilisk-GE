@@ -11,7 +11,7 @@ namespace basilisk
         this->B = static_cast<float>(color.B) / static_cast<float>(MaxValue);
         this->A = color.A;
     }
-    
+
     Color::Color(const Normalize& normalizedColor)
     {
         this->R = static_cast<unsigned char>(normalizedColor.R * static_cast<float>(MaxValue));

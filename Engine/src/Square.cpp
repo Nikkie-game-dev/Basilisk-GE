@@ -53,10 +53,10 @@ namespace basilisk
             //@formatter:off
             vertices =
             {
-                 0.5f,  0.5f, 0.0f,       color.R, color.G, color.G, color.A, // top right
-                 0.5f, -0.5f, 0.0f,       color.R, color.G, color.G, color.A, // bottom right
-                -0.5f, -0.5f, 0.0f,       color.R, color.G, color.G, color.A, // bottom left
-                -0.5f,  0.5f, 0.0f,       color.R, color.G, color.G, color.A  // top left
+                 0.5f,  0.5f, 0.0f,       color.R, color.G, color.B, color.A, // top right
+                 0.5f, -0.5f, 0.0f,       color.R, color.G, color.B, color.A, // bottom right
+                -0.5f, -0.5f, 0.0f,       color.R, color.G, color.B, color.A, // bottom left
+                -0.5f,  0.5f, 0.0f,       color.R, color.G, color.B, color.A  // top left
             };
             //@formatter:on
         }

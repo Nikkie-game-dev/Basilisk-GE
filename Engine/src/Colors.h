@@ -8,7 +8,29 @@ namespace basilisk
     /// </summary>
     class BASILISK_API Color
     {
+
     public:
+        class Normalize
+        {
+        public:
+            /// <summary>
+            /// Normalize a color
+            /// </summary>
+            /// <param name="color">Color to normalize</param>
+            explicit Normalize(Color color);
+            
+            float R;
+            float G;
+            float B;
+            float A;
+        };
+
+        /// <summary>
+        /// Converts a normalized color into a color.
+        /// </summary>
+        /// <param name="normalizedColor">Color that is within 1.0f and 0.0f</param>
+        Color(const Normalize& normalizedColor);
+        
         /// <summary>
         /// Constructor for Color, with a transparency value. All values are from 0 to 255, except the transparency value that has a maximum
         /// of 1.0f, and a minimum of 0.0f.
@@ -48,6 +70,7 @@ namespace basilisk
         {
         }
 
+
         unsigned char R;
         unsigned char G;
         unsigned char B;
@@ -65,5 +88,6 @@ namespace basilisk
         static const unsigned char MaxValue;
         static const float MaxValueAlpha;
         static const float MinValueAlpha;
+
     };
 } // namespace basilisk

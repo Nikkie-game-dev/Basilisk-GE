@@ -39,7 +39,27 @@ namespace basilisk
         /// Loads an orthogonal projection matrix. Should be called once.
         /// </summary>
         void LoadProjectionMatrix();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bufferID">Id of buffer to fill and bind</param>
+        /// <param name="sizeArray">Size of array to fill buffer with</param>
+        /// <param name="array">Array of data</param>
+        static void BindAndFill(unsigned int bufferID, int sizeArray, float array[]);
         
+        /// <copydoc href="BindAndFill">
+        static void BindAndFill(unsigned int bufferID, int sizeArray, unsigned int array[]);
+
+        /// <summary>
+        /// Sets attribute pointer.
+        /// </summary>
+        /// <param name="index">Index of value to set</param>
+        /// <param name="size">Amount of vertices per value</param>
+        /// <param name="strideAmount">Size of stride</param>
+        /// <param name="start">Start of value</param>
+        static void SetAttribPointer(int index, int size, int strideAmount, int start);
+
 #pragma endregion
         
 #pragma region Drawing
@@ -48,7 +68,7 @@ namespace basilisk
         /// </summary>
         /// <param name="buffers">Buffers to pass to OpenGl</param>
         /// <param name="isSolid">Whether the object being drawn is a solid color or the vertex data includes per vertex color data</param>
-        void GenerateVBs(Buffers& buffers, bool isSolid);
+        void GenerateVBs(Buffers& buffers, bool isTextured);
         
         /// <summary>
         /// Draws non-solid color objects.
@@ -58,14 +78,7 @@ namespace basilisk
         /// <param name="amountIndices">Amount of indices</param>
         void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices) const;
         
-        /// <summary>
-        /// Draws solid color objects.
-        /// </summary>
-        /// <param name="shaderProg">Process ID from the shader program</param>
-        /// <param name="vao">Vertex Array Object</param>
-        /// <param name="amountIndices">Amount of indices</param>
-        /// <param name="color">Solid Color of object</param>
-        void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices, Color color) const;
+        [[deprecated]] void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices, Color color) const;
 
         /// <summary>
         /// Makes Pre-draw calls.

@@ -83,12 +83,14 @@ namespace basilisk
 
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
-    
+
     const char* Material::VertexShader = "#version 330 core\n"
         "layout (location = 0) in vec3 Pos;\n"
         "layout (location = 1) in vec4 Color;\n"
+        "layout (location = 2) in vec2 TexCoord;\n"
 
         "out vec4 OutColor;\n"
+        "out vec2 OutTexCoord;\n"
 
         "uniform mat4 matrix;\n"
 
@@ -96,13 +98,17 @@ namespace basilisk
         "{\n"
         " gl_Position = matrix * vec4(Pos, 1.0);\n"
         " OutColor = Color;\n"
+        " OutTexCoord = TexCoord;\n"
         "}\0";
 
     const char* Material::FragShader = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "in vec4 OutColor;\n"
+    
+        "uniform sampler2D OutTexture;\n"
+    
         "void main()\n"
         "{\n"
-        " FragColor = OutColor;\n"
+        " FragColor = texture(OutTexture, TexCoord) * vec4(OutColor, 1.0);\n"
         "}\n";
 } // namespace basilisk

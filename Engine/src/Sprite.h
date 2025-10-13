@@ -6,7 +6,10 @@ namespace basilisk
     class Sprite : public Entity2D
     {
     public:
-        Sprite();
+        explicit Sprite(const std::string textureDir&);
+        
+    private:
+        unsigned int Texture;
     };
 
 } // namespace basilisk

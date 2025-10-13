@@ -6,7 +6,7 @@
 namespace basilisk
 {
 
-    unsigned int TextureImporter::GetTexture(std::string imageDir)
+    unsigned int TextureImporter::MakeTexture(const std::string& imageDir)
     {
         int width;
         int height;
@@ -33,6 +33,7 @@ namespace basilisk
         unsigned int texture;
 
         glGenTextures(1, &texture);
+        glActiveTexture(GL_TEXTURE0); // check for glUniform1i to assign non default locations
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

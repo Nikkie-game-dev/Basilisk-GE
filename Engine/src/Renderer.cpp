@@ -42,16 +42,16 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::BindAndFill(unsigned int bufferID, int sizeArray, float array[])
+    void Renderer::BindAndFillVbo(unsigned int VboID, int sizeArray, float array[])
     {
-        glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+        glBindBuffer(GL_ARRAY_BUFFER, VboID);
         glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::BindAndFill(unsigned int bufferID, int sizeArray, unsigned int array[])
+    void Renderer::BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[])
     {
-        glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-        glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
     void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
@@ -72,8 +72,8 @@ namespace basilisk
         glGenBuffers(1, &buffers.Vbo);
         glGenBuffers(1, &buffers.Ebo);
 
-        BindAndFill(buffers.Vbo, buffers.AmountVertices, buffers.Vertices);
-        BindAndFill(buffers.Ebo, buffers.AmountIndices, buffers.Indices);
+        BindAndFillVbo(buffers.Vbo, buffers.AmountVertices, buffers.Vertices);
+        BindAndFillEbo(buffers.Ebo, buffers.AmountIndices, buffers.Indices);
 
         //Position
         SetAttribPointer(0, posSize, stride, 0);

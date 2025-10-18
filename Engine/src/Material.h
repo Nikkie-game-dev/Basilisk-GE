@@ -22,9 +22,9 @@ namespace basilisk
         /// <summary>
         /// Constructs materials and returns a shared pointer with the material.
         /// </summary>
-        /// <param name="isSolid">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
+        /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
         /// <returns>Shared pointer with new Material</returns>
-        static std::shared_ptr<Material> New(bool isSolid);
+        static std::shared_ptr<Material> New(bool isTextured);
 
         /// <summary>
         /// Builds and compiles shaders.

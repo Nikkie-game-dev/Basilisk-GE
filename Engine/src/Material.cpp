@@ -15,10 +15,10 @@ namespace basilisk
     {
     }
 
-    std::shared_ptr<Material> Material::New(const bool isSolid)
+    std::shared_ptr<Material> Material::New(const bool isTextured)
     {
         // Makes a new object with a shared pointer.
-        return std::make_shared<Material>(isSolid);
+        return std::make_shared<Material>(isTextured);
     }
 
     void Material::BuildShader()
@@ -40,7 +40,7 @@ namespace basilisk
             std::cerr <<  ShaderCompileError(vertexShader).what() << std::endl;
         }
 
-        glShaderSource(fragmentShader, 1, this->IsTextured ? &FragShaderTextureless : &FragShader, nullptr);
+        glShaderSource(fragmentShader, 1, this->IsTextured ? &FragShader : &FragShaderTextureless, nullptr);
         glCompileShader(fragmentShader);
 
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);

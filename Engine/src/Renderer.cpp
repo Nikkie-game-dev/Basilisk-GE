@@ -56,13 +56,15 @@ namespace basilisk
 
     void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
     {
-        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * sizeof(float), (void*)start);
+        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)), (void*)(start * sizeof(float)));
         glEnableVertexAttribArray(index);
     }
 
     void Renderer::GenerateVBs(Buffers& buffers, const bool isTextured)
     {
         constexpr int posSize = 3;
+        const int textureSize = isTextured ? 2 : 0;
+        const int stride = posSize + Color::ColorParamsAmount + textureSize;
 
         glGenVertexArrays(1, &buffers.Vao);
         glBindVertexArray(buffers.Vao);
@@ -74,15 +76,14 @@ namespace basilisk
         BindAndFill(buffers.Ebo, buffers.AmountIndices, buffers.Indices);
 
         //Position
-        SetAttribPointer(0, posSize, posSize, 0);
+        SetAttribPointer(0, posSize, stride, 0);
 
         //Color
-        SetAttribPointer(1, Color::ColorParamsAmount, posSize + Color::ColorParamsAmount, posSize);
-        
+        SetAttribPointer(1, Color::ColorParamsAmount, stride, posSize);
+
         if (isTextured)
         {
-            constexpr int textureSize = 2;
-            SetAttribPointer(2, textureSize, posSize + Color::ColorParamsAmount + textureSize, posSize + Color::ColorParamsAmount);
+            SetAttribPointer(2, textureSize, stride, posSize + Color::ColorParamsAmount);
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);

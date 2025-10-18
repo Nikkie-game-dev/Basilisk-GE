@@ -43,13 +43,13 @@ namespace basilisk
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bufferID">Id of buffer to fill and bind</param>
+        /// <param name="VboID">Id of buffer to fill and bind</param>
         /// <param name="sizeArray">Size of array to fill buffer with</param>
         /// <param name="array">Array of data</param>
-        static void BindAndFill(unsigned int bufferID, int sizeArray, float array[]);
+        static void BindAndFillVbo(unsigned int VboID, int sizeArray, float array[]);
         
         /// <copydoc href="BindAndFill">
-        static void BindAndFill(unsigned int bufferID, int sizeArray, unsigned int array[]);
+        static void BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[]);
 
         /// <summary>
         /// Sets attribute pointer.

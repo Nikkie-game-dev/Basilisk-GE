@@ -111,6 +111,6 @@ namespace basilisk
     
         "void main()\n"
         "{\n"
-        " FragColor = texture(OutTexture, TexCoord) * vec4(OutColor, 1.0);\n"
+        " FragColor = texture(OutTexture, TexCoord) * OutColor;\n"
         "}\n";
 } // namespace basilisk

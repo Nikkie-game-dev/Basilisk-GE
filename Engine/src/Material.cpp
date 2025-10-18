@@ -1,6 +1,7 @@
 #include "Material.h"
 
 #include <GL/glew.h>
+#include <iostream>
 
 #include "RenderException.h"
 #include "glm/gtc/type_ptr.hpp"
@@ -36,7 +37,7 @@ namespace basilisk
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(vertexShader);
+            std::cerr <<  ShaderCompileError(vertexShader).what() << std::endl;
         }
 
         glShaderSource(fragmentShader, 1, &FragShader, nullptr);
@@ -45,7 +46,7 @@ namespace basilisk
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(fragmentShader);
+            std::cerr <<  ShaderCompileError(fragmentShader).what() << std::endl;
         }
 
         /*Shader program attachment and linking*/
@@ -56,7 +57,7 @@ namespace basilisk
         glGetProgramiv(this->ShaderProgram, GL_LINK_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(this->ShaderProgram);
+            std::cerr <<  ShaderCompileError(this->ShaderProgram).what() << std::endl;
         }
 
         /*Deletion*/
@@ -104,6 +105,7 @@ namespace basilisk
     const char* Material::FragShader = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "in vec4 OutColor;\n"
+        "in vec2 TexCoord;\n"
     
         "uniform sampler2D OutTexture;\n"
     

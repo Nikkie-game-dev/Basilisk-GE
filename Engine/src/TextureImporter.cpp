@@ -1,5 +1,7 @@
 #include "TextureImporter.h"
 #define STB_IMAGE_IMPLEMENTATION
+#include <filesystem>
+
 #include "stb_image.h"
 #include "GL/glew.h"
 
@@ -20,6 +22,12 @@ namespace basilisk
     unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height)
     {
         int colorChannelsAmount;
+        
+        if (!std::filesystem::exists(imageDir))
+        {
+            throw ImageNotFound();
+        }
+        
         auto* data = stbi_load(imageDir.c_str(), &width, &height, &colorChannelsAmount, 0);
 
         if (!data)

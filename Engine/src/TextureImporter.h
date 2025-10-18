@@ -1,4 +1,5 @@
 #pragma once
+#include <filesystem>
 #include <string>
 #include "Export.h"
 
@@ -30,6 +31,19 @@ namespace basilisk
         [[nodiscard]] char const* what() const override
         {
             return "Tried and failed to load a texture";
+        }
+    };
+
+    class ImageNotFound : std::exception
+    {
+    public:
+        [[nodiscard]] char const* what() const override
+        {
+            std::string error = "Image has not been found, files the Engine can see: ";
+            for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()))
+                         error += entry.path().string();
+            
+            return error.c_str();
         }
     };
 } // namespace basilisk

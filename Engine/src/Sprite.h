@@ -3,11 +3,12 @@
 
 namespace basilisk
 {
-    class Sprite : public Entity2D
+    class BASILISK_API Sprite : public Entity2D
     {
     public:
-        explicit Sprite(const std::string& textureDir);
-        
+        explicit Sprite(const std::string& textureDir, glm::vec2 center, glm::vec2 size);
+        void Init() override;
+
     private:
         unsigned int Texture;
     };

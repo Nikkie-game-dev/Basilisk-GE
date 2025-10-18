@@ -1,11 +1,15 @@
 #include "Sprite.h"
 
+#include "Renderer.h"
 #include "TextureImporter.h"
 
 namespace basilisk
 {
-    Sprite::Sprite(const std::string& textureDir)
+    Sprite::Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size)
     {
+        this->Entity2D::SetPosition(center);
+        this->Entity2D::SetScaling(size);
+        
         this->Texture = TextureImporter::MakeTexture(textureDir);
 
         float vertices[] = 
@@ -25,5 +29,19 @@ namespace basilisk
 
         this->FillVertices(vertices, sizeof(vertices));
         this->FillIndices(indices, sizeof(indices));
+    }
+    void Sprite::Init()
+    {
+        const auto mat = this->GetMaterial();
+        this->UpdateBuffers();
+
+        mat->BuildShader();
+
+        if (!mat->IsProjectionSent)
+        {
+            Renderer::GetInstance().LoadProjectionMatrix();
+            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
+            mat->IsProjectionSent = true;
+        }
     }
 }

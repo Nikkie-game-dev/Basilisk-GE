@@ -43,7 +43,7 @@ namespace basilisk
         glShaderSource(fragmentShader, 1, this->IsTextured ? &FragShader : &FragShaderTextureless, nullptr);
         glCompileShader(fragmentShader);
 
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
+            glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
             std::cerr <<  ShaderCompileError(fragmentShader).what() << std::endl;
@@ -57,7 +57,7 @@ namespace basilisk
         glGetProgramiv(this->ShaderProgram, GL_LINK_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            std::cerr <<  ShaderCompileError(this->ShaderProgram).what() << std::endl;
+            std::cerr <<  ProgramCompileError(this->ShaderProgram).what() << std::endl;
         }
 
         /*Deletion*/
@@ -105,13 +105,13 @@ namespace basilisk
     const char* Material::FragShader = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "in vec4 OutColor;\n"
-        "in vec2 TexCoord;\n"
+        "in vec2 OutTexCoord;\n"
     
         "uniform sampler2D OutTexture;\n"
     
         "void main()\n"
         "{\n"
-        " FragColor = OutColor;\n"
+        " FragColor = texture(OutTexture, OutTexCoord) * OutColor;\n"
         "}\n";
     
     const char* Material::FragShaderTextureless = "#version 330 core\n"

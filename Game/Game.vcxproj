@@ -115,6 +115,7 @@
     <ClCompile Include="src\GreenSquare.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TestTriangle.cpp" />
+    <ClCompile Include="src\TextureTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build.bat" />
@@ -123,6 +124,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GreenSquare.h" />
     <ClInclude Include="src\TestTriangle.h" />
+    <ClInclude Include="src\TextureTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

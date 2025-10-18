@@ -16,8 +16,8 @@ namespace basilisk
         /// <summary>
         /// Constructor for material. It is not recommended to use this function, but use New().
         /// </summary>
-        /// <param name="isSolid">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
-        explicit Material(bool isSolid);
+        /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
+        explicit Material(bool isTextured);
 
         /// <summary>
         /// Constructs materials and returns a shared pointer with the material.
@@ -39,10 +39,10 @@ namespace basilisk
         [[nodiscard]] SPProc GetShaderProgram() const;
 
         /// <summary>
-        /// Getter for IsSolid Flag
+        /// Getter for IsTextured Flag
         /// </summary>
-        /// <returns>If the material is supplied by the vertices or if it is supplied by the program</returns>
-        [[nodiscard]] bool GetIsSolid() const;
+        /// <returns>If the material is set with a texture</returns>
+        [[nodiscard]] bool GetIsTextured() const;
         
         /// <summary>
         /// Sends a matrix to OpenGl.
@@ -55,9 +55,10 @@ namespace basilisk
         bool IsViewSent = false;
         
     private:
-        bool IsSolid;
+        bool IsTextured;
         SPProc ShaderProgram = 0;
         static const char* VertexShader;
         static const char* FragShader;
+        static const char* FragShaderTextureless;
     };
 } // namespace basilisk 

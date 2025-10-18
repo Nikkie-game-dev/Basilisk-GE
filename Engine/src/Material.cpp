@@ -10,8 +10,8 @@ namespace basilisk
 {
     using ShaderProc = unsigned int;
 
-    Material::Material(const bool isSolid) :
-        IsSolid(isSolid)
+    Material::Material(const bool isTextured) :
+        IsTextured(isTextured)
     {
     }
 
@@ -40,7 +40,7 @@ namespace basilisk
             std::cerr <<  ShaderCompileError(vertexShader).what() << std::endl;
         }
 
-        glShaderSource(fragmentShader, 1, &FragShader, nullptr);
+        glShaderSource(fragmentShader, 1, this->IsTextured ? &FragShaderTextureless : &FragShader, nullptr);
         glCompileShader(fragmentShader);
 
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
@@ -71,9 +71,9 @@ namespace basilisk
         return this->ShaderProgram;
     }
 
-    bool Material::GetIsSolid() const
+    bool Material::GetIsTextured() const
     {
-        return IsSolid;
+        return IsTextured;
     }
 
     void Material::UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const
@@ -111,6 +111,15 @@ namespace basilisk
     
         "void main()\n"
         "{\n"
-        " FragColor = texture(OutTexture, TexCoord) * OutColor;\n"
+        " FragColor = OutColor;\n"
+        "}\n";
+    
+    const char* Material::FragShaderTextureless = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "in vec4 OutColor;\n"
+    
+        "void main()\n"
+        "{\n"
+        " FragColor = OutColor;\n"
         "}\n";
 } // namespace basilisk

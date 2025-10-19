@@ -42,27 +42,48 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::GenerateVBs(Buffers &buffers, const bool isSolid)
+    void Renderer::BindAndFillVbo(unsigned int VboID, int sizeArray, float array[])
     {
+        glBindBuffer(GL_ARRAY_BUFFER, VboID);
+        glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
+    }
+
+    void Renderer::BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[])
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
+    }
+
+    void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
+    {
+        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)), (void*)(start * sizeof(float)));
+        glEnableVertexAttribArray(index);
+    }
+
+    void Renderer::GenerateVBs(Buffers& buffers, const bool isTextured)
+    {
+        constexpr int posSize = 3;
+        const int textureSize = isTextured ? 2 : 0;
+        const int stride = posSize + Color::ColorParamsAmount + textureSize;
+
         glGenVertexArrays(1, &buffers.Vao);
         glBindVertexArray(buffers.Vao);
 
         glGenBuffers(1, &buffers.Vbo);
         glGenBuffers(1, &buffers.Ebo);
 
-        glBindBuffer(GL_ARRAY_BUFFER, buffers.Vbo);
-        glBufferData(GL_ARRAY_BUFFER, buffers.AmountVertices, buffers.Vertices, GL_STATIC_DRAW);
+        BindAndFillVbo(buffers.Vbo, buffers.AmountVertices, buffers.Vertices);
+        BindAndFillEbo(buffers.Ebo, buffers.AmountIndices, buffers.Indices);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.Ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffers.AmountIndices, buffers.Indices, GL_STATIC_DRAW);
+        //Position
+        SetAttribPointer(0, posSize, stride, 0);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, isSolid ? 3 * sizeof(float) : 7 * sizeof(float), static_cast<void*>(nullptr));
-        glEnableVertexAttribArray(0);
+        //Color
+        SetAttribPointer(1, Color::ColorParamsAmount, stride, posSize);
 
-        if (!isSolid)
+        if (isTextured)
         {
-            glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
-            glEnableVertexAttribArray(1);
+            SetAttribPointer(2, textureSize, stride, posSize + Color::ColorParamsAmount);
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -76,24 +97,11 @@ namespace basilisk
         glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
     }
 
-
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices, const Color color) const
-    {
-        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
-        glUseProgram(shaderProg);
-        glUniform4f(vertexColorLocation,
-                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
-                    color.A);
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
-    }
-
     void Renderer::StartDraw()
     {
         glClear(GL_COLOR_BUFFER_BIT);
     }
+
     void Renderer::EndDraw() const
     {
         glfwSwapBuffers(glfwGetCurrentContext());
@@ -104,7 +112,7 @@ namespace basilisk
     {
         this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);
     }
-    
+
     Renderer& Renderer::GetInstance()
     {
         static Renderer instance;
@@ -126,7 +134,7 @@ namespace basilisk
     {
         return this->CameraPos;
     }
-    
+
     glm::mat4 Renderer::GetProjectionMatrix() const
     {
         return this->ProjectionMatrix;
@@ -149,9 +157,23 @@ namespace basilisk
         Window(nullptr)
     {
         const auto invDirection = glm::normalize(CameraPos - CameraTarget);
-        const auto right = glm::normalize(glm::cross(glm::vec3(0,1.0,0), invDirection));
+        const auto right = glm::normalize(glm::cross(glm::vec3(0, 1.0, 0), invDirection));
         this->CameraUp = glm::cross(invDirection, right);
     }
 
 
+#pragma region deprecated
+    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices, const Color color) const
+    {
+        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
+        glUseProgram(shaderProg);
+        glUniform4f(vertexColorLocation,
+                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
+                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
+                    color.A);
+        glBindVertexArray(vao);
+        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
+    }
+#pragma endregion
 } // basilisk

@@ -31,6 +31,32 @@ namespace basilisk
     private:
         std::string Error;
     };
+    
+    /// <summary>
+    /// The Shader could not compile. Call What() for error message.
+    /// </summary>
+    class ProgramCompileError : std::exception
+    {
+    public:
+        using ShaderProc = unsigned int;
+
+        explicit ProgramCompileError(const ShaderProc shader)
+        {
+            constexpr int infoBufferSize = 512;
+
+            char infoLog[infoBufferSize];
+            glGetProgramInfoLog(shader, infoBufferSize, nullptr, infoLog);
+
+            Error = "Shader failed to compile: \n" + std::string(infoLog);
+        }
+        [[nodiscard]] char const* what() const override
+        {
+            return Error.c_str();
+        }
+
+    private:
+        std::string Error;
+    };
 
     /// <summary>
     /// GLFW Would not be initialized.

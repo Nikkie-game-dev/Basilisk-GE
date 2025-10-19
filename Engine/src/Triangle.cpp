@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+#include <array>
+
 #include "Renderer.h"
 
 namespace basilisk
@@ -15,7 +17,7 @@ namespace basilisk
 
         unsigned int indices[]
         {
-            0, 1, 2, // first triangle
+            0, 1, 2, // triangle
         };
 
         this->FillIndices(indices, sizeof(indices));
@@ -23,29 +25,36 @@ namespace basilisk
 
     void Triangle::SetVertices()
     {
+        constexpr int amountVert = 3;
+        constexpr int amountDim = 3;
+
+        std::array<float, amountVert * (amountDim + Color::ColorParamsAmount)> vertices;
+
         if (!this->IsSolid)
         {
             //@formatter:off
-            float vertices[]
+            vertices = 
             {
-                0.0f,  0.5f,  0.0f,        1.0f, 0.0f, 0.0f, 1.0f,  // top right
-                0.5f,  -0.5f, 0.0f,        0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
-                -0.5f, -0.5f, 0.0f,        0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
+                0.0f,  0.5f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,  // top right
+                0.5f,  -0.5f, 0.0f,    0.0f, 1.0f, 0.0f, 1.0f,  // bottom right
+                -0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f, 1.0f,  // bottom left
             };
             //@formatter:on
-            this->FillVertices(vertices, sizeof(vertices));
         }
         else
         {
+            const auto color = Color::Normalize(this->Color);
             //@formatter:off
-            float vertices[]
+            vertices = 
             {
-                0.0f,  0.5f,  0.0f,  // top right
-                0.5f,  -0.5f, 0.0f,  // bottom right
-                -0.5f, -0.5f, 0.0f,  // bottom left
+                 0.0f,  0.5f, 0.0f,   color.R, color.G, color.B, color.A, // top right
+                 0.5f, -0.5f, 0.0f,   color.R, color.G, color.B, color.A, // bottom right
+                -0.5f, -0.5f, 0.0f,   color.R, color.G, color.B, color.A, // bottom left
             };
             //@formatter:on
-            this->FillVertices(vertices, sizeof(vertices));
         }
+
+        this->FillVertices(vertices.data(), sizeof(vertices));
+
     }
 }

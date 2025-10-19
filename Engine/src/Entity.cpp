@@ -114,7 +114,7 @@ namespace basilisk
     
     void Entity::UpdateBuffers()
     {
-        Renderer::GetInstance().GenerateVBs(buffers, this->GetMaterial()->GetIsSolid());
+        Renderer::GetInstance().GenerateVBs(buffers, this->Mat->GetIsTextured());
         
     }
     

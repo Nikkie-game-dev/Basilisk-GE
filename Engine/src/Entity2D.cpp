@@ -43,28 +43,22 @@ namespace basilisk
         renderer.UpdateViewMatrix();
         const auto matrix = renderer.GetProjectionMatrix() * renderer.GetViewMatrix() * this->ModelMatrix;
         mat->UpdateGLMatrix(matrix, "matrix");
+        
+        renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.AmountIndices);
 
-        if (mat->GetIsSolid())
-        {
-            renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.AmountIndices, this->Color);
-        }
-        else
-        {
-            renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.AmountIndices);
-        }
 
     }
-    
+
     glm::vec3 Entity2D::GetPosition() const
     {
         return Entity::GetPosition();
     }
-    
+
     glm::vec3 Entity2D::GetScale() const
     {
         return Entity::GetScale();
     }
-    
+
     glm::vec3 Entity2D::GetRotation(const bool isRads) const
     {
         return Entity::GetRotation(isRads);

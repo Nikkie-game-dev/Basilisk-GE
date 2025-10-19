@@ -3,6 +3,7 @@
 #include "TestTriangle.h"
 #include "GreenSquare.h"
 #include "Basilisk/Renderer.h"
+#include "TextureTest.h"
 
 
 namespace game
@@ -19,6 +20,7 @@ namespace game
 
         TestTriangle Test;
         GreenSquare Test2;
+        TextureTest Test3;
 
     };
 }

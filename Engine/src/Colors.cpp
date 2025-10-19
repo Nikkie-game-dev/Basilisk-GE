@@ -4,6 +4,22 @@ namespace basilisk
 {
     // Color palette from https://coolors.co/palette/f00314-ff8019-fae603-28e10a-3bb5ff-0500c7-5c03fa-de00ed
 
+    Color::Normalize::Normalize(const Color color)
+    {
+        this->R = static_cast<float>(color.R) / static_cast<float>(MaxValue);
+        this->G = static_cast<float>(color.G) / static_cast<float>(MaxValue);
+        this->B = static_cast<float>(color.B) / static_cast<float>(MaxValue);
+        this->A = color.A;
+    }
+
+    Color::Color(const Normalize& normalizedColor)
+    {
+        this->R = static_cast<unsigned char>(normalizedColor.R * static_cast<float>(MaxValue));
+        this->G = static_cast<unsigned char>(normalizedColor.G * static_cast<float>(MaxValue));
+        this->B = static_cast<unsigned char>(normalizedColor.B * static_cast<float>(MaxValue));
+        this->A = normalizedColor.A;
+    }
+
     const Color Color::Red = Color(255, 3, 20);
     const Color Color::Orange = Color(255, 128, 25);
     const Color Color::Yellow = Color(250, 230, 3);

@@ -1,6 +1,7 @@
 #include "Material.h"
 
 #include <GL/glew.h>
+#include <iostream>
 
 #include "RenderException.h"
 #include "glm/gtc/type_ptr.hpp"
@@ -9,15 +10,15 @@ namespace basilisk
 {
     using ShaderProc = unsigned int;
 
-    Material::Material(const bool isSolid) :
-        IsSolid(isSolid)
+    Material::Material(const bool isTextured) :
+        IsTextured(isTextured)
     {
     }
 
-    std::shared_ptr<Material> Material::New(const bool isSolid)
+    std::shared_ptr<Material> Material::New(const bool isTextured)
     {
         // Makes a new object with a shared pointer.
-        return std::make_shared<Material>(isSolid);
+        return std::make_shared<Material>(isTextured);
     }
 
     void Material::BuildShader()
@@ -30,24 +31,22 @@ namespace basilisk
 
         GLint hasCompiled;
 
-        glShaderSource(vertexShader, 1, this->IsSolid ? &VertexShaderSolid : &VertexShaderNotSolid, nullptr);
-
+        glShaderSource(vertexShader, 1, &VertexShader, nullptr);
         glCompileShader(vertexShader);
 
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(vertexShader);
+            std::cerr <<  ShaderCompileError(vertexShader).what() << std::endl;
         }
 
-        glShaderSource(fragmentShader, 1, this->IsSolid ? &FragShaderSolid : &FragShaderNotSolid, nullptr);
-
+        glShaderSource(fragmentShader, 1, this->IsTextured ? &FragShader : &FragShaderTextureless, nullptr);
         glCompileShader(fragmentShader);
 
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
+            glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(fragmentShader);
+            std::cerr <<  ShaderCompileError(fragmentShader).what() << std::endl;
         }
 
         /*Shader program attachment and linking*/
@@ -58,7 +57,7 @@ namespace basilisk
         glGetProgramiv(this->ShaderProgram, GL_LINK_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            throw ShaderCompileError(this->ShaderProgram);
+            std::cerr <<  ProgramCompileError(this->ShaderProgram).what() << std::endl;
         }
 
         /*Deletion*/
@@ -72,9 +71,9 @@ namespace basilisk
         return this->ShaderProgram;
     }
 
-    bool Material::GetIsSolid() const
+    bool Material::GetIsTextured() const
     {
-        return IsSolid;
+        return IsTextured;
     }
 
     void Material::UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const
@@ -86,31 +85,13 @@ namespace basilisk
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    const char* Material::VertexShaderSolid = "#version 330 core\n"
-
-        "layout (location = 0) in vec3 Pos;\n"
-
-        "uniform mat4 matrix;\n"
-
-        "void main()\n"
-        "{\n"
-        " gl_Position = matrix * vec4(Pos, 1.0);\n"
-        "}\0";
-
-
-    const char* Material::FragShaderSolid = "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "uniform vec4 SolidColor;\n"
-        "void main()\n"
-        "{\n"
-        "FragColor = SolidColor;\n"
-        "}\n";
-
-    const char* Material::VertexShaderNotSolid = "#version 330 core\n"
+    const char* Material::VertexShader = "#version 330 core\n"
         "layout (location = 0) in vec3 Pos;\n"
         "layout (location = 1) in vec4 Color;\n"
+        "layout (location = 2) in vec2 TexCoord;\n"
 
         "out vec4 OutColor;\n"
+        "out vec2 OutTexCoord;\n"
 
         "uniform mat4 matrix;\n"
 
@@ -118,11 +99,25 @@ namespace basilisk
         "{\n"
         " gl_Position = matrix * vec4(Pos, 1.0);\n"
         " OutColor = Color;\n"
+        " OutTexCoord = TexCoord;\n"
         "}\0";
 
-    const char* Material::FragShaderNotSolid = "#version 330 core\n"
+    const char* Material::FragShader = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "in vec4 OutColor;\n"
+        "in vec2 OutTexCoord;\n"
+    
+        "uniform sampler2D OutTexture;\n"
+    
+        "void main()\n"
+        "{\n"
+        " FragColor = texture(OutTexture, OutTexCoord) * OutColor;\n"
+        "}\n";
+    
+    const char* Material::FragShaderTextureless = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "in vec4 OutColor;\n"
+    
         "void main()\n"
         "{\n"
         " FragColor = OutColor;\n"

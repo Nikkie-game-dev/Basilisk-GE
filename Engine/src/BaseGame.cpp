@@ -10,7 +10,7 @@
 namespace basilisk
 {
 
-    BaseGame::BaseGame(const std::string& windowName, const int sizeX, const int sizeY) :
+    BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY)
     {
         try

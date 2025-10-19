@@ -4,11 +4,11 @@
 
 namespace basilisk
 {
-    Window::Window(const std::string& windowName, const glm::ivec2 size) :
+    Window::Window(const char* windowName, const glm::ivec2 size) :
         Size(size)
     {
         /* Create a windowed mode window and its OpenGL context */
-        this->WindowP = glfwCreateWindow(size.x, size.y, windowName.c_str(), nullptr, nullptr);
+        this->WindowP = glfwCreateWindow(size.x, size.y, windowName, nullptr, nullptr);
         
         if (!this->WindowP)
         {

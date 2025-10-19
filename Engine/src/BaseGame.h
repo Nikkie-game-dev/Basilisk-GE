@@ -2,8 +2,6 @@
 
 #include "Export.h"
 
-#include <string>
-
 namespace basilisk
 {
     class Window;
@@ -21,7 +19,7 @@ namespace basilisk
         /// <param name="windowName">Name to set the window</param>
         /// <param name="sizeX">Width in pixels for the size of the window</param>
         /// <param name="sizeY">Height in pixels for the size of the window</param>
-        BaseGame(const std::string& windowName, int sizeX, int sizeY);
+        BaseGame(const char* windowName, int sizeX, int sizeY);
 
         virtual ~BaseGame();
 
@@ -89,7 +87,7 @@ namespace basilisk
         Renderer& Renderer;
         
     private:
-        std::string WindowName;
+        const char* WindowName;
         int X;
         int Y;
         float Delta = 0;

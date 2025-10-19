@@ -1,6 +1,6 @@
 ::1 == solution dir, 2 == outdir, 3 == project dir, 4 == config
 @echo "Copying resources"
-xcopy "%~3res\assets\" "%~2res\" /i/y/s
+robocopy "%~1res" "%~2res" /E /XD "%~1res\raw"
 
 @echo "Copying dlls"
 xcopy "%~3lib\*.dll" "%~2" /i/y/s

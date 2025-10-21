@@ -1,5 +1,7 @@
 #include "TextureTest.h"
 
+#include <iostream>
+
 namespace game
 {
     TextureTest::TextureTest()
@@ -24,8 +26,8 @@ namespace game
         {
             goLeft = false;
         }
-
+        
         auto pos = this->GetPosition2D();
-        this->SetPosition({pos.x + (goLeft ? 10.0f : -10.0f), pos.y});
+        this->SetPosition({pos.x + (goLeft ? 100.0f * this->Delta : -100.0f * this->Delta), pos.y});
     }
 }

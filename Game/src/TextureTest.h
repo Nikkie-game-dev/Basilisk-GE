@@ -13,5 +13,7 @@ namespace game
         void Init() override;
         void Update() override;
 
+        float Delta = 0;
+
     };
 } // namespace game 

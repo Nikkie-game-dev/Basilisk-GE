@@ -2,8 +2,8 @@
 
 namespace game
 {
-    TextureTest::TextureTest() :
-        Sprite(R"(bin\Debug\res\Trans-Flag.png)", {300, 300}, {100, 100})
+    TextureTest::TextureTest()
+        : Sprite(R"(res\assets\Trans-Flag.png)", {300,300} , {100, 100})
     {
     }
 

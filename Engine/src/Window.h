@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <glm/glm.hpp>
-
 #include "Export.h"
 
 namespace basilisk
@@ -12,7 +11,7 @@ namespace basilisk
     {
     public:
         Window() = default;
-        Window(const std::string& windowName, glm::ivec2 size);
+        Window(const char* windowName, glm::ivec2 size);
 
         /// <summary>
         /// Getter for the window pointer

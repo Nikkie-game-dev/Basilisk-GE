@@ -103,7 +103,7 @@
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)Build.bat "$(SolutionDir)" "$(OutDir)" "$(ProjectDir)" "$(Configuration)"</Command>
+      <Command>"$(ProjectDir)Build.bat" "$(SolutionDir)" "$(OutDir)" "$(ProjectDir)" "$(Configuration)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

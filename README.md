@@ -16,7 +16,7 @@ checks and auto-pointers.
 
 # Installation
 Clone from source and compile with MSBuild, then Build.bat should generate a release DLL in the project root folder. 
-Use and install [glm](https://github.com/g-truc/glm).
+Use and install [glm](https://github.com/g-truc/glm). If you are using the example as base, you must install it in the .../libs/include/ folder.
 
 Optionally download directly from releases.
 

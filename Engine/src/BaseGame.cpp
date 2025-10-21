@@ -130,14 +130,14 @@ namespace basilisk
             {
 
                 Delta = std::chrono::duration<float>(now - old).count();
-                now = std::chrono::system_clock::now();
+                old = std::chrono::system_clock::now();
 
                 Update();
                 Renderer.StartDraw();
                 Draw();
                 Renderer.EndDraw();
 
-                old = std::chrono::system_clock::now();
+                now = std::chrono::system_clock::now();
             }
 
             Close();

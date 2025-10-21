@@ -33,7 +33,7 @@ namespace basilisk
     };
     
     /// <summary>
-    /// The Shader could not compile. Call What() for error message.
+    /// The program could not compile. Call What() for error message.
     /// </summary>
     class ProgramCompileError : std::exception
     {

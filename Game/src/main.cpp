@@ -2,6 +2,6 @@
 
 int main()
 {
-    auto game = game::Game("Test", 600, 600);
+    auto game = game::Game("Test", 800, 800);
     game.Run();
 }

@@ -28,6 +28,7 @@ namespace game
         Test2.Delta = this->GetDelta();
         Test2.Update();
         Test.Update();
+        Test3.Update();
     }
 
     void Game::Draw()

@@ -15,15 +15,19 @@ namespace basilisk
     {
         try
         {
-            Renderer.InitGLFW();
 
-            Renderer.SetGlVersion();
+            this->Renderer.InitGLFW();
+
+            this->Renderer.SetGlVersion();
 
             this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+            
+            this->WindowName = windowName;
 
-            Renderer.InitGL();
+            this->Renderer.InitGL();
 
             Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
         }
         catch (std::exception& error)
         {
@@ -44,6 +48,7 @@ namespace basilisk
             this->WindowName = other.WindowName;
             this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
             Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
         }
         catch (std::exception& error)
         {
@@ -63,6 +68,7 @@ namespace basilisk
             other.Y = 0;
             other.WindowName = "";
             Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
         }
         catch (std::exception& error)
         {
@@ -81,6 +87,7 @@ namespace basilisk
                 this->WindowName = other.WindowName;
                 this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
                 Renderer.SetWindowRef(*this->Window);
+                this->InputSystem = Input(this->Window);
             }
         }
         catch (std::exception& error)
@@ -109,6 +116,7 @@ namespace basilisk
                 other.WindowName = "";
 
                 Renderer.SetWindowRef(*this->Window);
+                this->InputSystem = Input(this->Window);
             }
         }
         catch (std::exception& error)
@@ -122,25 +130,25 @@ namespace basilisk
     {
         try
         {
-            Init();
+            this->Init();
             auto old = std::chrono::system_clock::now();
             std::chrono::time_point<std::chrono::system_clock> now = old;
 
-            while (!WindowShouldClose())
+            while (!this->WindowShouldClose())
             {
 
-                Delta = std::chrono::duration<float>(now - old).count();
+                this->Delta = std::chrono::duration<float>(now - old).count();
                 old = std::chrono::system_clock::now();
 
-                Update();
-                Renderer.StartDraw();
-                Draw();
-                Renderer.EndDraw();
+                this->Update();
+                this->Renderer.StartDraw();
+                this->Draw();
+                this->Renderer.EndDraw();
 
                 now = std::chrono::system_clock::now();
             }
 
-            Close();
+            this->Close();
         }
         catch (std::exception& error)
         {
@@ -150,7 +158,7 @@ namespace basilisk
 
     bool BaseGame::WindowShouldClose() const
     {
-        return Window->WindowShouldClose();
+        return this->Window->WindowShouldClose();
     }
 
     void BaseGame::Close() const

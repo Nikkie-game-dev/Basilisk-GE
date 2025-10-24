@@ -2,7 +2,7 @@
 #include "Basilisk/BaseGame.h"
 #include "TestTriangle.h"
 #include "GreenSquare.h"
-#include "Basilisk/Renderer.h"
+#include "InputTest.h"
 #include "TextureTest.h"
 
 
@@ -21,6 +21,7 @@ namespace game
         TestTriangle Test;
         GreenSquare Test2;
         TextureTest Test3;
+        InputTest Test4;
 
     };
 }

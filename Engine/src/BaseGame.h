@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Export.h"
+#include "Input.h"
 
 namespace basilisk
 {
@@ -84,6 +85,8 @@ namespace basilisk
 
         float GetDelta();
         
+        Input& GetInputSystem();
+        
         Renderer& Renderer;
         
     private:
@@ -92,6 +95,7 @@ namespace basilisk
         int Y;
         float Delta = 0;
         Window* Window;
+        Input InputSystem;
     };
 
 } // namespace basilisk

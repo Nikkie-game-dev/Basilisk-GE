@@ -11,7 +11,7 @@ namespace basilisk
 {
 
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
-        Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY)
+        Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
         try
         {
@@ -26,8 +26,9 @@ namespace basilisk
 
             this->Renderer.InitGL();
 
-            Renderer.SetWindowRef(*this->Window);
             this->Renderer.SetWindowRef(*this->Window);
+
+            this->InputSystem = Input(this->Window);
         }
         catch (std::exception& error)
         {
@@ -41,14 +42,15 @@ namespace basilisk
     }
 
     BaseGame::BaseGame(const BaseGame& other) :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y)
+        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
         try
         {
             this->WindowName = other.WindowName;
             this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-            Renderer.SetWindowRef(*this->Window);
             this->Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
+
         }
         catch (std::exception& error)
         {
@@ -57,7 +59,7 @@ namespace basilisk
     }
 
     BaseGame::BaseGame(BaseGame&& other) noexcept :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y)
+        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
         try
         {
@@ -67,8 +69,8 @@ namespace basilisk
             other.X = 0;
             other.Y = 0;
             other.WindowName = "";
-            Renderer.SetWindowRef(*this->Window);
             this->Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
         }
         catch (std::exception& error)
         {
@@ -136,6 +138,7 @@ namespace basilisk
 
             while (!this->WindowShouldClose())
             {
+                this->InputSystem.UpdateInputs();
 
                 this->Delta = std::chrono::duration<float>(now - old).count();
                 old = std::chrono::system_clock::now();
@@ -169,5 +172,10 @@ namespace basilisk
     float BaseGame::GetDelta()
     {
         return this->Delta;
+    }
+
+    Input& BaseGame::GetInputSystem()
+    {
+        return this->InputSystem;
     }
 } // namespace basilisk

@@ -6,8 +6,10 @@ namespace game
         BaseGame(windowName, sizeX, sizeY),
         Test(TestTriangle({50, 100}, {100, 100})),
         Test2(GreenSquare({50.0f, 100.0f}, {100, 100})),
-        Test3(TextureTest())
+        Test3(TextureTest()),
+        Test4({20, 20}, { 100, 600})
     {
+        
     }
 
     void Game::Init()
@@ -15,12 +17,17 @@ namespace game
         auto mat = basilisk::Material::New(false);
         Test2.SetMaterial(mat);
         Test2.Init();
+        
         Test.SetMaterial(mat);
         Test.Init();
         
         auto mat2 = basilisk::Material::New(true);
         Test3.SetMaterial(mat2);
         Test3.Init();
+        
+        Test4.SetMaterial(mat);
+        Test4.Init();
+        Test4.Action = &this->GetInputSystem().NewInput(basilisk::Keys::A);
     }
 
     void Game::Update()
@@ -30,6 +37,7 @@ namespace game
         Test2.Update();
         Test.Update();
         Test3.Update();
+        Test4.Update();
     }
 
     void Game::Draw()
@@ -37,5 +45,6 @@ namespace game
         Test2.Draw();
         Test.Draw();
         Test3.Draw();
+        Test4.Draw();
     }
 }

@@ -11,19 +11,24 @@ namespace basilisk
 {
 
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
-        Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY)
+        Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
         try
         {
-            Renderer.InitGLFW();
 
-            Renderer.SetGlVersion();
+            this->Renderer.InitGLFW();
+
+            this->Renderer.SetGlVersion();
 
             this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+            
+            this->WindowName = windowName;
 
-            Renderer.InitGL();
+            this->Renderer.InitGL();
 
-            Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
+
+            this->InputSystem = Input(this->Window);
         }
         catch (std::exception& error)
         {
@@ -37,13 +42,15 @@ namespace basilisk
     }
 
     BaseGame::BaseGame(const BaseGame& other) :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y)
+        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
         try
         {
             this->WindowName = other.WindowName;
             this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-            Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
+
         }
         catch (std::exception& error)
         {
@@ -52,7 +59,7 @@ namespace basilisk
     }
 
     BaseGame::BaseGame(BaseGame&& other) noexcept :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y)
+        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
         try
         {
@@ -62,7 +69,8 @@ namespace basilisk
             other.X = 0;
             other.Y = 0;
             other.WindowName = "";
-            Renderer.SetWindowRef(*this->Window);
+            this->Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
         }
         catch (std::exception& error)
         {
@@ -81,6 +89,7 @@ namespace basilisk
                 this->WindowName = other.WindowName;
                 this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
                 Renderer.SetWindowRef(*this->Window);
+                this->InputSystem = Input(this->Window);
             }
         }
         catch (std::exception& error)
@@ -109,6 +118,7 @@ namespace basilisk
                 other.WindowName = "";
 
                 Renderer.SetWindowRef(*this->Window);
+                this->InputSystem = Input(this->Window);
             }
         }
         catch (std::exception& error)
@@ -122,25 +132,26 @@ namespace basilisk
     {
         try
         {
-            Init();
+            this->Init();
             auto old = std::chrono::system_clock::now();
             std::chrono::time_point<std::chrono::system_clock> now = old;
 
-            while (!WindowShouldClose())
+            while (!this->WindowShouldClose())
             {
+                this->InputSystem.UpdateInputs();
 
-                Delta = std::chrono::duration<float>(now - old).count();
+                this->Delta = std::chrono::duration<float>(now - old).count();
                 old = std::chrono::system_clock::now();
 
-                Update();
-                Renderer.StartDraw();
-                Draw();
-                Renderer.EndDraw();
+                this->Update();
+                this->Renderer.StartDraw();
+                this->Draw();
+                this->Renderer.EndDraw();
 
                 now = std::chrono::system_clock::now();
             }
 
-            Close();
+            this->Close();
         }
         catch (std::exception& error)
         {
@@ -150,7 +161,7 @@ namespace basilisk
 
     bool BaseGame::WindowShouldClose() const
     {
-        return Window->WindowShouldClose();
+        return this->Window->WindowShouldClose();
     }
 
     void BaseGame::Close() const
@@ -161,5 +172,10 @@ namespace basilisk
     float BaseGame::GetDelta()
     {
         return this->Delta;
+    }
+
+    Input& BaseGame::GetInputSystem()
+    {
+        return this->InputSystem;
     }
 } // namespace basilisk

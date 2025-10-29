@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GreenSquare.cpp" />
+    <ClCompile Include="src\InputTest.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TestTriangle.cpp" />
     <ClCompile Include="src\TextureTest.cpp" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GreenSquare.h" />
+    <ClInclude Include="src\InputTest.h" />
     <ClInclude Include="src\TestTriangle.h" />
     <ClInclude Include="src\TextureTest.h" />
   </ItemGroup>

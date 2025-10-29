@@ -9,8 +9,6 @@ namespace game
     {
     public:
         TextureTest();
-        
-        void Init() override;
         void Update() override;
 
         float Delta = 0;

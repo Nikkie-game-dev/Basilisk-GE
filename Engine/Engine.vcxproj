@@ -120,6 +120,8 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Entity2D.h" />
     <ClInclude Include="src\Export.h" />
+    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\InputAction.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\RenderException.h" />
@@ -137,6 +139,8 @@
     <ClCompile Include="src\Entity2D.cpp">
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\InputAction.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shape.cpp" />

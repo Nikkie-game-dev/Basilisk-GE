@@ -10,7 +10,7 @@ namespace game
     void GreenSquare::Update()
     {
         auto rot = GetRotation2D();
-        SetRotation(rot - 300 *  this->Delta);
+        SetRotation(rot - 300 * this->Delta);
 
         static bool growing = false;
         auto scale = GetScale2D();

@@ -14,11 +14,8 @@ void Animation::Update(float delta)
     CurrentFrame = static_cast<int>(CurrentTime / frameLength);
 }
 
-void Animation::AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, float duration)
-{
-    AddFrame(frameCoord, frameSize, textureSize, duration, 1);
-}
-void Animation::AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, float duration, int frameCount)
+void Animation::AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, 
+                         float duration, int frameCount = 1)
 {
     Length = duration * 1000;
 

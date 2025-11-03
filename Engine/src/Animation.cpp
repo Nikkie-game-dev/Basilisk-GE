@@ -26,17 +26,17 @@ namespace basilisk
         for (int i = 0; i < frameCount; i++)
         {
             Frame frame;
-            frame.coords[TOP_LEFT].u = (frameCoord.x + currentXPos) / textureSize.x;
-            frame.coords[TOP_LEFT].v = frameCoord.y / textureSize.y;
+            frame.coords[BOTTOM_LEFT].u = (frameCoord.x + currentXPos) / textureSize.x;
+            frame.coords[BOTTOM_LEFT].v = frameCoord.y / textureSize.y;
 
-            frame.coords[TOP_RIGHT].u = (frameCoord.x + currentXPos + frameSize.x) / textureSize.x;
+            frame.coords[BOTTOM_RIGHT].u = (frameCoord.x + currentXPos + frameSize.x) / textureSize.x;
+            frame.coords[BOTTOM_RIGHT].v = frame.coords[BOTTOM_LEFT].v;
+
+            frame.coords[TOP_LEFT].u = frame.coords[BOTTOM_LEFT].u;
+            frame.coords[TOP_LEFT].v = (frameCoord.y + frameSize.y + currentXPos) / textureSize.y;
+
+            frame.coords[TOP_RIGHT].u = frame.coords[TOP_LEFT].u;
             frame.coords[TOP_RIGHT].v = frame.coords[TOP_LEFT].v;
-
-            frame.coords[BOTTOM_RIGHT].u = frame.coords[TOP_LEFT].u;
-            frame.coords[BOTTOM_RIGHT].v = (frameCoord.y + frameSize.y + currentXPos) / textureSize.y;
-
-            frame.coords[BOTTOM_LEFT].u = frame.coords[TOP_RIGHT].u;
-            frame.coords[BOTTOM_LEFT].v = frame.coords[BOTTOM_RIGHT].v;
 
             this->Frames.push_back(frame);
 

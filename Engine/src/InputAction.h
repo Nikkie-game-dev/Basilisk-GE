@@ -1,5 +1,3 @@
-// 24/10/2025 - Basilisk-GE
-
 #pragma once
 
 #include "Export.h"

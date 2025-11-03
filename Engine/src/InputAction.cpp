@@ -1,5 +1,7 @@
 #include "InputAction.h"
+
 #include <unordered_map>
+
 #include "Window.h"
 
 namespace basilisk

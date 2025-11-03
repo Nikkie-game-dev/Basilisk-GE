@@ -142,7 +142,6 @@
     <ClCompile Include="src\Entity2D.cpp">
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\InputAction.cpp" />
     <ClCompile Include="src\Material.cpp" />

@@ -3,29 +3,39 @@
 #include "glm/glm.hpp"
 
 #include "Frame.h"
+#include "Export.h"
 
-class Animation
+namespace basilisk
 {
-public:
-    void Update(float delta);
+    enum Corners
+    {
+        TOP_RIGHT,
+        TOP_LEFT,
+        BOTTOM_RIGHT,
+        BOTTOM_LEFT
+    };
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="frameCoord"></param>
-    /// <param name="frameSize"></param>
-    /// <param name="textureSize"></param>
-    /// <param name="duration">Frame duration in seconds</param>
-    void AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, 
-                  glm::vec2 textureSize, float duration);
+    class BASILISK_API Animation
+    {
+    public:
+        void Update(float delta);
 
-    void AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, 
-                  glm::vec2 textureSize, float duration, 
-                  int frameCount);
+        /// <summary>
+        /// Adds all the frames that the animation needs.
+        /// </summary>
+        /// <param name="frameCoord">First frame coord</param>
+        /// <param name="frameSize">Size of one frame in pixels</param>
+        /// <param name="textureSize">Size of the total texture in pixels</param>
+        /// <param name="duration">Frame duration in seconds</param>
+        void AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, float duration, int frameCount);
 
-private:
-    int CurrentFrame;
-    float CurrentTime;
-    float Length;
-    std::vector<Frame> Frames;
-};
+        Frame GetCurrentFrame();
+
+    private:
+        int CurrentFrame;
+        float CurrentTime;
+        float Length;
+        std::vector<Frame> Frames;
+    };
+
+} // namespace basilisk

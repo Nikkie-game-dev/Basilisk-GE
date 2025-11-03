@@ -28,16 +28,22 @@ namespace game
         Test4.SetMaterial(mat);
         Test4.Init();
         Test4.Action = &this->GetInputSystem().NewInput(basilisk::Keys::A);
+    
+        auto mat3 = basilisk::Material::New(true);
+        Test5.SetMaterial(mat3);
+        Test5.Init();
     }
 
     void Game::Update()
     {
         Test2.Delta = this->GetDelta();
         Test3.Delta = this->GetDelta();
+        Test5.Delta = this->GetDelta();
         Test2.Update();
         Test.Update();
         Test3.Update();
         Test4.Update();
+        Test5.Update();
     }
 
     void Game::Draw()
@@ -46,5 +52,6 @@ namespace game
         Test.Draw();
         Test3.Draw();
         Test4.Draw();
+        Test5.Draw();
     }
 }

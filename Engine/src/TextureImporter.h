@@ -19,7 +19,6 @@ namespace basilisk
         static unsigned int MakeTexture(const std::string& imageDir);
 
     private:
-        static void LoadTexture();
         static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height);
         static unsigned int GenTexture(unsigned char* data, int& width, int& height);
         static void FreeImage(unsigned char* data);

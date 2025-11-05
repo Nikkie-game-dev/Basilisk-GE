@@ -24,6 +24,7 @@ namespace basilisk
     private:
         static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height);
         static unsigned int GenTexture(unsigned char* data, int& width, int& height);
+        static void SetParametersi();
         static void FreeImage(unsigned char* data);
     };
 

@@ -125,6 +125,5 @@ namespace basilisk
         };
 
         this->FillVertices(vertices, sizeof(vertices));
-        this->UpdateBuffers();
     }
 }

@@ -54,6 +54,15 @@ namespace basilisk
 
         return texture;
     }
+    void TextureImporter::BindTexture(unsigned int texture)
+    {
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
+
+    void TextureImporter::UnbindTexture()
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 
     void TextureImporter::FreeImage(unsigned char* data)
     {

@@ -63,6 +63,13 @@ namespace basilisk
         }
     }
 
+    void Sprite::Draw()
+    {
+        TextureImporter::BindTexture(this->Texture);
+        Entity2D::Draw();
+        TextureImporter::UnbindTexture();
+    }
+
 
     void Sprite::SetAnimation(basilisk::Animation* animation)
     {
@@ -118,5 +125,6 @@ namespace basilisk
         };
 
         this->FillVertices(vertices, sizeof(vertices));
+        this->UpdateBuffers();
     }
 }

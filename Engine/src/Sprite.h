@@ -16,6 +16,7 @@ namespace basilisk
         //Sprite& operator=(Sprite&& other) noexcept; // move assignment
         //
         void Init() override;
+        void Draw() override;
         void SetAnimation(Animation* animation);
         /// <summary>
         /// Updates the animation

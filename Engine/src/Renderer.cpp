@@ -2,6 +2,7 @@
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <stb_image.h>
 
 #include "Colors.h"
 #include "GL/glew.h"
@@ -34,6 +35,7 @@ namespace basilisk
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        stbi_set_flip_vertically_on_load(true);
     }
 
     void Renderer::LoadProjectionMatrix()

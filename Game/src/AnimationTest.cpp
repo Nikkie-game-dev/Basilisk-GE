@@ -7,7 +7,7 @@ namespace game
     {
         this->Animation = new basilisk::Animation();
 
-        this->Animation->SetAnimationValues({0, 0}, {100, 100}, {800, 100}, 0.2f, 8);
+        this->Animation->GenUVFrames({0, 0}, {100, 100}, {800, 100}, 0.2f, 8);
 
         SetAnimation(this->Animation);
     }

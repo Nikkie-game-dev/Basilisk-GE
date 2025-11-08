@@ -3,50 +3,51 @@
 namespace basilisk
 {
 
-    void Animation::Update(float delta)
+    void Animation::Update(float deltaTime)
     {
-        this->CurrentTime += delta;
+        this->ElapsedTime = fmodf(ElapsedTime + deltaTime, this->AnimationDuration);
 
-        while (this->CurrentTime > this->Length)
-        {
-            this->CurrentTime -= this->Length;
-        }
+        if (this->ElapsedTime < 0.0f)
+            this->ElapsedTime += this->AnimationDuration;
 
-        float frameLength = this->Length / this->Frames.size();
+        float frameDuration = this->AnimationDuration / this->Frames.size();
 
-        this->CurrentFrame = static_cast<int>(this->CurrentTime / frameLength);
+        this->CurrentFrameIndex = static_cast<int>(this->ElapsedTime / frameDuration);
     }
 
-    void Animation::AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, float duration, int frameCount)
+    void Animation::GenUVFrames(const glm::vec2& frameTopLeft,
+                                       const glm::vec2& frameSize,
+                                       const glm::vec2& textureSize,
+                                       const float& animationDuration,
+                                       const int& frameCount)
     {
-        this->Length = duration * 1000;
-
-        float currentXPos = 0;
+        this->AnimationDuration = animationDuration * 1000;
+        this->Frames.reserve(frameCount);
 
         for (int i = 0; i < frameCount; i++)
         {
-            Frame frame;
-            frame.coords[BOTTOM_LEFT].u = (frameCoord.x + currentXPos) / textureSize.x;
-            frame.coords[BOTTOM_LEFT].v = frameCoord.y / textureSize.y;
+            const float x = frameTopLeft.x + frameSize.x * i;
+            const float y = frameTopLeft.y;
 
-            frame.coords[BOTTOM_RIGHT].u = (frameCoord.x + currentXPos + frameSize.x) / textureSize.x;
-            frame.coords[BOTTOM_RIGHT].v = frame.coords[BOTTOM_LEFT].v;
-
-            frame.coords[TOP_LEFT].u = frame.coords[BOTTOM_LEFT].u;
-            frame.coords[TOP_LEFT].v = (frameCoord.y + frameSize.y + currentXPos) / textureSize.y;
-
-            frame.coords[TOP_RIGHT].u = frame.coords[TOP_LEFT].u;
-            frame.coords[TOP_RIGHT].v = frame.coords[TOP_LEFT].v;
-
+            Frame frame = MakeFrame({x, y}, frameSize, textureSize);
             this->Frames.push_back(frame);
-
-            currentXPos += frameSize.x;
         }
     }
 
-    Frame Animation::GetCurrentFrame()
+    Animation::Frame Animation::MakeFrame(const glm::vec2& topLeftPixels, const glm::vec2& frameSize, const glm::vec2& textureSize) const
     {
-        return this->Frames.at(this->CurrentFrame);
+        Frame frame{};
+        frame.topLeftUV = glm::vec2(topLeftPixels.x, topLeftPixels.y + frameSize.y) / textureSize;
+        frame.topRightUV = glm::vec2(topLeftPixels.x + frameSize.x, frame.topLeftUV.y) / textureSize;
+        frame.bottomLeftUV = topLeftPixels / textureSize;
+        frame.bottomRightUV = glm::vec2(frame.topRightUV.x, frame.bottomLeftUV.y) / textureSize;
+
+        return frame;
+    }
+
+    Animation::Frame Animation::GetCurrentFrame()
+    {
+        return this->Frames.at(this->CurrentFrameIndex);
     }
 
 } // namespace basilisk

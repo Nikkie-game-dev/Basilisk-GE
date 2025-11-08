@@ -46,7 +46,6 @@ namespace basilisk
         
         renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.AmountIndices);
 
-
     }
 
     glm::vec3 Entity2D::GetPosition() const

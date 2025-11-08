@@ -2,39 +2,46 @@
 #include <vector>
 #include "glm/glm.hpp"
 
-#include "Frame.h"
 #include "Export.h"
 
 namespace basilisk
 {
-    enum Corners
-    {
-        TOP_RIGHT,
-        TOP_LEFT,
-        BOTTOM_RIGHT,
-        BOTTOM_LEFT
-    };
 
     class BASILISK_API Animation
     {
     public:
+        struct Frame
+        {
+            glm::vec2 topLeftUV;
+            glm::vec2 topRightUV;
+            glm::vec2 bottomLeftUV;
+            glm::vec2 bottomRightUV;
+        };
         void Update(float delta);
 
         /// <summary>
-        /// Adds all the frames that the animation needs.
+        /// Sets the animation values. If you use an animation like this,
+        /// the image of the sprite should be a spritesheet.
         /// </summary>
-        /// <param name="frameCoord">First frame coord</param>
-        /// <param name="frameSize">Size of one frame in pixels</param>
+        /// <param name="firstTopLeft">First frame top left coordinates</param>
+        /// <param name="frameSize">Size (x = width, y = height) of one frame in pixels</param>
         /// <param name="textureSize">Size of the total texture in pixels</param>
-        /// <param name="duration">Frame duration in seconds</param>
-        void AddFrame(glm::vec2 frameCoord, glm::vec2 frameSize, glm::vec2 textureSize, float duration, int frameCount);
+        /// <param name="duration">The duration of the entire animation in seconds</param>
+        /// <param name="frameCount">Frame total amount (horizontal)</param>
+        void GenUVFrames(const glm::vec2& firstTopLeft,
+                                const glm::vec2& frameSize,
+                                const glm::vec2& textureSize,
+                                const float& duration,
+                                const int& frameCount);
+
+        Animation::Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize) const;
 
         Frame GetCurrentFrame();
 
     private:
-        int CurrentFrame;
-        float CurrentTime;
-        float Length;
+        int CurrentFrameIndex;
+        float ElapsedTime;
+        float AnimationDuration;
         std::vector<Frame> Frames;
     };
 

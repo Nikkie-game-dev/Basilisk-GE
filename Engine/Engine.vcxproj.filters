@@ -110,9 +110,6 @@
     <ClInclude Include="src\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>

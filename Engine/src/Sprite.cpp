@@ -89,39 +89,15 @@ namespace basilisk
 
     void Sprite::UpdateCurrentFrame()
     {
-        Frame current = this->Animation->GetCurrentFrame();
-
-        glm::vec2 topRight = 
-        {
-            current.coords[TOP_RIGHT].u, 
-            current.coords[TOP_RIGHT].v
-        };
-
-        glm::vec2 topLeft = 
-        {
-            current.coords[TOP_LEFT].u, 
-            current.coords[TOP_LEFT].v
-        };
-
-        glm::vec2 bottomRight = 
-        {
-            current.coords[BOTTOM_RIGHT].u, 
-            current.coords[BOTTOM_RIGHT].v
-        };
-
-        glm::vec2 bottomLeft = 
-        {
-            current.coords[BOTTOM_LEFT].u, 
-            current.coords[BOTTOM_LEFT].v
-        };
+        Animation::Frame current = this->Animation->GetCurrentFrame();
 
         float vertices[] = 
         {
             // positions            // colors                    // texture coords
-            0.5f,   0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      topRight.x, topRight.y, // top right
-            0.5f,  -0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      bottomRight.x, bottomRight.y, // bottom right
-            -0.5f, -0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      bottomLeft.x, bottomLeft.y, // bottom left
-            -0.5f,  0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      topLeft.x, topLeft.y // top left
+            0.5f,  0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.topRightUV.x,    current.topRightUV.y, // top right
+            0.5f,  -0.5f, 0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.bottomRightUV.x, current.bottomRightUV.y, // bottom right
+            -0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.bottomLeftUV.x,  current.bottomLeftUV.y, // bottom left
+            -0.5f, 0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.topLeftUV.x,     current.topLeftUV.y // top left
         };
 
         this->FillVertices(vertices, sizeof(vertices));

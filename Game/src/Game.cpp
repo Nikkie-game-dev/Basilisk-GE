@@ -38,6 +38,7 @@ namespace game
 
     void Game::Update()
     {
+        Test.Delta = this->GetDelta();
         Test2.Delta = this->GetDelta();
         Test3.Delta = this->GetDelta();
         Test5.Delta = this->GetDelta();

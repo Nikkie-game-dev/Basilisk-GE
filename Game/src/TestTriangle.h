@@ -10,6 +10,8 @@ namespace game
     public:
         TestTriangle(const glm::vec2& size, const glm::vec2& position);
         void Update() override;
+        
+        float Delta;
 
     };
 } // game 

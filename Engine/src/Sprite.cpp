@@ -77,7 +77,7 @@ namespace basilisk
     }
 
 
-    void Sprite::UpdateAnimation(float delta)
+    void Sprite::UpdateAnimation(const float delta)
     {
         if (!this->Animation)
             return;

@@ -12,14 +12,14 @@ namespace basilisk
         delete[] this->buffers.Vertices;
         delete[] this->buffers.Indices;
     }
-    
+
     void Entity::SetRotation(float angle, const Axis rotationAxis, const bool isRads)
     {
         if (!isRads)
         {
-            angle = glm::radians(angle) ;         
+            angle = glm::radians(angle);
         }
-        
+
         switch (rotationAxis)
         {
         case Axis::X:
@@ -62,7 +62,7 @@ namespace basilisk
 
         SetScaling(this->Scaling);
     }
-    
+
     void Entity::SetPosition(const glm::vec3& newPosition)
     {
         this->Position = newPosition;
@@ -106,18 +106,18 @@ namespace basilisk
         return Mat;
 
     }
-    
+
     glm::mat4 Entity::GetModelMatrix() const
     {
         return this->ModelMatrix;
     }
-    
+
     void Entity::UpdateBuffers()
     {
         Renderer::GetInstance().GenerateVBs(buffers, this->Mat->GetIsTextured());
-        
+
     }
-    
+
     void Entity::FillVertices(float vertices[], const int amountVertices)
     {
         delete[] this->buffers.Vertices;
@@ -149,14 +149,12 @@ namespace basilisk
     void Entity::UpdateRotationMatrix()
     {
         this->RotationMatrix = glm::mat4(1.0f);
-        if (Rotation.x != 0.0f)
-            this->RotationMatrix = glm::rotate(this->RotationMatrix, glm::radians(this->Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        
+        this->RotationMatrix = glm::rotate(this->RotationMatrix, this->Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 
-        if (Rotation.y != 0.0f)
-            this->RotationMatrix = glm::rotate(this->RotationMatrix, glm::radians(this->Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        this->RotationMatrix = glm::rotate(this->RotationMatrix, this->Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 
-        if (Rotation.z != 0.0f)
-            this->RotationMatrix = glm::rotate(this->RotationMatrix, glm::radians(this->Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        this->RotationMatrix = glm::rotate(this->RotationMatrix, this->Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
     void Entity::UpdateTranslateMatrix()

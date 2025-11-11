@@ -10,7 +10,6 @@ namespace basilisk
     class BASILISK_API Animation
     {
     public:
-        
         struct Frame
         {
             glm::vec2 topLeftUV;
@@ -18,6 +17,8 @@ namespace basilisk
             glm::vec2 bottomLeftUV;
             glm::vec2 bottomRightUV;
         };
+        
+        Animation();
         
         void Update(float delta, bool& outHasChanged);
 
@@ -47,15 +48,18 @@ namespace basilisk
         void Stop();
         
         void Reset();
-        
-        bool IsAnimPlaying() const;
+
+        [[nodiscard]] bool IsAnimPlaying() const;
 
     private:
+        int Id;
         int CurrentFrameIndex = -1;
         float ElapsedTimeMs = 0;
         float AnimationDurationMs = 0;
         std::vector<Frame> Frames;
         bool IsPlaying = false;
+        
+        static int IdsCounter;
     };
 
 } // namespace basilisk

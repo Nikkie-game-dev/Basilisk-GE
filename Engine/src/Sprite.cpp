@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include <iostream>
+
 #include "Renderer.h"
 #include "TextureImporter.h"
 
@@ -30,23 +32,6 @@ namespace basilisk
         this->FillVertices(vertices, sizeof(vertices));
         this->FillIndices(indices, sizeof(indices));
     }
-
-    Sprite::~Sprite()
-    {
-    }
-
-    //Sprite::Sprite(const Sprite& other)
-    //{
-    //}
-
-    //Sprite& Sprite::operator=(const Sprite& other)
-    //{
-    //}
-
-    //Sprite& Sprite::operator=(Sprite&& other) noexcept
-    //{
-    //    return default;
-    //}
 
     void Sprite::Init()
     {
@@ -92,7 +77,7 @@ namespace basilisk
         }
     }
 
-    void Sprite::UpdateCurrentFrame()
+    void Sprite::UpdateCurrentFrame() const
     {
         constexpr int start = 7;
         constexpr int amountVerticesPerCorner = 9;
@@ -108,7 +93,14 @@ namespace basilisk
         this->buffers.Vertices[start + amountVerticesPerCorner * 3] = topLeftUV.x;
         this->buffers.Vertices[start + amountVerticesPerCorner * 3 + 1] = topLeftUV.y;
 
-        this->FillVertices(vertices, sizeof(vertices));
+#ifdef CONSOLE_OUTPUT_ENABLED
+        std::cout << "================================================================\n";
+        std::cout << "Top Right UV: (" << topRightUV.x << ", " << topRightUV.y << ")\n";
+        std::cout << "Bottom Right UV: (" << bottomRightUV.x << ", " << bottomRightUV.y << ")\n";
+        std::cout << "Bottom Left UV: (" << bottomLeftUV.x << ", " << bottomLeftUV.y << ")\n";
+        std::cout << "Top Left UV: (" << topLeftUV.x << ", " << topLeftUV.y << ")\n";
+#endif
+
         Renderer::GetInstance().BindBufferData(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }
 }

@@ -64,7 +64,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>BASILISK_EXPORT;WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions); GLFW_INCLUDE_NONE;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CONSOLE_OUTPUT_ENABLED;BASILISK_EXPORT;WIN32;_DEBUG;CPPDYNAMICLIBRARYTEMPLATE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions); GLFW_INCLUDE_NONE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

@@ -1,32 +1,50 @@
 #include "Animation.h"
 
+#include <iostream>
+
 namespace basilisk
 {
 
-    void Animation::Update(float deltaTime)
+    int Animation::IdsCounter = 0;
+
+    Animation::Animation()
     {
-        this->ElapsedTime = fmodf(ElapsedTime + deltaTime, this->AnimationDuration);
+        this->Id = IdsCounter;
+        IdsCounter++;
+    }
 
-        if (this->ElapsedTime < 0.0f)
-            this->ElapsedTime += this->AnimationDuration;
+    void Animation::Update(float delta, bool& outHasChanged)
+    {
+        if (!this->IsPlaying)
+            return;
 
-        float frameDuration = this->AnimationDuration / this->Frames.size();
+        delta *= 1000;
 
-        this->CurrentFrameIndex = static_cast<int>(this->ElapsedTime / frameDuration);
+        this->ElapsedTimeMs = fmodf(this->ElapsedTimeMs + delta, this->AnimationDurationMs);
+
+        if (this->ElapsedTimeMs < 0.0f)
+            this->ElapsedTimeMs += this->AnimationDurationMs;
+
+        const float frameDurationMs = this->AnimationDurationMs / static_cast<float>(this->Frames.size());
+
+        const int current = CurrentFrameIndex;
+        this->CurrentFrameIndex = static_cast<int>(this->ElapsedTimeMs / frameDurationMs);
+
+        outHasChanged = current != this->CurrentFrameIndex;
     }
 
     void Animation::GenUVFrames(const glm::vec2& frameTopLeft,
-                                       const glm::vec2& frameSize,
-                                       const glm::vec2& textureSize,
-                                       const float& animationDuration,
-                                       const int& frameCount)
+                                const glm::vec2& frameSize,
+                                const glm::vec2& textureSize,
+                                const float& animationDuration,
+                                const int& frameCount)
     {
-        this->AnimationDuration = animationDuration * 1000;
+        this->AnimationDurationMs = animationDuration * 1000;
         this->Frames.reserve(frameCount);
 
         for (int i = 0; i < frameCount; i++)
         {
-            const float x = frameTopLeft.x + frameSize.x * i;
+            const float x = frameTopLeft.x + frameSize.x * static_cast<float>(i);
             const float y = frameTopLeft.y;
 
             Frame frame = MakeFrame({x, y}, frameSize, textureSize);
@@ -34,20 +52,64 @@ namespace basilisk
         }
     }
 
-    Animation::Frame Animation::MakeFrame(const glm::vec2& topLeftPixels, const glm::vec2& frameSize, const glm::vec2& textureSize) const
+    Animation::Frame Animation::MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize)
     {
-        Frame frame{};
-        frame.topLeftUV = glm::vec2(topLeftPixels.x, topLeftPixels.y + frameSize.y) / textureSize;
-        frame.topRightUV = glm::vec2(topLeftPixels.x + frameSize.x, frame.topLeftUV.y) / textureSize;
-        frame.bottomLeftUV = topLeftPixels / textureSize;
-        frame.bottomRightUV = glm::vec2(frame.topRightUV.x, frame.bottomLeftUV.y) / textureSize;
+        Frame frame;
+
+        frame.topLeftUV = glm::vec2(topLeft.x, topLeft.y + frameSize.y) / textureSize;
+        frame.topRightUV = glm::vec2(topLeft.x + frameSize.x, topLeft.y + frameSize.y) / textureSize;
+        frame.bottomLeftUV = topLeft / textureSize;
+        frame.bottomRightUV = glm::vec2(topLeft.x + frameSize.x, topLeft.y) / textureSize;
 
         return frame;
     }
 
-    Animation::Frame Animation::GetCurrentFrame()
+    Animation::Frame Animation::GetCurrentFrame() const
     {
         return this->Frames.at(this->CurrentFrameIndex);
+    }
+
+    void Animation::Play()
+    {
+
+#ifdef CONSOLE_OUTPUT_ENABLED
+        std::cout << "Animation playing. ID: " << this->Id << ". Address: " << this << "/n";
+#endif
+
+        this->IsPlaying = true;
+    }
+
+    void Animation::Pause()
+    {
+#ifdef CONSOLE_OUTPUT_ENABLED
+        std::cout << "Animation pausing. ID: " << this->Id << ". Address: " << this << "/n";
+#endif
+
+        this->IsPlaying = false;
+    }
+
+    void Animation::Stop()
+    {
+#ifdef CONSOLE_OUTPUT_ENABLED
+        std::cout << "Animation stopping. ID: " << this->Id << ". Address: " << this << "/n";
+#endif
+
+        this->IsPlaying = false;
+        this->Reset();
+    }
+
+    void Animation::Reset()
+    {
+#ifdef CONSOLE_OUTPUT_ENABLED
+        std::cout << "Animation resetting. ID: " << this->Id << ". Address: " << this << "/n";
+#endif
+
+        this->ElapsedTimeMs = 0;
+    }
+
+    bool Animation::IsAnimPlaying() const
+    {
+        return this->IsPlaying;
     }
 
 } // namespace basilisk

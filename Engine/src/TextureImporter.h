@@ -5,6 +5,21 @@
 
 namespace basilisk
 {
+    enum class BASILISK_API Filters
+    {
+        LINEAR,
+        MIPMAP_LINEAR,
+        NEAREST,
+        MIPMAP_NEAREST
+    };
+
+    enum class BASILISK_API FitMode
+    {
+        CLAMP_EDGE,
+        CLAMP_BORDER,
+        REPEAT
+    };
+
     /// <summary>
     /// Static class for texture loading
     /// </summary>
@@ -15,16 +30,24 @@ namespace basilisk
         /// Loads a texture to GPU from an image directory.
         /// </summary>
         /// <param name="imageDir">Relative path to image directory</param>
+        /// <param name="filter"></param>
+        /// <param name="fit"></param>
         /// <returns>Id of loaded texture</returns>
-        static unsigned int MakeTexture(const std::string& imageDir);
+        static unsigned int MakeTexture(const std::string& imageDir, Filters filter = Filters::LINEAR, FitMode fit = FitMode::REPEAT);
         static void BindTexture(unsigned int texture);
 
         static void UnbindTexture();
 
     private:
-        static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height);
-        static unsigned int GenTexture(unsigned char* data, int& width, int& height);
-        static void SetParametersi();
+        static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels);
+        static unsigned int GenTexture(unsigned char* data,
+                                       int& width,
+                                       int& height,
+                                       int format,
+                                       Filters filter,
+                                       FitMode fit);
+        static void SetFilter(Filters filter);
+        static void SetFit(FitMode);
         static void FreeImage(unsigned char* data);
     };
 
@@ -44,8 +67,8 @@ namespace basilisk
         {
             std::string error = "Image has not been found, files the Engine can see: ";
             for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()))
-                         error += entry.path().string();
-            
+                error += entry.path().string();
+
             return error.c_str();
         }
     };

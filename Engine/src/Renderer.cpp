@@ -58,8 +58,19 @@ namespace basilisk
 
     void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
     {
-        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)), (void*)(start * sizeof(float)));
+        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)),
+                              (void*)(start * sizeof(float)));
         glEnableVertexAttribArray(index);
+    }
+
+    void Renderer::BindBufferData(const unsigned int vbo,
+                                  const int amountVertices,
+                                  float* arrayData,
+                                  const int verticesBefore,
+                                  const int sizeDataInVbo)
+    {
+        BindAndFillVbo(vbo, amountVertices, arrayData);
+        SetAttribPointer(2, sizeDataInVbo, sizeDataInVbo + verticesBefore, verticesBefore);
     }
 
     void Renderer::GenerateVBs(Buffers& buffers, const bool isTextured)

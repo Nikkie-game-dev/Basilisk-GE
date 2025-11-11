@@ -17,32 +17,49 @@ namespace basilisk
             glm::vec2 bottomLeftUV;
             glm::vec2 bottomRightUV;
         };
-        void Update(float delta);
+        
+        Animation();
+        
+        void Update(float delta, bool& outHasChanged);
 
         /// <summary>
         /// Sets the animation values. If you use an animation like this,
         /// the image of the sprite should be a spritesheet.
         /// </summary>
-        /// <param name="firstTopLeft">First frame top left coordinates</param>
+        /// <param name="frameTopLeft">First frame top left coordinates</param>
         /// <param name="frameSize">Size (x = width, y = height) of one frame in pixels</param>
         /// <param name="textureSize">Size of the total texture in pixels</param>
-        /// <param name="duration">The duration of the entire animation in seconds</param>
+        /// <param name="animationDuration">The duration of the entire animation in seconds</param>
         /// <param name="frameCount">Frame total amount (horizontal)</param>
-        void GenUVFrames(const glm::vec2& firstTopLeft,
+        void GenUVFrames(const glm::vec2& frameTopLeft,
                                 const glm::vec2& frameSize,
                                 const glm::vec2& textureSize,
-                                const float& duration,
+                                const float& animationDuration,
                                 const int& frameCount);
 
-        Animation::Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize) const;
+        static Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
 
-        Frame GetCurrentFrame();
+        Frame GetCurrentFrame() const;
+        
+        void Play();
+        
+        void Pause();
+        
+        void Stop();
+        
+        void Reset();
+
+        [[nodiscard]] bool IsAnimPlaying() const;
 
     private:
-        int CurrentFrameIndex;
-        float ElapsedTime;
-        float AnimationDuration;
+        int Id;
+        int CurrentFrameIndex = -1;
+        float ElapsedTimeMs = 0;
+        float AnimationDurationMs = 0;
         std::vector<Frame> Frames;
+        bool IsPlaying = false;
+        
+        static int IdsCounter;
     };
 
 } // namespace basilisk

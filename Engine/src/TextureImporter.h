@@ -44,8 +44,8 @@ namespace basilisk
         {
             std::string error = "Image has not been found, files the Engine can see: ";
             for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()))
-                         error += entry.path().string();
-            
+                error += entry.path().string();
+
             return error.c_str();
         }
     };

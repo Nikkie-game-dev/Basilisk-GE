@@ -14,8 +14,10 @@ namespace basilisk
 
         const float frameDurationMs = this->AnimationDurationMs / this->Frames.size();
 
-        this->CurrentFrameIndex = static_cast<int>(this->ElapsedTime / frameDuration);
+        const int current = CurrentFrameIndex;
         this->CurrentFrameIndex = static_cast<int>(this->ElapsedTimeMs / frameDurationMs);
+        
+        outHasChanged = current != this->CurrentFrameIndex;
     }
 
     void Animation::GenUVFrames(const glm::vec2& frameTopLeft,

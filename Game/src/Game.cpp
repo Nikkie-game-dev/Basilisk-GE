@@ -53,8 +53,8 @@ namespace game
     {
         Test2.Draw();
         Test.Draw();
-        Test5.Draw();
         Test3.Draw();
         Test4.Draw();
+        Test5.Draw();
     }
 }

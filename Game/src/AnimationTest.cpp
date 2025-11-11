@@ -3,11 +3,11 @@
 namespace game
 {
     AnimationTest::AnimationTest() : 
-        Sprite(R"(res\assets\Soldier-Walk.png)", {400, 300}, {100, 100})
+        Sprite(R"(res\assets\Soldier-Walk.png)", {400, 300}, {500, 500})
     {
         this->Animation = new basilisk::Animation();
 
-        this->Animation->GenUVFrames({0, 0}, {100, 100}, {800, 100}, 0.2f, 8);
+        this->Animation->GenUVFrames({0, 0}, {100, 100}, {800, 100}, 0.8f, 8);
 
         SetAnimation(this->Animation);
     }

@@ -5,7 +5,7 @@
 namespace game
 {
     TextureTest::TextureTest()
-        : Sprite(R"(res\assets\Trans-Flag.png)", {300,300} , {100, 100})
+        : Sprite(R"(res\assets\Trans-Flag-uwu.png)", {300,300} , {100, 100})
     {
     }
     void TextureTest::Update()

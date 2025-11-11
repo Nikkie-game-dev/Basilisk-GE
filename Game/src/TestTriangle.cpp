@@ -11,7 +11,7 @@ namespace game
     void TestTriangle::Update()
     {
         auto rot = GetRotation2D();
-        SetRotation( rot + 3);
+        SetRotation( rot + 3 * this->Delta);
 
         static bool growing = false; 
         auto scale = GetScale2D();
@@ -26,11 +26,11 @@ namespace game
 
         if (growing)
         {
-            SetScaling({scale.x + 1, scale.y + 1});
+            SetScaling({scale.x + 1 * this->Delta, scale.y + 1 * this->Delta});
         }
         else
         {
-            SetScaling({scale.x - 1, scale.y - 1});
+            SetScaling({scale.x - 1 * this->Delta, scale.y - 1 * this->Delta});
         }
     }
 }

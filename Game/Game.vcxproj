@@ -111,6 +111,7 @@
     <Folder Include="res\raw\" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AnimationTest.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GreenSquare.cpp" />
     <ClCompile Include="src\InputTest.cpp" />
@@ -122,6 +123,7 @@
     <Content Include="Build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AnimationTest.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GreenSquare.h" />
     <ClInclude Include="src\InputTest.h" />

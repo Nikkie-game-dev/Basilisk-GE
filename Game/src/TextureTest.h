@@ -1,6 +1,5 @@
-// 18/10/2025 - Basilisk-GE
-
 #pragma once
+
 #include "Basilisk/Sprite.h"
 
 namespace game

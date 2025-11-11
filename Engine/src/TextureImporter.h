@@ -17,11 +17,14 @@ namespace basilisk
         /// <param name="imageDir">Relative path to image directory</param>
         /// <returns>Id of loaded texture</returns>
         static unsigned int MakeTexture(const std::string& imageDir);
+        static void BindTexture(unsigned int texture);
+
+        static void UnbindTexture();
 
     private:
-        static void LoadTexture();
         static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height);
         static unsigned int GenTexture(unsigned char* data, int& width, int& height);
+        static void SetParametersi();
         static void FreeImage(unsigned char* data);
     };
 

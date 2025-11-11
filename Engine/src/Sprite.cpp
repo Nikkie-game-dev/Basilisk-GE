@@ -30,6 +30,24 @@ namespace basilisk
         this->FillVertices(vertices, sizeof(vertices));
         this->FillIndices(indices, sizeof(indices));
     }
+
+    Sprite::~Sprite()
+    {
+    }
+
+    //Sprite::Sprite(const Sprite& other)
+    //{
+    //}
+
+    //Sprite& Sprite::operator=(const Sprite& other)
+    //{
+    //}
+
+    //Sprite& Sprite::operator=(Sprite&& other) noexcept
+    //{
+    //    return default;
+    //}
+
     void Sprite::Init()
     {
         const auto mat = this->GetMaterial();
@@ -43,5 +61,45 @@ namespace basilisk
             mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
             mat->IsProjectionSent = true;
         }
+    }
+
+    void Sprite::Draw()
+    {
+        TextureImporter::BindTexture(this->Texture);
+        Entity2D::Draw();
+        TextureImporter::UnbindTexture();
+    }
+
+
+    void Sprite::SetAnimation(basilisk::Animation* animation)
+    {
+        this->Animation = animation;
+    }
+
+
+    void Sprite::UpdateAnimation(const float delta)
+    {
+        if (!this->Animation)
+            return;
+
+        this->Animation->Update(delta);
+
+        UpdateCurrentFrame();
+    }
+
+    void Sprite::UpdateCurrentFrame()
+    {
+        Animation::Frame current = this->Animation->GetCurrentFrame();
+
+        float vertices[] = 
+        {
+            // positions            // colors                    // texture coords
+            0.5f,  0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.topRightUV.x,    current.topRightUV.y, // top right
+            0.5f,  -0.5f, 0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.bottomRightUV.x, current.bottomRightUV.y, // bottom right
+            -0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.bottomLeftUV.x,  current.bottomLeftUV.y, // bottom left
+            -0.5f, 0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      current.topLeftUV.x,     current.topLeftUV.y // top left
+        };
+
+        this->FillVertices(vertices, sizeof(vertices));
     }
 }

@@ -4,6 +4,7 @@
 #include "GreenSquare.h"
 #include "InputTest.h"
 #include "TextureTest.h"
+#include "AnimationTest.h"
 
 
 namespace game
@@ -22,6 +23,7 @@ namespace game
         GreenSquare Test2;
         TextureTest Test3;
         InputTest Test4;
+        AnimationTest Test5;
 
     };
 }

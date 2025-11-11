@@ -3,16 +3,19 @@
 namespace basilisk
 {
 
-    void Animation::Update(float deltaTime)
+    void Animation::Update(float deltaTime, bool& outHasChanged)
     {
-        this->ElapsedTime = fmodf(ElapsedTime + deltaTime, this->AnimationDuration);
+        deltaTime *= 1000;
+        
+        this->ElapsedTimeMs = fmodf(this->ElapsedTimeMs + deltaTime, this->AnimationDurationMs);
 
-        if (this->ElapsedTime < 0.0f)
-            this->ElapsedTime += this->AnimationDuration;
+        if (this->ElapsedTimeMs < 0.0f)
+            this->ElapsedTimeMs += this->AnimationDurationMs;
 
-        float frameDuration = this->AnimationDuration / this->Frames.size();
+        const float frameDurationMs = this->AnimationDurationMs / this->Frames.size();
 
         this->CurrentFrameIndex = static_cast<int>(this->ElapsedTime / frameDuration);
+        this->CurrentFrameIndex = static_cast<int>(this->ElapsedTimeMs / frameDurationMs);
     }
 
     void Animation::GenUVFrames(const glm::vec2& frameTopLeft,
@@ -21,7 +24,7 @@ namespace basilisk
                                        const float& animationDuration,
                                        const int& frameCount)
     {
-        this->AnimationDuration = animationDuration * 1000;
+        this->AnimationDurationMs = animationDuration * 1000;
         this->Frames.reserve(frameCount);
 
         for (int i = 0; i < frameCount; i++)
@@ -36,11 +39,12 @@ namespace basilisk
 
     Animation::Frame Animation::MakeFrame(const glm::vec2& topLeftPixels, const glm::vec2& frameSize, const glm::vec2& textureSize) const
     {
-        Frame frame{};
+        Frame frame;
+        
         frame.topLeftUV = glm::vec2(topLeftPixels.x, topLeftPixels.y + frameSize.y) / textureSize;
-        frame.topRightUV = glm::vec2(topLeftPixels.x + frameSize.x, frame.topLeftUV.y) / textureSize;
+        frame.topRightUV = glm::vec2(topLeftPixels.x + frameSize.x, topLeftPixels.y + frameSize.y) / textureSize;
         frame.bottomLeftUV = topLeftPixels / textureSize;
-        frame.bottomRightUV = glm::vec2(frame.topRightUV.x, frame.bottomLeftUV.y) / textureSize;
+        frame.bottomRightUV = glm::vec2(topLeftPixels.x + frameSize.x, topLeftPixels.y) / textureSize;
 
         return frame;
     }

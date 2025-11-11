@@ -17,7 +17,7 @@ namespace basilisk
             glm::vec2 bottomLeftUV;
             glm::vec2 bottomRightUV;
         };
-        void Update(float delta);
+        void Update(float delta, bool& outHasChanged);
 
         /// <summary>
         /// Sets the animation values. If you use an animation like this,
@@ -34,14 +34,14 @@ namespace basilisk
                                 const float& duration,
                                 const int& frameCount);
 
-        Animation::Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize) const;
+        Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize) const;
 
         Frame GetCurrentFrame();
 
     private:
-        int CurrentFrameIndex;
-        float ElapsedTime;
-        float AnimationDuration;
+        int CurrentFrameIndex = -1;
+        float ElapsedTimeMs = 0;
+        float AnimationDurationMs = 0;
         std::vector<Frame> Frames;
     };
 

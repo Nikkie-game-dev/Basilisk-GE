@@ -115,7 +115,6 @@ namespace basilisk
     void Entity::UpdateBuffers()
     {
         Renderer::GetInstance().GenerateVBs(buffers, this->Mat->GetIsTextured());
-
     }
 
     void Entity::FillVertices(float vertices[], const int amountVertices)

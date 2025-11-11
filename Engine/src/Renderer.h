@@ -59,6 +59,8 @@ namespace basilisk
         /// <param name="strideAmount">Size of stride</param>
         /// <param name="start">Start of value</param>
         static void SetAttribPointer(int index, int size, int strideAmount, int start);
+        
+        void BindBufferData(unsigned int vbo, int amountVertices, float* arrayData, int verticesBefore, int sizeDataInVbo);
 
 #pragma endregion
         

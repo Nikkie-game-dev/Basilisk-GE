@@ -19,8 +19,12 @@ namespace basilisk
         /// <param name="delta"></param>
         void UpdateAnimation(float delta);
 
+        bool FlipSpriteX = false;
+        bool FlipSpriteY = false;
+       
     private:
         void UpdateCurrentFrame() const;
+        void FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const;
         unsigned int Texture;
         Animation* Animation = nullptr;
     };

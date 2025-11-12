@@ -14,7 +14,7 @@ namespace basilisk
 
         this->Texture = TextureImporter::MakeTexture(textureDir);
 
-        float vertices[] =
+        float vertices[] = 
         {
             // positions            // colors                    // texture coords
             0.5f,   0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      1.0f, 1.0f, // top right
@@ -83,7 +83,9 @@ namespace basilisk
         constexpr int amountVerticesPerCorner = 9;
 
         auto [topLeftUV, topRightUV, bottomLeftUV, bottomRightUV] = this->Animation->GetCurrentFrame();
-        
+
+        FlipSprite(topRightUV, topLeftUV, bottomLeftUV, bottomRightUV);
+
         this->buffers.Vertices[start] = topRightUV.x;
         this->buffers.Vertices[start + 1] = topRightUV.y;
         this->buffers.Vertices[start + amountVerticesPerCorner] = bottomRightUV.x;
@@ -103,4 +105,22 @@ namespace basilisk
 
         Renderer::GetInstance().BindBufferData(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }
-}
+
+    void Sprite::FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const
+    {
+        if (!FlipSpriteX && !FlipSpriteY) return;
+
+        glm::vec2 topLeftUVFlipped = {FlipSpriteX ? topRightUV.x : topLeftUV.x, FlipSpriteY ? bottomLeftUV.y : topLeftUV.y};
+
+        glm::vec2 topRightUVFlipped = {FlipSpriteX ? topLeftUV.x : topRightUV.x, FlipSpriteY ? bottomRightUV.y : topRightUV.y};
+
+        glm::vec2 bottomLeftUVFlipped = {FlipSpriteX ? bottomRightUV.x : bottomLeftUV.x, FlipSpriteY ? topLeftUV.y : bottomLeftUV.y};
+
+        glm::vec2 bottomRightUVFlipped = {FlipSpriteX ? bottomLeftUV.x : bottomRightUV.x, FlipSpriteY ? topRightUV.y : bottomRightUV.y};
+
+        topLeftUV = topLeftUVFlipped;
+        topRightUV = topRightUVFlipped;
+        bottomLeftUV = bottomLeftUVFlipped;
+        bottomRightUV = bottomRightUVFlipped;
+    }
+} // namespace basilisk

@@ -78,16 +78,14 @@ namespace basilisk
         }
     }
 
-    void Sprite::ChangeAnimation(basilisk::Animation* current, basilisk::Animation* newAnimation)
+    void Sprite::ChangeAnimation(basilisk::Animation* newAnimation)
     {
-        if (current->GetId() != newAnimation->GetId())
+        if (this->Animation->GetId() != newAnimation->GetId())
         {
-            current->Stop();
-            SetAnimation(newAnimation);
-            newAnimation->Play();
+            this->Animation->Stop();
+            this->SetAnimation(newAnimation);
+            this->Animation->Play();
         }
-
-        current = newAnimation;
     }
 
     void Sprite::UpdateCurrentFrame() const

@@ -14,7 +14,6 @@ namespace game
         this->WalkDownAnimation.GenUVFrames({0, 8 * 32}, {32, 32}, {128, 384}, 1.0f, 4);
 
         SetAnimation(&this->IdleAnimation);
-        CurrentAnimation = &this->IdleAnimation;
     }
 
     void Player::Update()
@@ -38,33 +37,33 @@ namespace game
 
         if (this->MoveUpIA && this->MoveUpIA->IsDown())
         {
-            ChangeAnimation(CurrentAnimation, &WalkUpAnimation);
+            ChangeAnimation(&WalkUpAnimation);
             position.y += this->Speed * this->Delta;
         }
 
         else if (this->MoveDownIA && this->MoveDownIA->IsDown())
         {
-            ChangeAnimation(CurrentAnimation, &WalkDownAnimation);
+            ChangeAnimation(&WalkDownAnimation);
             position.y -= this->Speed * this->Delta;
         }
 
         else if (this->MoveLeftIA && this->MoveLeftIA->IsDown())
         {
             FlipSpriteX = true;
-            ChangeAnimation(CurrentAnimation, &WalkHorAnimation);
+            ChangeAnimation(&WalkHorAnimation);
             position.x -= this->Speed * this->Delta;
         }
 
         else if (MoveRightIA && this->MoveRightIA->IsDown())
         {
             FlipSpriteX = false;
-            ChangeAnimation(CurrentAnimation, &WalkHorAnimation);
+            ChangeAnimation(&WalkHorAnimation);
             position.x += this->Speed * this->Delta;
         }
 
         else
         {
-            ChangeAnimation(CurrentAnimation, &IdleAnimation);
+            ChangeAnimation(&IdleAnimation);
         }
 
         this->SetPosition(position);

@@ -20,7 +20,7 @@ namespace basilisk
         /// </summary>
         /// <param name="delta"></param>
         void UpdateAnimation(float delta);
-        void ChangeAnimation(Animation* current, Animation* newAnimation);
+        void ChangeAnimation(Animation* newAnimation);
 
         bool FlipSpriteX = false;
         bool FlipSpriteY = false;

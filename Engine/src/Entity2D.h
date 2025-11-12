@@ -29,7 +29,7 @@ namespace basilisk
         /// <summary>
         /// Setter for rotation angle.
         /// </summary>
-        /// <param name="angle">Angle to rotate entity. Clockwise is positive.</param>
+        /// <param name="angle">Angle to rotate entity. Clockwise is negative.</param>
         /// <param name="isRads">True if is in radians, false if is in degrees</param>
         virtual void SetRotation(float angle, bool isRads = false);
         /// <summary>

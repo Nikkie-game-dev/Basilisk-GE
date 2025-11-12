@@ -7,12 +7,13 @@
 
 namespace basilisk
 {
-    Sprite::Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size)
+    Sprite::Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size, 
+                   const Filters filter, const FitMode fitMode)
     {
         this->Entity2D::SetPosition(center);
         this->Entity2D::SetScaling(size);
 
-        this->Texture = TextureImporter::MakeTexture(textureDir);
+        this->Texture = TextureImporter::MakeTexture(textureDir, filter, fitMode);
 
         float vertices[] = 
         {
@@ -75,6 +76,18 @@ namespace basilisk
         {
             UpdateCurrentFrame();
         }
+    }
+
+    void Sprite::ChangeAnimation(basilisk::Animation* current, basilisk::Animation* newAnimation)
+    {
+        if (current->GetId() != newAnimation->GetId())
+        {
+            current->Stop();
+            SetAnimation(newAnimation);
+            newAnimation->Play();
+        }
+
+        current = newAnimation;
     }
 
     void Sprite::UpdateCurrentFrame() const

@@ -1,13 +1,15 @@
 #pragma once
 #include "Animation.h"
 #include "Entity2D.h"
+#include "TextureImporter.h"
 
 namespace basilisk
 {
     class BASILISK_API Sprite : public Entity2D
     {
     public:
-        Sprite(const std::string& textureDir, glm::vec2 center, glm::vec2 size);
+        Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size, 
+               const Filters filter = Filters::NEAREST, const FitMode fitMode = FitMode::REPEAT);
         
         void Init() override;
         void Draw() override;
@@ -18,6 +20,7 @@ namespace basilisk
         /// </summary>
         /// <param name="delta"></param>
         void UpdateAnimation(float delta);
+        void ChangeAnimation(Animation* current, Animation* newAnimation);
 
         bool FlipSpriteX = false;
         bool FlipSpriteY = false;

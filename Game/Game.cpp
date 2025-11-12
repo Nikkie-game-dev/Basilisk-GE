@@ -3,7 +3,7 @@
 namespace game
 {
     Game::Game(const char* windowName, float sizeX, float sizeY) : 
-        basilisk::BaseGame(windowName, sizeX, sizeY), Player(100.0f)
+        basilisk::BaseGame(windowName, sizeX, sizeY), Player(100.0f), Obstacle()
     {
     }
     
@@ -23,6 +23,10 @@ namespace game
 
         this->Player.RotateCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::Q);
         this->Player.RotateCCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::E);
+    
+        auto obstacleMat = basilisk::Material::New(false);
+        this->Obstacle.SetMaterial(obstacleMat);
+        this->Obstacle.Init();
     }
     
     void Game::Update()
@@ -34,6 +38,7 @@ namespace game
     void Game::Draw()
     {
         this->Player.Draw();
+        this->Obstacle.Draw();
     }
 
 } // namespace game

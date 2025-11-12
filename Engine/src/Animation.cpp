@@ -4,7 +4,6 @@
 
 namespace basilisk
 {
-
     int Animation::IdsCounter = 0;
 
     Animation::Animation()
@@ -66,7 +65,7 @@ namespace basilisk
 
     Animation::Frame Animation::GetCurrentFrame() const
     {
-        return this->Frames.at(this->CurrentFrameIndex);
+        return this->Frames.at(this->CurrentFrameIndex == -1 ? 0 : this->CurrentFrameIndex);
     }
 
     void Animation::Play()

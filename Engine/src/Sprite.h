@@ -8,8 +8,11 @@ namespace basilisk
     class BASILISK_API Sprite : public Entity2D
     {
     public:
-        Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size, 
-               const Filters filter = Filters::NEAREST, const FitMode fitMode = FitMode::REPEAT);
+        Sprite(const std::string& textureDir,
+               glm::vec2 center,
+               glm::vec2 size,
+               Filters filter = Filters::NEAREST,
+               FitMode fitMode = FitMode::REPEAT);
         
         void Init() override;
         void Draw() override;
@@ -28,6 +31,7 @@ namespace basilisk
     private:
         void UpdateCurrentFrame() const;
         void FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const;
+        
         unsigned int Texture;
         Animation* Animation = nullptr;
     };

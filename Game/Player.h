@@ -8,9 +8,9 @@ namespace game
     {
 
     public:
-        Player(float speed);
-        void Update() override;
+        explicit Player(float speed);
         void Init() override;
+        void Update() override;
         float Delta;
 
         basilisk::InputAction* MoveUpIA = nullptr;
@@ -22,18 +22,19 @@ namespace game
         basilisk::InputAction* ScaleDownIA = nullptr;
         basilisk::InputAction* RotateCWIA = nullptr;
         basilisk::InputAction* RotateCCWIA = nullptr;
+        
+        //glm::vec2 NextPosition;
 
     private:
-        float Speed;
         void Move();
         void Scale();
         void Rotate();
 
+        float Speed;
         basilisk::Animation IdleAnimation;
         basilisk::Animation WalkUpAnimation;
         basilisk::Animation WalkDownAnimation;
         basilisk::Animation WalkHorAnimation;
-        basilisk::Animation* CurrentAnimation = nullptr;
     };
 
 } // namespace game

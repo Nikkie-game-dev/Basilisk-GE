@@ -1,7 +1,7 @@
 #include "Obstacle.h"
 namespace game
 {
-    Obstacle::Obstacle() : Square({400, 300}, {60,60}, true, basilisk::Color::Red)
+    Obstacle::Obstacle() : Square({400, 300}, {100,100}, true, basilisk::Color::Red)
     {
     }
 

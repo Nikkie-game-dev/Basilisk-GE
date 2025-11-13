@@ -1,11 +1,16 @@
 #include "Player.h"
 #include "Basilisk/Animation.h"
-#include "Basilisk/TextureImporter.h"   
+#include "Basilisk/TextureImporter.h"
 
 namespace game
 {
-    Player::Player(float speed) :
-        basilisk::Sprite("res/assets/character.png", glm::vec2(300.0f, 300.0f), glm::vec2(100.0f, 100.0f), basilisk::Filters::NEAREST), 
+    Player::Player(const float speed) :
+        Sprite(
+            "res/assets/character.png", 
+            glm::vec2(300.0f, 300.0f), 
+            glm::vec2(100.0f, 100.0f), 
+            basilisk::Filters::NEAREST
+            ),
         Delta(0.0f), Speed(speed)
     {
         this->IdleAnimation.GenUVFrames({0, 11 * 32}, {32, 32}, {128, 384}, 1.0f, 2);
@@ -27,7 +32,7 @@ namespace game
     void Player::Init()
     {
         this->IdleAnimation.Play();
-        basilisk::Sprite::Init();
+        Sprite::Init();
     }
 
     void Player::Move()

@@ -10,6 +10,9 @@ namespace basilisk
 {
     using SPProc = unsigned int;
 
+    /// <summary>
+    /// This class is in charged of shaders building and compilation.
+    /// </summary>
     class BASILISK_API Material
     {
     public:
@@ -30,7 +33,6 @@ namespace basilisk
         /// Builds and compiles shaders.
         /// </summary>
         void BuildShader();
-
 
         /// <summary>
         /// Getter for Shader Program.

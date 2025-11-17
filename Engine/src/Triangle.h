@@ -14,9 +14,6 @@ namespace basilisk
         explicit Triangle(glm::vec2 center, glm::vec2 size, bool isSolid, const basilisk::Color& color);
 
     private:
-        /// <summary>
-        /// Initializes the vertices that will be used for drawing the triangle.
-        /// </summary>
         void SetVertices() override;
     };
 } // basilisk 

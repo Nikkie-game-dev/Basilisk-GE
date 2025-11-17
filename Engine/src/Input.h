@@ -20,9 +20,6 @@ namespace basilisk
         /// <param name="window">Window to provide context</param>
         explicit Input(Window* window);
         
-        /// <summary>
-        /// Destructor.
-        /// </summary>
         ~Input();
 
         /// <summary>

@@ -6,7 +6,9 @@
 
 namespace basilisk
 {
-
+    /// <summary>
+    /// The Animation class. It provides functionality for 2D sprite animations.
+    /// </summary>
     class BASILISK_API Animation
     {
     public:
@@ -17,7 +19,9 @@ namespace basilisk
             glm::vec2 bottomLeftUV;
             glm::vec2 bottomRightUV;
         };
-        
+        /// <summary>
+        /// The constructor for Animation.
+        /// </summary>
         Animation();
 
         /// <summary>

@@ -5,6 +5,9 @@
 namespace basilisk
 {
 
+    /// <summary>
+    /// 2D entity, all 2d entities must inherit from this class.
+    /// </summary>
     class BASILISK_API Entity2D : public Entity
     {
     public:

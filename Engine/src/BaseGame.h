@@ -88,7 +88,7 @@ namespace basilisk
         Input& GetInputSystem();
         
         Renderer& Renderer;
-        
+
     private:
         const char* WindowName;
         int X;

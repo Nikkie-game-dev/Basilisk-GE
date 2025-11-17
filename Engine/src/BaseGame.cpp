@@ -21,7 +21,7 @@ namespace basilisk
             this->Renderer.SetGlVersion();
 
             this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
-            
+
             this->WindowName = windowName;
 
             this->Renderer.InitGL();
@@ -50,7 +50,6 @@ namespace basilisk
             this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
             this->Renderer.SetWindowRef(*this->Window);
             this->InputSystem = Input(this->Window);
-
         }
         catch (std::exception& error)
         {

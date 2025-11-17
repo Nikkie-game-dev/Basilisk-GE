@@ -4,7 +4,6 @@
 
 namespace basilisk
 {
-
     int Animation::IdsCounter = 0;
 
     Animation::Animation()
@@ -33,7 +32,7 @@ namespace basilisk
         outHasChanged = current != this->CurrentFrameIndex;
     }
 
-    void Animation::GenUVFrames(const glm::vec2& frameTopLeft,
+    void Animation::GenUVFrames(const glm::vec2& frameBottomLeft,
                                 const glm::vec2& frameSize,
                                 const glm::vec2& textureSize,
                                 const float& animationDuration,
@@ -44,29 +43,29 @@ namespace basilisk
 
         for (int i = 0; i < frameCount; i++)
         {
-            const float x = frameTopLeft.x + frameSize.x * static_cast<float>(i);
-            const float y = frameTopLeft.y;
+            const float x = frameBottomLeft.x + frameSize.x * static_cast<float>(i);
+            const float y = frameBottomLeft.y;
 
             Frame frame = MakeFrame({x, y}, frameSize, textureSize);
             this->Frames.push_back(frame);
         }
     }
 
-    Animation::Frame Animation::MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize)
+    Animation::Frame Animation::MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize)
     {
         Frame frame;
 
-        frame.topLeftUV = glm::vec2(topLeft.x, topLeft.y + frameSize.y) / textureSize;
-        frame.topRightUV = glm::vec2(topLeft.x + frameSize.x, topLeft.y + frameSize.y) / textureSize;
-        frame.bottomLeftUV = topLeft / textureSize;
-        frame.bottomRightUV = glm::vec2(topLeft.x + frameSize.x, topLeft.y) / textureSize;
+        frame.topLeftUV = glm::vec2(bottomLeft.x, bottomLeft.y + frameSize.y) / textureSize;
+        frame.topRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y + frameSize.y) / textureSize;
+        frame.bottomLeftUV = bottomLeft / textureSize;
+        frame.bottomRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y) / textureSize;
 
         return frame;
     }
 
     Animation::Frame Animation::GetCurrentFrame() const
     {
-        return this->Frames.at(this->CurrentFrameIndex);
+        return this->Frames.at(this->CurrentFrameIndex == -1 ? 0 : this->CurrentFrameIndex);
     }
 
     void Animation::Play()
@@ -105,6 +104,11 @@ namespace basilisk
 #endif
 
         this->ElapsedTimeMs = 0;
+    }
+
+    int Animation::GetId() const
+    {
+        return this->Id;
     }
 
     bool Animation::IsAnimPlaying() const

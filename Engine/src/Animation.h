@@ -49,6 +49,8 @@ namespace basilisk
         
         void Reset();
 
+        [[nodiscard]] int GetId() const;
+
         [[nodiscard]] bool IsAnimPlaying() const;
 
     private:

@@ -111,24 +111,18 @@
     <Folder Include="res\raw\" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AnimationTest.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GreenSquare.cpp" />
-    <ClCompile Include="src\InputTest.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\TestTriangle.cpp" />
-    <ClCompile Include="src\TextureTest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Build.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AnimationTest.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GreenSquare.h" />
-    <ClInclude Include="src\InputTest.h" />
-    <ClInclude Include="src\TestTriangle.h" />
-    <ClInclude Include="src\TextureTest.h" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

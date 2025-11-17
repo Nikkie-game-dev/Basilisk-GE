@@ -119,15 +119,20 @@ namespace basilisk
 
     void Sprite::FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const
     {
-        if (!FlipSpriteX && !FlipSpriteY) return;
+        if (!this->FlipSpriteX && !this->FlipSpriteY)
+            return;
 
-        glm::vec2 topLeftUVFlipped = {FlipSpriteX ? topRightUV.x : topLeftUV.x, FlipSpriteY ? bottomLeftUV.y : topLeftUV.y};
+        glm::vec2 topLeftUVFlipped = {this->FlipSpriteX ? topRightUV.x : topLeftUV.x, 
+                                      this->FlipSpriteY ? bottomLeftUV.y : topLeftUV.y};
 
-        glm::vec2 topRightUVFlipped = {FlipSpriteX ? topLeftUV.x : topRightUV.x, FlipSpriteY ? bottomRightUV.y : topRightUV.y};
+        glm::vec2 topRightUVFlipped = {this->FlipSpriteX ? topLeftUV.x : topRightUV.x, 
+                                       this->FlipSpriteY ? bottomRightUV.y : topRightUV.y};
 
-        glm::vec2 bottomLeftUVFlipped = {FlipSpriteX ? bottomRightUV.x : bottomLeftUV.x, FlipSpriteY ? topLeftUV.y : bottomLeftUV.y};
+        glm::vec2 bottomLeftUVFlipped = {this->FlipSpriteX ? bottomRightUV.x : bottomLeftUV.x,
+                                         this->FlipSpriteY ? topLeftUV.y : bottomLeftUV.y};
 
-        glm::vec2 bottomRightUVFlipped = {FlipSpriteX ? bottomLeftUV.x : bottomRightUV.x, FlipSpriteY ? topRightUV.y : bottomRightUV.y};
+        glm::vec2 bottomRightUVFlipped = {this->FlipSpriteX ? bottomLeftUV.x : bottomRightUV.x,
+                                          this->FlipSpriteY ? topRightUV.y : bottomRightUV.y};
 
         topLeftUV = topLeftUVFlipped;
         topRightUV = topRightUVFlipped;

@@ -14,6 +14,9 @@ namespace basilisk
         Z
     };
 
+    /// <summary>
+    /// Represents an entity within the engine. All entities should inherit from this class.
+    /// </summary>
     class BASILISK_API Entity
     {
     public:

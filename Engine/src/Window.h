@@ -7,9 +7,13 @@
 
 namespace basilisk
 {
+    /// <summary>
+    /// A class for creating and managing the window.
+    /// </summary>
     class BASILISK_API Window
     {
     public:
+
         Window() = default;
         Window(const char* windowName, glm::ivec2 size);
 

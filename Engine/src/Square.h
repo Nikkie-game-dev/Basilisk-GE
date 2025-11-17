@@ -5,6 +5,9 @@
 
 namespace basilisk
 {
+    /// <summary>
+    /// Primitive square shape. The color can be provided by the Color class or read from material.
+    /// </summary>
     class BASILISK_API Square : public Shape
     {
     protected:

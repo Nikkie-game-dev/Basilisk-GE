@@ -34,8 +34,16 @@ namespace basilisk
         /// <param name="fit"></param>
         /// <returns>Id of loaded texture</returns>
         static unsigned int MakeTexture(const std::string& imageDir, Filters filter = Filters::LINEAR, FitMode fit = FitMode::REPEAT);
+        
+        /// <summary>
+        /// Binds a texture for rendering.
+        /// </summary>
+        /// <param name="texture"></param>
         static void BindTexture(unsigned int texture);
 
+        /// <summary>
+        /// Unbinds the currently bound texture.
+        /// </summary>
         static void UnbindTexture();
 
     private:
@@ -51,6 +59,9 @@ namespace basilisk
         static void FreeImage(unsigned char* data);
     };
 
+    /// <summary>
+    /// Exception for failed texture loading.
+    /// </summary>
     class FailedTextureLoading : std::exception
     {
     public:
@@ -60,6 +71,9 @@ namespace basilisk
         }
     };
 
+    /// <summary>
+    /// Exception for when the image is not found in the directory.
+    /// </summary>
     class ImageNotFound : std::exception
     {
     public:

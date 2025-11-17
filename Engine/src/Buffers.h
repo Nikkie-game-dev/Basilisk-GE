@@ -30,7 +30,15 @@ namespace basilisk
         /// Pointer to an array of indices.
         /// </summary>
         unsigned int* Indices = nullptr;
+
+        /// <summary>
+        /// Amount of vertices.
+        /// </summary>
         int AmountVertices;
+
+        /// <summary>
+        /// Amount of indices.
+        /// </summary>
         int AmountIndices;
     };
 }

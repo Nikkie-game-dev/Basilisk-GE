@@ -41,7 +41,7 @@ namespace basilisk
         void LoadProjectionMatrix();
 
         /// <summary>
-        /// 
+        /// Binds and fills the VBO.
         /// </summary>
         /// <param name="VboID">Id of buffer to fill and bind</param>
         /// <param name="sizeArray">Size of array to fill buffer with</param>

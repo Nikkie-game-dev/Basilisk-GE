@@ -21,8 +21,7 @@ namespace basilisk
 
     protected:
         explicit Shape(basilisk::Color color, bool isSolid);
-
-
+        
         /// <summary>
         /// Initializes the vertices that will be used for drawing.
         /// </summary>

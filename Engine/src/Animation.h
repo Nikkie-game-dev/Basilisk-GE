@@ -19,14 +19,19 @@ namespace basilisk
         };
         
         Animation();
-        
+
+        /// <summary>
+        /// Updates which frame is currently displaying.
+        /// </summary>
+        /// <param name="delta">Time between frames</param>
+        /// <param name="outHasChanged">Returns true if an animation has changed frames</param>
         void Update(float delta, bool& outHasChanged);
 
         /// <summary>
         /// Sets the animation values. If you use an animation like this,
         /// the image of the sprite should be a spritesheet.
         /// </summary>
-        /// <param name="frameTopLeft">First frame top left coordinates</param>
+        /// <param name="frameBottomLeft">First frame bottom left coordinates</param>
         /// <param name="frameSize">Size (x = width, y = height) of one frame in pixels</param>
         /// <param name="textureSize">Size of the total texture in pixels</param>
         /// <param name="animationDuration">The duration of the entire animation in seconds</param>
@@ -37,21 +42,51 @@ namespace basilisk
                                 const float& animationDuration,
                                 const int& frameCount);
 
-        static Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
+        /// <summary>
+        /// Constructs a frame with a given size.
+        /// </summary>
+        /// <param name="bottomLeft">Bottom left corner of frame in pixels</param>
+        /// <param name="frameSize">Size of frame in pixels</param>
+        /// <param name="textureSize">Size of texture</param>
+        /// <returns>Constructed Frame</returns>
         static Frame MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
 
-        Frame GetCurrentFrame() const;
-        
+        /// <summary>
+        /// Returns current Frame
+        /// </summary>
+        /// <returns>Current Frame</returns>
+        [[nodiscard]] Frame GetCurrentFrame() const;
+
+        /// <summary>
+        /// Enables update of animation.
+        /// </summary>
         void Play();
-        
+
+        /// <summary>
+        /// Disables update of animation
+        /// </summary>
         void Pause();
         
+        /// <summary>
+        /// Disables update of animation and rests current frame to first frame.
+        /// </summary>
         void Stop();
-        
+
+        /// <summary>
+        /// Resets current frame to first frame without disabling update.
+        /// </summary>
         void Reset();
 
+        /// <summary>
+        /// Getter for Animation Id.
+        /// </summary>
+        /// <returns>Animation Id</returns>
         [[nodiscard]] int GetId() const;
 
+        /// <summary>
+        /// Gets animation playing state.
+        /// </summary>
+        /// <returns>Whether the animation is playing</returns>
         [[nodiscard]] bool IsAnimPlaying() const;
 
     private:

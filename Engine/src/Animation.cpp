@@ -17,8 +17,9 @@ namespace basilisk
         if (!this->IsPlaying)
             return;
 
-        delta *= 1000;
+        delta *= 1000; // convert from seconds to milliseconds
 
+        
         this->ElapsedTimeMs = fmodf(this->ElapsedTimeMs + delta, this->AnimationDurationMs);
 
         if (this->ElapsedTimeMs < 0.0f)

@@ -53,7 +53,14 @@ namespace basilisk
         /// <param name="name">Name of Matrix in Shader source</param>
         void UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const;
 
+        /// <summary>
+        /// Has the projection matrix been sent.
+        /// </summary>
         bool IsProjectionSent = false;
+
+        /// <summary>
+        /// Has the view matrix been sent.
+        /// </summary>
         bool IsViewSent = false;
         
     private:

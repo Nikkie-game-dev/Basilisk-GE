@@ -104,7 +104,7 @@ namespace basilisk
         std::cout << "Animation resetting. ID: " << this->Id << ". Address: " << this << "/n";
 #endif
 
-        this->ElapsedTimeMs = 0;
+        this->CurrentFrameIndex = 0;
     }
 
     int Animation::GetId() const

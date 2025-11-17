@@ -5,6 +5,9 @@
 
 namespace basilisk
 {
+    /// <summary>
+    /// Manager for collisions.
+    /// </summary>
     class BASILISK_API CollisionManager
     {
     public:

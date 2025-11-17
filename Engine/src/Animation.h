@@ -31,13 +31,14 @@ namespace basilisk
         /// <param name="textureSize">Size of the total texture in pixels</param>
         /// <param name="animationDuration">The duration of the entire animation in seconds</param>
         /// <param name="frameCount">Frame total amount (horizontal)</param>
-        void GenUVFrames(const glm::vec2& frameTopLeft,
+        void GenUVFrames(const glm::vec2& frameBottomLeft,
                                 const glm::vec2& frameSize,
                                 const glm::vec2& textureSize,
                                 const float& animationDuration,
                                 const int& frameCount);
 
         static Frame MakeFrame(const glm::vec2& topLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
+        static Frame MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
 
         Frame GetCurrentFrame() const;
         

@@ -17,7 +17,6 @@ namespace game
     private:
         Player Player;
         Obstacle RedObstacle;
-        Obstacle BlueObstacle;
     };
 
 } // namespace game

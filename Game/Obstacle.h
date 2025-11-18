@@ -1,14 +1,19 @@
 #pragma once
 
-#include "Basilisk/Square.h"
+#include "Basilisk/Sprite.h"
+#include "Basilisk/Animation.h"
 
 namespace game
 {
-    class Obstacle : public basilisk::Square
+    class Obstacle : public basilisk::Sprite
     {
     public:
+        basilisk::Animation IdleAnimation;
+        float Delta;
+
         Obstacle();
 
         void Update() override;
+        void GetPushed(float speed);
     };
 } // namespace game

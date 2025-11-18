@@ -30,21 +30,17 @@ namespace game
         this->Player.RotateCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::Q);
         this->Player.RotateCCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::E);
 
-        auto obstacleMat = basilisk::Material::New(false);
+        auto obstacleMat = basilisk::Material::New(true);
         this->RedObstacle.SetMaterial(obstacleMat);
         this->RedObstacle.Init();
-        // Player's bounding box
-        /*
-        this->BlueObstacle.SetMaterial(obstacleMat);
-        this->BlueObstacle.Init();*/
     }
 
     void Game::Update()
     {
-        // this->BlueObstacle.SetPosition(this->Player.GetPosition2D());
-
         this->Player.Delta = this->GetDelta();
+        this->RedObstacle.Delta = this->GetDelta();
         this->Player.Update();
+
 
         if (this->Player.GetNextPos())
         {
@@ -53,19 +49,27 @@ namespace game
             {
                 std::cout << "Hits" << std::endl;
                 this->Player.ChangeAnimation(&this->Player.CollisionAnimation);
+                //this->RedObstacle.GetPushed(this->Player.Speed * this->Player.Delta);
             }
             else
             {
                 this->Player.Move();
             }
         }
+        else
+        {
+            this->Player.ChangeAnimation(&this->Player.IdleAnimation);
+        }
+
+        this->RedObstacle.Update();
     }
 
     void Game::Draw()
     {
-        // this->BlueObstacle.Draw();
         this->Player.Draw();
         this->RedObstacle.Draw();
     }
+
+    
 
 } // namespace game

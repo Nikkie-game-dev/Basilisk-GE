@@ -1,11 +1,10 @@
 #pragma once
 #include "BaseGame.h"
-#include "Obstacle.h"
-#include "Player.h"
+#include "Character.h"
 
 namespace game
 {
-    class Game : public basilisk::BaseGame
+    class Game : public BaseGame
     {
     public:
         Game(const char* windowName, float sizeX, float sizeY);
@@ -15,9 +14,8 @@ namespace game
         void Draw() override;
 
     private:
-        Player Player;
-        Obstacle RedObstacle;
-        Obstacle BlueObstacle;
+        Character Eliwood;
+        Character Eirika;
     };
 
 } // namespace game

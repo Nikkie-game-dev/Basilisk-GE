@@ -7,56 +7,44 @@
 namespace game
 {
     Game::Game(const char* windowName, float sizeX, float sizeY) :
-        BaseGame(windowName, sizeX, sizeY), Player(100.0f)
+        BaseGame(windowName, sizeX, sizeY), Eirika("res/assets/Eirika_Lord_Sword_Sprite_Sheet.gif", {100, 300}, {200, 100}),
+        Eliwood("res/assets/Eliwood_Knightlord_Lance_Sprite_Sheet.gif", {400, 300}, {100, 100})
     {
     }
 
     void Game::Init()
     {
-        auto playerMat = basilisk::Material::New(true);
-        this->Player.SetMaterial(playerMat);
-        this->Player.Init();
+        auto mat = Material::New(true);
 
-        this->Player.MoveUpIA = &this->GetInputSystem().NewInput(basilisk::Keys::W);
-        this->Player.MoveLeftIA = &this->GetInputSystem().NewInput(basilisk::Keys::A);
-        this->Player.MoveDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::S);
-        this->Player.MoveRightIA = &this->GetInputSystem().NewInput(basilisk::Keys::D);
+        this->Eliwood.SetMaterial(mat);
+        this->Eirika.SetMaterial(mat);
 
-        this->Player.ScaleUpIA = &this->GetInputSystem().NewInput(basilisk::Keys::J);
-        this->Player.ScaleDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::K);
-
-        this->Player.RotateCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::Q);
-        this->Player.RotateCCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::E);
-
-        auto obstacleMat = basilisk::Material::New(false);
-        this->RedObstacle.SetMaterial(obstacleMat);
-        this->RedObstacle.Init();
+        this->Eliwood.Init();
+        this->Eirika.Init();
         
-        this->BlueObstacle.SetMaterial(obstacleMat);
-        this->BlueObstacle.Init();
+        this->Eirika.AttackAnimation.GenUVFrames({50, 200}, {40, 50}, {500, 250}, 1.0f, 10);
+        this->Eliwood.AttackAnimation.GenUVFrames({210, 80}, {70, 80}, {500, 603}, 1.0f, 6);
+        
+        this->Eirika.IdleAnimation.GenUVFrames({0, 200}, {40, 50}, {500, 250}, 1, 1);
+        this->Eliwood.IdleAnimation.GenUVFrames({395, 48}, {45, 60}, {500, 603}, 1, 2);
+
+        this->Eirika.DeathAnimation.GenUVFrames({270, 160}, {40, 50}, {500, 250}, 1, 2);
+        this->Eliwood.IdleAnimation.GenUVFrames({332, 80}, {45, 60}, {500, 603}, 1, 2);
+
+        this->Eirika.Attack = &this->GetInputSystem().NewInput(Keys::A);
+        this->Eliwood.Attack = &this->GetInputSystem().NewInput(Keys::K);
     }
 
     void Game::Update()
     {
-        this->BlueObstacle.SetPosition(this->Player.GetPosition2D());
-        
-        this->Player.Delta = this->GetDelta();
-        this->Player.Update();
-        
-        if (basilisk::CollisionManager::IsCollidingAaBb(this->Player.GetPosition2D(),
-                                                        this->Player.GetScale2D(),
-                                                        this->RedObstacle.GetPosition2D(),
-                                                        this->RedObstacle.GetScale2D()))
-        {
-            std::cout << "Hits" << std::endl;
-        }
+        this->Eirika.Update();
+        this->Eliwood.Update();
     }
 
     void Game::Draw()
     {
-        this->BlueObstacle.Draw();
-        this->Player.Draw();
-        this->RedObstacle.Draw();
+        this->Eirika.Draw();
+        this->Eliwood.Draw();
     }
 
 } // namespace game

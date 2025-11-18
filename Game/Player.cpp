@@ -5,28 +5,33 @@
 namespace game
 {
     Player::Player(const float speed) :
-        Sprite(
-            "res/assets/character.png", 
-            glm::vec2(300.0f, 300.0f), 
-            glm::vec2(100.0f, 100.0f), 
-            basilisk::Filters::NEAREST
-            ),
-        Delta(0.0f), Speed(speed)
+        Sprite("res/assets/Knuckles.png", glm::vec2(300.0f, 300.0f), glm::vec2(100.0f, 100.0f), basilisk::Filters::NEAREST), Delta(0.0f),
+        Speed(speed)
     {
-        this->IdleAnimation.GenUVFrames({0, 11 * 32}, {32, 32}, {128, 384}, 1.0f, 2);
-        this->WalkUpAnimation.GenUVFrames({0, 6 * 32}, {32, 32}, {128, 384}, 1.0f, 4);
-        this->WalkHorAnimation.GenUVFrames({0, 7 * 32}, {32, 32}, {128, 384}, 1.0f, 4);
-        this->WalkDownAnimation.GenUVFrames({0, 8 * 32}, {32, 32}, {128, 384}, 1.0f, 4);
+        this->IdleAnimation.GenUVFrames({0, 15 * 29}, {36, 36}, {646, 473}, 1.0f, 1);
+        this->WalkHorAnimation.GenUVFrames({41*2, 14 * 28}, {41, 36}, {646, 473}, 1.0f, 4);
+        this->SpinAnimation.GenUVFrames({0, 12 * 26}, {33, 34}, {646, 473}, 1.0f, 6);
+        this->CollisionAnimation.GenUVFrames({12 * 35.5, 13 * 26.5}, {35, 36}, {646, 473}, 1.0f, 4);
+
+        this->NextPos = this->GetPosition2D();
 
         SetAnimation(&this->IdleAnimation);
     }
 
     void Player::Update()
     {
-        Move();
         Scale();
         Rotate();
         UpdateAnimation(this->Delta);
+
+        if (this->SpinIA && this->SpinIA->IsDown())
+        {
+            ChangeAnimation(&SpinAnimation);
+        }
+        if (this->PushIA && this->PushIA->IsDown())
+        {
+            ChangeAnimation(&CollisionAnimation);
+        }
     }
 
     void Player::Init()
@@ -35,43 +40,40 @@ namespace game
         Sprite::Init();
     }
 
-    void Player::Move()
+    bool Player::GetNextPos()
     {
+        bool moved = false;
+
         glm::vec2 position = this->GetPosition2D();
 
-
-        if (this->MoveUpIA && this->MoveUpIA->IsDown())
-        {
-            ChangeAnimation(&WalkUpAnimation);
-            position.y += this->Speed * this->Delta;
-        }
-
-        else if (this->MoveDownIA && this->MoveDownIA->IsDown())
-        {
-            ChangeAnimation(&WalkDownAnimation);
-            position.y -= this->Speed * this->Delta;
-        }
-
-        else if (this->MoveLeftIA && this->MoveLeftIA->IsDown())
+        if (this->MoveLeftIA && this->MoveLeftIA->IsDown())
         {
             FlipSpriteX = true;
             ChangeAnimation(&WalkHorAnimation);
             position.x -= this->Speed * this->Delta;
+            moved = true;
         }
-
-        else if (MoveRightIA && this->MoveRightIA->IsDown())
+        else if (this->MoveRightIA && this->MoveRightIA->IsDown())
         {
             FlipSpriteX = false;
             ChangeAnimation(&WalkHorAnimation);
             position.x += this->Speed * this->Delta;
+            moved = true;
         }
 
-        else
-        {
-            ChangeAnimation(&IdleAnimation);
-        }
+        if (moved)
+            this->NextPos = position;
 
-        this->SetPosition(position);
+        return moved;
+    }
+
+    void Player::Move()
+    {
+        this->SetPosition(NextPos);
+    }
+
+    void Player::BackToPreviousPos()
+    {
     }
 
     void Player::Scale()
@@ -86,8 +88,7 @@ namespace game
 
         else if (this->ScaleDownIA && this->ScaleDownIA->IsDown())
         {
-            if (scale.x - this->Speed * this->Delta <= 0.0f ||
-                scale.y - this->Speed * this->Delta <= 0.0f)
+            if (scale.x - this->Speed * this->Delta <= 0.0f || scale.y - this->Speed * this->Delta <= 0.0f)
             {
                 return;
             }

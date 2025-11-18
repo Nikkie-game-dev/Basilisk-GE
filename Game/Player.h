@@ -10,6 +10,7 @@ namespace game
     public:
         explicit Player(float speed);
         void Init() override;
+        bool GetNextPos();
         void Update() override;
         float Delta;
 
@@ -18,23 +19,27 @@ namespace game
         basilisk::InputAction* MoveLeftIA = nullptr;
         basilisk::InputAction* MoveRightIA = nullptr;
 
+        basilisk::InputAction* SpinIA = nullptr;
+        basilisk::InputAction* PushIA = nullptr;
+
         basilisk::InputAction* ScaleUpIA = nullptr;
         basilisk::InputAction* ScaleDownIA = nullptr;
         basilisk::InputAction* RotateCWIA = nullptr;
         basilisk::InputAction* RotateCCWIA = nullptr;
+        basilisk::Animation CollisionAnimation;
+        basilisk::Animation IdleAnimation;
         
-        //glm::vec2 NextPosition;
+        glm::vec2 NextPos;
+        void Move();
+        void BackToPreviousPos();
 
     private:
-        void Move();
         void Scale();
         void Rotate();
 
         float Speed;
-        basilisk::Animation IdleAnimation;
-        basilisk::Animation WalkUpAnimation;
-        basilisk::Animation WalkDownAnimation;
         basilisk::Animation WalkHorAnimation;
+        basilisk::Animation SpinAnimation;
     };
 
 } // namespace game

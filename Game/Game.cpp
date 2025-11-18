@@ -6,8 +6,7 @@
 
 namespace game
 {
-    Game::Game(const char* windowName, float sizeX, float sizeY) :
-        BaseGame(windowName, sizeX, sizeY), Player(100.0f)
+    Game::Game(const char* windowName, float sizeX, float sizeY) : BaseGame(windowName, sizeX, sizeY), Player(100.0f)
     {
     }
 
@@ -22,6 +21,9 @@ namespace game
         this->Player.MoveDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::S);
         this->Player.MoveRightIA = &this->GetInputSystem().NewInput(basilisk::Keys::D);
 
+        this->Player.SpinIA = &this->GetInputSystem().NewInput(basilisk::Keys::F);
+        this->Player.PushIA = &this->GetInputSystem().NewInput(basilisk::Keys::G);
+
         this->Player.ScaleUpIA = &this->GetInputSystem().NewInput(basilisk::Keys::J);
         this->Player.ScaleDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::K);
 
@@ -31,30 +33,37 @@ namespace game
         auto obstacleMat = basilisk::Material::New(false);
         this->RedObstacle.SetMaterial(obstacleMat);
         this->RedObstacle.Init();
-        
+        // Player's bounding box
+        /*
         this->BlueObstacle.SetMaterial(obstacleMat);
-        this->BlueObstacle.Init();
+        this->BlueObstacle.Init();*/
     }
 
     void Game::Update()
     {
-        this->BlueObstacle.SetPosition(this->Player.GetPosition2D());
-        
+        // this->BlueObstacle.SetPosition(this->Player.GetPosition2D());
+
         this->Player.Delta = this->GetDelta();
         this->Player.Update();
-        
-        if (basilisk::CollisionManager::IsCollidingAaBb(this->Player.GetPosition2D(),
-                                                        this->Player.GetScale2D(),
-                                                        this->RedObstacle.GetPosition2D(),
-                                                        this->RedObstacle.GetScale2D()))
+
+        if (this->Player.GetNextPos())
         {
-            std::cout << "Hits" << std::endl;
+            if (basilisk::CollisionManager::IsCollidingAaBb(this->Player.NextPos, this->Player.GetScale2D(),
+                                                            this->RedObstacle.GetPosition2D(), this->RedObstacle.GetScale2D()))
+            {
+                std::cout << "Hits" << std::endl;
+                this->Player.ChangeAnimation(&this->Player.CollisionAnimation);
+            }
+            else
+            {
+                this->Player.Move();
+            }
         }
     }
 
     void Game::Draw()
     {
-        this->BlueObstacle.Draw();
+        // this->BlueObstacle.Draw();
         this->Player.Draw();
         this->RedObstacle.Draw();
     }

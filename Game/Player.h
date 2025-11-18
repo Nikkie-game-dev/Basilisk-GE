@@ -19,7 +19,7 @@ namespace game
 
         basilisk::InputAction* SpinIA = nullptr;
         basilisk::InputAction* PushIA = nullptr;
-
+            
         basilisk::Animation CollisionAnimation;
         basilisk::Animation IdleAnimation;
         

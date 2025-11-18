@@ -5,7 +5,7 @@
 namespace game
 {
     Player::Player(const float speed) :
-        Sprite("res/assets/Knuckles.png", glm::vec2(300.0f, 300.0f), glm::vec2(100.0f, 100.0f), basilisk::Filters::NEAREST), Delta(0.0f),
+        Sprite("res/assets/Knuckles_Sprite_Sheet.png", glm::vec2(300.0f, 300.0f), glm::vec2(100.0f, 100.0f), basilisk::Filters::NEAREST), Delta(0.0f),
         Speed(speed)
     {
         this->IdleAnimation.GenUVFrames({0, 15 * 29}, {36, 36}, {646, 473}, 1.0f, 1);
@@ -69,49 +69,4 @@ namespace game
     {
         this->SetPosition(NextPos);
     }
-
-    void Player::BackToPreviousPos()
-    {
-    }
-
-    void Player::Scale()
-    {
-        glm::vec2 scale = this->GetScale2D();
-
-        if (this->ScaleUpIA && this->ScaleUpIA->IsDown())
-        {
-            scale.x += this->Speed * this->Delta;
-            scale.y += this->Speed * this->Delta;
-        }
-
-        else if (this->ScaleDownIA && this->ScaleDownIA->IsDown())
-        {
-            if (scale.x - this->Speed * this->Delta <= 0.0f || scale.y - this->Speed * this->Delta <= 0.0f)
-            {
-                return;
-            }
-
-            scale.x -= this->Speed * this->Delta;
-            scale.y -= this->Speed * this->Delta;
-        }
-
-        this->SetScaling(scale);
-    }
-
-    void Player::Rotate()
-    {
-        float rotation = this->GetRotation2D();
-
-        if (RotateCWIA && RotateCWIA->IsDown())
-        {
-            rotation += this->Speed * this->Delta;
-        }
-        else if (RotateCCWIA && RotateCCWIA->IsDown())
-        {
-            rotation -= this->Speed * this->Delta;
-        }
-
-        SetRotation(rotation);
-    }
-
 } // namespace game

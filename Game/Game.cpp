@@ -25,7 +25,7 @@ namespace game
         auto obstacleMat = basilisk::Material::New(true);
         this->RedObstacle.SetMaterial(obstacleMat);
         this->RedObstacle.Init();
-    }
+    }   
 
     void Game::Update()
     {

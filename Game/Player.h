@@ -14,18 +14,12 @@ namespace game
         void Update() override;
         float Delta;
 
-        basilisk::InputAction* MoveUpIA = nullptr;
-        basilisk::InputAction* MoveDownIA = nullptr;
         basilisk::InputAction* MoveLeftIA = nullptr;
         basilisk::InputAction* MoveRightIA = nullptr;
 
         basilisk::InputAction* SpinIA = nullptr;
         basilisk::InputAction* PushIA = nullptr;
 
-        basilisk::InputAction* ScaleUpIA = nullptr;
-        basilisk::InputAction* ScaleDownIA = nullptr;
-        basilisk::InputAction* RotateCWIA = nullptr;
-        basilisk::InputAction* RotateCCWIA = nullptr;
         basilisk::Animation CollisionAnimation;
         basilisk::Animation IdleAnimation;
         

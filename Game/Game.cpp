@@ -16,9 +16,7 @@ namespace game
         this->Player.SetMaterial(playerMat);
         this->Player.Init();
 
-        this->Player.MoveUpIA = &this->GetInputSystem().NewInput(basilisk::Keys::W);
         this->Player.MoveLeftIA = &this->GetInputSystem().NewInput(basilisk::Keys::A);
-        this->Player.MoveDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::S);
         this->Player.MoveRightIA = &this->GetInputSystem().NewInput(basilisk::Keys::D);
 
         this->Player.SpinIA = &this->GetInputSystem().NewInput(basilisk::Keys::F);

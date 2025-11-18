@@ -26,6 +26,7 @@ namespace game
         bool IsGettingAttacked = false;
         float Delta;
         float DeathTimer;
-        float DeathTime;
+        float AttackTimer;
+        float AccumulatorTime;
     };
 } // game 

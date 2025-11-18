@@ -14,22 +14,35 @@ namespace game
         {
             this->ChangeAnimation(&this->DeathAnimation);
             this->CurrentAnimation = &this->DeathAnimation;
-            this->DeathTime = 0;
+            this->AccumulatorTime = 0;
         }
         else if (this->CurrentAnimation == &this->DeathAnimation)
         {
-            this->DeathTime += this->Delta;
+            this->AccumulatorTime += this->Delta;
 
-            if (this->DeathTime >= this->DeathTimer)
+            if (this->AccumulatorTime >= this->DeathTimer)
             {
                 this->ChangeAnimation(&this->IdleAnimation);
                 this->CurrentAnimation = &this->IdleAnimation;
+                this->IsGettingAttacked = false;
             }
         }
         else if (this->Attack->IsPressedAndReleased() && this->CurrentAnimation == &this->IdleAnimation)
         {
             this->ChangeAnimation(&this->AttackAnimation);
             this->CurrentAnimation = &this->AttackAnimation;
+            
+            this->AccumulatorTime = 0;
+        }
+        else if (this->CurrentAnimation == &this->AttackAnimation)
+        {
+            this->AccumulatorTime += this->Delta;
+
+            if (this->AccumulatorTime >= this->AttackTimer)
+            {
+                this->ChangeAnimation(&this->IdleAnimation);
+                this->CurrentAnimation = &this->IdleAnimation;
+            }
         }
         else
         {

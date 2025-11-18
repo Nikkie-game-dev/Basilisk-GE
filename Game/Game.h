@@ -1,4 +1,5 @@
 #pragma once
+
 #include "BaseGame.h"
 #include "Character.h"
 

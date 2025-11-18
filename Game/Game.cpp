@@ -24,12 +24,6 @@ namespace game
         this->Player.SpinIA = &this->GetInputSystem().NewInput(basilisk::Keys::F);
         this->Player.PushIA = &this->GetInputSystem().NewInput(basilisk::Keys::G);
 
-        this->Player.ScaleUpIA = &this->GetInputSystem().NewInput(basilisk::Keys::J);
-        this->Player.ScaleDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::K);
-
-        this->Player.RotateCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::Q);
-        this->Player.RotateCCWIA = &this->GetInputSystem().NewInput(basilisk::Keys::E);
-
         auto obstacleMat = basilisk::Material::New(true);
         this->RedObstacle.SetMaterial(obstacleMat);
         this->RedObstacle.Init();

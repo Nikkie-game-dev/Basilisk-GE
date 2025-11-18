@@ -31,12 +31,9 @@ namespace game
         
         glm::vec2 NextPos;
         void Move();
-        void BackToPreviousPos();
         float Speed;
 
     private:
-        void Scale();
-        void Rotate();
 
         basilisk::Animation WalkHorAnimation;
         basilisk::Animation SpinAnimation;

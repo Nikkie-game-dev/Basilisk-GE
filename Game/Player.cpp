@@ -20,8 +20,6 @@ namespace game
 
     void Player::Update()
     {
-        Scale();
-        Rotate();
         UpdateAnimation(this->Delta);
 
         if (this->SpinIA && this->SpinIA->IsDown())

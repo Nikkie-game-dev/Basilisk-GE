@@ -48,7 +48,7 @@ namespace game
                 this->Player.Move();
             }
         }
-        else
+        else if (!this->Player.IsRolling)
         {
             this->Player.ChangeAnimation(&this->Player.IdleAnimation);
         }

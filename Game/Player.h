@@ -26,6 +26,7 @@ namespace game
         glm::vec2 NextPos;
         void Move();
         float Speed;
+        bool IsRolling;
 
     private:
 

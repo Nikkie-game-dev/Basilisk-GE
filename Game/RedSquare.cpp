@@ -4,6 +4,7 @@ namespace game
     RedSquare::RedSquare(float speed) : Square({400, 300}, {100,100}, true, basilisk::Color::Red)
     {
         Speed = speed;
+        Delta = 0.0f;
     }
 
     void RedSquare::Update()

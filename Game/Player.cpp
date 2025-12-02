@@ -70,46 +70,4 @@ namespace game
         return moved;
     }
 
-
-    //void Player::Scale()
-    //{
-    //    glm::vec2 scale = this->GetScale2D();
-
-    //    if (this->ScaleUpIA && this->ScaleUpIA->IsDown())
-    //    {
-    //        scale.x += this->Speed * this->Delta;
-    //        scale.y += this->Speed * this->Delta;
-    //    }
-
-    //    else if (this->ScaleDownIA && this->ScaleDownIA->IsDown())
-    //    {
-    //        if (scale.x - this->Speed * this->Delta <= 0.0f ||
-    //            scale.y - this->Speed * this->Delta <= 0.0f)
-    //        {
-    //            return;
-    //        }
-
-    //        scale.x -= this->Speed * this->Delta;
-    //        scale.y -= this->Speed * this->Delta;
-    //    }
-
-    //    this->SetScaling(scale);
-    //}
-
-  /*  void Player::Rotate()
-    {
-        float rotation = this->GetRotation2D();
-
-        if (RotateCWIA && RotateCWIA->IsDown())
-        {
-            rotation += this->Speed * this->Delta;
-        }
-        else if (RotateCCWIA && RotateCCWIA->IsDown())
-        {
-            rotation -= this->Speed * this->Delta;
-        }
-
-        SetRotation(rotation);
-    }*/
-
 } // namespace game

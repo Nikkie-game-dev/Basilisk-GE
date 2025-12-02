@@ -6,7 +6,9 @@
 
 namespace game
 {
-    Game::Game(const char* windowName, float sizeX, float sizeY) : BaseGame(windowName, sizeX, sizeY), Player(100.0f), RedSquare(100.0f)
+    Game::Game(const char* windowName, float sizeX, float sizeY) : 
+        BaseGame(windowName, sizeX, sizeY), 
+        Player(100.0f), RedSquare(100.0f), BlueSquare(200.0f, {sizeX, sizeY})
     {
     }
 
@@ -37,6 +39,7 @@ namespace game
     {
         this->Player.Delta = this->GetDelta();
         this->RedSquare.Delta = this->GetDelta();
+        this->BlueSquare.Delta = this->GetDelta();
         this->Player.Update();
 
 
@@ -59,6 +62,7 @@ namespace game
         }
 
         this->RedSquare.Update();
+        this->BlueSquare.Update();
     }
 
     void Game::Draw()

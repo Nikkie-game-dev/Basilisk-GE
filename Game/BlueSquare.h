@@ -4,6 +4,14 @@ class BlueSquare : public basilisk::Square
 {
 
 public:
-    BlueSquare();
+    BlueSquare(float speed, glm::vec2 limits);
     void Update() override;
+
+    float Delta;
+
+private:
+    bool MovingRight;
+    float MaxX;
+    float MinX;
+    float Speed;
 };

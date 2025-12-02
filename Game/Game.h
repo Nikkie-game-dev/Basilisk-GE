@@ -15,9 +15,6 @@ namespace game
         void Draw() override;
 
     private:
-        Player Player;
-        Obstacle RedObstacle;
-        Obstacle BlueObstacle;
     };
 
 } // namespace game

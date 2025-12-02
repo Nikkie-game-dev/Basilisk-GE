@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseGame.h"
+#include "RedSquare.h"
 #include "Player.h"
+#include "BlueSquare.h"
 
 namespace game
 {
@@ -15,6 +17,8 @@ namespace game
 
     private:
         Player Player;
+        RedSquare RedSquare;
+        BlueSquare BlueSquare;
     };
 
 } // namespace game

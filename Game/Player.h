@@ -23,15 +23,16 @@ namespace game
         //basilisk::InputAction* RotateCWIA = nullptr;
         //basilisk::InputAction* RotateCCWIA = nullptr;
         
-        //glm::vec2 NextPosition;
+        glm::vec2 NextPos;
+        void Move();
+        float Speed;
+        bool GetNextPos();
+        basilisk::Animation IdleAnimation;
 
     private:
-        void Move();
         void Scale();
         void Rotate();
 
-        float Speed;
-        basilisk::Animation IdleAnimation;
         /*basilisk::Animation WalkUpAnimation;
         basilisk::Animation WalkDownAnimation;*/
         basilisk::Animation WalkHorAnimation;

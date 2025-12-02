@@ -120,6 +120,6 @@ namespace basilisk
     
         "void main()\n"
         "{\n"
-        " FragColor = OutColor;\n"
+        " FragColor = vec4(OutColor.x, OutColor.y + 150, OutColor.z, OutColor.w);\n"
         "}\n";
 } // namespace basilisk

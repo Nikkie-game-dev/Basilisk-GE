@@ -1,7 +1,10 @@
 #pragma once
-#include "BaseGame.h"
+#include "Basilisk/CollisionManager.h"
+#include "Basilisk/BaseGame.h"
 #include "Obstacle.h"
-#include "Player.h"
+#include "Samus.h"
+#include "TransparentObs.h"
+
 
 namespace game
 {
@@ -15,9 +18,10 @@ namespace game
         void Draw() override;
 
     private:
-        Player Player;
-        Obstacle RedObstacle;
-        Obstacle BlueObstacle;
+        Samus Player;
+        Obstacle Obstacle;
+        TransparentObs Obstacle2;
+        basilisk::CollisionManager CM;
     };
 
 } // namespace game

@@ -13,15 +13,15 @@ namespace game
         void Update() override;
         float Delta;
 
-        basilisk::InputAction* MoveUpIA = nullptr;
-        basilisk::InputAction* MoveDownIA = nullptr;
+        //basilisk::InputAction* MoveUpIA = nullptr;
+        //basilisk::InputAction* MoveDownIA = nullptr;
         basilisk::InputAction* MoveLeftIA = nullptr;
         basilisk::InputAction* MoveRightIA = nullptr;
 
-        basilisk::InputAction* ScaleUpIA = nullptr;
-        basilisk::InputAction* ScaleDownIA = nullptr;
-        basilisk::InputAction* RotateCWIA = nullptr;
-        basilisk::InputAction* RotateCCWIA = nullptr;
+        //basilisk::InputAction* ScaleUpIA = nullptr;
+        //basilisk::InputAction* ScaleDownIA = nullptr;
+        //basilisk::InputAction* RotateCWIA = nullptr;
+        //basilisk::InputAction* RotateCCWIA = nullptr;
         
         //glm::vec2 NextPosition;
 
@@ -32,8 +32,8 @@ namespace game
 
         float Speed;
         basilisk::Animation IdleAnimation;
-        basilisk::Animation WalkUpAnimation;
-        basilisk::Animation WalkDownAnimation;
+        /*basilisk::Animation WalkUpAnimation;
+        basilisk::Animation WalkDownAnimation;*/
         basilisk::Animation WalkHorAnimation;
     };
 

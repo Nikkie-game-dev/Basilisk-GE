@@ -1,7 +1,8 @@
 #pragma once
 #include <filesystem>
-#include "glm/glm.hpp"
 #include "Frame.h"
+#include "Tile.h"
+#include "glm/glm.hpp"
 
 namespace basilisk
 {
@@ -10,11 +11,19 @@ namespace basilisk
     class TileMap
     {
     public:
-        TileMap(path mapFilePath, glm::vec2 textureSize, glm::vec2 tileSize);
+        TileMap(const path mapFilePath,
+                const glm::vec2 textureSize,
+                const std::string tileSizeName,
+                const std::string mapWidthName,
+                const std::string mapHeightName,
+                const std::string layersName,
+                const std::string idName,
+                const std::string colName,
+                const std::string rowName);
 
     private:
         std::vector<Tile> Tiles;
-        std::vector<Frame> SpritesheetFrames;
+        std::vector<Frame> SpriteSheetFrames;
     };
 
 } // namespace basilisk

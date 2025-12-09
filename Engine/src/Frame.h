@@ -6,6 +6,8 @@ namespace basilisk
     class Frame
     {
     public:
+        Frame() = default;
+        
         /// <summary>
         /// Constructs a frame with a given size.
         /// </summary>

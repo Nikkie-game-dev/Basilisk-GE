@@ -9,5 +9,4 @@ namespace basilisk
         this->BottomLeft = bottomLeft / textureSize;
         this->BottomRight = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y) / textureSize;
     }
-
 } // namespace basilisk

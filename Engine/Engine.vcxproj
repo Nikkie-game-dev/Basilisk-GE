@@ -134,6 +134,8 @@
     <ClInclude Include="src\TextureImporter.h" />
     <ClInclude Include="src\Triangle.h" />
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
@@ -155,6 +157,7 @@
     <ClCompile Include="src\TextureImporter.cpp" />
     <ClCompile Include="src\Triangle.cpp" />
     <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="Tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Build.bat" />

@@ -2,34 +2,33 @@
 
 #include <fstream>
 #include <vector>
-#include "json.hpp"
 
 #include "Tile.h"
 
 namespace basilisk
 {
-    using json = nlohmann::json;
 
-    TileMap::TileMap(const path mapFilePath,
-                     const glm::vec2 textureSize,
-                     const std::string tileSizeName = "tileSize",
-                     const std::string mapWidthName = "mapWidth",
-                     const std::string mapHeightName = "mapHeight",
-                     const std::string layersName = "layers",
-                     const std::string idName = "id",
-                     const std::string colName = "x",
-                     const std::string rowName = "y"
-    )
+    TileMap::TileMap(const path& mapFilePath, const path& texturePath, const glm::vec2& textureSize)
     {
         std::ifstream file(mapFilePath.string(), std::ios::in);
 
-        json data = json::parse(file);
+        this->Data = json::parse(file);
+        this->TileSize = this->Data[this->TileSizeName];
+        this->TilesAmount = {this->Data[MapWidthName], this->Data[MapHeightName]};
 
-        int tileSize = data[tileSizeName];
-        glm::vec2 tilesAmount = {data[mapWidthName], data[mapHeightName]};
+        this->PathToTexture = texturePath;
+        this->TextureSize = textureSize;
+
+        GenerateFrames();
+        GenerateTiles();
+    }
 
         short cols = textureSize.x / tileSize;
         short rows = textureSize.y / tileSize;
+    void TileMap::GenerateFrames()
+    {
+        const short cols = static_cast<short>(this->TextureSize.x / this->TileSize);
+        const short rows = static_cast<short>(this->TextureSize.y / this->TileSize);
 
         this->SpriteSheetFrames.reserve(cols * rows);
 
@@ -37,30 +36,36 @@ namespace basilisk
         {
             for (int col = 0; col < cols; col++)
             {
-                const float x = tileSize * static_cast<float>(col);
-                const float y = tilesAmount.y - tileSize * static_cast<float>(row);
+                const float x = this->TileSize * static_cast<float>(col);
+                const float y = this->TilesAmount.y - this->TileSize * static_cast<float>(row);
 
-                Frame frame = Frame({x, y}, {tileSize,tileSize}, tilesAmount);
+                const auto frame = Frame({x, y}, {this->TileSize, this->TileSize}, this->TilesAmount);
                 this->SpriteSheetFrames.at(col) = frame;
             }
         }
+    }
 
-        auto layersAmount = data[layersName].size();
+    void TileMap::GenerateTiles()
+    {
+        const auto layersAmount = this->Data[LayersName].size();
 
         auto tileCount = 0;
 
-        this->Tiles.reserve(tilesAmount.x * tilesAmount.y);
+        this->Tiles.resize(static_cast<size_t>(this->TilesAmount.x * this->TilesAmount.y));
 
-        for (int layer = 0; layer < layersAmount; layer++)
+        for (size_t layer = 0; layer < layersAmount; layer++)
         {
-            for (int tile = 0; tile < data[layersName][layer].size(); tile++)
+            for (size_t tile = 0; tile < this->Data[LayersName][layer].size(); tile++)
             {
-                auto tileObj = data[layersName][layer][tile];
-                short id = tileObj[idName];
-                short row = tileObj[rowName];
-                short col = tileObj[colName];
+                auto tileObj = this->Data[LayersName][layer][tile];
+                const short id = tileObj[IdName];
+                const short row = tileObj[RowName];
+                const short col = tileObj[ColName];
 
-                this->Tiles.at(tileCount) = Tile(id, col, row);
+                this->Tiles[layer].at(tileCount) = Tile(this->SpriteSheetFrames.at(id), col, row, this->PathToTexture.string(),
+                                                        {this->TileSize, this->TileSize},
+                                                        this->TextureSize);
+                ++tileCount;
             }
         }
     }

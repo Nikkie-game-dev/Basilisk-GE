@@ -24,7 +24,5 @@ namespace basilisk
                 this->SpriteSheetFrames.at(col) = frame;
             }
         }
-
-
     }
 } // namespace basilisk

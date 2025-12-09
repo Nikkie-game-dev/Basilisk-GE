@@ -14,12 +14,11 @@ namespace basilisk
 
     void Animation::Update(float delta, bool& outHasChanged)
     {
-        if (!this->IsPlaying)
+        if (!this->IsPlaying || this->Frames.size() <= 1)
             return;
 
         delta *= 1000; // convert from seconds to milliseconds
 
-        
         this->ElapsedTimeMs = fmodf(this->ElapsedTimeMs + delta, this->AnimationDurationMs);
 
         if (this->ElapsedTimeMs < 0.0f)
@@ -47,24 +46,18 @@ namespace basilisk
             const float x = frameBottomLeft.x + frameSize.x * static_cast<float>(i);
             const float y = frameBottomLeft.y;
 
-            Frame frame = MakeFrame({x, y}, frameSize, textureSize);
-            this->Frames.push_back(frame);
+            Frame frame = Frame({x, y}, frameSize, textureSize);
+            this->Frames.at(i) = frame;
         }
     }
 
-    Animation::Frame Animation::MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize)
+    void Animation::ReplaceFrames(std::vector<Frame> frames, const float animationDuration)
     {
-        Frame frame;
-
-        frame.topLeftUV = glm::vec2(bottomLeft.x, bottomLeft.y + frameSize.y) / textureSize;
-        frame.topRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y + frameSize.y) / textureSize;
-        frame.bottomLeftUV = bottomLeft / textureSize;
-        frame.bottomRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y) / textureSize;
-
-        return frame;
+        this->AnimationDurationMs = animationDuration * 1000;
+        this->Frames = frames;
     }
 
-    Animation::Frame Animation::GetCurrentFrame() const
+    Frame Animation::GetCurrentFrame() const
     {
         return this->Frames.at(this->CurrentFrameIndex == -1 ? 0 : this->CurrentFrameIndex);
     }

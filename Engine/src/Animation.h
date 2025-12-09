@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "Export.h"
+#include "Frame.h"
 
 namespace basilisk
 {
@@ -12,13 +13,6 @@ namespace basilisk
     class BASILISK_API Animation
     {
     public:
-        struct Frame
-        {
-            glm::vec2 topLeftUV;
-            glm::vec2 topRightUV;
-            glm::vec2 bottomLeftUV;
-            glm::vec2 bottomRightUV;
-        };
         /// <summary>
         /// The constructor for Animation.
         /// </summary>
@@ -41,19 +35,17 @@ namespace basilisk
         /// <param name="animationDuration">The duration of the entire animation in seconds</param>
         /// <param name="frameCount">Frame total amount (horizontal)</param>
         void GenUVFrames(const glm::vec2& frameBottomLeft,
-                                const glm::vec2& frameSize,
-                                const glm::vec2& textureSize,
-                                const float& animationDuration,
-                                const int& frameCount);
+                         const glm::vec2& frameSize,
+                         const glm::vec2& textureSize,
+                         const float& animationDuration,
+                         const int& frameCount);
 
         /// <summary>
-        /// Constructs a frame with a given size.
+        /// Replaces frames vector and animation duration. It's useful when you need to manually define each frame.
         /// </summary>
-        /// <param name="bottomLeft">Bottom left corner of frame in pixels</param>
-        /// <param name="frameSize">Size of frame in pixels</param>
-        /// <param name="textureSize">Size of texture</param>
-        /// <returns>Constructed Frame</returns>
-        static Frame MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
+        /// <param name="frames"></param>
+        /// <param name="animationDuration"></param>
+        void ReplaceFrames(std::vector<Frame> frames, const float animationDuration);
 
         /// <summary>
         /// Returns current Frame
@@ -70,7 +62,7 @@ namespace basilisk
         /// Disables update of animation
         /// </summary>
         void Pause();
-        
+
         /// <summary>
         /// Disables update of animation and rests current frame to first frame.
         /// </summary>
@@ -100,7 +92,7 @@ namespace basilisk
         float AnimationDurationMs = 0;
         std::vector<Frame> Frames;
         bool IsPlaying = false;
-        
+
         static int IdsCounter;
     };
 

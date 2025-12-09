@@ -74,7 +74,7 @@ namespace basilisk
 
         if (hasChanged)
         {
-            UpdateCurrentFrame();
+            this->UpdateCurrentFrame();
         }
     }
 
@@ -85,6 +85,7 @@ namespace basilisk
             this->Animation->Stop();
             this->SetAnimation(newAnimation);
             this->Animation->Play();
+            this->UpdateCurrentFrame();
         }
     }
 

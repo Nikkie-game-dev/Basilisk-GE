@@ -23,8 +23,17 @@ namespace basilisk
         GenerateTiles();
     }
 
-        short cols = textureSize.x / tileSize;
-        short rows = textureSize.y / tileSize;
+    void TileMap::Draw() const
+    {
+        for (const auto& layer : this->Tiles)
+        {
+            for (auto tile : layer)
+            {
+                tile.Draw();
+            }
+        }
+    }
+
     void TileMap::GenerateFrames()
     {
         const short cols = static_cast<short>(this->TextureSize.x / this->TileSize);

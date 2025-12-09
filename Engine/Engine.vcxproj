@@ -155,6 +155,7 @@
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\Square.cpp" />
     <ClCompile Include="src\TextureImporter.cpp" />
+    <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Tilemap.cpp" />
     <ClCompile Include="src\Triangle.cpp" />
     <ClCompile Include="src\Window.cpp" />

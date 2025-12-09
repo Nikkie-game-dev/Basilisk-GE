@@ -1,10 +1,22 @@
 #pragma once
+#include "Sprite.h"
 
 namespace basilisk
 {
-    struct Tile
+    class Tile final : public Sprite
     {
-        short Id;
+    public:
+        Tile(Frame frame,
+             short col,
+             short row,
+             const std::string& textureFilePath,
+             glm::vec2 size,
+             glm::vec2 textureSize,
+             Filters filter = Filters::NEAREST,
+             FitMode fitMode = FitMode::REPEAT);
+        
+        void Update() override = delete;
+
         short Col;
         short Row;
     };

@@ -47,8 +47,14 @@ namespace basilisk
             const float y = frameBottomLeft.y;
 
             Frame frame = Frame({x, y}, frameSize, textureSize);
-            this->Frames.push_back(frame);
+            this->Frames.at(i) = frame;
         }
+    }
+
+    void Animation::ReplaceFrames(std::vector<Frame> frames, const float animationDuration)
+    {
+        this->AnimationDurationMs = animationDuration * 1000;
+        this->Frames = frames;
     }
 
     Frame Animation::GetCurrentFrame() const

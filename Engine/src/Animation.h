@@ -13,7 +13,6 @@ namespace basilisk
     class BASILISK_API Animation
     {
     public:
-        
         /// <summary>
         /// The constructor for Animation.
         /// </summary>
@@ -36,10 +35,17 @@ namespace basilisk
         /// <param name="animationDuration">The duration of the entire animation in seconds</param>
         /// <param name="frameCount">Frame total amount (horizontal)</param>
         void GenUVFrames(const glm::vec2& frameBottomLeft,
-                                const glm::vec2& frameSize,
-                                const glm::vec2& textureSize,
-                                const float& animationDuration,
-                                const int& frameCount);
+                         const glm::vec2& frameSize,
+                         const glm::vec2& textureSize,
+                         const float& animationDuration,
+                         const int& frameCount);
+
+        /// <summary>
+        /// Replaces frames vector and animation duration. It's useful when you need to manually define each frame.
+        /// </summary>
+        /// <param name="frames"></param>
+        /// <param name="animationDuration"></param>
+        void ReplaceFrames(std::vector<Frame> frames, const float animationDuration);
 
         /// <summary>
         /// Returns current Frame
@@ -56,7 +62,7 @@ namespace basilisk
         /// Disables update of animation
         /// </summary>
         void Pause();
-        
+
         /// <summary>
         /// Disables update of animation and rests current frame to first frame.
         /// </summary>
@@ -86,7 +92,7 @@ namespace basilisk
         float AnimationDurationMs = 0;
         std::vector<Frame> Frames;
         bool IsPlaying = false;
-        
+
         static int IdsCounter;
     };
 

@@ -14,12 +14,11 @@ namespace basilisk
 
     void Animation::Update(float delta, bool& outHasChanged)
     {
-        if (!this->IsPlaying)
+        if (!this->IsPlaying || this->Frames.size() <= 1)
             return;
 
         delta *= 1000; // convert from seconds to milliseconds
 
-        
         this->ElapsedTimeMs = fmodf(this->ElapsedTimeMs + delta, this->AnimationDurationMs);
 
         if (this->ElapsedTimeMs < 0.0f)

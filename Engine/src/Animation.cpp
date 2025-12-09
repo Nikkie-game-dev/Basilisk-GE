@@ -47,24 +47,12 @@ namespace basilisk
             const float x = frameBottomLeft.x + frameSize.x * static_cast<float>(i);
             const float y = frameBottomLeft.y;
 
-            Frame frame = MakeFrame({x, y}, frameSize, textureSize);
+            Frame frame = Frame({x, y}, frameSize, textureSize);
             this->Frames.push_back(frame);
         }
     }
 
-    Animation::Frame Animation::MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize)
-    {
-        Frame frame;
-
-        frame.topLeftUV = glm::vec2(bottomLeft.x, bottomLeft.y + frameSize.y) / textureSize;
-        frame.topRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y + frameSize.y) / textureSize;
-        frame.bottomLeftUV = bottomLeft / textureSize;
-        frame.bottomRightUV = glm::vec2(bottomLeft.x + frameSize.x, bottomLeft.y) / textureSize;
-
-        return frame;
-    }
-
-    Animation::Frame Animation::GetCurrentFrame() const
+    Frame Animation::GetCurrentFrame() const
     {
         return this->Frames.at(this->CurrentFrameIndex == -1 ? 0 : this->CurrentFrameIndex);
     }

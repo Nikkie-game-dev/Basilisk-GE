@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 
 #include "Export.h"
+#include "Frame.h"
 
 namespace basilisk
 {
@@ -12,13 +13,7 @@ namespace basilisk
     class BASILISK_API Animation
     {
     public:
-        struct Frame
-        {
-            glm::vec2 topLeftUV;
-            glm::vec2 topRightUV;
-            glm::vec2 bottomLeftUV;
-            glm::vec2 bottomRightUV;
-        };
+        
         /// <summary>
         /// The constructor for Animation.
         /// </summary>
@@ -45,15 +40,6 @@ namespace basilisk
                                 const glm::vec2& textureSize,
                                 const float& animationDuration,
                                 const int& frameCount);
-
-        /// <summary>
-        /// Constructs a frame with a given size.
-        /// </summary>
-        /// <param name="bottomLeft">Bottom left corner of frame in pixels</param>
-        /// <param name="frameSize">Size of frame in pixels</param>
-        /// <param name="textureSize">Size of texture</param>
-        /// <returns>Constructed Frame</returns>
-        static Frame MakeFrame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);
 
         /// <summary>
         /// Returns current Frame

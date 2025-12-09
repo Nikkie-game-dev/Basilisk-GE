@@ -15,7 +15,7 @@ namespace basilisk
              Filters filter = Filters::NEAREST,
              FitMode fitMode = FitMode::REPEAT);
         
-        void Update() override = delete;
+        void Update() override;
 
         short Col;
         short Row;

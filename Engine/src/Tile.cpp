@@ -34,4 +34,9 @@ namespace basilisk
 
         Renderer::GetInstance().BindBufferData(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }
+
+    void Tile::Update()
+    {
+    }
+
 } //namespace basilisk

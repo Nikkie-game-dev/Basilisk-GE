@@ -3,8 +3,8 @@
 
 namespace game
 {
-    TileSet::TileSet() : 
-        TileMap("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536})
+    TileSet::TileSet(const glm::vec2& screenSize) : 
+        TileMap("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536}, screenSize)
     {
     }
 } // namespace game

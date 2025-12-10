@@ -1,6 +1,8 @@
 #pragma once
 #include <filesystem>
 
+#include "Animation.h"
+#include "Animation.h"
 #include "Frame.h"
 #include "Tile.h"
 #include "glm/glm.hpp"
@@ -17,13 +19,14 @@ namespace basilisk
         TileMap(const path& mapFilePath,
                 const path& texturePath,
                 const glm::vec2& textureSize,
+                const glm::vec2& screenSize,
                 Filters filter = Filters::NEAREST,
                 FitMode fitMode = FitMode::REPEAT);
         void Draw();
 
     private:
         void GenerateFrames();
-        void GenerateTiles();
+        void GenerateTiles(glm::vec2 screenSize);
 
         std::vector<std::vector<Tile>> Tiles;
         std::vector<Frame> SpriteSheetFrames;

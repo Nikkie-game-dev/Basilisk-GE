@@ -11,6 +11,7 @@ namespace basilisk
     TileMap::TileMap(const path& mapFilePath,
                      const path& texturePath,
                      const glm::vec2& textureSize,
+                     const glm::vec2& screenSize,
                      const Filters filter,
                      const FitMode fitMode)
     {
@@ -26,7 +27,7 @@ namespace basilisk
         this->TextureSize = textureSize;
 
         GenerateFrames();
-        GenerateTiles();
+        GenerateTiles(screenSize);
     }
 
     void TileMap::Draw()
@@ -67,12 +68,12 @@ namespace basilisk
         }
     }
 
-    void TileMap::GenerateTiles()
+    void TileMap::GenerateTiles(glm::vec2 screenSize)
     {
         auto mat = Material::New(true);
 
         const auto layersAmount = this->Data[LayersName].size();
-        
+
         auto tileCount = 0;
 
         this->Tiles.resize(layersAmount);
@@ -97,10 +98,11 @@ namespace basilisk
                 this->Tiles[layer].at(tileCount).SetMaterial(mat);
                 this->Tiles[layer].at(tileCount).Init();
 
-                this->Tiles[layer].at(tileCount).SetPosition({this->TileSize * static_cast<float>(col),
-                                                              this->TileSize * (static_cast<float>(this->Data[MapHeightName]) - row)});
-                
-                this->Tiles[layer].at(tileCount).SetScaling({this->TileSize, this->TileSize});
+                this->Tiles[layer].at(tileCount).SetPosition({screenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
+                                                              screenSize.y / this->TilesAmount.y * (static_cast<float>(this->Data[
+                                                                  MapHeightName]) - static_cast<float>(row) - 0.5f)});
+
+                this->Tiles[layer].at(tileCount).SetScaling({screenSize.x / this->TilesAmount.x, screenSize.y / this->TilesAmount.y});
 
                 ++tileCount;
             }

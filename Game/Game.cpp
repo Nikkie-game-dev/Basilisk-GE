@@ -7,7 +7,8 @@
 namespace game
 {
     Game::Game(const char* windowName, float sizeX, float sizeY) :
-        BaseGame(windowName, sizeX, sizeY)
+        BaseGame(windowName, sizeX, sizeY),
+        Set({sizeX, sizeY})
     {
     }
 

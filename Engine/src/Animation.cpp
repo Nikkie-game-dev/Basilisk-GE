@@ -49,7 +49,6 @@ namespace basilisk
 
             Frame frame = Frame({x, y}, frameSize, textureSize);
             this->Frames[i] = frame;
-            //this->Frames.push_back(frame);
         }
     }
 

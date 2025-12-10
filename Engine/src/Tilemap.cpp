@@ -80,12 +80,15 @@ namespace basilisk
 
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
-            const auto tilesAmount = this->Data[LayersName][layer][tileName].size();
+            const auto layerObj = this->Data[LayersName][layer];
+
+            const auto tilesAmount = layerObj[tileName].size();
+            const bool collider = layerObj[colliderName];
             this->Tiles[layer].reserve(tilesAmount);
 
             for (size_t tile = 0; tile < tilesAmount; tile++)
             {
-                const auto& tileJson = this->Data[LayersName][layer][tileName][tile];
+                const auto& tileJson = layerObj[tileName][tile];
 
                 const std::string idStr = tileJson[IdName];
                 const short id = stoi(idStr);
@@ -95,14 +98,18 @@ namespace basilisk
 
                 this->Tiles[layer].emplace_back(this->SpriteSheetFrames.at(id), col, row);
 
-                this->Tiles[layer].at(tileCount).SetMaterial(mat);
-                this->Tiles[layer].at(tileCount).Init();
+                auto& currentTile = this->Tiles[layer].at(tileCount);
 
-                this->Tiles[layer].at(tileCount).SetPosition({screenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
+                currentTile.SetMaterial(mat);
+                currentTile.Init();
+
+                currentTile.SetPosition({screenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
                                                               screenSize.y / this->TilesAmount.y * (static_cast<float>(this->Data[
                                                                   MapHeightName]) - static_cast<float>(row) - 0.5f)});
 
-                this->Tiles[layer].at(tileCount).SetScaling({screenSize.x / this->TilesAmount.x, screenSize.y / this->TilesAmount.y});
+                currentTile.SetScaling({screenSize.x / this->TilesAmount.x, screenSize.y / this->TilesAmount.y});
+
+                currentTile.hasCollision = collider;
 
                 ++tileCount;
             }

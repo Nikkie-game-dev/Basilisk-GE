@@ -50,6 +50,7 @@ namespace basilisk
         std::string ColName = "x";
         std::string RowName = "y";
         std::string tileName = "tiles";
+        std::string colliderName = "collider";
 
     };
 

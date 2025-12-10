@@ -11,7 +11,8 @@ namespace basilisk
              short row);
         
         void Update() override;
-
+        
+        bool hasCollision;
         short Col;
         short Row;
 

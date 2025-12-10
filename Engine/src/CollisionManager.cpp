@@ -18,4 +18,44 @@ namespace basilisk
             && aBottomLeft.y + sizeA.y > bBottomLeft.y;
 
     }
+
+    CollisionManager::CollisionData IsCollidingAaBbDir(const glm::vec2 positionA, 
+                                                      const glm::vec2 sizeA, 
+                                                      const glm::vec2 positionB, 
+                                                      const glm::vec2 sizeB)
+    {
+        const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
+        const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
+
+        CollisionManager::CollisionData data = {CollisionManager::CollisionDir::NONE, CollisionManager::CollisionDir::NONE};
+
+        if (aBottomLeft.x<bBottomLeft.x + sizeB.x && 
+            aBottomLeft.x + sizeA.x > bBottomLeft.x && 
+            aBottomLeft.y<bBottomLeft.y + sizeB.y && 
+            aBottomLeft.y + sizeA.y > bBottomLeft.y)
+        {
+
+            if (aBottomLeft.x < bBottomLeft.x)
+            {
+                data.HorizontalDir = CollisionManager::CollisionDir::RIGHT;
+            }
+            else
+            {
+                data.HorizontalDir = CollisionManager::CollisionDir::LEFT;
+            }
+
+            if (aBottomLeft.y < bBottomLeft.y)
+            {
+                data.VerticalDir = CollisionManager::CollisionDir::DOWN;
+            }
+            else
+            {
+                data.VerticalDir = CollisionManager::CollisionDir::UP;
+            }
+
+        }
+
+        return data;
+    }
+
 } // namespace basilisk

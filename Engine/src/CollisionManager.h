@@ -11,6 +11,21 @@ namespace basilisk
     class BASILISK_API CollisionManager
     {
     public:
+        enum class CollisionDir
+        {
+            UP,
+            DOWN,
+            LEFT,
+            RIGHT,
+            NONE
+        };
+
+        struct CollisionData
+        {
+            CollisionDir VerticalDir;
+            CollisionDir HorizontalDir;
+        };
+
         /// <summary>
         /// Detects collisions.
         /// </summary>
@@ -20,5 +35,14 @@ namespace basilisk
         /// <param name="sizeB">Width and height of entity B</param>
         /// <returns>True if a collision is detected</returns>
         static bool IsCollidingAaBb(glm::vec2 positionA, glm::vec2 sizeA, glm::vec2 positionB, glm::vec2 sizeB);
+        /// <summary>
+        /// Detects collisions and returns a direction.
+        /// </summary>
+        /// <param name="positionA">Center position of entity A</param>
+        /// <param name="sizeA">Width and height of entity A</param>
+        /// <param name="positionB">Center position of entity B</param>
+        /// <param name="sizeB">Width and height of entity B</param>
+        /// <returns>Returns the direction where the collision came from (in which direction B is)</returns>
+        static CollisionData IsCollidingAaBbDir(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB);
     };
-} // namespace basilisk 
+} // namespace basilisk

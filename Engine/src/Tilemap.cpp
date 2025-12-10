@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 
+#include "CollisionManager.h"
 #include "Tile.h"
 
 namespace basilisk
@@ -117,4 +118,56 @@ namespace basilisk
             tileCount = 0;
         }
     }
+
+    CollisionManager::CollisionData TileMap::CheckCollision(Entity2D& entity)
+    {
+        auto entityPos = entity.GetPosition2D();
+        auto entityScale = entity.GetScale2D();
+
+        glm::vec2 topLeftCorner = {entityPos.x, entityPos.y - entityScale.y / 2};
+        glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y + entityScale.y / 2};
+
+        if (bottomRightCorner.x >= ScreenSize.x)
+            bottomRightCorner.x = ScreenSize.x - 1.0f;
+
+        if (bottomRightCorner.y >= ScreenSize.y)
+            bottomRightCorner.y = ScreenSize.y - 1;
+
+        if (topLeftCorner.x < 0)
+            topLeftCorner.x = 0.0f;
+
+        if (topLeftCorner.y < 0)
+            topLeftCorner.y = 0;
+
+        glm::ivec2 center = ConvertToTileMapPos(entityPos);
+        glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
+        glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
+
+        for (int layer = 0; layer < this->Tiles.size(); layer++)
+        {
+            for (int row = topLeft.y; row < bottomRight.y; row++)
+            {
+                for (int col = topLeft.x; col < bottomRight.x; col++)
+                {
+                    auto tile = this->Tiles[layer].at(row * this->TilesAmount.x + col);
+
+                    if (tile.hasCollision)
+                    {
+                        return CollisionManager::GetCollisionDir(tile.GetPosition2D(), tile.GetScale2D(), 
+                                                                 entityPos, entityScale);
+                    }
+                }
+            }
+        }
+
+        return {CollisionManager::CollisionDir::NONE, CollisionManager::CollisionDir::NONE};
+    }
+
+    glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
+    {
+        const glm::vec2 newPos = {pos.x / ScreenSize.x * this->TilesAmount.x, pos.y / ScreenSize.y * this->TilesAmount.y};
+
+        return {ceil(newPos.x), ceil(newPos.y)};
+    }
+
 } // namespace basilisk

@@ -23,6 +23,8 @@ namespace basilisk
     private:
         void GenerateFrames();
         void GenerateTiles();
+        CollisionManager::CollisionData CheckCollision(Entity2D& entity);
+        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
 
         std::vector<std::vector<Tile>> Tiles;
         std::vector<Frame> SpriteSheetFrames;

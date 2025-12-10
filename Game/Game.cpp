@@ -18,6 +18,7 @@ namespace game
 
     void Game::Update()
     {
+
     }
 
     void Game::Draw()

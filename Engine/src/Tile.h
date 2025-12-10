@@ -3,22 +3,18 @@
 
 namespace basilisk
 {
-    class Tile final : public Sprite
+    class Tile final : public Entity2D
     {
     public:
         Tile(Frame frame,
              short col,
-             short row,
-             const std::string& textureFilePath,
-             glm::vec2 size,
-             glm::vec2 textureSize,
-             Filters filter = Filters::NEAREST,
-             FitMode fitMode = FitMode::REPEAT);
+             short row);
         
         void Update() override;
 
         short Col;
         short Row;
+
     };
 
 } // namespace basilisk

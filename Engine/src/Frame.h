@@ -11,7 +11,7 @@ namespace basilisk
         /// <summary>
         /// Constructs a frame with a given size.
         /// </summary>
-        /// <param name="bottomLeft">Bottom left coordinate of the frame</param>
+        /// <param name="bottomLeft">Bottom left coordinate of the frame in pixels, not uv.</param>
         /// <param name="frameSize">Size of the frame (x = width, y = height)</param>
         /// <param name="textureSize">Size of the texture (x = width, y = height)</param>
         Frame(const glm::vec2& bottomLeft, const glm::vec2& frameSize, const glm::vec2& textureSize);

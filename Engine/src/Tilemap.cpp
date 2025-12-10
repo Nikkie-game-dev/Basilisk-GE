@@ -54,10 +54,11 @@ namespace basilisk
 
         for (int row = 0; row < rows; row++)
         {
+            const float y = this->TextureSize.y - this->TileSize * (static_cast<float>(row) + 1);
+
             for (int col = 0; col < cols; col++)
             {
                 const float x = this->TileSize * static_cast<float>(col);
-                const float y = this->TilesAmount.y - this->TileSize * static_cast<float>(row);
 
                 const auto frame = Frame({x, y}, {this->TileSize, this->TileSize}, this->TextureSize);
                 this->SpriteSheetFrames.at(id) = frame;
@@ -78,12 +79,11 @@ namespace basilisk
 
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
-            for (size_t tile = 0; tile < this->Data[LayersName][layer].size(); tile++)
+            const auto tilesAmount = this->Data[LayersName][layer][tileName].size();
+            this->Tiles[layer].reserve(tilesAmount);
+
+            for (size_t tile = 0; tile < tilesAmount; tile++)
             {
-                auto tileObj = this->Data[LayersName][layer][tile];
-                const short id = tileObj[IdName];
-                const short row = tileObj[RowName];
-                const short col = tileObj[ColName];
                 const auto& tileJson = this->Data[LayersName][layer][tileName][tile];
 
                 const std::string idStr = tileJson[IdName];
@@ -93,12 +93,15 @@ namespace basilisk
 
 
                 this->Tiles[layer].emplace_back(this->SpriteSheetFrames.at(id), col, row);
+
                 this->Tiles[layer].at(tileCount).SetMaterial(mat);
                 this->Tiles[layer].at(tileCount).Init();
 
-                this->Tiles[layer].at(tileCount) = Tile(this->SpriteSheetFrames.at(id), col, row, this->PathToTexture.string(),
-                                                        {this->TileSize, this->TileSize},
-                                                        this->TextureSize);
+                this->Tiles[layer].at(tileCount).SetPosition({this->TileSize * static_cast<float>(col),
+                                                              this->TileSize * (static_cast<float>(this->Data[MapHeightName]) - row)});
+                
+                this->Tiles[layer].at(tileCount).SetScaling({this->TileSize, this->TileSize});
+
                 ++tileCount;
             }
             tileCount = 0;

@@ -14,27 +14,31 @@ namespace basilisk
     class TileMap
     {
     public:
-        TileMap(const path& mapFilePath, const path& texturePath, const glm::vec2& textureSize);
-        void Draw() const;
-        
+        TileMap(const path& mapFilePath,
+                const path& texturePath,
+                const glm::vec2& textureSize,
+                Filters filter = Filters::NEAREST,
+                FitMode fitMode = FitMode::REPEAT);
+        void Draw();
 
     private:
-        
         void GenerateFrames();
         void GenerateTiles();
 
         std::vector<std::vector<Tile>> Tiles;
         std::vector<Frame> SpriteSheetFrames;
 
+        unsigned int Texture;
         float TileSize;
-        
+
         path PathToTexture;
 
         json Data;
-        
+
         glm::vec2 TextureSize;
         glm::vec2 TilesAmount;
-        
+
+
         std::string TileSizeName = "tileSize";
         std::string MapWidthName = "mapWidth";
         std::string MapHeightName = "mapHeight";
@@ -42,6 +46,7 @@ namespace basilisk
         std::string IdName = "id";
         std::string ColName = "x";
         std::string RowName = "y";
+        std::string tileName = "tiles";
 
     };
 

@@ -17,12 +17,11 @@ namespace game
 
     void Game::Update()
     {
-
     }
 
     void Game::Draw()
     {
-
+        this->Set.Draw();
     }
 
 } // namespace game

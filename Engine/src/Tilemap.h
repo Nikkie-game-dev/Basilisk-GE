@@ -11,7 +11,7 @@ namespace basilisk
     using namespace std::filesystem;
     using json = nlohmann::json;
 
-    class TileMap
+    class BASILISK_API TileMap
     {
     public:
         TileMap(const path& mapFilePath,

@@ -1,7 +1,6 @@
 #pragma once
 #include "BaseGame.h"
-#include "Obstacle.h"
-#include "Player.h"
+#include "Tileset.h"
 
 namespace game
 {
@@ -15,9 +14,7 @@ namespace game
         void Draw() override;
 
     private:
-        Player Player;
-        Obstacle RedObstacle;
-        Obstacle BlueObstacle;
+        TileSet Set;
     };
 
 } // namespace game

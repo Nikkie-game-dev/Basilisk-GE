@@ -34,21 +34,6 @@ namespace basilisk
         this->FillIndices(indices, sizeof(indices));
     }
 
-    void Sprite::Init()
-    {
-        const auto mat = this->GetMaterial();
-        this->UpdateBuffers();
-
-        mat->BuildShader();
-
-        if (!mat->IsProjectionSent)
-        {
-            Renderer::GetInstance().LoadProjectionMatrix();
-            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
-            mat->IsProjectionSent = true;
-        }
-    }
-
     void Sprite::Draw()
     {
         TextureImporter::BindTexture(this->Texture);

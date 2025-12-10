@@ -46,6 +46,7 @@ namespace basilisk
         /// <param name="newPosition">Position vector</param>
         virtual void SetPosition(glm::vec2 newPosition);
 
+        void Init() override;
         void Draw() override;
 
     protected:

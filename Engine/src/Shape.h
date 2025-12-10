@@ -13,11 +13,6 @@ namespace basilisk
     {
     public:
         virtual ~Shape() = default;
-        
-        /// <summary>
-        /// Initializes the shape. It overrides the Initialization function from Entity
-        /// </summary>
-        void Init() override;
 
     protected:
         explicit Shape(basilisk::Color color, bool isSolid);

@@ -10,6 +10,7 @@ namespace basilisk
     {
         this->Id = IdsCounter;
         IdsCounter++;
+        this->Frames = std::vector<Frame>();
     }
 
     void Animation::Update(float delta, bool& outHasChanged)
@@ -39,7 +40,7 @@ namespace basilisk
                                 const int& frameCount)
     {
         this->AnimationDurationMs = animationDuration * 1000;
-        this->Frames.reserve(frameCount);
+        this->Frames.resize(frameCount);
 
         for (int i = 0; i < frameCount; i++)
         {
@@ -47,7 +48,7 @@ namespace basilisk
             const float y = frameBottomLeft.y;
 
             Frame frame = Frame({x, y}, frameSize, textureSize);
-            this->Frames.at(i) = frame;
+            this->Frames[i] = frame;
         }
     }
 

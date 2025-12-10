@@ -25,7 +25,6 @@ namespace basilisk
                Filters filter = Filters::NEAREST,
                FitMode fitMode = FitMode::REPEAT);
         
-        void Init() override;
         void Draw() override;
 
         /// <summary>

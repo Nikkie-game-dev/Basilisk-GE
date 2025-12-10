@@ -26,7 +26,7 @@ namespace basilisk
 
     private:
         void GenerateFrames();
-        void GenerateTiles(glm::vec2 screenSize);
+        void GenerateTiles();
 
         std::vector<std::vector<Tile>> Tiles;
         std::vector<Frame> SpriteSheetFrames;
@@ -40,6 +40,7 @@ namespace basilisk
 
         glm::vec2 TextureSize;
         glm::vec2 TilesAmount;
+        glm::vec2 ScreenSize;
 
 
         std::string TileSizeName = "tileSize";

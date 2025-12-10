@@ -25,9 +25,10 @@ namespace basilisk
 
         this->PathToTexture = texturePath;
         this->TextureSize = textureSize;
+        this->ScreenSize = screenSize;
 
         GenerateFrames();
-        GenerateTiles(screenSize);
+        GenerateTiles();
     }
 
     void TileMap::Draw()
@@ -68,7 +69,7 @@ namespace basilisk
         }
     }
 
-    void TileMap::GenerateTiles(glm::vec2 screenSize)
+    void TileMap::GenerateTiles()
     {
         auto mat = Material::New(true);
 
@@ -103,11 +104,11 @@ namespace basilisk
                 currentTile.SetMaterial(mat);
                 currentTile.Init();
 
-                currentTile.SetPosition({screenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
-                                                              screenSize.y / this->TilesAmount.y * (static_cast<float>(this->Data[
-                                                                  MapHeightName]) - static_cast<float>(row) - 0.5f)});
+                currentTile.SetPosition({this->ScreenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
+                                         this->ScreenSize.y / this->TilesAmount.y *
+                                             (static_cast<float>(this->Data[MapHeightName]) - static_cast<float>(row) - 0.5f)});
 
-                currentTile.SetScaling({screenSize.x / this->TilesAmount.x, screenSize.y / this->TilesAmount.y});
+                currentTile.SetScaling({this->ScreenSize.x / this->TilesAmount.x, this->ScreenSize.y / this->TilesAmount.y});
 
                 currentTile.hasCollision = collider;
 

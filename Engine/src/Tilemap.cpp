@@ -49,7 +49,8 @@ namespace basilisk
         const short cols = static_cast<short>(this->TextureSize.x / this->TileSize);
         const short rows = static_cast<short>(this->TextureSize.y / this->TileSize);
 
-        this->SpriteSheetFrames.reserve(cols * rows);
+        this->SpriteSheetFrames.resize(cols * rows);
+        int id = 0;
 
         for (int row = 0; row < rows; row++)
         {
@@ -58,8 +59,9 @@ namespace basilisk
                 const float x = this->TileSize * static_cast<float>(col);
                 const float y = this->TilesAmount.y - this->TileSize * static_cast<float>(row);
 
-                const auto frame = Frame({x, y}, {this->TileSize, this->TileSize}, this->TilesAmount);
-                this->SpriteSheetFrames.at(col) = frame;
+                const auto frame = Frame({x, y}, {this->TileSize, this->TileSize}, this->TextureSize);
+                this->SpriteSheetFrames.at(id) = frame;
+                id++;
             }
         }
     }
@@ -72,7 +74,7 @@ namespace basilisk
         
         auto tileCount = 0;
 
-        this->Tiles.resize(static_cast<size_t>(this->TilesAmount.x * this->TilesAmount.y));
+        this->Tiles.resize(layersAmount);
 
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
@@ -82,6 +84,15 @@ namespace basilisk
                 const short id = tileObj[IdName];
                 const short row = tileObj[RowName];
                 const short col = tileObj[ColName];
+                const auto& tileJson = this->Data[LayersName][layer][tileName][tile];
+
+                const std::string idStr = tileJson[IdName];
+                const short id = stoi(idStr);
+                const short row = tileJson[RowName];
+                const short col = tileJson[ColName];
+
+
+                this->Tiles[layer].emplace_back(this->SpriteSheetFrames.at(id), col, row);
                 this->Tiles[layer].at(tileCount).SetMaterial(mat);
                 this->Tiles[layer].at(tileCount).Init();
 
@@ -90,6 +101,7 @@ namespace basilisk
                                                         this->TextureSize);
                 ++tileCount;
             }
+            tileCount = 0;
         }
     }
 } // namespace basilisk

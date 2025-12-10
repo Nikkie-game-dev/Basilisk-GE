@@ -8,10 +8,16 @@
 namespace basilisk
 {
 
-    TileMap::TileMap(const path& mapFilePath, const path& texturePath, const glm::vec2& textureSize)
+    TileMap::TileMap(const path& mapFilePath,
+                     const path& texturePath,
+                     const glm::vec2& textureSize,
+                     const Filters filter,
+                     const FitMode fitMode)
     {
+
         std::ifstream file(mapFilePath.string(), std::ios::in);
 
+        this->Texture = TextureImporter::MakeTexture(texturePath.string(), filter, fitMode);
         this->Data = json::parse(file);
         this->TileSize = this->Data[this->TileSizeName];
         this->TilesAmount = {this->Data[MapWidthName], this->Data[MapHeightName]};
@@ -23,15 +29,19 @@ namespace basilisk
         GenerateTiles();
     }
 
-    void TileMap::Draw() const
+    void TileMap::Draw()
     {
-        for (const auto& layer : this->Tiles)
+        TextureImporter::BindTexture(this->Texture);
+
+        for (int i = this->Tiles.size() - 1; i >= 0; --i)
         {
-            for (auto tile : layer)
+            for (auto& tile : this->Tiles.at(i))
             {
                 tile.Draw();
             }
         }
+
+        TextureImporter::UnbindTexture();
     }
 
     void TileMap::GenerateFrames()
@@ -56,8 +66,10 @@ namespace basilisk
 
     void TileMap::GenerateTiles()
     {
-        const auto layersAmount = this->Data[LayersName].size();
+        auto mat = Material::New(true);
 
+        const auto layersAmount = this->Data[LayersName].size();
+        
         auto tileCount = 0;
 
         this->Tiles.resize(static_cast<size_t>(this->TilesAmount.x * this->TilesAmount.y));
@@ -70,6 +82,8 @@ namespace basilisk
                 const short id = tileObj[IdName];
                 const short row = tileObj[RowName];
                 const short col = tileObj[ColName];
+                this->Tiles[layer].at(tileCount).SetMaterial(mat);
+                this->Tiles[layer].at(tileCount).Init();
 
                 this->Tiles[layer].at(tileCount) = Tile(this->SpriteSheetFrames.at(id), col, row, this->PathToTexture.string(),
                                                         {this->TileSize, this->TileSize},

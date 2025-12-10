@@ -19,7 +19,7 @@ namespace basilisk
 
     }
 
-    CollisionManager::CollisionData IsCollidingAaBbDir(const glm::vec2 positionA, 
+    CollisionManager::CollisionData GetCollisionDir(const glm::vec2 positionA, 
                                                       const glm::vec2 sizeA, 
                                                       const glm::vec2 positionB, 
                                                       const glm::vec2 sizeB)
@@ -29,30 +29,22 @@ namespace basilisk
 
         CollisionManager::CollisionData data = {CollisionManager::CollisionDir::NONE, CollisionManager::CollisionDir::NONE};
 
-        if (aBottomLeft.x<bBottomLeft.x + sizeB.x && 
-            aBottomLeft.x + sizeA.x > bBottomLeft.x && 
-            aBottomLeft.y<bBottomLeft.y + sizeB.y && 
-            aBottomLeft.y + sizeA.y > bBottomLeft.y)
+        if (aBottomLeft.x < bBottomLeft.x)
         {
+            data.HorizontalDir = CollisionManager::CollisionDir::RIGHT;
+        }
+        else
+        {
+            data.HorizontalDir = CollisionManager::CollisionDir::LEFT;
+        }
 
-            if (aBottomLeft.x < bBottomLeft.x)
-            {
-                data.HorizontalDir = CollisionManager::CollisionDir::RIGHT;
-            }
-            else
-            {
-                data.HorizontalDir = CollisionManager::CollisionDir::LEFT;
-            }
-
-            if (aBottomLeft.y < bBottomLeft.y)
-            {
-                data.VerticalDir = CollisionManager::CollisionDir::DOWN;
-            }
-            else
-            {
-                data.VerticalDir = CollisionManager::CollisionDir::UP;
-            }
-
+        if (aBottomLeft.y < bBottomLeft.y)
+        {
+            data.VerticalDir = CollisionManager::CollisionDir::DOWN;
+        }
+        else
+        {
+            data.VerticalDir = CollisionManager::CollisionDir::UP;
         }
 
         return data;

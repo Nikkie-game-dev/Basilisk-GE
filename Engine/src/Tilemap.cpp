@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 #include "Tile.h"
 
@@ -133,14 +134,14 @@ namespace basilisk
         const auto& entityPos = entity.GetPosition2D();
         const auto& entityScale = entity.GetScale2D();
 
-        glm::vec2 topLeftCorner = {entityPos.x, entityPos.y - entityScale.y / 2};
-        glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y + entityScale.y / 2};
+        glm::vec2 topLeftCorner = {entityPos.x - entityScale.x/2, entityPos.y + entityScale.y / 2};
+        glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
         if (bottomRightCorner.x >= ScreenSize.x)
             bottomRightCorner.x = ScreenSize.x - 1.0f;
 
         if (bottomRightCorner.y >= ScreenSize.y)
-            bottomRightCorner.y = ScreenSize.y - 1;
+            bottomRightCorner.y = ScreenSize.y - 1.0f;
 
         if (topLeftCorner.x < 0)
             topLeftCorner.x = 0;
@@ -153,7 +154,7 @@ namespace basilisk
 
         for (const auto& layer : this->Tiles)
         {
-            for (int row = topLeft.y; row < bottomRight.y; row++)
+            for (int row = topLeft.y; row > bottomRight.y; row--)
             {
                 for (int col = topLeft.x; col < bottomRight.x; col++)
                 {
@@ -164,6 +165,12 @@ namespace basilisk
 
                     if (const auto& tile = layer.at(currentTile); tile.hasCollision)
                     {
+                        std::cout << "Checking layee index: " << &layer - &this->Tiles[0] << std::endl;
+                        std::cout << "Checking tile at index: " << currentTile << std::endl;
+                        std::cout << "Collision in tile at row: " << tile.Row << " col: " << tile.Col << std::endl;
+                        std::cout << "Detected row: " << row << " col: " << col << std::endl;
+                        std::cout << "Entity pos: (" << entityPos.x << ", " << entityPos.y << ")" << std::endl;;
+
                         return CollisionManager::GetCollisionDir(tile.GetPosition2D(), tile.GetScale2D(), 
                                                                  entityPos, entityScale);
                     }

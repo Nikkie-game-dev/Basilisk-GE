@@ -43,7 +43,7 @@ namespace basilisk
         /// <param name="sizeA">Width and height of entity A</param>
         /// <param name="positionB">Center position of entity B</param>
         /// <param name="sizeB">Width and height of entity B</param>
-        /// <returns>Returns the vertical and horitontal directions of the collision from B</returns>
+        /// <returns>Returns the vertical and horizontal directions of the collision from B</returns>
         static CollisionData GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB);
     };
 } // namespace basilisk

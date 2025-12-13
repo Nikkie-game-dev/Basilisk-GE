@@ -21,6 +21,7 @@ namespace basilisk
                 FitMode fitMode = FitMode::REPEAT);
         void Init();
         void Draw();
+        float GetTileSize() const;
 
     private:
         void GenerateFrames();

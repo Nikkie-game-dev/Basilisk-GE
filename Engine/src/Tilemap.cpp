@@ -49,6 +49,11 @@ namespace basilisk
         TextureImporter::UnbindTexture();
     }
 
+    float TileMap::GetTileSize() const
+    {
+        return TileSize;
+    }
+
     void TileMap::GenerateFrames()
     {
         const short cols = static_cast<short>(this->TextureSize.x / this->TileSize);

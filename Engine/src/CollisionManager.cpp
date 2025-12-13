@@ -18,7 +18,7 @@ namespace basilisk
         const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
         const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
 
-        CollisionData data = {CollisionManager::CollisionDir::NONE, CollisionManager::CollisionDir::NONE};
+        CollisionData data;
 
         if (aBottomLeft.x < bBottomLeft.x)
         {

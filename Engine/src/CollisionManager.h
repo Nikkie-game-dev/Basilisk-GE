@@ -11,7 +11,7 @@ namespace basilisk
     class BASILISK_API CollisionManager
     {
     public:
-        enum class CollisionDir
+        enum class BASILISK_API CollisionDir
         {
             UP,
             DOWN,
@@ -20,7 +20,7 @@ namespace basilisk
             NONE
         };
 
-        struct CollisionData
+        struct BASILISK_API CollisionData
         {
             CollisionDir VerticalDir;
             CollisionDir HorizontalDir;
@@ -44,6 +44,6 @@ namespace basilisk
         /// <param name="positionB">Center position of entity B</param>
         /// <param name="sizeB">Width and height of entity B</param>
         /// <returns>Returns the vertical and horizontal directions of the collision from B</returns>
-        static CollisionData GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB);
+        static CollisionData GetCollisionDir(glm::vec2 positionA, glm::vec2 sizeA, glm::vec2 positionB, glm::vec2 sizeB);
     };
 } // namespace basilisk

@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "glm/glm.hpp"
 #include "json.hpp"
+
 #include "CollisionManager.h"
 
 namespace basilisk
@@ -22,11 +23,11 @@ namespace basilisk
         void Init();
         void Draw();
         float GetTileSize() const;
+        CollisionManager::CollisionData CheckCollision(Entity2D& entity);
 
     private:
         void GenerateFrames();
         void GenerateTiles();
-        CollisionManager::CollisionData CheckCollision(Entity2D& entity);
         glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
 
         std::vector<std::vector<Tile>> Tiles;

@@ -14,6 +14,7 @@ namespace basilisk
                      const glm::vec2& screenSize,
                      const Filters filter,
                      const FitMode fitMode)
+
     {
 
         std::ifstream file(mapFilePath.string(), std::ios::in);
@@ -157,6 +158,11 @@ namespace basilisk
             {
                 for (int col = topLeft.x; col < bottomRight.x; col++)
                 {
+                    auto currentTile = row * this->TilesAmount.x + col;
+
+                    if (this->Tiles[layer].size() <= currentTile)
+                        continue;
+
                     auto tile = this->Tiles[layer].at(row * this->TilesAmount.x + col);
 
                     if (tile.hasCollision)

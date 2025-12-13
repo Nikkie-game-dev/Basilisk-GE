@@ -1,8 +1,8 @@
 #include "Tilemap.h"
 
 #include <fstream>
-#include <vector>
 #include <iostream>
+#include <vector>
 
 #include "Tile.h"
 
@@ -34,9 +34,12 @@ namespace basilisk
     {
         for (auto layer : this->Tiles)
         {
-            for (const auto tile : layer)
+            for (auto row : layer)
             {
-                delete tile;
+                for (auto col : row)
+                {
+                    delete col;
+                }
             }
         }
     }
@@ -51,13 +54,27 @@ namespace basilisk
     {
         TextureImporter::BindTexture(this->Texture);
 
-        for (int i = this->Tiles.size() - 1; i >= 0; --i)
+        /* for (int i = this->Tiles.size() - 1; i >= 0; --i)
+         {
+             for (const auto tile : this->Tiles.at(i))
+             {
+                 if (tile)
+                 {
+                     tile->Draw();
+                 }
+             }
+         }*/
+
+        for (int layer = this->Tiles.size() - 1; layer >= 0; --layer)
         {
-            for (const auto tile : this->Tiles.at(i))
+            for (auto row : this->Tiles[layer])
             {
-                if (tile)
+                for (auto col : row)
                 {
-                    tile->Draw();
+                    if (col)
+                    {
+                        col->Draw();
+                    }
                 }
             }
         }
@@ -78,37 +95,43 @@ namespace basilisk
         glm::vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
         glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
-        if (bottomRightCorner.x >= ScreenSize.x)
-            bottomRightCorner.x = ScreenSize.x - 1.0f;
 
+        if (bottomRightCorner.y < 0)
+            bottomRightCorner.y = 0;
+
+        if (bottomRightCorner.x < 0)
+            bottomRightCorner.x = 0;
+        
         if (bottomRightCorner.y >= ScreenSize.y)
             bottomRightCorner.y = ScreenSize.y - 1.0f;
 
-        if (topLeftCorner.x < 0)
-            topLeftCorner.x = 0;
+        if (bottomRightCorner.x >= ScreenSize.x)
+            bottomRightCorner.x = ScreenSize.x - 1.0f;
+        
+        if (topLeftCorner.x >= ScreenSize.x)
+            topLeftCorner.x = ScreenSize.x - 1.0f;
+
+        if (topLeftCorner.y >= ScreenSize.y)
+            topLeftCorner.y = ScreenSize.y - 1.0f;
 
         if (topLeftCorner.y < 0)
             topLeftCorner.y = 0;
+
+        if (topLeftCorner.x < 0)
+            topLeftCorner.x = 0;
 
         const glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
         const glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
 
         for (const auto& layer : this->Tiles)
         {
-            for (int row = topLeft.y; row > bottomRight.y; row--)
+            for (int row = topLeft.y-1; row > bottomRight.y-1; row--)
             {
-                for (int col = topLeft.x; col < bottomRight.x; col++)
+                for (int col = topLeft.x-1; col < bottomRight.x-1; col++)
                 {
-                    const auto currentTile = static_cast<size_t>(row * this->TilesAmount.x + col);
-
-                    if (layer.size() <= currentTile)
-                        continue;
-
-                    if (const auto& tile = layer.at(currentTile); tile && tile->hasCollision)
+                    if (const auto& tile = layer[row][col]; tile && tile->hasCollision)
                     {
-
-                        return CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(),
-                                                                 entityPos, entityScale);
+                        return CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(), entityPos, entityScale);
                     }
                 }
             }
@@ -148,9 +171,9 @@ namespace basilisk
 
         auto tileCount = 0;
 
-        const size_t layerSize = static_cast<size_t>(TilesAmount.x * TilesAmount.y);
-
         this->Tiles.resize(layersAmount);
+
+        int layerSize = this->TilesAmount.x * this->TilesAmount.y;
 
         glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
 
@@ -159,37 +182,39 @@ namespace basilisk
             const auto layerObj = this->Data[LayersName][layer];
 
             const bool collider = layerObj[colliderName];
-            this->Tiles[layer].reserve(layerSize);
 
-            for (size_t tile = 0; tile < layerSize; tile++)
+            this->Tiles[layer].resize(TilesAmount.y);
+
+            short id;
+            short row;
+            short col;
+
+            for (int rows = 0; rows < TilesAmount.y; rows++)
             {
-                if (layerObj[tileName].size() <= tile)
-                {
-                    this->Tiles[layer].push_back(nullptr);
-                    continue;
-                }
+                this->Tiles[layer][rows].resize(TilesAmount.x);
 
-                const auto& tileJson = layerObj[tileName][tile];
+                for (int cols = 0; cols < TilesAmount.x; cols++)
+                {
+                    this->Tiles[layer][rows][cols] = nullptr;
+                }
+            }
+
+            for (int tileId = 0; tileId < layerObj[tileName].size(); tileId++)
+            {
+                const auto& tileJson = layerObj[tileName][tileId];
 
                 const std::string idStr = tileJson[IdName];
-                const short id = stoi(idStr);
-                const short row = tileJson[RowName];
-                const short col = tileJson[ColName];
+                id = stoi(idStr);
+                row = tileJson[RowName];
+                col = tileJson[ColName];
 
-                this->Tiles[layer].push_back(BuildTile(mat, scale, collider, id, row, col));
-
-                ++tileCount;
+                this->Tiles[layer][row][col] = BuildTile(mat, scale, layerObj[colliderName], id, row, col);
             }
-            tileCount = 0;
         }
     }
 
-    Tile* TileMap::BuildTile(const std::shared_ptr<Material>& mat,
-                             const glm::vec2 scale,
-                             const bool collider,
-                             const short id,
-                             const short row,
-                             const short col)
+    Tile* TileMap::BuildTile(
+        const std::shared_ptr<Material>& mat, const glm::vec2 scale, const bool collider, const short id, const short row, const short col)
     {
         const auto currentTile = new Tile(this->SpriteSheetFrames.at(id), col, row);
         currentTile->SetMaterial(mat);

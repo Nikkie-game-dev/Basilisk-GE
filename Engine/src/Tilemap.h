@@ -32,7 +32,7 @@ namespace basilisk
         Tile* BuildTile(const std::shared_ptr<Material>& mat, glm::vec2 scale, const bool collider, const short id, const short row, const short col);
         glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
 
-        std::vector<std::vector<Tile*>> Tiles;
+        std::vector<std::vector<std::vector<Tile*>>> Tiles;
         std::vector<Frame> SpriteSheetFrames;
 
         unsigned int Texture;

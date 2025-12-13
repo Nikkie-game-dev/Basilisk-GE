@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "glm/glm.hpp"
 #include "json.hpp"
+#include "CollisionManager.h"
 
 namespace basilisk
 {

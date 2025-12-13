@@ -3,7 +3,6 @@
 #include <fstream>
 #include <vector>
 
-#include "CollisionManager.h"
 #include "Tile.h"
 
 namespace basilisk

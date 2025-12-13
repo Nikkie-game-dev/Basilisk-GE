@@ -130,8 +130,8 @@ namespace basilisk
 
     CollisionManager::CollisionData TileMap::CheckCollision(Entity2D& entity)
     {
-        auto entityPos = entity.GetPosition2D();
-        auto entityScale = entity.GetScale2D();
+        const auto& entityPos = entity.GetPosition2D();
+        const auto& entityScale = entity.GetScale2D();
 
         glm::vec2 topLeftCorner = {entityPos.x, entityPos.y - entityScale.y / 2};
         glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y + entityScale.y / 2};
@@ -143,29 +143,26 @@ namespace basilisk
             bottomRightCorner.y = ScreenSize.y - 1;
 
         if (topLeftCorner.x < 0)
-            topLeftCorner.x = 0.0f;
+            topLeftCorner.x = 0;
 
         if (topLeftCorner.y < 0)
             topLeftCorner.y = 0;
 
-        glm::ivec2 center = ConvertToTileMapPos(entityPos);
-        glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
-        glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
+        const glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
+        const glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
 
-        for (int layer = 0; layer < this->Tiles.size(); layer++)
+        for (const auto& layer : this->Tiles)
         {
             for (int row = topLeft.y; row < bottomRight.y; row++)
             {
                 for (int col = topLeft.x; col < bottomRight.x; col++)
                 {
-                    auto currentTile = row * this->TilesAmount.x + col;
+                    const auto currentTile = static_cast<size_t>(row * this->TilesAmount.x + col);
 
-                    if (this->Tiles[layer].size() <= currentTile)
+                    if (layer.size() <= currentTile)
                         continue;
 
-                    auto tile = this->Tiles[layer].at(row * this->TilesAmount.x + col);
-
-                    if (tile.hasCollision)
+                    if (const auto& tile = layer.at(currentTile); tile.hasCollision)
                     {
                         return CollisionManager::GetCollisionDir(tile.GetPosition2D(), tile.GetScale2D(), 
                                                                  entityPos, entityScale);
@@ -174,7 +171,7 @@ namespace basilisk
             }
         }
 
-        return {CollisionManager::CollisionDir::NONE, CollisionManager::CollisionDir::NONE};
+        return {.VerticalDir = CollisionManager::CollisionDir::NONE, .HorizontalDir = CollisionManager::CollisionDir::NONE};
     }
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)

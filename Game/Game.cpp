@@ -9,7 +9,7 @@ namespace game
     Game::Game(const char* windowName, float sizeX, float sizeY) :
         BaseGame(windowName, sizeX, sizeY), 
         Map("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536}, {sizeX, sizeY}),
-        Player(200.0f)
+        Player(200.0f, {Map.GetTileSize(), Map.GetTileSize()})
     {
     }
 
@@ -29,12 +29,23 @@ namespace game
 
     void Game::Update()
     {
-        this->Map.CheckCollision(Player);
+        auto collisionDir = this->Map.CheckCollision(Player);
+
+        if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE &&
+            collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
+        {
+            std::cout << "Collision detected! Vertical: " << static_cast<int>(collisionDir.VerticalDir)
+                      << " Horizontal: " << static_cast<int>(collisionDir.HorizontalDir) << std::endl;
+        }
+
+        this->Player.Delta = this->GetDelta();
+        this->Player.Update(); 
     }
 
     void Game::Draw()
     {
         this->Map.Draw();
+        this->Player.Draw();
     }
 
 } // namespace game

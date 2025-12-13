@@ -8,7 +8,7 @@ namespace game
     {
 
     public:
-        explicit Player(float speed);
+        Player(const float speed, const glm::vec2& size);
         void Init() override;
         void Update() override;
         float Delta;

@@ -20,17 +20,19 @@ namespace basilisk
                 const glm::vec2& screenSize,
                 Filters filter = Filters::NEAREST,
                 FitMode fitMode = FitMode::REPEAT);
+        ~TileMap();
         void Init();
-        void Draw();
+        void Draw() const;
         float GetTileSize() const;
         CollisionManager::CollisionData CheckCollision(Entity2D& entity);
 
     private:
         void GenerateFrames();
         void GenerateTiles();
+        Tile* BuildTile(const std::shared_ptr<Material>& mat, glm::vec2 scale, const bool collider, const short id, const short row, const short col);
         glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
 
-        std::vector<std::vector<Tile>> Tiles;
+        std::vector<std::vector<Tile*>> Tiles;
         std::vector<Frame> SpriteSheetFrames;
 
         unsigned int Texture;

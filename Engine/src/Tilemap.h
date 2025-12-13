@@ -19,6 +19,7 @@ namespace basilisk
                 const glm::vec2& screenSize,
                 Filters filter = Filters::NEAREST,
                 FitMode fitMode = FitMode::REPEAT);
+        void Init();
         void Draw();
 
     private:

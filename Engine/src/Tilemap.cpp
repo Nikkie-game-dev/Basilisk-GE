@@ -26,7 +26,10 @@ namespace basilisk
         this->PathToTexture = texturePath;
         this->TextureSize = textureSize;
         this->ScreenSize = screenSize;
+    }
 
+    void TileMap::Init()
+    {
         GenerateFrames();
         GenerateTiles();
     }

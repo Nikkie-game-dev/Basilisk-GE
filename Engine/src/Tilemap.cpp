@@ -79,6 +79,8 @@ namespace basilisk
 
         this->Tiles.resize(layersAmount);
 
+        glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
+
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
             const auto layerObj = this->Data[LayersName][layer];
@@ -104,11 +106,10 @@ namespace basilisk
                 currentTile.SetMaterial(mat);
                 currentTile.Init();
 
-                currentTile.SetPosition({this->ScreenSize.x / this->TilesAmount.x * (static_cast<float>(col) + 0.5f),
-                                         this->ScreenSize.y / this->TilesAmount.y *
-                                             (static_cast<float>(this->Data[MapHeightName]) - static_cast<float>(row) - 0.5f)});
+                currentTile.SetPosition({scale.x * (static_cast<float>(col) + 0.5f),
+                                         scale.y * (static_cast<float>(this->Data[MapHeightName]) - static_cast<float>(row) - 0.5f)});
 
-                currentTile.SetScaling({this->ScreenSize.x / this->TilesAmount.x, this->ScreenSize.y / this->TilesAmount.y});
+                currentTile.SetScaling(scale);
 
                 currentTile.hasCollision = collider;
 

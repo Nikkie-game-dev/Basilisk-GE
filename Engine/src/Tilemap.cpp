@@ -109,14 +109,20 @@ namespace basilisk
         if (topLeftCorner.x < 0)
             topLeftCorner.x = 0;
 
-        const glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
-        const glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
+        glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
+        glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
+
+        topLeft.y -= topLeft.y == 0 ? 0 : 1;
+        topLeft.x -= topLeft.x == 0 ? 0 : 1;
+
+        bottomRight.y += 1;
+        bottomRight.x += 1;
 
         for (const auto& layer : this->Tiles)
         {
-            for (int row = topLeft.y-1; row > bottomRight.y-1; row--)
+            for (int row = topLeft.y; row < bottomRight.y; row++)
             {
-                for (int col = topLeft.x-1; col < bottomRight.x-1; col++)
+                for (int col = topLeft.x; col < bottomRight.x; col++)
                 {
                     if (const auto& tile = layer[row][col]; tile && tile->hasCollision)
                     {

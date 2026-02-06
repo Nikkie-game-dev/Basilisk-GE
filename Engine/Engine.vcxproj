@@ -127,6 +127,7 @@
     <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\InputAction.h" />
+    <ClInclude Include="src\Loggers.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shape.h" />

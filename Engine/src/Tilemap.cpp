@@ -54,17 +54,6 @@ namespace basilisk
     {
         TextureImporter::BindTexture(this->Texture);
 
-        /* for (int i = this->Tiles.size() - 1; i >= 0; --i)
-         {
-             for (const auto tile : this->Tiles.at(i))
-             {
-                 if (tile)
-                 {
-                     tile->Draw();
-                 }
-             }
-         }*/
-
         for (int layer = this->Tiles.size() - 1; layer >= 0; --layer)
         {
             for (auto row : this->Tiles[layer])

@@ -3,37 +3,50 @@
 #include <chrono>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <spdlog/spdlog.h>
+
+#include "Loggers.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 
 #include "Renderer.h"
 #include "Window.h"
 
+#define MAX_LOGS 3
+#define MAX_LOG_SIZE (1024 * 1024)
+
 namespace basilisk
 {
+
+    void BaseGame::SetUpLog()
+    {
+        const auto console = std::make_shared<spdlog::sinks::wincolor_stderr_sink_st>();
+        const auto errorDump = std::make_shared<spdlog::sinks::rotating_file_sink_st>("logs/dump.log", MAX_LOG_SIZE, MAX_LOGS);
+        std::vector<spdlog::sink_ptr> sinks{console, errorDump};
+
+        Logger = std::make_shared<spdlog::logger>(DEF_LOG, sinks.begin(), sinks.end());
+        spdlog::register_logger(Logger);
+    }
 
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-        try
-        {
 
-            this->Renderer.InitGLFW();
+        SetUpLog();
 
-            this->Renderer.SetGlVersion();
+        this->Renderer.InitGLFW();
 
-            this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+        this->Renderer.SetGlVersion();
 
-            this->WindowName = windowName;
+        this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
 
-            this->Renderer.InitGL();
+        this->WindowName = windowName;
 
-            this->Renderer.SetWindowRef(*this->Window);
+        this->Renderer.InitGL();
 
-            this->InputSystem = Input(this->Window);
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
+        this->Renderer.SetWindowRef(*this->Window);
+
+        this->InputSystem = Input(this->Window);
+
     }
 
     BaseGame::~BaseGame()
@@ -44,6 +57,7 @@ namespace basilisk
     BaseGame::BaseGame(const BaseGame& other) :
         Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
+        //todo: remove
         try
         {
             this->WindowName = other.WindowName;

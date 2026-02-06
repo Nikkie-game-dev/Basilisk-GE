@@ -1,8 +1,15 @@
 #pragma once
 
+#include <memory>
+
 #include "Export.h"
 #include "glm/glm.hpp"
 #include "Buffers.h"
+
+namespace spdlog
+{
+    class logger;
+}
 
 namespace basilisk
 {
@@ -164,6 +171,7 @@ namespace basilisk
         glm::mat4 ViewMatrix = glm::mat4(1.0f);
 
         Window* Window;
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
 
     

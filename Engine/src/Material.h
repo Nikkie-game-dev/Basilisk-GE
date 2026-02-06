@@ -1,9 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <spdlog/logger.h>
 #include <string>
 
 #include "Export.h"
+#include "Renderer.h"
 #include "glm/glm.hpp"
 #include "Colors.h"
 
@@ -48,7 +50,7 @@ namespace basilisk
         /// </summary>
         /// <returns>If the material is set with a texture</returns>
         [[nodiscard]] bool GetIsTextured() const;
-        
+
         /// <summary>
         /// Sends a matrix to OpenGl.
         /// </summary>
@@ -65,8 +67,10 @@ namespace basilisk
         /// Has the view matrix been sent.
         /// </summary>
         bool IsViewSent = false;
-        
+
     private:
+        static void ShaderCompileError(ShaderProc shader);
+        static void ProgramCompileError(SPProc spProc);
         bool IsTextured;
         bool HasFilter;
         SPProc ShaderProgram = 0;
@@ -74,5 +78,6 @@ namespace basilisk
         static const char* FragShader;
         static const char* FilterFragShader;
         static const char* FragShaderTextureless;
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
 } // namespace basilisk 

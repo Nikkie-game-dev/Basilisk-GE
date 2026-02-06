@@ -1,8 +1,8 @@
 #pragma once
 
-#include <exception>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <spdlog/logger.h>
 
 #include "Export.h"
 
@@ -37,18 +37,6 @@ namespace basilisk
     private:
         GLFWwindow* WindowP = nullptr;
         glm::ivec2 Size;
-        
-    };
-
-    /// <summary>
-    /// Window could not be created.
-    /// </summary>
-    class FailedWindowCreation : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Tried and failed creating a window";
-        }
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
 } // basilisk 

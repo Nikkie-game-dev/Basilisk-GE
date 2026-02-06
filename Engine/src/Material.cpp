@@ -2,14 +2,16 @@
 
 
 #include <GL/glew.h>
-#include <iostream>
+#include <spdlog/spdlog.h>
 
-#include "RenderException.h"
+#include "Loggers.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
     using ShaderProc = unsigned int;
+
+    const std::shared_ptr<spdlog::logger> Material::Logger = spdlog::get(DEF_LOG);
 
     Material::Material(const bool isTextured, const bool hasFilter) : 
         IsTextured(isTextured), HasFilter(hasFilter)
@@ -46,7 +48,7 @@ namespace basilisk
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            std::cerr << ShaderCompileError(vertexShader).what() << std::endl;
+            ShaderCompileError(vertexShader);
         }
 
         auto fragShader = &FragShaderTextureless;
@@ -66,7 +68,7 @@ namespace basilisk
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            std::cerr << ShaderCompileError(fragmentShader).what() << std::endl;
+            ShaderCompileError(fragmentShader);
         }
 
         /*Shader program attachment and linking*/
@@ -77,7 +79,7 @@ namespace basilisk
         glGetProgramiv(this->ShaderProgram, GL_LINK_STATUS, &hasCompiled);
         if (!hasCompiled)
         {
-            std::cerr << ProgramCompileError(this->ShaderProgram).what() << std::endl;
+            ProgramCompileError(this->ShaderProgram);
         }
 
         /*Deletion*/
@@ -104,8 +106,29 @@ namespace basilisk
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    const char* Material::VertexShader = 
-        "#version 330 core\n"
+    void Material::ShaderCompileError(const ShaderProc shader)
+    {
+        constexpr int infoBufferSize = 512;
+
+        char infoLog[infoBufferSize];
+        glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
+        Logger->error("Shader failed to compile:\n{}", std::string(infoLog));
+        Logger->flush();
+        abort();
+    }
+
+    void Material::ProgramCompileError(SPProc program)
+    {
+        constexpr int infoBufferSize = 512;
+
+        char infoLog[infoBufferSize];
+        glGetProgramInfoLog(program, infoBufferSize, nullptr, infoLog);
+        Logger->error("Shader program failed to compile:\n{}", std::string(infoLog));
+        Logger->flush();
+        abort();
+    }
+
+    const char* Material::VertexShader = "#version 330 core\n"
         "layout (location = 0) in vec3 Pos;\n"
         "layout (location = 1) in vec4 Color;\n"
         "layout (location = 2) in vec2 TexCoord;\n"

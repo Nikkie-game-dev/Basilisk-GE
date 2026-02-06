@@ -39,16 +39,4 @@ namespace basilisk
         glm::ivec2 Size;
         
     };
-
-    /// <summary>
-    /// Window could not be created.
-    /// </summary>
-    class FailedWindowCreation : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Tried and failed creating a window";
-        }
-    };
 } // basilisk 

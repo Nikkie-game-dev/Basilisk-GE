@@ -2,21 +2,29 @@
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <spdlog/spdlog.h>
 #include <stb_image.h>
 
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "RenderException.h"
+#include "Loggers.h"
 #include "Window.h"
 
 namespace basilisk
 {
+    const std::shared_ptr<spdlog::logger> Renderer::Logger = spdlog::get(DEF_LOG);
+
     void Renderer::InitGLFW()
     {
         if (!glfwInit())
         {
-            throw CouldNotStartGlfw();
+            const char* description;
+            int errorCode = glfwGetError(&description);
+
+            Logger->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
+            Logger->flush();
+            abort();        
         }
     }
     void Renderer::SetGlVersion()
@@ -28,9 +36,12 @@ namespace basilisk
 
     void Renderer::InitGL() const
     {
-        if (glewInit() != GLEW_OK)
+        if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
-            throw CouldNotStartGlew();
+            Logger->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
+                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode)))); //huh?
+            Logger->flush();
+            abort();            
         }
 
         glEnable(GL_BLEND);

@@ -1,12 +1,17 @@
 #include "Entity.h"
 
-#include "RenderException.h"
+#include <spdlog/spdlog.h>
+
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Buffers.h"
+#include "Loggers.h"
 
 namespace basilisk
 {
+
+    const std::shared_ptr<spdlog::logger> Entity::Logger = spdlog::get(DEF_LOG);
+
     Entity::~Entity()
     {
         delete[] this->buffers.Vertices;
@@ -101,7 +106,9 @@ namespace basilisk
     {
         if (!Mat)
         {
-            throw MaterialUnassigned();
+            Logger->error("Material has not being assigned. Must be set before this call");
+            Logger->flush();
+            abort();
         }
         return Mat;
 
@@ -148,7 +155,7 @@ namespace basilisk
     void Entity::UpdateRotationMatrix()
     {
         this->RotationMatrix = glm::mat4(1.0f);
-        
+
         this->RotationMatrix = glm::rotate(this->RotationMatrix, this->Rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 
         this->RotationMatrix = glm::rotate(this->RotationMatrix, this->Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));

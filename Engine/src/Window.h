@@ -1,8 +1,8 @@
 #pragma once
 
-#include <exception>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <spdlog/logger.h>
 
 #include "Export.h"
 
@@ -37,6 +37,6 @@ namespace basilisk
     private:
         GLFWwindow* WindowP = nullptr;
         glm::ivec2 Size;
-        
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
 } // basilisk 

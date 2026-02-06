@@ -5,6 +5,7 @@
 
 #include "Export.h"
 #include "glm/glm.hpp"
+#include "Colors.h"
 
 namespace basilisk
 {
@@ -20,14 +21,16 @@ namespace basilisk
         /// Constructor for material. It is not recommended to use this function, but use New().
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
-        explicit Material(bool isTextured);
+        explicit Material(bool isTextured, bool hasFilter);
+
+        void OverrideColorFilter(Color color) const;
 
         /// <summary>
         /// Constructs materials and returns a shared pointer with the material.
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
         /// <returns>Shared pointer with new Material</returns>
-        static std::shared_ptr<Material> New(bool isTextured);
+        static std::shared_ptr<Material> New(bool isTextured, bool hasFilter = false);
 
         /// <summary>
         /// Builds and compiles shaders.
@@ -65,9 +68,11 @@ namespace basilisk
         
     private:
         bool IsTextured;
+        bool HasFilter;
         SPProc ShaderProgram = 0;
         static const char* VertexShader;
         static const char* FragShader;
+        static const char* FilterFragShader;
         static const char* FragShaderTextureless;
     };
 } // namespace basilisk 

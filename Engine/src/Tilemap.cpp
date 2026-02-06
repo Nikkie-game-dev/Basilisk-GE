@@ -90,13 +90,13 @@ namespace basilisk
 
         if (bottomRightCorner.x < 0)
             bottomRightCorner.x = 0;
-        
+
         if (bottomRightCorner.y >= ScreenSize.y)
             bottomRightCorner.y = ScreenSize.y - 1.0f;
 
         if (bottomRightCorner.x >= ScreenSize.x)
             bottomRightCorner.x = ScreenSize.x - 1.0f;
-        
+
         if (topLeftCorner.x >= ScreenSize.x)
             topLeftCorner.x = ScreenSize.x - 1.0f;
 
@@ -115,8 +115,8 @@ namespace basilisk
         topLeft.y -= topLeft.y == 0 ? 0 : 1;
         topLeft.x -= topLeft.x == 0 ? 0 : 1;
 
-        bottomRight.y += 1;
-        bottomRight.x += 1;
+        bottomRight.y += bottomRight.y >= TilesAmount.y - 1 ? 0 : 1;
+        bottomRight.x += bottomRight.x >= TilesAmount.x - 1 ? 0 : 1;
 
         for (const auto& layer : this->Tiles)
         {
@@ -124,7 +124,7 @@ namespace basilisk
             {
                 for (int col = topLeft.x; col < bottomRight.x; col++)
                 {
-                    if (const auto& tile = layer[row][col]; tile && tile->hasCollision)
+                    if (const auto& tile = layer[row][col]; tile && tile->HasCollision)
                     {
                         return CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(), entityPos, entityScale);
                     }
@@ -160,7 +160,7 @@ namespace basilisk
 
     void TileMap::GenerateTiles()
     {
-        auto mat = Material::New(true);
+        auto mat = Material::New(true, true);
 
         const auto layersAmount = this->Data[LayersName].size();
 
@@ -202,8 +202,9 @@ namespace basilisk
                 id = stoi(idStr);
                 row = tileJson[RowName];
                 col = tileJson[ColName];
+                const bool collider = layerObj[colliderName];
 
-                this->Tiles[layer][row][col] = BuildTile(mat, scale, layerObj[colliderName], id, row, col);
+                this->Tiles[layer][row][col] = BuildTile(mat, scale, collider, id, row, col);
             }
         }
     }
@@ -217,15 +218,22 @@ namespace basilisk
         currentTile->SetPosition({scale.x * (static_cast<float>(col) + 0.5f),
                                   scale.y * (static_cast<float>(this->Data[MapHeightName]) - static_cast<float>(row) - 0.5f)});
         currentTile->SetScaling(scale);
-        currentTile->hasCollision = collider;
+        currentTile->HasCollision = collider;
         return currentTile;
     }
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
     {
-        const glm::vec2 newPos = {pos.x / ScreenSize.x * this->TilesAmount.x, pos.y / ScreenSize.y * this->TilesAmount.y};
+        const glm::vec2 newPos ={pos.x / ScreenSize.x * this->TilesAmount.x, 
+                                 pos.y / ScreenSize.y * this->TilesAmount.y};
 
         return {round(newPos.x), round(newPos.y)};
+    }
+
+    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2 pos)
+    {
+        const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
+        return newPos;
     }
 
 } // namespace basilisk

@@ -6,7 +6,7 @@ namespace basilisk
 {
     Tile::Tile(Frame frame,
                short col,
-               short row) :
+               short row) : 
         Col(col), Row(row)
     {
         float vertices[] = 
@@ -30,8 +30,7 @@ namespace basilisk
 
     void Tile::Update()
     {
-    }
-    
-    
 
-} //namespace basilisk
+    }
+
+} // namespace basilisk

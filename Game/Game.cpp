@@ -7,8 +7,7 @@
 namespace game
 {
     Game::Game(const char* windowName, float sizeX, float sizeY) :
-        BaseGame(windowName, sizeX, sizeY), 
-        Map("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536}, {sizeX, sizeY}),
+        BaseGame(windowName, sizeX, sizeY), Map("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536}, {sizeX, sizeY}),
         Player(200.0f, {Map.GetTileSize(), Map.GetTileSize()})
     {
     }
@@ -29,17 +28,27 @@ namespace game
 
     void Game::Update()
     {
-        auto collisionDir = this->Map.CheckCollision(Player);
+        auto collisionDir = this->Map.CheckCollision(this->Player);
 
         if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE &&
             collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
         {
-            std::cout << "Collision detected! Vertical: " << static_cast<int>(collisionDir.VerticalDir)
-                      << " Horizontal: " << static_cast<int>(collisionDir.HorizontalDir) << std::endl;
+            /*std::cout << "Collision detected! Vertical: " << static_cast<int>(collisionDir.VerticalDir)
+                      << " Horizontal: " << static_cast<int>(collisionDir.HorizontalDir) << std::endl;*/
+
+            glm::vec2 playerPos = this->Player.GetPosition2D();
+
+            const glm::vec2 tilePos = {playerPos.x / 1920 * 29, playerPos.y / 900 * 16};
+
+            this->Logger->info("Collision detected: x: {}, y: {}\nPlayer screen position: x: {}, y: {}\nPlayer tile position: x: {}, y: {}", 
+                               collisionDir.CollisionTilePos.x, collisionDir.CollisionTilePos.y, 
+                               playerPos.x, playerPos.y,
+                               round(tilePos.x), round(tilePos.y));
         }
 
+
         this->Player.Delta = this->GetDelta();
-        this->Player.Update(); 
+        this->Player.Update();
     }
 
     void Game::Draw()

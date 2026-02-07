@@ -91,9 +91,10 @@ namespace basilisk
         
         Renderer& Renderer;
 
+        std::shared_ptr<spdlog::logger> Logger;
+
     private:
         void SetUpLog();
-        std::shared_ptr<spdlog::logger> Logger;
         const char* WindowName;
         int X;
         int Y;

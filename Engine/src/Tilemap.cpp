@@ -84,7 +84,8 @@ namespace basilisk
         glm::vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
         glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
-
+        // Clamp corners to screen bounds
+        {
         if (bottomRightCorner.y < 0)
             bottomRightCorner.y = 0;
 
@@ -109,7 +110,10 @@ namespace basilisk
         if (topLeftCorner.x < 0)
             topLeftCorner.x = 0;
 
+        }
+
         glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
+
         glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
 
         topLeft.y -= topLeft.y == 0 ? 0 : 1;
@@ -126,7 +130,9 @@ namespace basilisk
                 {
                     if (const auto& tile = layer[row][col]; tile && tile->HasCollision)
                     {
-                        return CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(), entityPos, entityScale);
+                        auto data = CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(), entityPos, entityScale);
+                        data.CollisionTilePos = {col, row};
+                        return data;
                     }
                 }
             }
@@ -224,8 +230,10 @@ namespace basilisk
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
     {
-        const glm::vec2 newPos ={pos.x / ScreenSize.x * this->TilesAmount.x, 
-                                 pos.y / ScreenSize.y * this->TilesAmount.y};
+        const glm::vec2 newPos ={pos.x / ScreenSize.x * this->TilesAmount.x,
+                                  this->TilesAmount.y - (pos.y / ScreenSize.y * this->TilesAmount.y)};
+
+
 
         return {round(newPos.x), round(newPos.y)};
     }

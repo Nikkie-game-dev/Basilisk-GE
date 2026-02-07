@@ -2,6 +2,7 @@
 #include "glm/vec2.hpp"
 
 #include "Export.h"
+#include <vector>
 
 namespace basilisk
 {
@@ -24,6 +25,7 @@ namespace basilisk
         {
             CollisionDir VerticalDir;
             CollisionDir HorizontalDir;
+            glm::vec2 CollisionTilePos;
         };
 
         /// <summary>

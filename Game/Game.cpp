@@ -33,9 +33,6 @@ namespace game
         if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE &&
             collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
         {
-            /*std::cout << "Collision detected! Vertical: " << static_cast<int>(collisionDir.VerticalDir)
-                      << " Horizontal: " << static_cast<int>(collisionDir.HorizontalDir) << std::endl;*/
-
             glm::vec2 playerPos = this->Player.GetPosition2D();
 
             const glm::vec2 tilePos = {playerPos.x / 1920 * 29, playerPos.y / 900 * 16};

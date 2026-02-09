@@ -14,7 +14,7 @@ namespace basilisk
                      const glm::vec2& textureSize,
                      const glm::vec2& screenSize,
                      const Filters filter,
-                     const FitMode fitMode)
+                     const FitMode fitMode) : PlayerCollision({0, 0}, {1, 1}, Color::Red)
 
     {
 
@@ -28,6 +28,10 @@ namespace basilisk
         this->PathToTexture = texturePath;
         this->TextureSize = textureSize;
         this->ScreenSize = screenSize;
+
+        auto collisionMat = Material::New(false);
+
+        PlayerCollision.SetMaterial(collisionMat);
     }
 
     TileMap::~TileMap()
@@ -46,13 +50,15 @@ namespace basilisk
 
     void TileMap::Init()
     {
-        GenerateFrames();
-        GenerateTiles();
+        this->GenerateFrames();
+        this->GenerateTiles();
+        PlayerCollision.Init();
     }
 
-    void TileMap::Draw() const
+    void TileMap::Draw()
     {
         TextureImporter::BindTexture(this->Texture);
+
 
         for (int layer = this->Tiles.size() - 1; layer >= 0; --layer)
         {
@@ -69,6 +75,7 @@ namespace basilisk
         }
 
         TextureImporter::UnbindTexture();
+        PlayerCollision.Draw();
     }
 
     float TileMap::GetTileSize() const
@@ -86,35 +93,40 @@ namespace basilisk
 
         // Clamp corners to screen bounds
         {
-        if (bottomRightCorner.y < 0)
-            bottomRightCorner.y = 0;
+            if (bottomRightCorner.y < 0)
+                bottomRightCorner.y = 0;
 
-        if (bottomRightCorner.x < 0)
-            bottomRightCorner.x = 0;
+            if (bottomRightCorner.x < 0)
+                bottomRightCorner.x = 0;
 
-        if (bottomRightCorner.y >= ScreenSize.y)
-            bottomRightCorner.y = ScreenSize.y - 1.0f;
+            if (bottomRightCorner.y >= ScreenSize.y)
+                bottomRightCorner.y = ScreenSize.y - 1.0f;
 
-        if (bottomRightCorner.x >= ScreenSize.x)
-            bottomRightCorner.x = ScreenSize.x - 1.0f;
+            if (bottomRightCorner.x >= ScreenSize.x)
+                bottomRightCorner.x = ScreenSize.x - 1.0f;
 
-        if (topLeftCorner.x >= ScreenSize.x)
-            topLeftCorner.x = ScreenSize.x - 1.0f;
+            if (topLeftCorner.x >= ScreenSize.x)
+                topLeftCorner.x = ScreenSize.x - 1.0f;
 
-        if (topLeftCorner.y >= ScreenSize.y)
-            topLeftCorner.y = ScreenSize.y - 1.0f;
+            if (topLeftCorner.y >= ScreenSize.y)
+                topLeftCorner.y = ScreenSize.y - 1.0f;
 
-        if (topLeftCorner.y < 0)
-            topLeftCorner.y = 0;
+            if (topLeftCorner.y < 0)
+                topLeftCorner.y = 0;
 
-        if (topLeftCorner.x < 0)
-            topLeftCorner.x = 0;
-
+            if (topLeftCorner.x < 0)
+                topLeftCorner.x = 0;
         }
 
-        glm::ivec2 topLeft = ConvertToTileMapPos(topLeftCorner);
+        glm::ivec2 topLeft = this->ConvertToTileMapPos(topLeftCorner);
 
-        glm::ivec2 bottomRight = ConvertToTileMapPos(bottomRightCorner);
+        glm::ivec2 bottomRight = this->ConvertToTileMapPos(bottomRightCorner);
+
+        PlayerCollision.SetPosition(entityPos);
+
+        glm::vec2 size = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
+
+        PlayerCollision.SetScaling(size);
 
         topLeft.y -= topLeft.y == 0 ? 0 : 1;
         topLeft.x -= topLeft.x == 0 ? 0 : 1;
@@ -166,7 +178,8 @@ namespace basilisk
 
     void TileMap::GenerateTiles()
     {
-        auto mat = Material::New(true, true);
+        auto commonMat = Material::New(true, false);
+        auto debugMat = Material::New(true, true);
 
         const auto layersAmount = this->Data[LayersName].size();
 
@@ -210,7 +223,7 @@ namespace basilisk
                 col = tileJson[ColName];
                 const bool collider = layerObj[colliderName];
 
-                this->Tiles[layer][row][col] = BuildTile(mat, scale, collider, id, row, col);
+                this->Tiles[layer][row][col] = BuildTile(collider ? debugMat : commonMat, scale, collider, id, row, col);
             }
         }
     }
@@ -230,10 +243,8 @@ namespace basilisk
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
     {
-        const glm::vec2 newPos ={pos.x / ScreenSize.x * this->TilesAmount.x,
+        const glm::vec2 newPos = {pos.x / ScreenSize.x * this->TilesAmount.x,
                                   this->TilesAmount.y - (pos.y / ScreenSize.y * this->TilesAmount.y)};
-
-
 
         return {round(newPos.x), round(newPos.y)};
     }
@@ -242,6 +253,14 @@ namespace basilisk
     {
         const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
         return newPos;
+    }
+
+    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) : Square(center, size, true, color)
+    {
+    }
+
+    void TileMap::CollisionBox::Update()
+    {
     }
 
 } // namespace basilisk

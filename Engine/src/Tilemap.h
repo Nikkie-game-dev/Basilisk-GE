@@ -22,11 +22,19 @@ namespace basilisk
                 FitMode fitMode = FitMode::REPEAT);
         ~TileMap();
         void Init();
-        void Draw() const;
+        void Draw();
         float GetTileSize() const;
         CollisionManager::CollisionData CheckCollision(Entity2D& entity);
 
+        class CollisionBox : public Square
+        {
+        public:
+            CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color);
+
+            void Update() override;
+        };
     private:
+
         void GenerateFrames();
         void GenerateTiles();
         Tile* BuildTile(const std::shared_ptr<Material>& mat, glm::vec2 scale, const bool collider, const short id, const short row, const short col);
@@ -42,6 +50,8 @@ namespace basilisk
         path PathToTexture;
 
         json Data;
+
+        CollisionBox PlayerCollision;
 
         glm::vec2 TextureSize;
         glm::vec2 TilesAmount;

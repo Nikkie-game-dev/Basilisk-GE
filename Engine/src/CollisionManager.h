@@ -3,6 +3,7 @@
 
 #include "Export.h"
 #include <vector>
+#include <string>
 
 namespace basilisk
 {
@@ -26,6 +27,7 @@ namespace basilisk
             CollisionDir VerticalDir;
             CollisionDir HorizontalDir;
             glm::vec2 CollisionTilePos;
+            std::string CollisionLayer;
         };
 
         /// <summary>

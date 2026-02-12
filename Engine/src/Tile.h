@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "Square.h"
+#include <string>
 
 namespace basilisk
 {
@@ -17,6 +18,7 @@ namespace basilisk
         bool HasCollision;
         short Col;
         short Row;
+        std::string LayerName;
     };
 
 } // namespace basilisk

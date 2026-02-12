@@ -250,7 +250,7 @@ namespace basilisk
         const glm::vec2 newPos = {pos.x / ScreenSize.x * this->TilesAmount.x,
                                   this->TilesAmount.y - (pos.y / ScreenSize.y * this->TilesAmount.y)};
 
-        return {round(newPos.x), round(newPos.y)};
+        return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }
 
     glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2 pos)

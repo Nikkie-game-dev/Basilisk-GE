@@ -185,7 +185,7 @@ namespace basilisk
         auto commonMat = Material::New(true, false);
         auto debugMat = Material::New(true, true);
 
-        const auto layersAmount = this->Data[LayersName].size();
+        const auto layersAmount = this->Data[Keys.Layers].size();
 
         auto tileCount = 0;
 
@@ -195,17 +195,19 @@ namespace basilisk
 
         glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
 
+        short id;
+        short row;
+        short col;
+        std::string layer;
+
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
-            const auto layerObj = this->Data[LayersName][layer];
+            const auto layerObj = this->Data[Keys.Layers][layer];
+            const std::string layerStr = layerObj[Keys.Layer];
 
-            const bool collider = layerObj[colliderName];
+            const bool collider = layerObj[Keys.Collider];
 
             this->Tiles[layer].resize(TilesAmount.y);
-
-            short id;
-            short row;
-            short col;
 
             for (int rows = 0; rows < TilesAmount.y; rows++)
             {
@@ -217,32 +219,29 @@ namespace basilisk
                 }
             }
 
-            for (int tileId = 0; tileId < layerObj[tileName].size(); tileId++)
+            for (int tileId = 0; tileId < layerObj[Keys.Tile].size(); tileId++)
             {
-                const auto& tileJson = layerObj[tileName][tileId];
+                const auto& tileJson = layerObj[Keys.Tile][tileId];
 
-                const std::string idStr = tileJson[IdName];
+                const std::string idStr = tileJson[Keys.Id];
                 id = stoi(idStr);
-                row = tileJson[RowName];
-                col = tileJson[ColName];
-                const bool collider = layerObj[colliderName];
+                row = tileJson[Keys.Row];
+                col = tileJson[Keys.Col];
+                const bool collider = layerObj[this->Keys.Collider];
 
-                this->Tiles[layer][row][col] = BuildTile(collider ? debugMat : commonMat, scale, collider, id, row, col);
+                this->Tiles[layer][row][col] = new Tile(this->SpriteSheetFrames.at(id), col, row);
+
+                auto currentTile = this->Tiles[layer][row][col];
+
+                currentTile->SetMaterial(collider ? debugMat : commonMat);
+                currentTile->Init();
+                currentTile->SetPosition({scale.x * (static_cast<float>(col) + 0.5f),
+                                          scale.y * (static_cast<float>(this->Data[Keys.MapHeight]) - static_cast<float>(row) - 0.5f)});
+                currentTile->SetScaling(scale);
+                currentTile->HasCollision = collider;
+                currentTile->LayerName = layerStr;
             }
         }
-    }
-
-    Tile* TileMap::BuildTile(
-        const std::shared_ptr<Material>& mat, const glm::vec2 scale, const bool collider, const short id, const short row, const short col)
-    {
-        const auto currentTile = new Tile(this->SpriteSheetFrames.at(id), col, row);
-        currentTile->SetMaterial(mat);
-        currentTile->Init();
-        currentTile->SetPosition({scale.x * (static_cast<float>(col) + 0.5f),
-                                  scale.y * (static_cast<float>(this->Data[MapHeightName]) - static_cast<float>(row) - 0.5f)});
-        currentTile->SetScaling(scale);
-        currentTile->HasCollision = collider;
-        return currentTile;
     }
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)

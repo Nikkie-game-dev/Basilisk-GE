@@ -35,7 +35,21 @@ namespace basilisk
 
             void Update() override;
         };
+
     private:
+        struct Key
+        {
+            const std::string TileSize = "tileSize";
+            const std::string MapWidth = "mapWidth";
+            const std::string MapHeight = "mapHeight";
+            const std::string Layers = "layers";
+            const std::string Id = "id";
+            const std::string Col = "x";
+            const std::string Row = "y";
+            const std::string Tile = "tiles";
+            const std::string Collider = "collider";
+            const std::string Layer = "name";
+        };
 
         void GenerateFrames();
         void GenerateTiles();
@@ -58,17 +72,7 @@ namespace basilisk
         glm::vec2 TilesAmount;
         glm::vec2 ScreenSize;
 
-
-        std::string TileSizeName = "tileSize";
-        std::string MapWidthName = "mapWidth";
-        std::string MapHeightName = "mapHeight";
-        std::string LayersName = "layers";
-        std::string IdName = "id";
-        std::string ColName = "x";
-        std::string RowName = "y";
-        std::string tileName = "tiles";
-        std::string colliderName = "collider";
-
+        static const Key Keys;
     };
 
 } // namespace basilisk

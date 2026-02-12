@@ -25,6 +25,8 @@ namespace basilisk
         void Draw();
         float GetTileSize() const;
         CollisionManager::CollisionData CheckCollision(Entity2D& entity);
+        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
+        glm::vec2 ConvertToScreenPos(const glm::ivec2 pos);
 
         class CollisionBox : public Square
         {
@@ -37,9 +39,8 @@ namespace basilisk
 
         void GenerateFrames();
         void GenerateTiles();
-        Tile* BuildTile(const std::shared_ptr<Material>& mat, glm::vec2 scale, const bool collider, const short id, const short row, const short col);
-        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
-        glm::vec2 ConvertToScreenPos(const glm::ivec2 pos);
+        Tile* BuildTile(
+            const std::shared_ptr<Material>& mat, glm::vec2 scale, const bool collider, const short id, const short row, const short col);
 
         std::vector<std::vector<std::vector<Tile*>>> Tiles;
         std::vector<Frame> SpriteSheetFrames;

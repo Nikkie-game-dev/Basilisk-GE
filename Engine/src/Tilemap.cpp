@@ -95,6 +95,7 @@ namespace basilisk
         glm::vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
         glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
+
         // Clamp corners to screen bounds
         {
             if (bottomRightCorner.y < 0)
@@ -125,6 +126,7 @@ namespace basilisk
         glm::ivec2 topLeft = this->ConvertToTileMapPos(topLeftCorner);
 
         glm::ivec2 bottomRight = this->ConvertToTileMapPos(bottomRightCorner);
+        
 
         PlayerCollision.SetPosition(entityPos);
 
@@ -139,22 +141,40 @@ namespace basilisk
 
         for (const auto& layer : this->Tiles)
         {
-            for (int row = topLeft.y; row < bottomRight.y; row++)
+            lastTile = nullptr;
+            firstTileCollided = nullptr;
+
             for (int row = topLeft.y; row <= bottomRight.y; row++)
             {
                 for (int col = topLeft.x; col <= bottomRight.x; col++)
                 {
-                    if (const auto& tile = layer[row][col]; tile && tile->HasCollision)
+                    const auto& tile = layer[row][col];
+
+                    lastTile = tile;
+
+                    if (tile && tile->HasCollision)
                     {
-                        auto data = CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(), entityPos, entityScale);
-                        data.CollisionTilePos = {col, row};
-                        return data;
+                        if (firstTileCollided == nullptr)
+                            firstTileCollided = tile;
                     }
                 }
             }
+
+            if (firstTileCollided != nullptr)
+            {
+                auto data = CollisionManager::GetCollisionDir(firstTileCollided->GetPosition2D(), firstTileCollided->GetScale2D(),
+                                                              entityPos, entityScale);
+                data.CollisionTilePos = {firstTileCollided->Col, firstTileCollided->Row};
+                data.CollisionLayer = firstTileCollided->LayerName;
+                return data;
+            }
+            else if (lastTile != nullptr)
+            {
+                return noneCollision;
+            }
         }
 
-        return {.VerticalDir = CollisionManager::CollisionDir::NONE, .HorizontalDir = CollisionManager::CollisionDir::NONE};
+        return noneCollision;
     }
 
     void TileMap::GenerateFrames()

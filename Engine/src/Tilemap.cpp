@@ -9,6 +9,8 @@
 namespace basilisk
 {
 
+    const TileMap::Key TileMap::Keys = TileMap::Key();
+
     TileMap::TileMap(const path& mapFilePath,
                      const path& texturePath,
                      const glm::vec2& textureSize,
@@ -22,8 +24,8 @@ namespace basilisk
 
         this->Texture = TextureImporter::MakeTexture(texturePath.string(), filter, fitMode);
         this->Data = json::parse(file);
-        this->TileSize = this->Data[this->TileSizeName];
-        this->TilesAmount = {this->Data[MapWidthName], this->Data[MapHeightName]};
+        this->TileSize = this->Data[Keys.TileSize];
+        this->TilesAmount = {this->Data[Keys.MapWidth], this->Data[Keys.MapHeight]};
 
         this->PathToTexture = texturePath;
         this->TextureSize = textureSize;
@@ -85,6 +87,8 @@ namespace basilisk
 
     CollisionManager::CollisionData TileMap::CheckCollision(Entity2D& entity)
     {
+        CollisionManager::CollisionData noneCollision = {.VerticalDir = CollisionManager::CollisionDir::NONE,
+                                                         .HorizontalDir = CollisionManager::CollisionDir::NONE};
         const auto& entityPos = entity.GetPosition2D();
         const auto& entityScale = entity.GetScale2D();
 
@@ -128,17 +132,17 @@ namespace basilisk
 
         PlayerCollision.SetScaling(size);
 
-        topLeft.y -= topLeft.y == 0 ? 0 : 1;
-        topLeft.x -= topLeft.x == 0 ? 0 : 1;
+        const glm::vec2 tilePos = {entityPos.x / 1920 * 29, entityPos.y / 900 * 16};
 
-        bottomRight.y += bottomRight.y >= TilesAmount.y - 1 ? 0 : 1;
-        bottomRight.x += bottomRight.x >= TilesAmount.x - 1 ? 0 : 1;
+        Tile* lastTile = nullptr;
+        Tile* firstTileCollided = nullptr;
 
         for (const auto& layer : this->Tiles)
         {
             for (int row = topLeft.y; row < bottomRight.y; row++)
+            for (int row = topLeft.y; row <= bottomRight.y; row++)
             {
-                for (int col = topLeft.x; col < bottomRight.x; col++)
+                for (int col = topLeft.x; col <= bottomRight.x; col++)
                 {
                     if (const auto& tile = layer[row][col]; tile && tile->HasCollision)
                     {

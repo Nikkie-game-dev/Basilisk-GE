@@ -36,33 +36,33 @@ namespace game
 
         if (this->MoveUpIA && this->MoveUpIA->IsDown())
         {
-            ChangeAnimation(&WalkUpAnimation);
+            ChangeAnimation(&this->WalkUpAnimation);
             position.y += this->Speed * this->Delta;
         }
 
         else if (this->MoveDownIA && this->MoveDownIA->IsDown())
         {
-            ChangeAnimation(&WalkDownAnimation);
+            ChangeAnimation(&this->WalkDownAnimation);
             position.y -= this->Speed * this->Delta;
         }
 
         else if (this->MoveLeftIA && this->MoveLeftIA->IsDown())
         {
-            FlipSpriteX = true;
-            ChangeAnimation(&WalkHorAnimation);
+            this->FlipSpriteX = true;
+            ChangeAnimation(&this->WalkHorAnimation);
             position.x -= this->Speed * this->Delta;
         }
 
         else if (MoveRightIA && this->MoveRightIA->IsDown())
         {
-            FlipSpriteX = false;
-            ChangeAnimation(&WalkHorAnimation);
+            this->FlipSpriteX = false;
+            ChangeAnimation(&this->WalkHorAnimation);
             position.x += this->Speed * this->Delta;
         }
 
         else
         {
-            ChangeAnimation(&IdleAnimation);
+            ChangeAnimation(&this->IdleAnimation);
         }
 
         if (position != previousPos)

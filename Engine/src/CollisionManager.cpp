@@ -15,29 +15,28 @@ namespace basilisk
 
     CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB)
     {
-        const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
-        const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
-
         CollisionData data;
 
-        if (aBottomLeft.x < bBottomLeft.x)
+        const glm::vec2 halfA = sizeA * 0.5f;
+        const glm::vec2 halfB = sizeB * 0.5f;
+
+        const glm::vec2 distance = positionA - positionB;
+
+        const float overlapX = (halfA.x + halfB.x) - std::abs(distance.x);
+        const float overlapY = (halfA.y + halfB.y) - std::abs(distance.y);
+
+        if (overlapX <= 0.0f || overlapY <= 0.0f)
+            return data;
+
+        if (overlapX < overlapY)
         {
-            data.HorizontalDir = CollisionDir::RIGHT;
+            data.HorizontalDir = distance.x > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
         }
         else
         {
-            data.HorizontalDir = CollisionDir::LEFT;
+            data.VerticalDir = distance.y > 0.0f ? CollisionDir::UP : CollisionDir::DOWN;
         }
-
-        if (aBottomLeft.y < bBottomLeft.y)
-        {
-            data.VerticalDir = CollisionDir::DOWN;
-        }
-        else
-        {
-            data.VerticalDir = CollisionDir::UP;
-        }
-
+        
         return data;
     }
 

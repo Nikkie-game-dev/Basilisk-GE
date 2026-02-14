@@ -24,8 +24,8 @@ namespace basilisk
 
         struct BASILISK_API CollisionData
         {
-            CollisionDir VerticalDir;
-            CollisionDir HorizontalDir;
+            CollisionDir VerticalDir = CollisionDir::NONE;
+            CollisionDir HorizontalDir = CollisionDir::NONE;
             glm::vec2 CollisionTilePos;
             std::string CollisionLayer;
         };

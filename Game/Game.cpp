@@ -29,6 +29,7 @@ namespace game
 
     void Game::Update()
     {
+        this->Player.Update();
         auto collisionDir = this->Map.CheckCollision(this->Player);
 
         glm::vec2 playerPos = this->Player.GetPosition2D();
@@ -45,9 +46,9 @@ namespace game
                                collisionDir.CollisionTilePos.x, collisionDir.CollisionTilePos.y, playerPos.x, playerPos.y, collisionDir.CollisionLayer);
         }
 
-
         this->Player.Delta = this->GetDelta();
-        this->Player.Update();
+
+        this->Player.CheckCollision(collisionDir);
     }
 
     void Game::Draw()

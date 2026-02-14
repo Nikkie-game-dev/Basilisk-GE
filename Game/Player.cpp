@@ -32,7 +32,7 @@ namespace game
     void Player::Move()
     {
         glm::vec2 position = this->GetPosition2D();
-
+        glm::vec2 previousPos = position;
 
         if (this->MoveUpIA && this->MoveUpIA->IsDown())
         {
@@ -64,6 +64,9 @@ namespace game
         {
             ChangeAnimation(&IdleAnimation);
         }
+
+        if (position != previousPos)
+            this->PreviousPos = previousPos;
 
         this->SetPosition(position);
     }

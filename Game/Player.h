@@ -18,7 +18,7 @@ namespace game
         basilisk::InputAction* MoveLeftIA = nullptr;
         basilisk::InputAction* MoveRightIA = nullptr;
 
-        // glm::vec2 NextPosition;
+        glm::vec2 PreviousPos;
 
     private:
         void Move();

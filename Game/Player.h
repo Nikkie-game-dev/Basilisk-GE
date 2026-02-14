@@ -1,5 +1,6 @@
 #pragma once
 #include "Basilisk/Sprite.h"
+#include "Basilisk/CollisionManager.h"
 #include "InputAction.h"
 
 namespace game
@@ -11,6 +12,7 @@ namespace game
         Player(const float speed, const glm::vec2& size);
         void Init() override;
         void Update() override;
+        void CheckCollision(basilisk::CollisionManager::CollisionData data);
         float Delta;
 
         basilisk::InputAction* MoveUpIA = nullptr;

@@ -21,6 +21,35 @@ namespace game
         UpdateAnimation(this->Delta);
     }
 
+    void Player::CheckCollision(basilisk::CollisionManager::CollisionData data)
+    {
+        if (data.HorizontalDir == basilisk::CollisionManager::CollisionDir::NONE &&
+            data.VerticalDir == basilisk::CollisionManager::CollisionDir::NONE)
+            return;
+
+        glm::vec2 newPos = GetPosition2D();
+
+        if (data.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE)
+            newPos.x = PreviousPos.x;
+
+        if (data.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
+        {
+            switch (data.VerticalDir)
+            {
+            case basilisk::CollisionManager::CollisionDir::UP:
+                newPos.y = PreviousPos.y + 0.2f;
+                break;
+            case basilisk::CollisionManager::CollisionDir::DOWN:
+                newPos.y = PreviousPos.y - 0.2f;
+                break;
+            default:
+                break;
+            }
+        }
+
+        SetPosition(newPos);
+    }
+
     void Player::Init()
     {
         this->IdleAnimation.Play();

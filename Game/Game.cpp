@@ -37,7 +37,7 @@ namespace game
 
         this->Logger->info("Player tile position: x: {}, y: {}", static_cast<int>(tilePos.x), static_cast<int>(tilePos.y));
 
-        if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE &&
+        if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE ||
             collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
         {
             const glm::vec2 collisionPos = Map.ConvertToScreenPos(collisionDir.CollisionTilePos);

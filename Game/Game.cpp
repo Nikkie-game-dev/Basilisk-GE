@@ -9,7 +9,7 @@ namespace game
     Game::Game(const char* windowName, float sizeX, float sizeY) :
         BaseGame(windowName, sizeX, sizeY),
         Map("res/assets/map.json", "res/assets/spritesheet.png", {512, 1536}, {sizeX, sizeY}),
-        Player(100.0f, {Map.GetTileSize(), Map.GetTileSize()}))
+        Player(100.0f, {Map.GetTileSize(), Map.GetTileSize()})
     {
     }
 

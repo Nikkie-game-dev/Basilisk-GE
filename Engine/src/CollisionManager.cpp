@@ -34,7 +34,7 @@ namespace basilisk
         }
         else
         {
-            data.VerticalDir = distance.y > 0.0f ? CollisionDir::UP : CollisionDir::DOWN;
+            data.VerticalDir = distance.y > 0.0f ? CollisionDir::DOWN : CollisionDir::UP;
         }
         
         return data;

@@ -18,8 +18,7 @@ namespace basilisk
             aBottomLeft.y < bBottomLeft.y + sizeB.y && aBottomLeft.y + sizeA.y > bBottomLeft.y;
     }
 
-    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2& positionA, const glm::vec2& sizeA, 
-                                                                      const glm::vec2& positionB, const glm::vec2& sizeB)
+    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2& positionA, const glm::vec2& positionB)
     {
         CollisionData data;
 

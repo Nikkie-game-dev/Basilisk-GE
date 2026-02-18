@@ -1,5 +1,6 @@
 #include "Tilemap.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -110,11 +111,9 @@ namespace basilisk
 
         // Clamp corners to screen bounds
         {
-            if (bottomRightCorner.y < 0)
-                bottomRightCorner.y = 0;
+            bottomRightCorner.y = std::max<float>(bottomRightCorner.y, 0);
 
-            if (bottomRightCorner.x < 0)
-                bottomRightCorner.x = 0;
+            bottomRightCorner.x = std::max<float>(bottomRightCorner.x, 0);
 
             if (bottomRightCorner.y >= static_cast<float>(ScreenSize.y))
                 bottomRightCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
@@ -128,11 +127,9 @@ namespace basilisk
             if (topLeftCorner.y >= static_cast<float>(ScreenSize.y))
                 topLeftCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
 
-            if (topLeftCorner.y < 0)
-                topLeftCorner.y = 0;
+            topLeftCorner.y = std::max<float>(topLeftCorner.y, 0);
 
-            if (topLeftCorner.x < 0)
-                topLeftCorner.x = 0;
+            topLeftCorner.x = std::max<float>(topLeftCorner.x, 0);
         }
 
         glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
@@ -178,7 +175,7 @@ namespace basilisk
 
                     if (tile)
                     {
-                        checkedTiles.push_back({col, row});
+                        checkedTiles.emplace_back(col, row);
                     }
                 }
             }

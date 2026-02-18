@@ -55,36 +55,36 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::BindAndFillVbo(unsigned int VboID, int sizeArray, float array[])
+    void Renderer::BindAndFillVbo(const unsigned int& VboID, const int& sizeArray, const float array[])
     {
         glBindBuffer(GL_ARRAY_BUFFER, VboID);
         glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[])
+    void Renderer::BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[])
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
+    void Renderer::SetAttribPointer(const int& index, const int& size, const int& strideAmount, const int& start)
     {
         glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)),
                               (void*)(start * sizeof(float)));
         glEnableVertexAttribArray(index);
     }
 
-    void Renderer::BindBufferData(const unsigned int vbo,
-                                  const int amountVertices,
+    void Renderer::BindBufferData(const unsigned int& vbo,
+                                  const int& amountVertices,
                                   float* arrayData,
-                                  const int verticesBefore,
-                                  const int sizeDataInVbo)
+                                  const int& verticesBefore,
+                                  const int& sizeDataInVbo)
     {
         BindAndFillVbo(vbo, amountVertices, arrayData);
         SetAttribPointer(2, sizeDataInVbo, sizeDataInVbo + verticesBefore, verticesBefore);
     }
 
-    void Renderer::GenerateVBs(Buffers& buffers, const bool isTextured)
+    void Renderer::GenerateVBs(Buffers& buffers, const bool& isTextured)
     {
         constexpr int posSize = 3;
         const int textureSize = isTextured ? 2 : 0;
@@ -114,7 +114,7 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(vao);
@@ -187,7 +187,7 @@ namespace basilisk
 
 
 #pragma region deprecated
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices, const Color color) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices, const Color& color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);

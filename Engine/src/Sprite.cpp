@@ -7,7 +7,7 @@
 
 namespace basilisk
 {
-    Sprite::Sprite(const std::string& textureDir, const glm::vec2 center, const glm::vec2 size, 
+    Sprite::Sprite(const std::string& textureDir, const glm::vec2& center, const glm::vec2& size, 
                    const Filters filter, const FitMode fitMode)
     {
         this->Entity2D::SetPosition(center);
@@ -48,7 +48,7 @@ namespace basilisk
     }
 
 
-    void Sprite::UpdateAnimation(const float delta)
+    void Sprite::UpdateAnimation(const float& delta)
     {
         if (!this->Animation)
             return;

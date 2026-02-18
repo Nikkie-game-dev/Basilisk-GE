@@ -6,7 +6,8 @@
 
 namespace basilisk
 {
-
+    const std::shared_ptr<spdlog::logger> CollisionManager::Logger = spdlog::get(DEF_LOG);
+    
     bool CollisionManager::IsCollidingAaBb(const glm::vec2& positionA, const glm::vec2& sizeA, 
                                            const glm::vec2& positionB, const glm::vec2& sizeB)
     {
@@ -52,7 +53,7 @@ namespace basilisk
 
         if (data.VerticalDir == CollisionDir::NONE && data.HorizontalDir == CollisionDir::NONE)
         {
-            spdlog::get(DEF_LOG)->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
+            Logger->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
                                         positionA.x, positionA.y, positionB.x, positionB.y);
         }
 

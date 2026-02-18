@@ -156,27 +156,20 @@ namespace basilisk
 
                     const auto& tile = layer[row][col];
 
-                    lastTile = tile;
-
                     if (tile && tile->HasCollision)
                     {
-                        if (firstTileCollided == nullptr)
-                            firstTileCollided = tile;
+                        auto data = CollisionManager::GetCollisionDir(tile->GetPosition2D(), tile->GetScale2D(),
+                                                                      entityPos, entityScale);
+                        data.CollisionTilePos = {tile->Col, tile->Row};
+                        data.CollisionLayer = tile->LayerName;
+                        return data;
                     }
-                }
-            }
-
 
                     if (tile)
                     {
                         checkedTiles.push_back({col, row});
                     }
                 }
-                return data;
-            }
-            else if (lastTile != nullptr)
-            {
-                return noneCollision;
             }
         }
 

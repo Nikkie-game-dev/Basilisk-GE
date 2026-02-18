@@ -46,18 +46,18 @@ namespace basilisk
         this->TextureSize = textureSize;
         this->ScreenSize = screenSize;
 
-        auto collisionMat = Material::New(false);
+        const auto collisionMat = Material::New(false);
 
         PlayerCollision.SetMaterial(collisionMat);
     }
 
     TileMap::~TileMap()
     {
-        for (auto layer : this->Tiles)
+        for (const auto& layer : this->Tiles)
         {
-            for (auto row : layer)
+            for (const auto& row : layer)
             {
-                for (auto col : row)
+                for (const auto col : row)
                 {
                     delete col;
                 }
@@ -79,9 +79,9 @@ namespace basilisk
 
         for (int layer = static_cast<int>(this->Tiles.size()) - 1; layer >= 0; --layer)
         {
-            for (auto row : this->Tiles[layer])
+            for (const auto& row : this->Tiles[layer])
             {
-                for (auto col : row)
+                for (const auto col : row)
                 {
                     if (col)
                     {
@@ -132,12 +132,12 @@ namespace basilisk
             topLeftCorner.x = std::max<float>(topLeftCorner.x, 0);
         }
 
-        glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
-        glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
+        const glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
+        const glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
 
         PlayerCollision.SetPosition(entityPos);
 
-        glm::vec2 collisionBoxSize = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
+        const glm::vec2 collisionBoxSize = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
 
         PlayerCollision.SetScaling(collisionBoxSize);
 
@@ -209,8 +209,8 @@ namespace basilisk
 
     void TileMap::GenerateTiles()
     {
-        auto commonMat = Material::New(true, false);
-        auto debugMat = Material::New(true, true);
+        const auto commonMat = Material::New(true, false);
+        const auto debugMat = Material::New(true, true);
 
         const auto layersAmount = this->Data[Keys.Layers].size();
 
@@ -218,9 +218,7 @@ namespace basilisk
 
         this->Tiles.resize(layersAmount);
 
-        int layerSize = this->TilesAmount.x * this->TilesAmount.y;
-
-        glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
+        const glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
 
         short id;
         short row;
@@ -254,11 +252,11 @@ namespace basilisk
                 id = static_cast<short>(stoi(idStr));
                 row = tileJson[Keys.Row];
                 col = tileJson[Keys.Col];
-                const bool collider = layerObj[this->Keys.Collider];
+                const bool collider = layerObj[Keys.Collider];
 
                 this->Tiles[layer][row][col] = new Tile(this->SpriteSheetFrames.at(id), col, row);
 
-                auto currentTile = this->Tiles[layer][row][col];
+                const auto currentTile = this->Tiles[layer][row][col];
 
                 currentTile->SetMaterial(collider ? debugMat : commonMat);
                 currentTile->Init();
@@ -271,7 +269,7 @@ namespace basilisk
         }
     }
 
-    glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
+    glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos) const
     {
         const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x * this->TilesAmount.x),
                                   static_cast<float>(this->TilesAmount.y) - pos.y / static_cast<float>(this->ScreenSize.y * this->
@@ -280,13 +278,14 @@ namespace basilisk
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }
 
-    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2& pos)
+    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2& pos) const
     {
         const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
         return newPos;
     }
 
-    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) : Square(center, size, true, color)
+    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) :
+        Square(center, size, true, color)
     {
     }
 

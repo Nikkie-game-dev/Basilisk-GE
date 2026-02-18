@@ -123,16 +123,14 @@ namespace basilisk
                 topLeftCorner.x = 0;
         }
 
-        glm::ivec2 topLeft = this->ConvertToTileMapPos(topLeftCorner);
-
-        glm::ivec2 bottomRight = this->ConvertToTileMapPos(bottomRightCorner);
-        
+        glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
+        glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
 
         PlayerCollision.SetPosition(entityPos);
 
-        glm::vec2 size = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
+        glm::vec2 collisionBoxSize = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
 
-        PlayerCollision.SetScaling(size);
+        PlayerCollision.SetScaling(collisionBoxSize);
 
         const glm::vec2 tilePos = {entityPos.x / 1920 * 29, entityPos.y / 900 * 16};
 
@@ -141,13 +139,13 @@ namespace basilisk
 
         for (const auto& layer : this->Tiles)
         {
-            lastTile = nullptr;
+            for (int row = topLeftTilePos.y; row <= bottomRightTilePos.y; row++)
             firstTileCollided = nullptr;
-
-            for (int row = topLeft.y; row <= bottomRight.y; row++)
-            {
-                for (int col = topLeft.x; col <= bottomRight.x; col++)
+                for (int col = topLeftTilePos.x; col <= bottomRightTilePos.x; col++)
                 {
+                    bool wasTileChecked = false;
+
+                    for (const auto& checkedTilePos : checkedTiles)
                     const auto& tile = layer[row][col];
 
                     lastTile = tile;

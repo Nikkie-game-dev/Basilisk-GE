@@ -11,7 +11,18 @@
 namespace basilisk
 {
 
-    const TileMap::Key TileMap::Keys = TileMap::Key();
+    const TileMap::Key TileMap::Keys = {
+        .TileSize = "tileSize",
+        .MapWidth = "mapWidth",
+        .MapHeight = "mapHeight",
+        .Layers = "layers",
+        .Id = "id",
+        .Col = "x",
+        .Row = "y",
+        .Tile = "tiles",
+        .Collider = "collider",
+        .Layer = "name",
+    };
 
     TileMap::TileMap(const path& mapFilePath,
                      const path& texturePath,

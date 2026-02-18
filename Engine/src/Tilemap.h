@@ -39,16 +39,16 @@ namespace basilisk
     private:
         struct Key
         {
-            const std::string TileSize = "tileSize";
-            const std::string MapWidth = "mapWidth";
-            const std::string MapHeight = "mapHeight";
-            const std::string Layers = "layers";
-            const std::string Id = "id";
-            const std::string Col = "x";
-            const std::string Row = "y";
-            const std::string Tile = "tiles";
-            const std::string Collider = "collider";
-            const std::string Layer = "name";
+            const std::string TileSize;
+            const std::string MapWidth;
+            const std::string MapHeight;
+            const std::string Layers;
+            const std::string Id;
+            const std::string Col;
+            const std::string Row;
+            const std::string Tile;
+            const std::string Collider;
+            const std::string Layer;
         };
 
         void GenerateFrames();

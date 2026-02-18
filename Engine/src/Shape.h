@@ -15,7 +15,7 @@ namespace basilisk
         virtual ~Shape() = default;
 
     protected:
-        explicit Shape(basilisk::Color color, bool isSolid);
+        explicit Shape(const basilisk::Color& color, const bool& isSolid);
         
         /// <summary>
         /// Initializes the vertices that will be used for drawing.

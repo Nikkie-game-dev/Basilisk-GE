@@ -23,16 +23,16 @@ namespace basilisk
         /// Constructor for material. It is not recommended to use this function, but use New().
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
-        explicit Material(bool isTextured, bool hasFilter);
+        explicit Material(const bool& isTextured, const bool& hasFilter);
 
-        void OverrideColorFilter(Color color) const;
+        void OverrideColorFilter(const Color& color) const;
 
         /// <summary>
         /// Constructs materials and returns a shared pointer with the material.
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
         /// <returns>Shared pointer with new Material</returns>
-        static std::shared_ptr<Material> New(bool isTextured, bool hasFilter = false);
+        static std::shared_ptr<Material> New(const bool& isTextured, const bool hasFilter = false);
 
         /// <summary>
         /// Builds and compiles shaders.
@@ -56,7 +56,7 @@ namespace basilisk
         /// </summary>
         /// <param name="matrix">Matrix to send to OpenGl.</param>
         /// <param name="name">Name of Matrix in Shader source</param>
-        void UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const;
+        void UpdateGLMatrix(const glm::mat4& matrix, const std::string& name) const;
 
         /// <summary>
         /// Has the projection matrix been sent.
@@ -69,8 +69,8 @@ namespace basilisk
         bool IsViewSent = false;
 
     private:
-        static void ShaderCompileError(ShaderProc shader);
-        static void ProgramCompileError(SPProc spProc);
+        static void ShaderCompileError(const ShaderProc& shader);
+        static void ProgramCompileError(const SPProc& spProc);
         bool IsTextured;
         bool HasFilter;
         SPProc ShaderProgram = 0;

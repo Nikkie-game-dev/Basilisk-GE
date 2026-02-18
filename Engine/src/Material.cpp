@@ -13,12 +13,12 @@ namespace basilisk
 
     const std::shared_ptr<spdlog::logger> Material::Logger = spdlog::get(DEF_LOG);
 
-    Material::Material(const bool isTextured, const bool hasFilter) : 
+    Material::Material(const bool& isTextured, const bool& hasFilter) : 
         IsTextured(isTextured), HasFilter(hasFilter)
     {
     }
 
-    void Material::OverrideColorFilter(Color color) const
+    void Material::OverrideColorFilter(const Color& color) const
     {
         glUseProgram(this->ShaderProgram);
 
@@ -27,7 +27,7 @@ namespace basilisk
         glUniform4f(location, color.R, color.G, color.B, color.A);
     }
 
-    std::shared_ptr<Material> Material::New(const bool isTextured, const bool hasFilter)
+    std::shared_ptr<Material> Material::New(const bool& isTextured, const bool hasFilter)
     {
         // Makes a new object with a shared pointer.
         return std::make_shared<Material>(isTextured, hasFilter);
@@ -97,7 +97,7 @@ namespace basilisk
         return IsTextured;
     }
 
-    void Material::UpdateGLMatrix(glm::mat4 matrix, const std::string& name) const
+    void Material::UpdateGLMatrix(const glm::mat4& matrix, const std::string& name) const
     {
         glUseProgram(this->ShaderProgram);
 
@@ -106,7 +106,7 @@ namespace basilisk
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    void Material::ShaderCompileError(const ShaderProc shader)
+    void Material::ShaderCompileError(const ShaderProc& shader)
     {
         constexpr int infoBufferSize = 512;
 
@@ -117,7 +117,7 @@ namespace basilisk
         abort();
     }
 
-    void Material::ProgramCompileError(SPProc program)
+    void Material::ProgramCompileError(const SPProc& program)
     {
         constexpr int infoBufferSize = 512;
 

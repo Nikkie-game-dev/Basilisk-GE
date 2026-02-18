@@ -7,8 +7,8 @@
 namespace basilisk
 {
 
-    bool CollisionManager::IsCollidingAaBb(const glm::vec2 positionA, const glm::vec2 sizeA, 
-                                           const glm::vec2 positionB, const glm::vec2 sizeB)
+    bool CollisionManager::IsCollidingAaBb(const glm::vec2& positionA, const glm::vec2& sizeA, 
+                                           const glm::vec2& positionB, const glm::vec2& sizeB)
     {
         const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
         const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
@@ -18,8 +18,8 @@ namespace basilisk
             aBottomLeft.y < bBottomLeft.y + sizeB.y && aBottomLeft.y + sizeA.y > bBottomLeft.y;
     }
 
-    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, 
-                                                                      const glm::vec2 positionB, const glm::vec2 sizeB)
+    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2& positionA, const glm::vec2& sizeA, 
+                                                                      const glm::vec2& positionB, const glm::vec2& sizeB)
     {
         CollisionData data;
 

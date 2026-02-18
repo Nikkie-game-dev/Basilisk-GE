@@ -33,9 +33,6 @@ namespace game
         auto collisionDir = this->Map.CheckCollision(this->Player);
 
         glm::vec2 playerPos = this->Player.GetPosition2D();
-        const glm::vec2 tilePos = {playerPos.x / 1920 * 29, playerPos.y / 900 * 16};
-
-        this->Logger->info("Player tile position: x: {}, y: {}", static_cast<int>(tilePos.x), static_cast<int>(tilePos.y));
 
         if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE ||
             collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)

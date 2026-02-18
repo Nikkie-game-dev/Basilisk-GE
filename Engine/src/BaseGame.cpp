@@ -143,8 +143,6 @@ namespace basilisk
 
     void BaseGame::Run()
     {
-        try
-        {
             this->Init();
             auto old = std::chrono::system_clock::now();
             std::chrono::time_point<std::chrono::system_clock> now = old;
@@ -165,11 +163,6 @@ namespace basilisk
             }
 
             this->Close();
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
     }
 
     bool BaseGame::WindowShouldClose() const

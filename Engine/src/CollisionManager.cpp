@@ -51,6 +51,10 @@ namespace basilisk
             }
         }
 
+        if (data.VerticalDir == CollisionDir::NONE && data.HorizontalDir == CollisionDir::NONE)
+        {
+            spdlog::get(DEF_LOG)->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
+                                        positionA.x, positionA.y, positionB.x, positionB.y);
         }
 
         return data;

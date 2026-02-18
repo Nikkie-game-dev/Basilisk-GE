@@ -61,9 +61,9 @@ namespace basilisk
     unsigned int TextureImporter::GenTexture(unsigned char* data,
                                              int& width,
                                              int& height,
-                                             const int format,
-                                             const Filters filter,
-                                             const FitMode fit)
+                                             const int& format,
+                                             const Filters& filter,
+                                             const FitMode& fit)
     {
         unsigned int texture;
 
@@ -82,7 +82,7 @@ namespace basilisk
         return texture;
     }
 
-    void TextureImporter::SetFilter(const Filters filter)
+    void TextureImporter::SetFilter(const Filters& filter)
     {
         int minFilter = 0;
         int magFilter = 0;
@@ -114,7 +114,7 @@ namespace basilisk
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
     }
-    void TextureImporter::SetFit(const FitMode fit)
+    void TextureImporter::SetFit(const FitMode& fit)
     {
         int selectedFit = 0;
 
@@ -137,7 +137,7 @@ namespace basilisk
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, selectedFit);
     }
 
-    void TextureImporter::BindTexture(const unsigned int texture)
+    void TextureImporter::BindTexture(const unsigned int& texture)
     {
         glBindTexture(GL_TEXTURE_2D, texture);
     }

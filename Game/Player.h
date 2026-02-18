@@ -9,7 +9,7 @@ namespace game
     {
 
     public:
-        Player(const float speed, const glm::vec2& size);
+        Player(const float speed, const glm::vec2& size, const glm::vec2& pos);
         void Init() override;
         void Update() override;
         void CheckCollision(basilisk::CollisionManager::CollisionData data);

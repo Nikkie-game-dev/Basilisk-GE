@@ -4,8 +4,8 @@
 
 namespace game
 {
-    Player::Player(const float speed, const glm::vec2& size) :
-        Sprite("res/assets/character.png", glm::vec2(600.0f, 200.0f), size, basilisk::Filters::NEAREST), Delta(0.0f), Speed(speed)
+    Player::Player(const float speed, const glm::vec2& size, const glm::vec2& pos) :
+        Sprite("res/assets/character.png", pos, size, basilisk::Filters::NEAREST), Delta(0.0f), Speed(speed)
     {
         this->IdleAnimation.GenUVFrames({0, 11 * 32}, {32, 32}, {128, 384}, 1.0f, 2);
         this->WalkUpAnimation.GenUVFrames({0, 6 * 32}, {32, 32}, {128, 384}, 1.0f, 4);

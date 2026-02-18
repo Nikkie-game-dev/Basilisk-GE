@@ -266,9 +266,9 @@ namespace basilisk
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos) const
     {
-        const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x * this->TilesAmount.x),
-                                  static_cast<float>(this->TilesAmount.y) - pos.y / static_cast<float>(this->ScreenSize.y * this->
-                                      TilesAmount.y)};
+        const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x) * static_cast<float>(this->TilesAmount.x),
+                                  static_cast<float>(this->TilesAmount.y) - pos.y / static_cast<float>(this->ScreenSize.y) *
+                                      static_cast<float>(this->TilesAmount.y)};
 
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }

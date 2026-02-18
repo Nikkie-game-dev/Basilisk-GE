@@ -11,7 +11,7 @@ namespace basilisk
     class BASILISK_API Triangle : public Shape
     {
     protected:
-        explicit Triangle(glm::vec2 center, glm::vec2 size, bool isSolid, const basilisk::Color& color);
+        explicit Triangle(const glm::vec2& center, const glm::vec2& size, const bool& isSolid, const basilisk::Color& color);
 
     private:
         void SetVertices() override;

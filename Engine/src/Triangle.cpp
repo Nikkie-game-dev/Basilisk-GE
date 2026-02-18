@@ -7,7 +7,7 @@
 namespace basilisk
 {
 
-    Triangle::Triangle(const glm::vec2 center, const glm::vec2 size, const bool isSolid, const basilisk::Color& color) :
+    Triangle::Triangle(const glm::vec2& center, const glm::vec2& size, const bool& isSolid, const basilisk::Color& color) :
         Shape(color, isSolid)
     {
         this->Entity2D::SetPosition(center);

@@ -66,9 +66,9 @@ namespace basilisk
 
         CollisionBox PlayerCollision;
 
-        glm::vec2 TextureSize;
-        glm::vec2 TilesAmount;
-        glm::vec2 ScreenSize;
+        glm::ivec2 TextureSize;
+        glm::ivec2 TilesAmount;
+        glm::ivec2 ScreenSize;
 
         static const Key Keys;
     };

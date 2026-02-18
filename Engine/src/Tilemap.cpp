@@ -29,7 +29,7 @@ namespace basilisk
                      const glm::vec2& textureSize,
                      const glm::vec2& screenSize,
                      const Filters filter,
-                     const FitMode fitMode) : 
+                     const FitMode fitMode) :
         PlayerCollision({0, 0}, {1, 1}, Color::Red)
 
     {
@@ -76,7 +76,7 @@ namespace basilisk
         TextureImporter::BindTexture(this->Texture);
 
 
-        for (int layer = this->Tiles.size() - 1; layer >= 0; --layer)
+        for (int layer = static_cast<int>(this->Tiles.size()) - 1; layer >= 0; --layer)
         {
             for (auto row : this->Tiles[layer])
             {
@@ -116,17 +116,17 @@ namespace basilisk
             if (bottomRightCorner.x < 0)
                 bottomRightCorner.x = 0;
 
-            if (bottomRightCorner.y >= ScreenSize.y)
-                bottomRightCorner.y = ScreenSize.y - 1.0f;
+            if (bottomRightCorner.y >= static_cast<float>(ScreenSize.y))
+                bottomRightCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
 
-            if (bottomRightCorner.x >= ScreenSize.x)
-                bottomRightCorner.x = ScreenSize.x - 1.0f;
+            if (bottomRightCorner.x >= static_cast<float>(ScreenSize.x))
+                bottomRightCorner.x = static_cast<float>(ScreenSize.x) - 1.0f;
 
-            if (topLeftCorner.x >= ScreenSize.x)
-                topLeftCorner.x = ScreenSize.x - 1.0f;
+            if (topLeftCorner.x >= static_cast<float>(ScreenSize.x))
+                topLeftCorner.x = static_cast<float>(ScreenSize.x) - 1.0f;
 
-            if (topLeftCorner.y >= ScreenSize.y)
-                topLeftCorner.y = ScreenSize.y - 1.0f;
+            if (topLeftCorner.y >= static_cast<float>(ScreenSize.y))
+                topLeftCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
 
             if (topLeftCorner.y < 0)
                 topLeftCorner.y = 0;
@@ -144,7 +144,7 @@ namespace basilisk
 
         PlayerCollision.SetScaling(collisionBoxSize);
 
-        std::list<glm::vec2> checkedTiles;
+        std::list<glm::ivec2> checkedTiles;
 
         for (const auto& layer : this->Tiles)
         {
@@ -197,7 +197,7 @@ namespace basilisk
 
         for (int row = 0; row < rows; row++)
         {
-            const float y = this->TextureSize.y - this->TileSize * (static_cast<float>(row) + 1);
+            const float y = static_cast<float>(this->TextureSize.y) - this->TileSize * (static_cast<float>(row) + 1);
 
             for (int col = 0; col < cols; col++)
             {
@@ -249,12 +249,12 @@ namespace basilisk
                 }
             }
 
-            for (int tileId = 0; tileId < layerObj[Keys.Tile].size(); tileId++)
+            for (int tileId = 0; tileId < static_cast<int>(layerObj[Keys.Tile].size()); tileId++)
             {
                 const auto& tileJson = layerObj[Keys.Tile][tileId];
 
                 const std::string idStr = tileJson[Keys.Id];
-                id = stoi(idStr);
+                id = static_cast<short>(stoi(idStr));
                 row = tileJson[Keys.Row];
                 col = tileJson[Keys.Col];
                 const bool collider = layerObj[this->Keys.Collider];
@@ -276,8 +276,9 @@ namespace basilisk
 
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos)
     {
-        const glm::vec2 newPos = {pos.x / ScreenSize.x * this->TilesAmount.x,
-                                  this->TilesAmount.y - (pos.y / ScreenSize.y * this->TilesAmount.y)};
+        const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x * this->TilesAmount.x),
+                                  static_cast<float>(this->TilesAmount.y) - pos.y / static_cast<float>(this->ScreenSize.y * this->
+                                      TilesAmount.y)};
 
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }

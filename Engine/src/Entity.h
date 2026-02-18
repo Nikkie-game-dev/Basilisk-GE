@@ -1,5 +1,7 @@
 #pragma once
 
+#include <spdlog/spdlog.h>
+
 #include "Export.h"
 #include "Material.h"
 #include "glm/glm.hpp"
@@ -48,7 +50,7 @@ namespace basilisk
         /// <param name="angle">Angle to rotate the entity, clockwise</param>
         /// <param name="rotationAxis">Axis to which rotate</param> 
         /// <param name="isRads">True if angle is in radians, false if in degrees</param>
-        void SetRotation(float angle, Axis rotationAxis, bool isRads);
+        void SetRotation(float angle, const Axis& rotationAxis, bool isRads);
 
         /// <summary>
         /// Sets scale vector and scales accordingly.
@@ -61,7 +63,7 @@ namespace basilisk
         /// </summary>
         /// <param name="scale">New size in a particular axis.</param>
         /// <param name="scalingAxis">Axis to which scale</param>
-        void SetScaling(float scale, Axis scalingAxis);
+        void SetScaling(float scale, const Axis& scalingAxis);
 
         /// <summary>
         /// Moves entity to a particular position.
@@ -151,6 +153,8 @@ namespace basilisk
         glm::vec3 Position = {0, 0, 0};
         glm::vec3 Scaling = {1, 1, 1};
         glm::vec3 Rotation = {0, 0, 0};
+        
+        static const std::shared_ptr<spdlog::logger> Logger;
 
     };
 } // basilisk 

@@ -11,7 +11,7 @@ namespace basilisk
     class BASILISK_API Square : public Shape
     {
     protected:
-        Square(glm::vec2 center, glm::vec2 size, bool isSolidColor, basilisk::Color color);
+        Square(const glm::vec2& center, const glm::vec2& size, bool isSolidColor, basilisk::Color color);
 
     private:
 

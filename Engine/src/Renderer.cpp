@@ -2,21 +2,29 @@
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <spdlog/spdlog.h>
 #include <stb_image.h>
 
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "RenderException.h"
+#include "Loggers.h"
 #include "Window.h"
 
 namespace basilisk
 {
+    const std::shared_ptr<spdlog::logger> Renderer::Logger = spdlog::get(DEF_LOG);
+
     void Renderer::InitGLFW()
     {
         if (!glfwInit())
         {
-            throw CouldNotStartGlfw();
+            const char* description;
+            int errorCode = glfwGetError(&description);
+
+            Logger->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
+            Logger->flush();
+            abort();        
         }
     }
     void Renderer::SetGlVersion()
@@ -28,9 +36,12 @@ namespace basilisk
 
     void Renderer::InitGL() const
     {
-        if (glewInit() != GLEW_OK)
+        if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
-            throw CouldNotStartGlew();
+            Logger->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
+                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode)))); //huh?
+            Logger->flush();
+            abort();            
         }
 
         glEnable(GL_BLEND);
@@ -44,36 +55,36 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::BindAndFillVbo(unsigned int VboID, int sizeArray, float array[])
+    void Renderer::BindAndFillVbo(const unsigned int& VboID, const int& sizeArray, const float array[])
     {
         glBindBuffer(GL_ARRAY_BUFFER, VboID);
         glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[])
+    void Renderer::BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[])
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
+    void Renderer::SetAttribPointer(const int& index, const int& size, const int& strideAmount, const int& start)
     {
         glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)),
                               (void*)(start * sizeof(float)));
         glEnableVertexAttribArray(index);
     }
 
-    void Renderer::BindBufferData(const unsigned int vbo,
-                                  const int amountVertices,
+    void Renderer::BindBufferData(const unsigned int& vbo,
+                                  const int& amountVertices,
                                   float* arrayData,
-                                  const int verticesBefore,
-                                  const int sizeDataInVbo)
+                                  const int& verticesBefore,
+                                  const int& sizeDataInVbo)
     {
         BindAndFillVbo(vbo, amountVertices, arrayData);
         SetAttribPointer(2, sizeDataInVbo, sizeDataInVbo + verticesBefore, verticesBefore);
     }
 
-    void Renderer::GenerateVBs(Buffers& buffers, const bool isTextured)
+    void Renderer::GenerateVBs(Buffers& buffers, bool isTextured)
     {
         constexpr int posSize = 3;
         const int textureSize = isTextured ? 2 : 0;
@@ -103,7 +114,7 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(vao);
@@ -176,7 +187,7 @@ namespace basilisk
 
 
 #pragma region deprecated
-    void Renderer::Draw(const SPProc shaderProg, unsigned int& vao, const int amountIndices, const Color color) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices, const Color& color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);

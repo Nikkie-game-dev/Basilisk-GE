@@ -1,3 +1,6 @@
+#Dump filed
+*.log
+
 # Prerequisites
 *.d
 

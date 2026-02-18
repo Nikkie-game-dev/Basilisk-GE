@@ -1,25 +1,21 @@
 #include "Tile.h"
 
-#include "Renderer.h"
-
 namespace basilisk
 {
-    Tile::Tile(Frame frame,
-               short col,
-               short row) :
-        Col(col), Row(row)
+    Tile::Tile(const Frame& frame, const short col, const short row) : 
+        Col(col), Row(row), HasCollision(false)
     {
-        float vertices[] = 
-        {
+        float vertices[] = {
+            //@formatter:off
             // positions            // colors                    // texture coords
-            0.5f,   0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      frame.TopRight.x, frame.TopRight.y, // top right
-            0.5f,  -0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      frame.BottomRight.x, frame.BottomRight.y, // bottom right
-            -0.5f, -0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      frame.BottomLeft.x, frame.BottomLeft.y, // bottom left
-            -0.5f,  0.5f,  0.0f,     1.0f, 1.0f, 1.0f, 1.0f,      frame.TopLeft.x, frame.TopLeft.y // top left
+            0.5f,  0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopRight.x,    frame.TopRight.y, // top right
+            0.5f,  -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomRight.x, frame.BottomRight.y, // bottom right
+            -0.5f, -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomLeft.x,  frame.BottomLeft.y, // bottom left
+            -0.5f, 0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopLeft.x,     frame.TopLeft.y // top left
+            //@formatter:on
         };
 
-        unsigned int indices[]
-        {
+        unsigned int indices[]{
             0, 1, 3, // first triangle
             1, 2, 3 // second triangle
         };
@@ -31,7 +27,13 @@ namespace basilisk
     void Tile::Update()
     {
     }
-    
-    
 
-} //namespace basilisk
+    void Tile::Draw()
+    {
+        if (HasCollision)
+            this->GetMaterial()->OverrideColorFilter(Color::Red);
+
+        Entity2D::Draw();
+    }
+
+} // namespace basilisk

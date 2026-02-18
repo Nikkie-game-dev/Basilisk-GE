@@ -1,8 +1,15 @@
 #pragma once
 
+#include <memory>
+
 #include "Export.h"
 #include "glm/glm.hpp"
 #include "Buffers.h"
+
+namespace spdlog
+{
+    class logger;
+}
 
 namespace basilisk
 {
@@ -46,10 +53,10 @@ namespace basilisk
         /// <param name="VboID">Id of buffer to fill and bind</param>
         /// <param name="sizeArray">Size of array to fill buffer with</param>
         /// <param name="array">Array of data</param>
-        static void BindAndFillVbo(unsigned int VboID, int sizeArray, float array[]);
+        static void BindAndFillVbo(const unsigned int& VboID, const int& sizeArray, const float array[]);
         
         /// <copydoc href="BindAndFill">
-        static void BindAndFillEbo(unsigned int EboId, int sizeArray, unsigned int array[]);
+        static void BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[]);
 
         /// <summary>
         /// Sets attribute pointer.
@@ -58,9 +65,9 @@ namespace basilisk
         /// <param name="size">Amount of vertices per value</param>
         /// <param name="strideAmount">Size of stride</param>
         /// <param name="start">Start of value</param>
-        static void SetAttribPointer(int index, int size, int strideAmount, int start);
+        static void SetAttribPointer(const int& index, const int& size, const int& strideAmount, const int& start);
         
-        void BindBufferData(unsigned int vbo, int amountVertices, float* arrayData, int verticesBefore, int sizeDataInVbo);
+        void BindBufferData(const unsigned int& vbo, const int& amountVertices, float* arrayData, const int& verticesBefore, const int& sizeDataInVbo);
 
 #pragma endregion
         
@@ -69,7 +76,7 @@ namespace basilisk
         /// Generates vertex array object, vertex buffer object and elements buffer object.
         /// </summary>
         /// <param name="buffers">Buffers to pass to OpenGl</param>
-        /// <param name="isSolid">Whether the object being drawn is a solid color or the vertex data includes per vertex color data</param>
+        /// <param name="isTextured">Whether is textured or not</param>
         void GenerateVBs(Buffers& buffers, bool isTextured);
         
         /// <summary>
@@ -78,9 +85,9 @@ namespace basilisk
         /// <param name="shaderProg">Process ID from the shader program</param>
         /// <param name="vao">Vertex Array Object</param>
         /// <param name="amountIndices">Amount of indices</param>
-        void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices) const;
+        void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices) const;
         
-        [[deprecated]] void Draw(SPProc shaderProg, unsigned int& vao, int amountIndices, Color color) const;
+        [[deprecated]] void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices, const Color& color) const;
 
         /// <summary>
         /// Makes Pre-draw calls.
@@ -164,6 +171,7 @@ namespace basilisk
         glm::mat4 ViewMatrix = glm::mat4(1.0f);
 
         Window* Window;
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
 
     

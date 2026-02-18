@@ -1,6 +1,8 @@
 #pragma once
 #include <filesystem>
+#include <spdlog/spdlog.h>
 #include <string>
+
 #include "Export.h"
 
 namespace basilisk
@@ -33,8 +35,10 @@ namespace basilisk
         /// <param name="filter"></param>
         /// <param name="fit"></param>
         /// <returns>Id of loaded texture</returns>
-        static unsigned int MakeTexture(const std::string& imageDir, Filters filter = Filters::LINEAR, FitMode fit = FitMode::REPEAT);
-        
+        static unsigned int MakeTexture(const std::string& imageDir,
+                                        Filters filter = Filters::LINEAR,
+                                        FitMode fit = FitMode::REPEAT);
+
         /// <summary>
         /// Binds a texture for rendering.
         /// </summary>
@@ -48,42 +52,11 @@ namespace basilisk
 
     private:
         static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels);
-        static unsigned int GenTexture(unsigned char* data,
-                                       int& width,
-                                       int& height,
-                                       int format,
-                                       Filters filter,
-                                       FitMode fit);
-        static void SetFilter(Filters filter);
-        static void SetFit(FitMode);
+        static unsigned int GenTexture(unsigned char* data, int& width, int& height, int format, const Filters& filter, const FitMode& fit);
+        static void SetFilter(const Filters& filter);
+        static void SetFit(const FitMode& fit);
         static void FreeImage(unsigned char* data);
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
-
-    /// <summary>
-    /// Exception for failed texture loading.
-    /// </summary>
-    class FailedTextureLoading : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Tried and failed to load a texture";
-        }
-    };
-
-    /// <summary>
-    /// Exception for when the image is not found in the directory.
-    /// </summary>
-    class ImageNotFound : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            std::string error = "Image has not been found, files the Engine can see: ";
-            for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()))
-                error += entry.path().string();
-
-            return error.c_str();
-        }
-    };
+    
 } // namespace basilisk

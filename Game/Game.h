@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseGame.h"
-#include "Tileset.h"
+#include "Basilisk/TileMap.h"
+#include "Player.h"
 
 namespace game
 {
@@ -14,7 +15,8 @@ namespace game
         void Draw() override;
 
     private:
-        TileSet Set;
+        basilisk::TileMap Map;
+        Player Player;
     };
 
 } // namespace game

@@ -39,12 +39,12 @@ namespace basilisk
         /// Setter for scale vector.
         /// </summary>
         /// <param name="scaling">Scaling vector.</param>
-        virtual void SetScaling(glm::vec2 scaling);
+        virtual void SetScaling(const glm::vec2& scaling);
         /// <summary>
         /// Setter for position vector.
         /// </summary>
         /// <param name="newPosition">Position vector</param>
-        virtual void SetPosition(glm::vec2 newPosition);
+        virtual void SetPosition(const glm::vec2& newPosition);
 
         void Init() override;
         void Draw() override;

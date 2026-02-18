@@ -1,12 +1,10 @@
 #pragma once
-#include <filesystem>
-
-#include "Animation.h"
-#include "Animation.h"
 #include "Frame.h"
 #include "Tile.h"
 #include "glm/glm.hpp"
 #include "json.hpp"
+
+#include "CollisionManager.h"
 
 namespace basilisk
 {
@@ -22,13 +20,41 @@ namespace basilisk
                 const glm::vec2& screenSize,
                 Filters filter = Filters::NEAREST,
                 FitMode fitMode = FitMode::REPEAT);
+        ~TileMap();
+        void Init();
         void Draw();
+        [[nodiscard]] float GetTileSize() const;
+        CollisionManager::CollisionData CheckCollision(const Entity2D& entity);
+        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos) const;
+        glm::vec2 ConvertToScreenPos(const glm::ivec2& pos) const;
+
+        class CollisionBox : public Square
+        {
+        public:
+            CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color);
+
+            void Update() override;
+        };
 
     private:
-        void GenerateFrames();
-        void GenerateTiles(glm::vec2 screenSize);
+        struct Key
+        {
+            const std::string TileSize;
+            const std::string MapWidth;
+            const std::string MapHeight;
+            const std::string Layers;
+            const std::string Id;
+            const std::string Col;
+            const std::string Row;
+            const std::string Tile;
+            const std::string Collider;
+            const std::string Layer;
+        };
 
-        std::vector<std::vector<Tile>> Tiles;
+        void GenerateFrames();
+        void GenerateTiles();
+
+        std::vector<std::vector<std::vector<Tile*>>> Tiles;
         std::vector<Frame> SpriteSheetFrames;
 
         unsigned int Texture;
@@ -38,19 +64,13 @@ namespace basilisk
 
         json Data;
 
-        glm::vec2 TextureSize;
-        glm::vec2 TilesAmount;
+        CollisionBox PlayerCollision;
 
+        glm::ivec2 TextureSize;
+        glm::ivec2 TilesAmount;
+        glm::ivec2 ScreenSize;
 
-        std::string TileSizeName = "tileSize";
-        std::string MapWidthName = "mapWidth";
-        std::string MapHeightName = "mapHeight";
-        std::string LayersName = "layers";
-        std::string IdName = "id";
-        std::string ColName = "x";
-        std::string RowName = "y";
-        std::string tileName = "tiles";
-
+        static const Key Keys;
     };
 
 } // namespace basilisk

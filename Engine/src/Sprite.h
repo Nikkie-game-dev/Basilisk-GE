@@ -20,8 +20,8 @@ namespace basilisk
         /// <param name="filter">A filter for texture rendering</param>
         /// <param name="fitMode">The fit mode. It tells the texture how it should fit in the size limits</param>
         Sprite(const std::string& textureDir,
-               glm::vec2 center,
-               glm::vec2 size,
+               const glm::vec2& center,
+               const glm::vec2& size,
                Filters filter = Filters::NEAREST,
                FitMode fitMode = FitMode::REPEAT);
         
@@ -37,7 +37,7 @@ namespace basilisk
         /// Updates the animation
         /// </summary>
         /// <param name="delta"></param>
-        void UpdateAnimation(float delta);
+        void UpdateAnimation(const float& delta);
 
         /// <summary>
         /// Transitions into a new animation

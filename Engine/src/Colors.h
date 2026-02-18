@@ -17,7 +17,7 @@ namespace basilisk
             /// Normalize a color.
             /// </summary>
             /// <param name="color">Color to normalize</param>
-            explicit Normalize(Color color);
+            explicit Normalize(const Color& color);
             
             float R;
             float G;
@@ -39,25 +39,7 @@ namespace basilisk
         /// <param name="g">Green value</param>
         /// <param name="b">Blue vaue</param>
         /// <param name="a">Transparency value</param>
-        Color(const unsigned char r, const unsigned char g, const unsigned char b, const float a)
-        {
-            this->R = r;
-            this->G = g;
-            this->B = b;
-
-            if (a >= MaxValueAlpha)
-            {
-                this->A = 1.0;
-            }
-            else if (a <= MinValueAlpha)
-            {
-                this->A = 0.0;
-            }
-            else
-            {
-                this->A = a;
-            }
-        }
+        Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float& a);
 
         /// <summary>
         /// Constructor for Color, without a transparency value. All values are from 0 to 255.
@@ -65,10 +47,7 @@ namespace basilisk
         /// <param name="r">Red value</param>
         /// <param name="g">Green value</param>
         /// <param name="b">Blue value</param>
-        Color(const unsigned char r, const unsigned char g, const unsigned char b) :
-            R(r), G(g), B(b), A(1.0)
-        {
-        }
+        Color(const unsigned char& r, const unsigned char& g, const unsigned char& b);
 
 
         unsigned char R;

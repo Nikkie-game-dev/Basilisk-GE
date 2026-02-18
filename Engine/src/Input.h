@@ -27,7 +27,7 @@ namespace basilisk
         /// </summary>
         /// <param name="key">Key to register</param>
         /// <returns>New Input Action</returns>
-        InputAction& NewInput(Keys key);
+        InputAction& NewInput(const Keys& key);
 
         /// <summary>
         /// Stops and removes an input action.

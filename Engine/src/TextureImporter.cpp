@@ -1,12 +1,17 @@
 #include "TextureImporter.h"
+
 #define STB_IMAGE_IMPLEMENTATION
+
 #include <filesystem>
 
 #include "GL/glew.h"
+#include "Loggers.h"
 #include "stb_image.h"
 
 namespace basilisk
 {
+    
+    const std::shared_ptr<spdlog::logger> TextureImporter::Logger = spdlog::get(DEF_LOG);
 
     unsigned int TextureImporter::MakeTexture(const std::string& imageDir, const Filters filter, const FitMode fit)
     {
@@ -47,13 +52,19 @@ namespace basilisk
 
         if (!std::filesystem::exists(imageDir))
         {
-            throw ImageNotFound();
+            Logger->error("Image at {} not found", imageDir);
+            Logger->flush();
+            return nullptr;
         }
-
+        
         auto* data = stbi_load(imageDir.c_str(), &width, &height, &outColorChannels, 0);
 
         if (!data)
-            throw FailedTextureLoading();
+        {
+            Logger->error("Could not load data at {}", imageDir);
+            Logger->flush();
+            return nullptr;        
+        }
 
         return data;
     }
@@ -62,8 +73,8 @@ namespace basilisk
                                              int& width,
                                              int& height,
                                              const int format,
-                                             const Filters filter,
-                                             const FitMode fit)
+                                             const Filters& filter,
+                                             const FitMode& fit)
     {
         unsigned int texture;
 
@@ -82,7 +93,7 @@ namespace basilisk
         return texture;
     }
 
-    void TextureImporter::SetFilter(const Filters filter)
+    void TextureImporter::SetFilter(const Filters& filter)
     {
         int minFilter = 0;
         int magFilter = 0;
@@ -114,7 +125,7 @@ namespace basilisk
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
     }
-    void TextureImporter::SetFit(const FitMode fit)
+    void TextureImporter::SetFit(const FitMode& fit)
     {
         int selectedFit = 0;
 

@@ -3,37 +3,50 @@
 #include <chrono>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/spdlog.h>
+
+#include "Loggers.h"
 
 #include "Renderer.h"
 #include "Window.h"
 
+#define MAX_LOGS 3
+#define MAX_LOG_SIZE (1024 * 1024)
+
 namespace basilisk
 {
+
+    void BaseGame::SetUpLog()
+    {
+        const auto console = std::make_shared<spdlog::sinks::wincolor_stderr_sink_st>();
+        const auto errorDump = std::make_shared<spdlog::sinks::rotating_file_sink_st>("logs/dump.log", MAX_LOG_SIZE, MAX_LOGS);
+        std::vector<spdlog::sink_ptr> sinks{console, errorDump};
+
+        Logger = std::make_shared<spdlog::logger>(DEF_LOG, sinks.begin(), sinks.end());
+        spdlog::register_logger(Logger);
+    }
 
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-        try
-        {
 
-            this->Renderer.InitGLFW();
+        SetUpLog();
 
-            this->Renderer.SetGlVersion();
+        this->Renderer.InitGLFW();
 
-            this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+        this->Renderer.SetGlVersion();
 
-            this->WindowName = windowName;
+        this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
 
-            this->Renderer.InitGL();
+        this->WindowName = windowName;
 
-            this->Renderer.SetWindowRef(*this->Window);
+        this->Renderer.InitGL();
 
-            this->InputSystem = Input(this->Window);
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
+        this->Renderer.SetWindowRef(*this->Window);
+
+        this->InputSystem = Input(this->Window);
+
     }
 
     BaseGame::~BaseGame()
@@ -44,56 +57,40 @@ namespace basilisk
     BaseGame::BaseGame(const BaseGame& other) :
         Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
-        try
-        {
-            this->WindowName = other.WindowName;
-            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-            this->Renderer.SetWindowRef(*this->Window);
-            this->InputSystem = Input(this->Window);
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
+
+        this->WindowName = other.WindowName;
+        this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+        this->Renderer.SetWindowRef(*this->Window);
+        this->InputSystem = Input(this->Window);
+
     }
 
     BaseGame::BaseGame(BaseGame&& other) noexcept :
         Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
-        try
-        {
-            this->WindowName = other.WindowName;
-            this->Window = other.Window;
-            other.Window = nullptr;
-            other.X = 0;
-            other.Y = 0;
-            other.WindowName = "";
-            this->Renderer.SetWindowRef(*this->Window);
-            this->InputSystem = Input(this->Window);
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
+
+        this->WindowName = other.WindowName;
+        this->Window = other.Window;
+        other.Window = nullptr;
+        other.X = 0;
+        other.Y = 0;
+        other.WindowName = "";
+        this->Renderer.SetWindowRef(*this->Window);
+        this->InputSystem = Input(this->Window);
+
     }
 
     BaseGame& BaseGame::operator=(const BaseGame& other)
     {
-        try
+
+        if (this != &other)
         {
-            if (this != &other)
-            {
-                this->X = other.X;
-                this->Y = other.Y;
-                this->WindowName = other.WindowName;
-                this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
-                Renderer.SetWindowRef(*this->Window);
-                this->InputSystem = Input(this->Window);
-            }
-        }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
+            this->X = other.X;
+            this->Y = other.Y;
+            this->WindowName = other.WindowName;
+            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+            Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
         }
 
         return *this;
@@ -102,60 +99,48 @@ namespace basilisk
 
     BaseGame& BaseGame::operator=(BaseGame&& other) noexcept
     {
-        try
-        {
-            if (this != &other)
-            {
-                this->X = other.X;
-                this->Y = other.Y;
-                this->WindowName = other.WindowName;
-                this->Window = other.Window;
 
-                other.Window = nullptr;
-                other.X = 0;
-                other.Y = 0;
-                other.WindowName = "";
-
-                Renderer.SetWindowRef(*this->Window);
-                this->InputSystem = Input(this->Window);
-            }
-        }
-        catch (std::exception& error)
+        if (this != &other)
         {
-            std::cerr << error.what();
+            this->X = other.X;
+            this->Y = other.Y;
+            this->WindowName = other.WindowName;
+            this->Window = other.Window;
+
+            other.Window = nullptr;
+            other.X = 0;
+            other.Y = 0;
+            other.WindowName = "";
+
+            Renderer.SetWindowRef(*this->Window);
+            this->InputSystem = Input(this->Window);
         }
+
         return *this;
     }
 
     void BaseGame::Run()
     {
-        try
+        this->Init();
+        auto old = std::chrono::system_clock::now();
+        std::chrono::time_point<std::chrono::system_clock> now = old;
+
+        while (!this->WindowShouldClose())
         {
-            this->Init();
-            auto old = std::chrono::system_clock::now();
-            std::chrono::time_point<std::chrono::system_clock> now = old;
+            this->InputSystem.UpdateInputs();
 
-            while (!this->WindowShouldClose())
-            {
-                this->InputSystem.UpdateInputs();
+            this->Delta = std::chrono::duration<float>(now - old).count();
+            old = std::chrono::system_clock::now();
 
-                this->Delta = std::chrono::duration<float>(now - old).count();
-                old = std::chrono::system_clock::now();
+            this->Update();
+            this->Renderer.StartDraw();
+            this->Draw();
+            this->Renderer.EndDraw();
 
-                this->Update();
-                this->Renderer.StartDraw();
-                this->Draw();
-                this->Renderer.EndDraw();
-
-                now = std::chrono::system_clock::now();
-            }
-
-            this->Close();
+            now = std::chrono::system_clock::now();
         }
-        catch (std::exception& error)
-        {
-            std::cerr << error.what();
-        }
+
+        this->Close();
     }
 
     bool BaseGame::WindowShouldClose() const

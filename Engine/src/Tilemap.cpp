@@ -132,15 +132,12 @@ namespace basilisk
 
         PlayerCollision.SetScaling(collisionBoxSize);
 
-        const glm::vec2 tilePos = {entityPos.x / 1920 * 29, entityPos.y / 900 * 16};
-
-        Tile* lastTile = nullptr;
-        Tile* firstTileCollided = nullptr;
+        std::list<glm::vec2> checkedTiles;
 
         for (const auto& layer : this->Tiles)
         {
             for (int row = topLeftTilePos.y; row <= bottomRightTilePos.y; row++)
-            firstTileCollided = nullptr;
+            {
                 for (int col = topLeftTilePos.x; col <= bottomRightTilePos.x; col++)
                 {
                     bool wasTileChecked = false;

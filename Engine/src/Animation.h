@@ -45,7 +45,7 @@ namespace basilisk
         /// </summary>
         /// <param name="frames"></param>
         /// <param name="animationDuration"></param>
-        void ReplaceFrames(std::vector<Frame> frames, const float animationDuration);
+        void ReplaceFrames(const std::vector<Frame>& frames, const float& animationDuration);
 
         /// <summary>
         /// Returns current Frame

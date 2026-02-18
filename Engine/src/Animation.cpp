@@ -52,7 +52,7 @@ namespace basilisk
         }
     }
 
-    void Animation::ReplaceFrames(std::vector<Frame> frames, const float animationDuration)
+    void Animation::ReplaceFrames(const std::vector<Frame>& frames, const float& animationDuration)
     {
         this->AnimationDurationMs = animationDuration * 1000;
         this->Frames = frames;

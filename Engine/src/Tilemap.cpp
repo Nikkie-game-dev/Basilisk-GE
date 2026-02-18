@@ -6,6 +6,8 @@
 
 #include "Tile.h"
 
+#define NONE_COLLISION {.VerticalDir = CollisionManager::CollisionDir::NONE, .HorizontalDir = CollisionManager::CollisionDir::NONE}
+
 namespace basilisk
 {
 
@@ -87,8 +89,6 @@ namespace basilisk
 
     CollisionManager::CollisionData TileMap::CheckCollision(Entity2D& entity)
     {
-        CollisionManager::CollisionData noneCollision = {.VerticalDir = CollisionManager::CollisionDir::NONE,
-                                                         .HorizontalDir = CollisionManager::CollisionDir::NONE};
         const auto& entityPos = entity.GetPosition2D();
         const auto& entityScale = entity.GetScale2D();
 
@@ -174,7 +174,7 @@ namespace basilisk
             }
         }
 
-        return noneCollision;
+        return NONE_COLLISION;
     }
 
     void TileMap::GenerateFrames()

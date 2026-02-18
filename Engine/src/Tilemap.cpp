@@ -214,8 +214,6 @@ namespace basilisk
 
         const auto layersAmount = this->Data[Keys.Layers].size();
 
-        auto tileCount = 0;
-
         this->Tiles.resize(layersAmount);
 
         const glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
@@ -223,14 +221,11 @@ namespace basilisk
         short id;
         short row;
         short col;
-        std::string layer;
 
         for (size_t layer = 0; layer < layersAmount; layer++)
         {
             const auto layerObj = this->Data[Keys.Layers][layer];
             const std::string layerStr = layerObj[Keys.Layer];
-
-            const bool collider = layerObj[Keys.Collider];
 
             this->Tiles[layer].resize(TilesAmount.y);
 

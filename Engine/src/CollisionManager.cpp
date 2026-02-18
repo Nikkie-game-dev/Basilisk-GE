@@ -1,9 +1,14 @@
 #include "CollisionManager.h"
 
+#include <spdlog/spdlog.h>
+
+#include "Loggers.h"
+
 namespace basilisk
 {
 
-    bool CollisionManager::IsCollidingAaBb(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB)
+    bool CollisionManager::IsCollidingAaBb(const glm::vec2 positionA, const glm::vec2 sizeA, 
+                                           const glm::vec2 positionB, const glm::vec2 sizeB)
     {
         const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
         const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
@@ -13,30 +18,41 @@ namespace basilisk
             aBottomLeft.y < bBottomLeft.y + sizeB.y && aBottomLeft.y + sizeA.y > bBottomLeft.y;
     }
 
-    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, const glm::vec2 positionB, const glm::vec2 sizeB)
+    CollisionManager::CollisionData CollisionManager::GetCollisionDir(const glm::vec2 positionA, const glm::vec2 sizeA, 
+                                                                      const glm::vec2 positionB, const glm::vec2 sizeB)
     {
         CollisionData data;
 
-        const glm::vec2 halfA = sizeA * 0.5f;
-        const glm::vec2 halfB = sizeB * 0.5f;
+        glm::vec2 vector = positionB - positionA;
+        const float hypotenuse = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
 
-        const glm::vec2 distance = positionA - positionB;
+        vector = {vector.x / hypotenuse, vector.y / hypotenuse};
 
-        const float overlapX = (halfA.x + halfB.x) - std::abs(distance.x);
-        const float overlapY = (halfA.y + halfB.y) - std::abs(distance.y);
-
-        if (overlapX <= 0.0f || overlapY <= 0.0f)
-            return data;
-
-        if (overlapX < overlapY)
+        if (abs(vector.x) >= abs(vector.y))
         {
-            data.HorizontalDir = distance.x > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
+            if (vector.x > 0)
+            {
+                data.HorizontalDir = CollisionDir::RIGHT;
+            }
+            else if (vector.x < 0)
+            {
+                data.HorizontalDir = CollisionDir::LEFT;
+            }
         }
-        else
+        else if (abs(vector.x) < abs(vector.y))
         {
-            data.VerticalDir = distance.y > 0.0f ? CollisionDir::DOWN : CollisionDir::UP;
+            if (vector.y > 0)
+            {
+                data.VerticalDir = CollisionDir::UP;
+            }
+            else if (vector.y < 0)
+            {
+                data.VerticalDir = CollisionDir::DOWN;
+            }
         }
-        
+
+        }
+
         return data;
     }
 

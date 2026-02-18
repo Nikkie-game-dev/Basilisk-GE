@@ -18,7 +18,8 @@ namespace basilisk
                      const glm::vec2& textureSize,
                      const glm::vec2& screenSize,
                      const Filters filter,
-                     const FitMode fitMode) : PlayerCollision({0, 0}, {1, 1}, Color::Red)
+                     const FitMode fitMode) : 
+        PlayerCollision({0, 0}, {1, 1}, Color::Red)
 
     {
 
@@ -87,7 +88,7 @@ namespace basilisk
         return TileSize;
     }
 
-    CollisionManager::CollisionData TileMap::CheckCollision(Entity2D& entity)
+    CollisionManager::CollisionData TileMap::CheckCollision(const Entity2D& entity)
     {
         const auto& entityPos = entity.GetPosition2D();
         const auto& entityScale = entity.GetScale2D();
@@ -271,7 +272,7 @@ namespace basilisk
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }
 
-    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2 pos)
+    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2& pos)
     {
         const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
         return newPos;

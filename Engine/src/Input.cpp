@@ -16,7 +16,7 @@ namespace basilisk
         }
     }
 
-    InputAction& Input::NewInput(Keys key)
+    InputAction& Input::NewInput(const Keys& key)
     {
         auto newIA = new InputAction(this->Window, key);
         this->InputActions.push_back(newIA);

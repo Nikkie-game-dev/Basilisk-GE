@@ -3,10 +3,10 @@
 #include <chrono>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/spdlog.h>
 
 #include "Loggers.h"
-#include "spdlog/sinks/rotating_file_sink.h"
 
 #include "Renderer.h"
 #include "Window.h"

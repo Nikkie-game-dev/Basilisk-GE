@@ -18,7 +18,7 @@ namespace basilisk
         delete[] this->buffers.Indices;
     }
 
-    void Entity::SetRotation(float angle, const Axis rotationAxis, const bool isRads)
+    void Entity::SetRotation(float angle, const Axis& rotationAxis, const bool& isRads)
     {
         if (!isRads)
         {
@@ -49,7 +49,7 @@ namespace basilisk
         UpdateModelMatrix();
     }
 
-    void Entity::SetScaling(const float scale, const Axis scalingAxis)
+    void Entity::SetScaling(const float& scale, const Axis& scalingAxis)
     {
         switch (scalingAxis)
         {

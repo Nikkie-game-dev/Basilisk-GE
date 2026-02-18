@@ -50,7 +50,7 @@ namespace basilisk
         /// <param name="angle">Angle to rotate the entity, clockwise</param>
         /// <param name="rotationAxis">Axis to which rotate</param> 
         /// <param name="isRads">True if angle is in radians, false if in degrees</param>
-        void SetRotation(float angle, Axis rotationAxis, bool isRads);
+        void SetRotation(float angle, const Axis& rotationAxis, const bool& isRads);
 
         /// <summary>
         /// Sets scale vector and scales accordingly.
@@ -63,7 +63,7 @@ namespace basilisk
         /// </summary>
         /// <param name="scale">New size in a particular axis.</param>
         /// <param name="scalingAxis">Axis to which scale</param>
-        void SetScaling(float scale, Axis scalingAxis);
+        void SetScaling(const float& scale, const Axis& scalingAxis);
 
         /// <summary>
         /// Moves entity to a particular position.

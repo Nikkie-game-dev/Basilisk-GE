@@ -1,6 +1,8 @@
 #pragma once
 #include <filesystem>
+#include <spdlog/spdlog.h>
 #include <string>
+
 #include "Export.h"
 
 namespace basilisk
@@ -54,33 +56,7 @@ namespace basilisk
         static void SetFilter(const Filters& filter);
         static void SetFit(const FitMode& fit);
         static void FreeImage(unsigned char* data);
+        static const std::shared_ptr<spdlog::logger> Logger;
     };
-
-    /// <summary>
-    /// Exception for failed texture loading.
-    /// </summary>
-    class FailedTextureLoading : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            return "Tried and failed to load a texture";
-        }
-    };
-
-    /// <summary>
-    /// Exception for when the image is not found in the directory.
-    /// </summary>
-    class ImageNotFound : std::exception
-    {
-    public:
-        [[nodiscard]] char const* what() const override
-        {
-            std::string error = "Image has not been found, files the Engine can see: ";
-            for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()))
-                error += entry.path().string();
-
-            return error.c_str();
-        }
-    };
+    
 } // namespace basilisk

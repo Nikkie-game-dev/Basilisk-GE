@@ -102,7 +102,7 @@ namespace basilisk
 
     }
 
-    int InputAction::ConvertKeys(Keys key)
+    int InputAction::ConvertKeys(const Keys key)
     {
         return key == Keys::UNSET ? 0 : keyMap.at(key);
     }

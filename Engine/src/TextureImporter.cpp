@@ -49,7 +49,7 @@ namespace basilisk
         {
             throw ImageNotFound();
         }
-
+        
         auto* data = stbi_load(imageDir.c_str(), &width, &height, &outColorChannels, 0);
 
         if (!data)
@@ -61,7 +61,7 @@ namespace basilisk
     unsigned int TextureImporter::GenTexture(unsigned char* data,
                                              int& width,
                                              int& height,
-                                             const int& format,
+                                             const int format,
                                              const Filters& filter,
                                              const FitMode& fit)
     {
@@ -137,7 +137,7 @@ namespace basilisk
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, selectedFit);
     }
 
-    void TextureImporter::BindTexture(const unsigned int& texture)
+    void TextureImporter::BindTexture(const unsigned int texture)
     {
         glBindTexture(GL_TEXTURE_2D, texture);
     }

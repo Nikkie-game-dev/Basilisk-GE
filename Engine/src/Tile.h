@@ -9,8 +9,8 @@ namespace basilisk
     {
     public:
         Tile(const Frame& frame, 
-             const short& col, 
-             const short& row);
+             short col, 
+             short row);
 
         void Update() override;
         void Draw() override;

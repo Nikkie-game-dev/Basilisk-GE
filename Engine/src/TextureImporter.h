@@ -33,13 +33,15 @@ namespace basilisk
         /// <param name="filter"></param>
         /// <param name="fit"></param>
         /// <returns>Id of loaded texture</returns>
-        static unsigned int MakeTexture(const std::string& imageDir, const Filters filter = Filters::LINEAR, const FitMode fit = FitMode::REPEAT);
-        
+        static unsigned int MakeTexture(const std::string& imageDir,
+                                        Filters filter = Filters::LINEAR,
+                                        FitMode fit = FitMode::REPEAT);
+
         /// <summary>
         /// Binds a texture for rendering.
         /// </summary>
         /// <param name="texture"></param>
-        static void BindTexture(const unsigned int& texture);
+        static void BindTexture(unsigned int texture);
 
         /// <summary>
         /// Unbinds the currently bound texture.
@@ -48,12 +50,7 @@ namespace basilisk
 
     private:
         static unsigned char* ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels);
-        static unsigned int GenTexture(unsigned char* data,
-                                       int& width,
-                                       int& height,
-                                       const int& format,
-                                       const Filters& filter,
-                                       const FitMode& fit);
+        static unsigned int GenTexture(unsigned char* data, int& width, int& height, int format, const Filters& filter, const FitMode& fit);
         static void SetFilter(const Filters& filter);
         static void SetFit(const FitMode& fit);
         static void FreeImage(unsigned char* data);

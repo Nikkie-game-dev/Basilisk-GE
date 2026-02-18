@@ -7,7 +7,6 @@
 #include "Export.h"
 #include "Renderer.h"
 #include "glm/glm.hpp"
-#include "Colors.h"
 
 namespace basilisk
 {
@@ -23,7 +22,7 @@ namespace basilisk
         /// Constructor for material. It is not recommended to use this function, but use New().
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
-        explicit Material(const bool& isTextured, const bool& hasFilter);
+        explicit Material(bool isTextured, bool hasFilter);
 
         void OverrideColorFilter(const Color& color) const;
 
@@ -32,7 +31,7 @@ namespace basilisk
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
         /// <returns>Shared pointer with new Material</returns>
-        static std::shared_ptr<Material> New(const bool& isTextured, const bool hasFilter = false);
+        static std::shared_ptr<Material> New(bool isTextured, bool hasFilter = false);
 
         /// <summary>
         /// Builds and compiles shaders.

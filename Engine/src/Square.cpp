@@ -2,14 +2,13 @@
 
 #include <array>
 #include "Entity.h"
-#include "Renderer.h"
 
 namespace basilisk
 {
 
     Square::Square(const glm::vec2& center,
                    const glm::vec2& size,
-                   const bool& isSolidColor,
+                   const bool isSolidColor,
                    const basilisk::Color color = basilisk::Color(0, 0, 0)) :
         Shape(color, isSolidColor)
     {

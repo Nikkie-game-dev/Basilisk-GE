@@ -84,7 +84,7 @@ namespace basilisk
         SetAttribPointer(2, sizeDataInVbo, sizeDataInVbo + verticesBefore, verticesBefore);
     }
 
-    void Renderer::GenerateVBs(Buffers& buffers, const bool& isTextured)
+    void Renderer::GenerateVBs(Buffers& buffers, bool isTextured)
     {
         constexpr int posSize = 3;
         const int textureSize = isTextured ? 2 : 0;
@@ -114,7 +114,7 @@ namespace basilisk
         glBindVertexArray(0);
     }
 
-    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices) const
     {
         glUseProgram(shaderProg);
         glBindVertexArray(vao);
@@ -187,7 +187,7 @@ namespace basilisk
 
 
 #pragma region deprecated
-    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices, const Color& color) const
+    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices, const Color& color) const
     {
         const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
         glUseProgram(shaderProg);

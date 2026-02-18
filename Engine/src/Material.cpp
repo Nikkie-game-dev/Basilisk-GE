@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
 
+#include "Colors.h"
 #include "Loggers.h"
 #include "glm/gtc/type_ptr.hpp"
 
@@ -13,7 +14,7 @@ namespace basilisk
 
     const std::shared_ptr<spdlog::logger> Material::Logger = spdlog::get(DEF_LOG);
 
-    Material::Material(const bool& isTextured, const bool& hasFilter) : 
+    Material::Material(const bool isTextured, const bool hasFilter) : 
         IsTextured(isTextured), HasFilter(hasFilter)
     {
     }
@@ -27,7 +28,7 @@ namespace basilisk
         glUniform4f(location, color.R, color.G, color.B, color.A);
     }
 
-    std::shared_ptr<Material> Material::New(const bool& isTextured, const bool hasFilter)
+    std::shared_ptr<Material> Material::New(const bool isTextured, const bool hasFilter)
     {
         // Makes a new object with a shared pointer.
         return std::make_shared<Material>(isTextured, hasFilter);

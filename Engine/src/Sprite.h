@@ -22,8 +22,8 @@ namespace basilisk
         Sprite(const std::string& textureDir,
                const glm::vec2& center,
                const glm::vec2& size,
-               const Filters filter = Filters::NEAREST,
-               const FitMode fitMode = FitMode::REPEAT);
+               Filters filter = Filters::NEAREST,
+               FitMode fitMode = FitMode::REPEAT);
         
         void Draw() override;
 

@@ -76,8 +76,8 @@ namespace basilisk
         /// Generates vertex array object, vertex buffer object and elements buffer object.
         /// </summary>
         /// <param name="buffers">Buffers to pass to OpenGl</param>
-        /// <param name="isSolid">Whether the object being drawn is a solid color or the vertex data includes per vertex color data</param>
-        void GenerateVBs(Buffers& buffers, const bool& isTextured);
+        /// <param name="isTextured">Whether is textured or not</param>
+        void GenerateVBs(Buffers& buffers, bool isTextured);
         
         /// <summary>
         /// Draws non-solid color objects.
@@ -85,9 +85,9 @@ namespace basilisk
         /// <param name="shaderProg">Process ID from the shader program</param>
         /// <param name="vao">Vertex Array Object</param>
         /// <param name="amountIndices">Amount of indices</param>
-        void Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices) const;
+        void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices) const;
         
-        [[deprecated]] void Draw(const SPProc& shaderProg, unsigned int& vao, const int& amountIndices, const Color& color) const;
+        [[deprecated]] void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices, const Color& color) const;
 
         /// <summary>
         /// Makes Pre-draw calls.

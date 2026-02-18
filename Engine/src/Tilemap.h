@@ -18,15 +18,15 @@ namespace basilisk
                 const path& texturePath,
                 const glm::vec2& textureSize,
                 const glm::vec2& screenSize,
-                const Filters filter = Filters::NEAREST,
-                const FitMode fitMode = FitMode::REPEAT);
+                Filters filter = Filters::NEAREST,
+                FitMode fitMode = FitMode::REPEAT);
         ~TileMap();
         void Init();
         void Draw();
-        float GetTileSize() const;
+        [[nodiscard]] float GetTileSize() const;
         CollisionManager::CollisionData CheckCollision(const Entity2D& entity);
-        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos);
-        glm::vec2 ConvertToScreenPos(const glm::ivec2& pos);
+        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos) const;
+        glm::vec2 ConvertToScreenPos(const glm::ivec2& pos) const;
 
         class CollisionBox : public Square
         {

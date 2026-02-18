@@ -20,7 +20,7 @@ namespace basilisk
         return GetPosition();
     }
 
-    void Entity2D::SetRotation(const float& angle, const bool isRads)
+    void Entity2D::SetRotation(const float angle, const bool isRads)
     {
         this->Entity::SetRotation(angle, Axis::Z, isRads);
     }

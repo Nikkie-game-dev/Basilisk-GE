@@ -1,7 +1,5 @@
 #include "Sprite.h"
 
-#include <iostream>
-
 #include "Renderer.h"
 #include "TextureImporter.h"
 
@@ -91,14 +89,6 @@ namespace basilisk
         this->buffers.Vertices[start + amountVerticesPerCorner * 2 + 1] = bottomLeftUV.y;
         this->buffers.Vertices[start + amountVerticesPerCorner * 3] = topLeftUV.x;
         this->buffers.Vertices[start + amountVerticesPerCorner * 3 + 1] = topLeftUV.y;
-
-#ifdef CONSOLE_OUTPUT_ENABLED
-        std::cout << "================================================================\n";
-        std::cout << "Top Right UV: (" << topRightUV.x << ", " << topRightUV.y << ")\n";
-        std::cout << "Bottom Right UV: (" << bottomRightUV.x << ", " << bottomRightUV.y << ")\n";
-        std::cout << "Bottom Left UV: (" << bottomLeftUV.x << ", " << bottomLeftUV.y << ")\n";
-        std::cout << "Top Left UV: (" << topLeftUV.x << ", " << topLeftUV.y << ")\n";
-#endif
 
         Renderer::GetInstance().BindBufferData(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }

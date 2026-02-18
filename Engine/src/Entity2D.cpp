@@ -20,17 +20,17 @@ namespace basilisk
         return GetPosition();
     }
 
-    void Entity2D::SetRotation(const float angle, const bool isRads)
+    void Entity2D::SetRotation(const float& angle, const bool isRads)
     {
         this->Entity::SetRotation(angle, Axis::Z, isRads);
     }
 
-    void Entity2D::SetScaling(glm::vec2 scaling)
+    void Entity2D::SetScaling(const glm::vec2& scaling)
     {
         this->Entity::SetScaling({scaling.x, scaling.y, 1.0f});
     }
 
-    void Entity2D::SetPosition(glm::vec2 newPosition)
+    void Entity2D::SetPosition(const glm::vec2& newPosition)
     {
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }

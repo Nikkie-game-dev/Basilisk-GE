@@ -15,7 +15,7 @@ namespace basilisk
         /// Getter for rotation angle.
         /// </summary>
         /// <returns>Returns angle with X axis. Clockwise is positive.</returns>
-        [[nodiscard]] float GetRotation2D(bool isRads = false) const;
+        [[nodiscard]] float GetRotation2D(const bool isRads = false) const;
 
         /// <summary>
         /// Getter for scale vector
@@ -34,17 +34,17 @@ namespace basilisk
         /// </summary>
         /// <param name="angle">Angle to rotate entity. Clockwise is negative.</param>
         /// <param name="isRads">True if is in radians, false if is in degrees</param>
-        virtual void SetRotation(float angle, bool isRads = false);
+        virtual void SetRotation(const float& angle, const bool isRads = false);
         /// <summary>
         /// Setter for scale vector.
         /// </summary>
         /// <param name="scaling">Scaling vector.</param>
-        virtual void SetScaling(glm::vec2 scaling);
+        virtual void SetScaling(const glm::vec2& scaling);
         /// <summary>
         /// Setter for position vector.
         /// </summary>
         /// <param name="newPosition">Position vector</param>
-        virtual void SetPosition(glm::vec2 newPosition);
+        virtual void SetPosition(const glm::vec2& newPosition);
 
         void Init() override;
         void Draw() override;

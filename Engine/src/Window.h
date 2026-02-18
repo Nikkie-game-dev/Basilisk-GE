@@ -16,7 +16,7 @@ namespace basilisk
     public:
 
         Window() = default;
-        Window(const char* windowName, glm::ivec2 size);
+        Window(const char* windowName, const glm::ivec2& size);
 
         /// <summary>
         /// Getter for the window pointer

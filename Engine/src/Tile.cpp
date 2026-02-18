@@ -4,7 +4,8 @@
 
 namespace basilisk
 {
-    Tile::Tile(Frame frame, short col, short row) : Col(col), Row(row)
+    Tile::Tile(const Frame& frame, const short& col, const short& row) : 
+        Col(col), Row(row), HasCollision(false)
     {
         float vertices[] = {
             // positions            // colors                    // texture coords

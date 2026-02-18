@@ -8,9 +8,9 @@ namespace basilisk
     class Tile final : public Entity2D
     {
     public:
-        Tile(Frame frame, 
-             short col, 
-             short row);
+        Tile(const Frame& frame, 
+             const short& col, 
+             const short& row);
 
         void Update() override;
         void Draw() override;

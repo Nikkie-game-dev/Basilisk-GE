@@ -143,6 +143,17 @@ namespace basilisk
                     bool wasTileChecked = false;
 
                     for (const auto& checkedTilePos : checkedTiles)
+                    {
+                        if (checkedTilePos.x == col && checkedTilePos.y == row)
+                        {
+                            wasTileChecked = true;
+                            break;
+                        }
+                    }
+
+                    if (wasTileChecked)
+                        continue;
+
                     const auto& tile = layer[row][col];
 
                     lastTile = tile;
@@ -155,12 +166,12 @@ namespace basilisk
                 }
             }
 
-            if (firstTileCollided != nullptr)
-            {
-                auto data = CollisionManager::GetCollisionDir(firstTileCollided->GetPosition2D(), firstTileCollided->GetScale2D(),
-                                                              entityPos, entityScale);
-                data.CollisionTilePos = {firstTileCollided->Col, firstTileCollided->Row};
-                data.CollisionLayer = firstTileCollided->LayerName;
+
+                    if (tile)
+                    {
+                        checkedTiles.push_back({col, row});
+                    }
+                }
                 return data;
             }
             else if (lastTile != nullptr)

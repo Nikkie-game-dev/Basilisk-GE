@@ -9,7 +9,8 @@ namespace game
     Game::Game(const char* windowName, float sizeX, float sizeY) :
         BaseGame(windowName, sizeX, sizeY), 
         Map("res/assets/map.json", "res/assets/spritesheet.png", {sizeX, sizeY}),
-        Player(100.0f, {Map.GetTileSize(), Map.GetTileSize()}, {600.0f, 500.0f})
+        Player(100.0f, {Map.GetTileSize(), Map.GetTileSize()}, {600.0f, 500.0f}), 
+        CollisionBox({0.0f, 0.0f}, {1.0f, 1.0f}, basilisk::Color::Red)
     {
     }
 
@@ -23,6 +24,12 @@ namespace game
         this->Player.MoveLeftIA = &this->GetInputSystem().NewInput(basilisk::Keys::A);
         this->Player.MoveDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::S);
         this->Player.MoveRightIA = &this->GetInputSystem().NewInput(basilisk::Keys::D);
+
+        auto collisionMat = basilisk::Material::New(false);
+        this->CollisionBox.SetMaterial(collisionMat);
+        this->CollisionBox.Init();
+        this->CollisionBox.SetPosition(this->Player.GetPosition2D());
+        this->CollisionBox.SetScaling(this->Player.GetScale2D());
 
         this->Map.Init();
     }
@@ -46,11 +53,13 @@ namespace game
         this->Player.Delta = this->GetDelta();
 
         this->Player.CheckCollision(collisionDir);
+        this->CollisionBox.SetPosition(this->Player.GetPosition2D());
     }
 
     void Game::Draw()
     {
         this->Map.Draw();
+        this->CollisionBox.Draw();
         this->Player.Draw();
     }
 

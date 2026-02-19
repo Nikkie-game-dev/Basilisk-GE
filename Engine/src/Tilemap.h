@@ -30,14 +30,6 @@ namespace basilisk
         glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos) const;
         glm::vec2 ConvertToScreenPos(const glm::ivec2& pos) const;
 
-        class CollisionBox : public Square
-        {
-        public:
-            CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color);
-
-            void Update() override;
-        };
-
     private:
         struct Key
         {
@@ -65,8 +57,6 @@ namespace basilisk
         path PathToTexture;
 
         json Data;
-
-        CollisionBox PlayerCollision;
 
         glm::ivec2 TextureSize;
         glm::ivec2 TilesAmount;

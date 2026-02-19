@@ -30,8 +30,7 @@ namespace basilisk
                      const glm::vec2& screenSize,
                      const Filters filter,
                      const FitMode fitMode,
-                     const glm::vec2& textureSize) : PlayerCollision({0, 0}, {1, 1}, Color::Red)
-
+                     const glm::vec2& textureSize)
     {
 
         std::ifstream file(mapFilePath.string(), std::ios::in);
@@ -50,8 +49,6 @@ namespace basilisk
         this->ScreenSize = screenSize;
 
         const auto collisionMat = Material::New(false);
-
-        PlayerCollision.SetMaterial(collisionMat);
     }
 
     TileMap::~TileMap()
@@ -72,7 +69,6 @@ namespace basilisk
     {
         this->GenerateFrames();
         this->GenerateTiles();
-        PlayerCollision.Init();
     }
 
     void TileMap::Draw()
@@ -95,7 +91,7 @@ namespace basilisk
         }
 
         TextureImporter::UnbindTexture();
-        PlayerCollision.Draw();
+        //PlayerCollision.Draw();
     }
 
     float TileMap::GetTileSize() const
@@ -137,12 +133,6 @@ namespace basilisk
 
         const glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
         const glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
-
-        PlayerCollision.SetPosition(entityPos);
-
-        const glm::vec2 collisionBoxSize = {bottomRightCorner.x - topLeftCorner.x, topLeftCorner.y - bottomRightCorner.y};
-
-        PlayerCollision.SetScaling(collisionBoxSize);
 
         std::list<glm::ivec2> checkedTiles;
 
@@ -280,14 +270,6 @@ namespace basilisk
     {
         const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
         return newPos;
-    }
-
-    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) : Square(center, size, true, color)
-    {
-    }
-
-    void TileMap::CollisionBox::Update()
-    {
     }
 
 } // namespace basilisk

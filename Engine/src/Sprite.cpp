@@ -11,7 +11,7 @@ namespace basilisk
         this->Entity2D::SetPosition(center);
         this->Entity2D::SetScaling(size);
 
-        this->Texture = TextureImporter::MakeTexture(textureDir, filter, fitMode);
+        this->Texture = TextureImporter::MakeTextureData(textureDir, filter, fitMode).textureID;
 
         float vertices[] = 
         {

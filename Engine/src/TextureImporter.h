@@ -28,14 +28,22 @@ namespace basilisk
     class BASILISK_API TextureImporter
     {
     public:
+
+        struct TextureData
+        {
+            unsigned int textureID;
+            int width;
+            int height;
+        };
+
         /// <summary>
         /// Loads a texture to GPU from an image directory.
         /// </summary>
         /// <param name="imageDir">Relative path to image directory</param>
         /// <param name="filter"></param>
         /// <param name="fit"></param>
-        /// <returns>Id of loaded texture</returns>
-        static unsigned int MakeTexture(const std::string& imageDir,
+        /// <returns>Data of the loaded texture.</returns>
+        static TextureData MakeTextureData(const std::string& imageDir,
                                         Filters filter = Filters::LINEAR,
                                         FitMode fit = FitMode::REPEAT);
 

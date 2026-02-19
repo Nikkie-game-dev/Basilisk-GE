@@ -13,7 +13,7 @@ namespace basilisk
     
     const std::shared_ptr<spdlog::logger> TextureImporter::Logger = spdlog::get(DEF_LOG);
 
-    unsigned int TextureImporter::MakeTexture(const std::string& imageDir, const Filters filter, const FitMode fit)
+    TextureImporter::TextureData TextureImporter::MakeTextureData(const std::string& imageDir, Filters filter, FitMode fit)
     {
         int width;
         int height;
@@ -41,10 +41,10 @@ namespace basilisk
             break;
         }
 
-        const auto texture = GenTexture(data, width, height, channelType, filter, fit);
+        const auto textureID = GenTexture(data, width, height, channelType, filter, fit);
 
         FreeImage(data);
-        return texture;
+        return {textureID, width, height};
     }
 
     unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels)

@@ -91,7 +91,6 @@ namespace basilisk
         }
 
         TextureImporter::UnbindTexture();
-        //PlayerCollision.Draw();
     }
 
     float TileMap::GetTileSize() const

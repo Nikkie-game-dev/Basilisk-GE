@@ -32,6 +32,7 @@ namespace basilisk
 
     void Entity2D::SetPosition(const glm::vec2& newPosition)
     {
+        this->PreviousPos = this->GetPosition2D();
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }
     
@@ -76,6 +77,23 @@ namespace basilisk
     glm::vec3 Entity2D::GetRotation(const bool isRads) const
     {
         return Entity::GetRotation(isRads);
+    }
+
+    void Entity2D::CheckCollision(basilisk::CollisionManager::CollisionData data)
+    {
+        if (data.HorizontalDir == basilisk::CollisionManager::CollisionDir::NONE &&
+            data.VerticalDir == basilisk::CollisionManager::CollisionDir::NONE)
+            return;
+
+        glm::vec2 newPos = GetPosition2D();
+
+        if (data.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE)
+            newPos.x = PreviousPos.x;
+
+        if (data.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
+            newPos.y = PreviousPos.y;
+
+        SetPosition(newPos);
     }
 
 } // namespace basilisk

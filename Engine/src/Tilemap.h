@@ -14,12 +14,14 @@ namespace basilisk
     class BASILISK_API TileMap
     {
     public:
+
         TileMap(const path& mapFilePath,
                 const path& texturePath,
-                const glm::vec2& textureSize,
                 const glm::vec2& screenSize,
                 Filters filter = Filters::NEAREST,
-                FitMode fitMode = FitMode::REPEAT);
+                FitMode fitMode = FitMode::REPEAT,
+                const glm::vec2& textureSize = {-1.0f, -1.0f});
+
         ~TileMap();
         void Init();
         void Draw();

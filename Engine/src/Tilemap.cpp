@@ -27,23 +27,26 @@ namespace basilisk
 
     TileMap::TileMap(const path& mapFilePath,
                      const path& texturePath,
-                     const glm::vec2& textureSize,
                      const glm::vec2& screenSize,
                      const Filters filter,
-                     const FitMode fitMode) :
-        PlayerCollision({0, 0}, {1, 1}, Color::Red)
+                     const FitMode fitMode,
+                     const glm::vec2& textureSize) : PlayerCollision({0, 0}, {1, 1}, Color::Red)
 
     {
 
         std::ifstream file(mapFilePath.string(), std::ios::in);
 
-        this->Texture = TextureImporter::MakeTexture(texturePath.string(), filter, fitMode);
+        TextureImporter::TextureData textureData = TextureImporter::MakeTextureData(texturePath.string(), filter, fitMode);
+        this->Texture = textureData.textureID;
+
+        this->TextureSize = (textureSize.x <= 0.0f || textureSize.y <= 0.0f) ? 
+                            glm::vec2{textureData.width, textureData.height} : textureSize;
+        this->PathToTexture = texturePath;
+
         this->Data = json::parse(file);
         this->TileSize = this->Data[Keys.TileSize];
         this->TilesAmount = {this->Data[Keys.MapWidth], this->Data[Keys.MapHeight]};
 
-        this->PathToTexture = texturePath;
-        this->TextureSize = textureSize;
         this->ScreenSize = screenSize;
 
         const auto collisionMat = Material::New(false);
@@ -267,8 +270,8 @@ namespace basilisk
     glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos) const
     {
         const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x) * static_cast<float>(this->TilesAmount.x),
-                                  static_cast<float>(this->TilesAmount.y) - pos.y / static_cast<float>(this->ScreenSize.y) *
-                                      static_cast<float>(this->TilesAmount.y)};
+                                  static_cast<float>(this->TilesAmount.y) -
+                                      pos.y / static_cast<float>(this->ScreenSize.y) * static_cast<float>(this->TilesAmount.y)};
 
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }
@@ -279,8 +282,7 @@ namespace basilisk
         return newPos;
     }
 
-    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) :
-        Square(center, size, true, color)
+    TileMap::CollisionBox::CollisionBox(glm::vec2 center, glm::vec2 size, basilisk::Color color) : Square(center, size, true, color)
     {
     }
 

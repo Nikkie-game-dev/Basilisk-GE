@@ -153,7 +153,7 @@ namespace basilisk
 
                     if (tile && tile->HasCollision)
                     {
-                        auto data = CollisionManager::GetCollisionDir(tile->GetPosition2D(), entityPos);
+                        auto data = CollisionManager::GetCollisionDir(entityPos, tile->GetPosition2D());
                         data.CollisionTilePos = {tile->Col, tile->Row};
                         data.CollisionLayer = tile->LayerName;
                         return data;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <spdlog/logger.h>
+
 
 #include "Export.h"
 #include "Input.h"
@@ -90,11 +90,8 @@ namespace basilisk
         Input& GetInputSystem();
         
         Renderer& Renderer;
-
-        std::shared_ptr<spdlog::logger> Logger;
-
+    
     private:
-        void SetUpLog();
         const char* WindowName;
         int X;
         int Y;

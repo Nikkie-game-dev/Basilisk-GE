@@ -44,7 +44,7 @@ namespace basilisk
         const auto textureID = GenTexture(data, width, height, channelType, filter, fit);
 
         FreeImage(data);
-        return {textureID, width, height};
+        return {.textureID = textureID, .width = width, .height = height};
     }
 
     unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels)

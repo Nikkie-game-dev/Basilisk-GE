@@ -17,21 +17,10 @@
 namespace basilisk
 {
 
-    void BaseGame::SetUpLog()
-    {
-        const auto console = std::make_shared<spdlog::sinks::wincolor_stderr_sink_st>();
-        const auto errorDump = std::make_shared<spdlog::sinks::rotating_file_sink_st>("logs/dump.log", MAX_LOG_SIZE, MAX_LOGS);
-        std::vector<spdlog::sink_ptr> sinks{console, errorDump};
-
-        Logger = std::make_shared<spdlog::logger>(DEF_LOG, sinks.begin(), sinks.end());
-        spdlog::register_logger(Logger);
-    }
-
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
 
-        SetUpLog();
 
         this->Renderer.InitGLFW();
 

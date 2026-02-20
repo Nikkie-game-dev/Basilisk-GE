@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include <iostream>
-
 #include "Basilisk/CollisionManager.h"
 
 namespace game
@@ -25,34 +23,20 @@ namespace game
         this->Player.MoveDownIA = &this->GetInputSystem().NewInput(basilisk::Keys::S);
         this->Player.MoveRightIA = &this->GetInputSystem().NewInput(basilisk::Keys::D);
 
-        auto collisionMat = basilisk::Material::New(false);
+        const auto collisionMat = basilisk::Material::New(false);
         this->CollisionBox.SetMaterial(collisionMat);
         this->CollisionBox.Init();
         this->CollisionBox.SetPosition(this->Player.GetPosition2D());
         this->CollisionBox.SetScaling(this->Player.GetScale2D());
 
         this->Map.Init();
+        this->Player.map = &this->Map;
     }
 
     void Game::Update()
     {
-        this->Player.Update();
-        auto collisionDir = this->Map.CheckCollision(this->Player);
-
-        glm::vec2 playerPos = this->Player.GetPosition2D();
-
-        if (collisionDir.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE ||
-            collisionDir.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
-        {
-            const glm::vec2 collisionPos = Map.ConvertToScreenPos(collisionDir.CollisionTilePos);
-
-            this->Logger->error("Collision detected: x: {}, y: {}\nPlayer screen position: x: {}, y: {}\nCollision layer: {}",
-                               collisionDir.CollisionTilePos.x, collisionDir.CollisionTilePos.y, playerPos.x, playerPos.y, collisionDir.CollisionLayer);
-        }
-
         this->Player.Delta = this->GetDelta();
-
-        this->Player.CheckCollision(collisionDir);
+        this->Player.Update();
         this->CollisionBox.SetPosition(this->Player.GetPosition2D());
     }
 

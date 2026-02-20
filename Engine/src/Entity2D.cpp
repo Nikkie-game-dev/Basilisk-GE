@@ -41,7 +41,8 @@ namespace basilisk
         const auto mat = this->GetMaterial();
         this->UpdateBuffers();
 
-        mat->BuildShader();
+        if (!mat->IsMaterialBuilt())
+            mat->BuildShader();
 
         if (!mat->IsProjectionSent)
         {

@@ -65,10 +65,13 @@ namespace basilisk
         /// Has the view matrix been sent.
         /// </summary>
         bool IsViewSent = false;
+        
+        bool IsMaterialBuilt();
 
     private:
-        static void ShaderCompileError(const ShaderProc& shader);
-        static void ProgramCompileError(const SPProc& spProc);
+        [[noreturn]] static void ShaderCompileError(const ShaderProc& shader);
+        [[noreturn]] static void ProgramCompileError(const SPProc& program);
+        bool IsMatBuilt = false;
         bool IsTextured;
         bool HasFilter;
         SPProc ShaderProgram = 0;

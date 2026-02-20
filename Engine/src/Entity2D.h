@@ -50,7 +50,7 @@ namespace basilisk
         void Init() override;
         void Draw() override;
 
-        void CheckCollision(basilisk::CollisionManager::CollisionData data);
+        void CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos);
     protected:
         Entity2D() = default;
         virtual ~Entity2D() = default;

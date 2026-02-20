@@ -113,6 +113,11 @@ namespace basilisk
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
+    bool Material::IsMaterialBuilt()
+    {
+        return this->IsMatBuilt;
+    }
+    
     void Material::ShaderCompileError(const ShaderProc& shader)
     {
         constexpr int infoBufferSize = 512;

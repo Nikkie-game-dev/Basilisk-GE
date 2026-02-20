@@ -21,33 +21,26 @@ namespace basilisk
     {
         CollisionData data;
 
-        glm::vec2 vector = positionB - positionA;
-        const float hypotenuse = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
-
-        vector = {vector.x / hypotenuse, vector.y / hypotenuse};
-
-        if (abs(vector.x) >= abs(vector.y))
+        const glm::vec2 vector = positionB - positionA;
+        
+        if (vector.x > 0)
         {
-            if (vector.x > 0)
-            {
-                data.HorizontalDir = CollisionDir::RIGHT;
-            }
-            else if (vector.x < 0)
-            {
-                data.HorizontalDir = CollisionDir::LEFT;
-            }
+            data.HorizontalDir = CollisionDir::RIGHT;
         }
-        else if (abs(vector.x) < abs(vector.y))
+        else if (vector.x < 0)
         {
-            if (vector.y > 0)
-            {
-                data.VerticalDir = CollisionDir::UP;
-            }
-            else if (vector.y < 0)
-            {
-                data.VerticalDir = CollisionDir::DOWN;
-            }
+            data.HorizontalDir = CollisionDir::LEFT;
         }
+
+        if (vector.y > 0)
+        {
+            data.VerticalDir = CollisionDir::UP;
+        }
+        else if (vector.y < 0)
+        {
+            data.VerticalDir = CollisionDir::DOWN;
+        }
+
 
         if (data.VerticalDir == CollisionDir::NONE && data.HorizontalDir == CollisionDir::NONE)
         {

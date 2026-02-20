@@ -13,8 +13,9 @@ namespace basilisk
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-
-
+        
+        Log::Print()->info("Loading Basilisk Engine");
+        
         this->Renderer.InitGLFW();
 
         this->Renderer.SetGlVersion();
@@ -28,6 +29,8 @@ namespace basilisk
         this->Renderer.SetWindowRef(*this->Window);
 
         this->InputSystem = Input(this->Window);
+        
+        Log::Print()->info("Loading Complete");
 
     }
 
@@ -107,6 +110,7 @@ namespace basilisk
         auto old = std::chrono::system_clock::now();
         std::chrono::time_point<std::chrono::system_clock> now = old;
 
+        Log::Print()->info("Running game...");
         while (!this->WindowShouldClose())
         {
             this->InputSystem.UpdateInputs();

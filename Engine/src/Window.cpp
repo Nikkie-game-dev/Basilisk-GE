@@ -9,6 +9,8 @@ namespace basilisk
     Window::Window(const char* windowName, const glm::ivec2& size) :
         Size(size)
     {
+        Log::Print()->info("Creating window");
+        
         /* Create a windowed mode window and its OpenGL context */
         this->WindowP = glfwCreateWindow(size.x, size.y, windowName, nullptr, nullptr);
         

@@ -29,40 +29,41 @@ namespace game
 
     void Player::Move()
     {
-        glm::vec2 position = this->GetPosition2D();
+        glm::vec2 newPos = this->GetPosition2D();
+        glm::vec2 currentPos = newPos;
 
         if (this->MoveUpIA && this->MoveUpIA->IsDown())
         {
             ChangeAnimation(&this->WalkUpAnimation);
-            position.y += this->Speed * this->Delta;
+            newPos.y += this->Speed * this->Delta;
         }
 
         else if (this->MoveDownIA && this->MoveDownIA->IsDown())
         {
             ChangeAnimation(&this->WalkDownAnimation);
-            position.y -= this->Speed * this->Delta;
+            newPos.y -= this->Speed * this->Delta;
         }
 
         else if (this->MoveLeftIA && this->MoveLeftIA->IsDown())
         {
             this->FlipSpriteX = true;
             ChangeAnimation(&this->WalkHorAnimation);
-            position.x -= this->Speed * this->Delta;
+            newPos.x -= this->Speed * this->Delta;
         }
 
         else if (MoveRightIA && this->MoveRightIA->IsDown())
         {
             this->FlipSpriteX = false;
             ChangeAnimation(&this->WalkHorAnimation);
-            position.x += this->Speed * this->Delta;
+            newPos.x += this->Speed * this->Delta;
         }
 
         else
         {
             ChangeAnimation(&this->IdleAnimation);
         }
-
-        this->SetPosition(position);
+        
+        this->CollideAndMove(map->CheckCollision(currentPos, this->GetScale2D()), newPos);
     }
 
 } // namespace game

@@ -1,4 +1,6 @@
 #pragma once
+#include <TileMap.h>
+
 #include "Basilisk/Sprite.h"
 #include "InputAction.h"
 
@@ -17,6 +19,7 @@ namespace game
         basilisk::InputAction* MoveDownIA = nullptr;
         basilisk::InputAction* MoveLeftIA = nullptr;
         basilisk::InputAction* MoveRightIA = nullptr;
+        basilisk::TileMap* map = nullptr;
 
     private:
         void Move();
@@ -26,6 +29,7 @@ namespace game
         basilisk::Animation WalkUpAnimation;
         basilisk::Animation WalkDownAnimation;
         basilisk::Animation WalkHorAnimation;
+
     };
 
 } // namespace game

@@ -80,21 +80,15 @@ namespace basilisk
         return Entity::GetRotation(isRads);
     }
 
-    void Entity2D::CheckCollision(basilisk::CollisionManager::CollisionData data)
+    void Entity2D::CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos)
     {
-        if (data.HorizontalDir == basilisk::CollisionManager::CollisionDir::NONE &&
-            data.VerticalDir == basilisk::CollisionManager::CollisionDir::NONE)
-            return;
+        if (data.HorizontalDir != CollisionManager::CollisionDir::NONE)
+            newPos.x = this->PreviousPos.x;
 
-        glm::vec2 newPos = GetPosition2D();
+        if (data.VerticalDir != CollisionManager::CollisionDir::NONE)
+            newPos.y = this->PreviousPos.y;
 
-        if (data.HorizontalDir != basilisk::CollisionManager::CollisionDir::NONE)
-            newPos.x = PreviousPos.x;
-
-        if (data.VerticalDir != basilisk::CollisionManager::CollisionDir::NONE)
-            newPos.y = PreviousPos.y;
-
-        SetPosition(newPos);
+        this->SetPosition(newPos);
     }
 
 } // namespace basilisk

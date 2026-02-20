@@ -24,9 +24,9 @@ namespace basilisk
 
         ~TileMap();
         void Init();
-        void Draw();
+        void Draw() const;
         [[nodiscard]] float GetTileSize() const;
-        CollisionManager::CollisionData CheckCollision(const Entity2D& entity);
+        CollisionManager::CollisionData CheckCollision(const glm::vec2& entityPos, const glm::vec2& entityScale) const;
         glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos) const;
         glm::vec2 ConvertToScreenPos(const glm::ivec2& pos) const;
 
@@ -44,7 +44,7 @@ namespace basilisk
             const std::string Collider;
             const std::string Layer;
         };
-
+        void ClampCorners(glm::vec2& topLeftCorner, glm::vec2& bottomRightCorner) const;
         void GenerateFrames();
         void GenerateTiles();
 

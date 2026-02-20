@@ -36,8 +36,9 @@ namespace basilisk
         TextureImporter::TextureData textureData = TextureImporter::MakeTextureData(texturePath.string(), filter, fitMode);
         this->Texture = textureData.textureID;
 
-        this->TextureSize = (textureSize.x <= 0.0f || textureSize.y <= 0.0f) ? 
-                            glm::vec2{textureData.width, textureData.height} : textureSize;
+        this->TextureSize = (textureSize.x <= 0.0f || textureSize.y <= 0.0f)
+            ? glm::vec2{textureData.width, textureData.height}
+            : textureSize;
         this->PathToTexture = texturePath;
 
         this->Data = json::parse(file);
@@ -69,10 +70,9 @@ namespace basilisk
         this->GenerateTiles();
     }
 
-    void TileMap::Draw()
+    void TileMap::Draw() const
     {
         TextureImporter::BindTexture(this->Texture);
-
 
         for (int layer = static_cast<int>(this->Tiles.size()) - 1; layer >= 0; --layer)
         {
@@ -96,37 +96,33 @@ namespace basilisk
         return TileSize;
     }
 
-    CollisionManager::CollisionData TileMap::CheckCollision(const Entity2D& entity)
+    void TileMap::ClampCorners(glm::vec2& topLeftCorner, glm::vec2& bottomRightCorner) const
     {
-        const auto& entityPos = entity.GetPosition2D();
-        const auto& entityScale = entity.GetScale2D();
+        bottomRightCorner.x = std::max<float>(bottomRightCorner.x, 0);
+        bottomRightCorner.y = std::max<float>(bottomRightCorner.y, 0);
 
+        if (bottomRightCorner.x >= static_cast<float>(this->ScreenSize.x))
+            bottomRightCorner.x = static_cast<float>(this->ScreenSize.x) - 1.0f;
+        
+        if (bottomRightCorner.y >= static_cast<float>(this->ScreenSize.y))
+            bottomRightCorner.y = static_cast<float>(this->ScreenSize.y) - 1.0f;
+
+        if (topLeftCorner.y >= static_cast<float>(this->ScreenSize.y))
+            topLeftCorner.y = static_cast<float>(this->ScreenSize.y) - 1.0f;
+        
+        if (topLeftCorner.x >= static_cast<float>(this->ScreenSize.x))
+            topLeftCorner.x = static_cast<float>(this->ScreenSize.x) - 1.0f;
+        
+        topLeftCorner.x = std::max<float>(topLeftCorner.x, 0);
+        topLeftCorner.y = std::max<float>(topLeftCorner.y, 0);
+    }
+    
+    CollisionManager::CollisionData TileMap::CheckCollision(const glm::vec2& entityPos, const glm::vec2& entityScale) const
+    {
         glm::vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
         glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
-
-        // Clamp corners to screen bounds
-        {
-            bottomRightCorner.y = std::max<float>(bottomRightCorner.y, 0);
-
-            bottomRightCorner.x = std::max<float>(bottomRightCorner.x, 0);
-
-            if (bottomRightCorner.y >= static_cast<float>(ScreenSize.y))
-                bottomRightCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
-
-            if (bottomRightCorner.x >= static_cast<float>(ScreenSize.x))
-                bottomRightCorner.x = static_cast<float>(ScreenSize.x) - 1.0f;
-
-            if (topLeftCorner.x >= static_cast<float>(ScreenSize.x))
-                topLeftCorner.x = static_cast<float>(ScreenSize.x) - 1.0f;
-
-            if (topLeftCorner.y >= static_cast<float>(ScreenSize.y))
-                topLeftCorner.y = static_cast<float>(ScreenSize.y) - 1.0f;
-
-            topLeftCorner.y = std::max<float>(topLeftCorner.y, 0);
-
-            topLeftCorner.x = std::max<float>(topLeftCorner.x, 0);
-        }
+        ClampCorners(topLeftCorner, bottomRightCorner);
 
         const glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
         const glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
@@ -200,6 +196,7 @@ namespace basilisk
     void TileMap::GenerateTiles()
     {
         const auto commonMat = Material::New(true, false);
+        //todo: remove
         const auto debugMat = Material::New(true, true);
 
         const auto layersAmount = this->Data[Keys.Layers].size();
@@ -258,7 +255,7 @@ namespace basilisk
     {
         const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x) * static_cast<float>(this->TilesAmount.x),
                                   static_cast<float>(this->TilesAmount.y) -
-                                      pos.y / static_cast<float>(this->ScreenSize.y) * static_cast<float>(this->TilesAmount.y)};
+                                  pos.y / static_cast<float>(this->ScreenSize.y) * static_cast<float>(this->TilesAmount.y)};
 
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }

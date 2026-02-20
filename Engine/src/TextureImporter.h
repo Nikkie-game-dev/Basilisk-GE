@@ -1,6 +1,5 @@
 #pragma once
 #include <filesystem>
-#include <spdlog/spdlog.h>
 #include <string>
 
 #include "Export.h"
@@ -64,7 +63,6 @@ namespace basilisk
         static void SetFilter(const Filters& filter);
         static void SetFit(const FitMode& fit);
         static void FreeImage(unsigned char* data);
-        static const std::shared_ptr<spdlog::logger> Logger;
     };
     
 } // namespace basilisk

@@ -2,18 +2,15 @@
 
 
 #include <GL/glew.h>
-#include <spdlog/spdlog.h>
 
 #include "Colors.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
     using ShaderProc = unsigned int;
-
-    const std::shared_ptr<spdlog::logger> Material::Logger = spdlog::get(DEF_LOG);
-
+    
     Material::Material(const bool isTextured, const bool hasFilter) : 
         IsTextured(isTextured), HasFilter(hasFilter)
     {
@@ -113,8 +110,8 @@ namespace basilisk
 
         char infoLog[infoBufferSize];
         glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-        Logger->error("Shader failed to compile:\n{}", std::string(infoLog));
-        Logger->flush();
+        Log::Print()->error("Shader failed to compile:\n{}", std::string(infoLog));
+        
         abort();
     }
 
@@ -124,8 +121,8 @@ namespace basilisk
 
         char infoLog[infoBufferSize];
         glGetProgramInfoLog(program, infoBufferSize, nullptr, infoLog);
-        Logger->error("Shader program failed to compile:\n{}", std::string(infoLog));
-        Logger->flush();
+        Log::Print()->error("Shader program failed to compile:\n{}", std::string(infoLog));
+        
         abort();
     }
 

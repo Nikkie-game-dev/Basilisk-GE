@@ -5,14 +5,12 @@
 #include <filesystem>
 
 #include "GL/glew.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "stb_image.h"
 
 namespace basilisk
 {
     
-    const std::shared_ptr<spdlog::logger> TextureImporter::Logger = spdlog::get(DEF_LOG);
-
     TextureImporter::TextureData TextureImporter::MakeTextureData(const std::string& imageDir, Filters filter, FitMode fit)
     {
         int width;
@@ -52,8 +50,7 @@ namespace basilisk
 
         if (!std::filesystem::exists(imageDir))
         {
-            Logger->error("Image at {} not found", imageDir);
-            Logger->flush();
+            Log::Print()->error("Image at {} not found", imageDir);
             return nullptr;
         }
         
@@ -61,8 +58,7 @@ namespace basilisk
 
         if (!data)
         {
-            Logger->error("Could not load data at {}", imageDir);
-            Logger->flush();
+            Log::Print()->error("Could not load data at {}", imageDir);
             return nullptr;        
         }
 

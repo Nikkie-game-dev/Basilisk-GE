@@ -5,13 +5,11 @@
 #include "Renderer.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Buffers.h"
-#include "Loggers.h"
+#include "Log.h"
 
 namespace basilisk
 {
-
-    const std::shared_ptr<spdlog::logger> Entity::Logger = spdlog::get(DEF_LOG);
-
+    
     Entity::~Entity()
     {
         delete[] this->buffers.Vertices;
@@ -106,8 +104,7 @@ namespace basilisk
     {
         if (!Mat)
         {
-            Logger->error("Material has not being assigned. Must be set before this call");
-            Logger->flush();
+            Log::Print()->error("Material has not being assigned. Must be set before this call");
             abort();
         }
         return Mat;

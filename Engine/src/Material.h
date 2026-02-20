@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <spdlog/logger.h>
 #include <string>
 
 #include "Export.h"
@@ -77,6 +76,5 @@ namespace basilisk
         static const char* FragShader;
         static const char* FilterFragShader;
         static const char* FragShaderTextureless;
-        static const std::shared_ptr<spdlog::logger> Logger;
     };
 } // namespace basilisk 

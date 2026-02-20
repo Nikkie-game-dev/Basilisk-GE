@@ -2,17 +2,10 @@
 
 #include <chrono>
 #include <glm/glm.hpp>
-#include <iostream>
-#include <spdlog/sinks/rotating_file_sink.h>
-#include <spdlog/spdlog.h>
 
-#include "Loggers.h"
-
+#include "Log.h"
 #include "Renderer.h"
 #include "Window.h"
-
-#define MAX_LOGS 3
-#define MAX_LOG_SIZE (1024 * 1024)
 
 namespace basilisk
 {

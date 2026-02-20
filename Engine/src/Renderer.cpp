@@ -8,13 +8,11 @@
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "Window.h"
 
 namespace basilisk
 {
-    const std::shared_ptr<spdlog::logger> Renderer::Logger = spdlog::get(DEF_LOG);
-
     void Renderer::InitGLFW()
     {
         if (!glfwInit())
@@ -22,8 +20,7 @@ namespace basilisk
             const char* description;
             int errorCode = glfwGetError(&description);
 
-            Logger->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
-            Logger->flush();
+            Log::Print()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
             abort();        
         }
     }
@@ -38,7 +35,7 @@ namespace basilisk
     {
         if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
-            Logger->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
+            Log::Print()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
                           std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode)))); //huh?
             Logger->flush();
             abort();            

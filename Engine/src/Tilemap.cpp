@@ -7,8 +7,6 @@
 
 #include "Tile.h"
 
-#define NONE_COLLISION {.VerticalDir = CollisionManager::CollisionDir::NONE, .HorizontalDir = CollisionManager::CollisionDir::NONE}
-
 namespace basilisk
 {
 
@@ -173,7 +171,7 @@ namespace basilisk
             }
         }
 
-        return NONE_COLLISION;
+        return {.VerticalDir = CollisionManager::CollisionDir::NONE, .HorizontalDir = CollisionManager::CollisionDir::NONE};
     }
 
     void TileMap::GenerateFrames()

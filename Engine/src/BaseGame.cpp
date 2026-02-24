@@ -2,37 +2,20 @@
 
 #include <chrono>
 #include <glm/glm.hpp>
-#include <iostream>
-#include <spdlog/sinks/rotating_file_sink.h>
-#include <spdlog/spdlog.h>
 
-#include "Loggers.h"
-
+#include "Log.h"
 #include "Renderer.h"
 #include "Window.h"
-
-#define MAX_LOGS 3
-#define MAX_LOG_SIZE (1024 * 1024)
 
 namespace basilisk
 {
 
-    void BaseGame::SetUpLog()
-    {
-        const auto console = std::make_shared<spdlog::sinks::wincolor_stderr_sink_st>();
-        const auto errorDump = std::make_shared<spdlog::sinks::rotating_file_sink_st>("logs/dump.log", MAX_LOG_SIZE, MAX_LOGS);
-        std::vector<spdlog::sink_ptr> sinks{console, errorDump};
-
-        Logger = std::make_shared<spdlog::logger>(DEF_LOG, sinks.begin(), sinks.end());
-        spdlog::register_logger(Logger);
-    }
-
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-
-        SetUpLog();
-
+        
+        Log::Print()->info("Loading Basilisk Engine");
+        
         this->Renderer.InitGLFW();
 
         this->Renderer.SetGlVersion();
@@ -46,6 +29,8 @@ namespace basilisk
         this->Renderer.SetWindowRef(*this->Window);
 
         this->InputSystem = Input(this->Window);
+        
+        Log::Print()->info("Loading Complete");
 
     }
 
@@ -125,6 +110,7 @@ namespace basilisk
         auto old = std::chrono::system_clock::now();
         std::chrono::time_point<std::chrono::system_clock> now = old;
 
+        Log::Print()->info("Running game...");
         while (!this->WindowShouldClose())
         {
             this->InputSystem.UpdateInputs();

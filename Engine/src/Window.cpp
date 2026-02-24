@@ -1,25 +1,23 @@
 #include "Window.h"
 
-#include <spdlog/spdlog.h>
-
-#include "Loggers.h"
+#include "Log.h"
 #include "Renderer.h"
 
 namespace basilisk
 {
-    const std::shared_ptr<spdlog::logger> Window::Logger = spdlog::get(DEF_LOG);
     
     Window::Window(const char* windowName, const glm::ivec2& size) :
         Size(size)
     {
+        Log::Print()->info("Creating window");
+        
         /* Create a windowed mode window and its OpenGL context */
         this->WindowP = glfwCreateWindow(size.x, size.y, windowName, nullptr, nullptr);
         
         if (!this->WindowP)
         {
             glfwTerminate();
-            spdlog::get(DEF_LOG)->error("Failed to create Window");
-            spdlog::get(DEF_LOG)->flush();
+            Log::Print()->error("Failed to create Window");
             abort();
         }
         glfwMakeContextCurrent(this->WindowP);

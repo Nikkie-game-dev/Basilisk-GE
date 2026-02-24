@@ -1,6 +1,7 @@
 #pragma once
 #include "Colors.h"
 #include "Entity.h"
+#include "CollisionManager.h"
 
 namespace basilisk
 {
@@ -49,11 +50,13 @@ namespace basilisk
         void Init() override;
         void Draw() override;
 
+        void CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos);
     protected:
         Entity2D() = default;
         virtual ~Entity2D() = default;
 
         Color Color = Color::Red;
+        glm::vec2 PreviousPos = {0.0f, 0.0f};
     private:
         // These functions are private to make 2D entities use 2D corresponding functions
         [[nodiscard]] glm::vec3 GetPosition() const override;

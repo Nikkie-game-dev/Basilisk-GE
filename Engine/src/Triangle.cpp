@@ -2,8 +2,6 @@
 
 #include <array>
 
-#include "Renderer.h"
-
 namespace basilisk
 {
 

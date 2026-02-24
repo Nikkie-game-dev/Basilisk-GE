@@ -1,6 +1,5 @@
 #pragma once
 #include <filesystem>
-#include <spdlog/spdlog.h>
 #include <string>
 
 #include "Export.h"
@@ -28,14 +27,22 @@ namespace basilisk
     class BASILISK_API TextureImporter
     {
     public:
+
+        struct TextureData
+        {
+            unsigned int textureID;
+            int width;
+            int height;
+        };
+
         /// <summary>
         /// Loads a texture to GPU from an image directory.
         /// </summary>
         /// <param name="imageDir">Relative path to image directory</param>
         /// <param name="filter"></param>
         /// <param name="fit"></param>
-        /// <returns>Id of loaded texture</returns>
-        static unsigned int MakeTexture(const std::string& imageDir,
+        /// <returns>Data of the loaded texture.</returns>
+        static TextureData MakeTextureData(const std::string& imageDir,
                                         Filters filter = Filters::LINEAR,
                                         FitMode fit = FitMode::REPEAT);
 
@@ -56,7 +63,6 @@ namespace basilisk
         static void SetFilter(const Filters& filter);
         static void SetFit(const FitMode& fit);
         static void FreeImage(unsigned char* data);
-        static const std::shared_ptr<spdlog::logger> Logger;
     };
     
 } // namespace basilisk

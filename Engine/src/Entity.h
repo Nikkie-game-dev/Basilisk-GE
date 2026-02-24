@@ -153,8 +153,5 @@ namespace basilisk
         glm::vec3 Position = {0, 0, 0};
         glm::vec3 Scaling = {1, 1, 1};
         glm::vec3 Rotation = {0, 0, 0};
-        
-        static const std::shared_ptr<spdlog::logger> Logger;
-
     };
 } // basilisk 

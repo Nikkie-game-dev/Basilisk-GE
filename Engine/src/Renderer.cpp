@@ -8,24 +8,23 @@
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "Window.h"
 
 namespace basilisk
 {
-    const std::shared_ptr<spdlog::logger> Renderer::Logger = spdlog::get(DEF_LOG);
-
     void Renderer::InitGLFW()
     {
+        Log::Print()->info("Loading GLFW");
         if (!glfwInit())
         {
             const char* description;
             int errorCode = glfwGetError(&description);
 
-            Logger->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
-            Logger->flush();
+            Log::Print()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
             abort();        
         }
+        Log::Print()->info("GLFW loaded");
     }
     void Renderer::SetGlVersion()
     {
@@ -36,17 +35,20 @@ namespace basilisk
 
     void Renderer::InitGL() const
     {
+        
+        Log::Print()->info("Loading GLEW");
         if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
-            Logger->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
+            Log::Print()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
                           std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode)))); //huh?
-            Logger->flush();
             abort();            
         }
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         stbi_set_flip_vertically_on_load(true);
+        
+        Log::Print()->info("GLEW loaded");
     }
 
     void Renderer::LoadProjectionMatrix()

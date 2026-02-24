@@ -2,6 +2,7 @@
 #include "BaseGame.h"
 #include "Basilisk/TileMap.h"
 #include "Player.h"
+#include "CollisionBox.h"
 
 namespace game
 {
@@ -17,6 +18,7 @@ namespace game
     private:
         basilisk::TileMap Map;
         Player Player;
+        CollisionBox CollisionBox;
     };
 
 } // namespace game

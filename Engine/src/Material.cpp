@@ -2,18 +2,15 @@
 
 
 #include <GL/glew.h>
-#include <spdlog/spdlog.h>
 
 #include "Colors.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "glm/gtc/type_ptr.hpp"
 
 namespace basilisk
 {
     using ShaderProc = unsigned int;
-
-    const std::shared_ptr<spdlog::logger> Material::Logger = spdlog::get(DEF_LOG);
-
+    
     Material::Material(const bool isTextured, const bool hasFilter) : 
         IsTextured(isTextured), HasFilter(hasFilter)
     {
@@ -36,12 +33,16 @@ namespace basilisk
 
     void Material::BuildShader()
     {
+        Log::Print()->info("Building shaders");
         const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
         this->ShaderProgram = glCreateProgram();
+        Log::Print()->info("Shader id: {}", this->ShaderProgram);
 
         GLint hasCompiled;
+
+        Log::Print()->info("Compiling shaders");
 
         glShaderSource(vertexShader, 1, &VertexShader, nullptr);
         glCompileShader(vertexShader);
@@ -72,6 +73,7 @@ namespace basilisk
             ShaderCompileError(fragmentShader);
         }
 
+        Log::Print()->info("Linking and attaching shader program");
         /*Shader program attachment and linking*/
         glAttachShader(this->ShaderProgram, vertexShader);
         glAttachShader(this->ShaderProgram, fragmentShader);
@@ -83,9 +85,13 @@ namespace basilisk
             ProgramCompileError(this->ShaderProgram);
         }
 
+        Log::Print()->info("Deleting compiled shaders");
+        
         /*Deletion*/
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
+        
+        this->IsMatBuilt = true;
     }
 
     SPProc Material::GetShaderProgram() const
@@ -107,14 +113,19 @@ namespace basilisk
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
+    bool Material::IsMaterialBuilt()
+    {
+        return this->IsMatBuilt;
+    }
+    
     void Material::ShaderCompileError(const ShaderProc& shader)
     {
         constexpr int infoBufferSize = 512;
 
         char infoLog[infoBufferSize];
         glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-        Logger->error("Shader failed to compile:\n{}", std::string(infoLog));
-        Logger->flush();
+        Log::Print()->error("Shader failed to compile:\n{}", std::string(infoLog));
+        
         abort();
     }
 
@@ -124,8 +135,8 @@ namespace basilisk
 
         char infoLog[infoBufferSize];
         glGetProgramInfoLog(program, infoBufferSize, nullptr, infoLog);
-        Logger->error("Shader program failed to compile:\n{}", std::string(infoLog));
-        Logger->flush();
+        Log::Print()->error("Shader program failed to compile:\n{}", std::string(infoLog));
+        
         abort();
     }
 

@@ -1,15 +1,13 @@
 #include "CollisionManager.h"
 
-#include <spdlog/spdlog.h>
-
-#include "Loggers.h"
+#include "Log.h"
 
 namespace basilisk
 {
-    const std::shared_ptr<spdlog::logger> CollisionManager::Logger = spdlog::get(DEF_LOG);
-    
-    bool CollisionManager::IsCollidingAaBb(const glm::vec2& positionA, const glm::vec2& sizeA, 
-                                           const glm::vec2& positionB, const glm::vec2& sizeB)
+    bool CollisionManager::IsCollidingAaBb(const glm::vec2& positionA,
+                                           const glm::vec2& sizeA,
+                                           const glm::vec2& positionB,
+                                           const glm::vec2& sizeB)
     {
         const glm::vec2 aBottomLeft = {positionA.x - sizeA.x / 2, positionA.y - sizeA.y / 2};
         const glm::vec2 bBottomLeft = {positionB.x - sizeB.x / 2, positionB.y - sizeB.y / 2};
@@ -23,38 +21,31 @@ namespace basilisk
     {
         CollisionData data;
 
-        glm::vec2 vector = positionB - positionA;
-        const float hypotenuse = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
-
-        vector = {vector.x / hypotenuse, vector.y / hypotenuse};
-
-        if (abs(vector.x) >= abs(vector.y))
+        const glm::vec2 vector = positionB - positionA;
+        
+        if (vector.x > 0)
         {
-            if (vector.x > 0)
-            {
-                data.HorizontalDir = CollisionDir::RIGHT;
-            }
-            else if (vector.x < 0)
-            {
-                data.HorizontalDir = CollisionDir::LEFT;
-            }
+            data.HorizontalDir = CollisionDir::RIGHT;
         }
-        else if (abs(vector.x) < abs(vector.y))
+        else if (vector.x < 0)
         {
-            if (vector.y > 0)
-            {
-                data.VerticalDir = CollisionDir::UP;
-            }
-            else if (vector.y < 0)
-            {
-                data.VerticalDir = CollisionDir::DOWN;
-            }
+            data.HorizontalDir = CollisionDir::LEFT;
         }
+
+        if (vector.y > 0)
+        {
+            data.VerticalDir = CollisionDir::UP;
+        }
+        else if (vector.y < 0)
+        {
+            data.VerticalDir = CollisionDir::DOWN;
+        }
+
 
         if (data.VerticalDir == CollisionDir::NONE && data.HorizontalDir == CollisionDir::NONE)
         {
-            Logger->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
-                                        positionA.x, positionA.y, positionB.x, positionB.y);
+            Log::Print()->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
+                                positionA.x, positionA.y, positionB.x, positionB.y);
         }
 
         return data;

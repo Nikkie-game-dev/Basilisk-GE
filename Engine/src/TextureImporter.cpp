@@ -5,15 +5,13 @@
 #include <filesystem>
 
 #include "GL/glew.h"
-#include "Loggers.h"
+#include "Log.h"
 #include "stb_image.h"
 
 namespace basilisk
 {
     
-    const std::shared_ptr<spdlog::logger> TextureImporter::Logger = spdlog::get(DEF_LOG);
-
-    unsigned int TextureImporter::MakeTexture(const std::string& imageDir, const Filters filter, const FitMode fit)
+    TextureImporter::TextureData TextureImporter::MakeTextureData(const std::string& imageDir, Filters filter, FitMode fit)
     {
         int width;
         int height;
@@ -41,19 +39,19 @@ namespace basilisk
             break;
         }
 
-        const auto texture = GenTexture(data, width, height, channelType, filter, fit);
+        const auto textureID = GenTexture(data, width, height, channelType, filter, fit);
 
         FreeImage(data);
-        return texture;
+        return {.textureID = textureID, .width = width, .height = height};
     }
 
     unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels)
     {
+        Log::Print()->info("Loading Image at {}", imageDir);
 
         if (!std::filesystem::exists(imageDir))
         {
-            Logger->error("Image at {} not found", imageDir);
-            Logger->flush();
+            Log::Print()->error("Image at {} not found", imageDir);
             return nullptr;
         }
         
@@ -61,8 +59,7 @@ namespace basilisk
 
         if (!data)
         {
-            Logger->error("Could not load data at {}", imageDir);
-            Logger->flush();
+            Log::Print()->error("Could not load data at {}", imageDir);
             return nullptr;        
         }
 
@@ -76,6 +73,7 @@ namespace basilisk
                                              const Filters& filter,
                                              const FitMode& fit)
     {
+        Log::Print()->info("Generating texture");
         unsigned int texture;
 
         glGenTextures(1, &texture);
@@ -83,6 +81,8 @@ namespace basilisk
         glActiveTexture(GL_TEXTURE0);
 
         glBindTexture(GL_TEXTURE_2D, texture);
+        
+        Log::Print()->info("Texture Id: {}", texture);
 
         SetFit(fit);
         SetFilter(filter);

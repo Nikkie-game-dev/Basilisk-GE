@@ -44,7 +44,7 @@ namespace basilisk
 
         if (data.VerticalDir == CollisionDir::NONE && data.HorizontalDir == CollisionDir::NONE)
         {
-            Log::Print()->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
+            Log::Get()->error("A collision  with none direction was detected. Position A: ({}, {})\n,  Position B: ({}, {})",
                                 positionA.x, positionA.y, positionB.x, positionB.y);
         }
 

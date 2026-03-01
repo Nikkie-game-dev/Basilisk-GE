@@ -7,7 +7,7 @@
 
 namespace basilisk
 {
-    std::shared_ptr<spdlog::logger>& Log::Print()
+    std::shared_ptr<spdlog::logger>& Log::Get()
     {
         static auto log = Log();
         

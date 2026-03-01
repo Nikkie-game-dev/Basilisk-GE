@@ -76,8 +76,6 @@ namespace basilisk
 
     void Entity::SetMaterial(const std::shared_ptr<Material>& material)
     {
-        // When shared_ptr is in rhs, it inits the shared_ptr in lhs and increments one ref count. When ref count == 0, the object referenced
-        // is deleted.
         this->Mat = material;
     }
 
@@ -104,7 +102,7 @@ namespace basilisk
     {
         if (!Mat)
         {
-            Log::Print()->error("Material has not being assigned. Must be set before this call");
+            Log::Get()->error("Material has not being assigned. Must be set before this call");
             abort();
         }
         return Mat;

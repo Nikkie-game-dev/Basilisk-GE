@@ -115,15 +115,15 @@ namespace basilisk
         {
             this->InputSystem.UpdateInputs();
 
+            now = std::chrono::system_clock::now();
             this->Delta = std::chrono::duration<float>(now - old).count();
-            old = std::chrono::system_clock::now();
+            old = now;
 
             this->Update();
             this->Renderer.StartDraw();
             this->Draw();
             this->Renderer.EndDraw();
 
-            now = std::chrono::system_clock::now();
         }
 
         this->Close();

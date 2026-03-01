@@ -37,7 +37,7 @@ namespace basilisk
         /// Updates the animation
         /// </summary>
         /// <param name="delta"></param>
-        void UpdateAnimation(const float& delta);
+        void UpdateAnimation(const float delta);
 
         /// <summary>
         /// Transitions into a new animation

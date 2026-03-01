@@ -39,7 +39,7 @@ namespace basilisk
         /// <param name="g">Green value</param>
         /// <param name="b">Blue vaue</param>
         /// <param name="a">Transparency value</param>
-        Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float& a);
+        Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float a);
 
         /// <summary>
         /// Constructor for Color, without a transparency value. All values are from 0 to 255.

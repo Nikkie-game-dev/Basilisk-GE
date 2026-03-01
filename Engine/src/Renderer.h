@@ -47,10 +47,11 @@ namespace basilisk
         /// <param name="VboID">Id of buffer to fill and bind</param>
         /// <param name="sizeArray">Size of array to fill buffer with</param>
         /// <param name="array">Array of data</param>
-        static void BindAndFillVbo(const unsigned int& VboID, const int& sizeArray, const float array[]);
+        static void BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[]);
         
         /// <copydoc href="BindAndFill">
         static void BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[]);
+        static void BindAndFillEbo(const unsigned int EboId, const int sizeArray, const unsigned int array[]);
 
         /// <summary>
         /// Sets attribute pointer.
@@ -59,9 +60,9 @@ namespace basilisk
         /// <param name="size">Amount of vertices per value</param>
         /// <param name="strideAmount">Size of stride</param>
         /// <param name="start">Start of value</param>
-        static void SetAttribPointer(const int& index, const int& size, const int& strideAmount, const int& start);
+        static void SetAttribPointer(const int index, const int size, const int strideAmount, const int start);
         
-        void BindBufferData(const unsigned int& vbo, const int& amountVertices, float* arrayData, const int& verticesBefore, const int& sizeDataInVbo);
+        void BindBufferDataUV(const unsigned int vbo, const int amountVertices, float* arrayData, const int verticesBefore, const int sizeDataInVbo);
 
 #pragma endregion
         

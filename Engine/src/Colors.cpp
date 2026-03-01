@@ -20,7 +20,7 @@ namespace basilisk
         this->A = normalizedColor.A;
     }
 
-    Color::Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float& a)
+    Color::Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float a)
     {
         this->R = r;
         this->G = g;

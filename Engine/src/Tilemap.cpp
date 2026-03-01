@@ -196,8 +196,6 @@ namespace basilisk
     void TileMap::GenerateTiles()
     {
         const auto commonMat = Material::New(true, false);
-        //todo: remove
-        const auto debugMat = Material::New(true, true);
 
         const auto layersAmount = this->Data[Keys.Layers].size();
 
@@ -240,7 +238,7 @@ namespace basilisk
 
                 const auto currentTile = this->Tiles[layer][row][col];
 
-                currentTile->SetMaterial(collider ? debugMat : commonMat);
+                currentTile->SetMaterial(commonMat);
                 currentTile->Init();
                 currentTile->SetPosition({scale.x * (static_cast<float>(col) + 0.5f),
                                           scale.y * (static_cast<float>(this->Data[Keys.MapHeight]) - static_cast<float>(row) - 0.5f)});

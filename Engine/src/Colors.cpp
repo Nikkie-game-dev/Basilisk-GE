@@ -1,10 +1,11 @@
 #include "Colors.h"
+#include <cfloat>
 
 namespace basilisk
 {
     // Color palette from https://coolors.co/palette/f00314-ff8019-fae603-28e10a-3bb5ff-0500c7-5c03fa-de00ed
 
-    Color::Normalize::Normalize(const Color& color)
+    void Color::Normalize(const Color& color)
     {
         this->R = static_cast<float>(color.R) / static_cast<float>(MaxValue);
         this->G = static_cast<float>(color.G) / static_cast<float>(MaxValue);
@@ -12,19 +13,11 @@ namespace basilisk
         this->A = color.A;
     }
 
-    Color::Color(const Normalize& normalizedColor)
-    {
-        this->R = static_cast<unsigned char>(normalizedColor.R * static_cast<float>(MaxValue));
-        this->G = static_cast<unsigned char>(normalizedColor.G * static_cast<float>(MaxValue));
-        this->B = static_cast<unsigned char>(normalizedColor.B * static_cast<float>(MaxValue));
-        this->A = normalizedColor.A;
-    }
-
     Color::Color(const unsigned char& r, const unsigned char& g, const unsigned char& b, const float a)
     {
-        this->R = r;
-        this->G = g;
-        this->B = b;
+        this->R = r < 1.0f + FLT_EPSILON ? static_cast<unsigned char>(r * static_cast<float>(MaxValue)) : r;
+        this->G = g < 1.0f + FLT_EPSILON ? static_cast<unsigned char>(g * static_cast<float>(MaxValue)) : g;
+        this->B = b < 1.0f + FLT_EPSILON ? static_cast<unsigned char>(b * static_cast<float>(MaxValue)) : b;
 
         if (a >= MaxValueAlpha)
         {
@@ -40,8 +33,7 @@ namespace basilisk
         }
     }
 
-    Color::Color(const unsigned char& r, const unsigned char& g, const unsigned char& b) : 
-        R(r), G(g), B(b), A(1.0)
+    Color::Color(const unsigned char& r, const unsigned char& g, const unsigned char& b) : R(r), G(g), B(b), A(1.0)
     {
     }
 
@@ -57,4 +49,4 @@ namespace basilisk
     const unsigned char Color::MaxValue = 255;
     const float Color::MaxValueAlpha = 1.0;
     const float Color::MinValueAlpha = 0.0;
-}
+} // namespace basilisk

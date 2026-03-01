@@ -30,9 +30,6 @@ namespace basilisk
 
     void Tile::Draw()
     {
-        if (HasCollision)
-            this->GetMaterial()->OverrideColorFilter(Color::Red);
-
         Entity2D::Draw();
     }
 

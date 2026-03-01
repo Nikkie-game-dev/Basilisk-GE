@@ -186,20 +186,4 @@ namespace basilisk
         const auto right = glm::normalize(glm::cross(glm::vec3(0, 1.0, 0), invDirection));
         this->CameraUp = glm::cross(invDirection, right);
     }
-
-
-#pragma region deprecated
-    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices, const Color& color) const
-    {
-        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
-        glUseProgram(shaderProg);
-        glUniform4f(vertexColorLocation,
-                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
-                    color.A);
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
-    }
-#pragma endregion
 } // basilisk

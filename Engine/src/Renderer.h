@@ -82,8 +82,6 @@ namespace basilisk
         /// <param name="amountIndices">Amount of indices</param>
         void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices) const;
         
-        [[deprecated]] void Draw(const SPProc& shaderProg, unsigned int& vao, int amountIndices, const Color& color) const;
-
         /// <summary>
         /// Makes Pre-draw calls.
         /// </summary>

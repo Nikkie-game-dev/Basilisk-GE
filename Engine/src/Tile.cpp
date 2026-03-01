@@ -8,10 +8,10 @@ namespace basilisk
         float vertices[] = {
             //@formatter:off
             // positions            // colors                    // texture coords
-            0.5f,  0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopRight.x,    frame.TopRight.y, // top right
-            0.5f,  -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomRight.x, frame.BottomRight.y, // bottom right
-            -0.5f, -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomLeft.x,  frame.BottomLeft.y, // bottom left
-            -0.5f, 0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopLeft.x,     frame.TopLeft.y // top left
+            0.5f,  0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopRight.x,    frame.TopRight.y,
+            0.5f,  -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomRight.x, frame.BottomRight.y,
+            -0.5f, -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomLeft.x,  frame.BottomLeft.y,
+            -0.5f, 0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopLeft.x,     frame.TopLeft.y
             //@formatter:on
         };
 

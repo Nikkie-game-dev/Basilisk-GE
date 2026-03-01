@@ -21,9 +21,8 @@ namespace basilisk
         /// Constructor for material. It is not recommended to use this function, but use New().
         /// </summary>
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
+        /// <param name="hasFilter">If it has a color filter on top. Use OverrideColorFilter to set the color.</param>
         explicit Material(bool isTextured, bool hasFilter);
-
-        void OverrideColorFilter(const Color& color) const;
 
         /// <summary>
         /// Constructs materials and returns a shared pointer with the material.
@@ -31,6 +30,12 @@ namespace basilisk
         /// <param name="isTextured">If the color is supplied by the vertices or if it is supplied by the program (solid color).</param>
         /// <returns>Shared pointer with new Material</returns>
         static std::shared_ptr<Material> New(bool isTextured, bool hasFilter = false);
+
+        /// <summary>
+        /// Sets a color as a filter.
+        /// </summary>
+        /// <param name="color"></param>
+        void OverrideColorFilter(const Color& color) const;
 
         /// <summary>
         /// Builds and compiles shaders.

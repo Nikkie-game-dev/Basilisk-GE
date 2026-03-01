@@ -33,16 +33,16 @@ namespace basilisk
 
     void Material::BuildShader()
     {
-        Log::Print()->info("Building shaders");
+        Log::Get()->info("Building shaders");
         const ShaderProc vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const ShaderProc fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
         this->ShaderProgram = glCreateProgram();
-        Log::Print()->info("Shader id: {}", this->ShaderProgram);
+        Log::Get()->info("Shader id: {}", this->ShaderProgram);
 
         GLint hasCompiled;
 
-        Log::Print()->info("Compiling shaders");
+        Log::Get()->info("Compiling shaders");
 
         glShaderSource(vertexShader, 1, &VertexShader, nullptr);
         glCompileShader(vertexShader);
@@ -73,7 +73,7 @@ namespace basilisk
             ShaderCompileError(fragmentShader);
         }
 
-        Log::Print()->info("Linking and attaching shader program");
+        Log::Get()->info("Linking and attaching shader program");
         /*Shader program attachment and linking*/
         glAttachShader(this->ShaderProgram, vertexShader);
         glAttachShader(this->ShaderProgram, fragmentShader);
@@ -85,7 +85,7 @@ namespace basilisk
             ProgramCompileError(this->ShaderProgram);
         }
 
-        Log::Print()->info("Deleting compiled shaders");
+        Log::Get()->info("Deleting compiled shaders");
         
         /*Deletion*/
         glDeleteShader(vertexShader);
@@ -124,7 +124,7 @@ namespace basilisk
 
         char infoLog[infoBufferSize];
         glGetShaderInfoLog(shader, infoBufferSize, nullptr, infoLog);
-        Log::Print()->error("Shader failed to compile:\n{}", std::string(infoLog));
+        Log::Get()->error("Shader failed to compile:\n{}", std::string(infoLog));
         
         abort();
     }
@@ -135,12 +135,13 @@ namespace basilisk
 
         char infoLog[infoBufferSize];
         glGetProgramInfoLog(program, infoBufferSize, nullptr, infoLog);
-        Log::Print()->error("Shader program failed to compile:\n{}", std::string(infoLog));
+        Log::Get()->error("Shader program failed to compile:\n{}", std::string(infoLog));
         
         abort();
     }
 
-    const char* Material::VertexShader = "#version 330 core\n"
+    const char* Material::VertexShader = 
+        "#version 330 core\n"
         "layout (location = 0) in vec3 Pos;\n"
         "layout (location = 1) in vec4 Color;\n"
         "layout (location = 2) in vec2 TexCoord;\n"

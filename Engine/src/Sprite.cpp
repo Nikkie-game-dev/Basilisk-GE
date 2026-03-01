@@ -48,7 +48,7 @@ namespace basilisk
     }
 
 
-    void Sprite::UpdateAnimation(const float& delta)
+    void Sprite::UpdateAnimation(const float delta)
     {
         if (!this->Animation)
             return;
@@ -77,7 +77,7 @@ namespace basilisk
     void Sprite::UpdateCurrentFrame() const
     {
         constexpr int start = 7;
-        constexpr int amountVerticesPerCorner = 9;
+        constexpr int stride = 9;
 
         auto [topLeftUV, topRightUV, bottomLeftUV, bottomRightUV] = this->Animation->GetCurrentFrame();
 
@@ -85,14 +85,14 @@ namespace basilisk
 
         this->buffers.Vertices[start] = topRightUV.x;
         this->buffers.Vertices[start + 1] = topRightUV.y;
-        this->buffers.Vertices[start + amountVerticesPerCorner] = bottomRightUV.x;
-        this->buffers.Vertices[start + amountVerticesPerCorner + 1] = bottomRightUV.y;
-        this->buffers.Vertices[start + amountVerticesPerCorner * 2] = bottomLeftUV.x;
-        this->buffers.Vertices[start + amountVerticesPerCorner * 2 + 1] = bottomLeftUV.y;
-        this->buffers.Vertices[start + amountVerticesPerCorner * 3] = topLeftUV.x;
-        this->buffers.Vertices[start + amountVerticesPerCorner * 3 + 1] = topLeftUV.y;
+        this->buffers.Vertices[start + stride] = bottomRightUV.x;
+        this->buffers.Vertices[start + stride + 1] = bottomRightUV.y;
+        this->buffers.Vertices[start + stride * 2] = bottomLeftUV.x;
+        this->buffers.Vertices[start + stride * 2 + 1] = bottomLeftUV.y;
+        this->buffers.Vertices[start + stride * 3] = topLeftUV.x;
+        this->buffers.Vertices[start + stride * 3 + 1] = topLeftUV.y;
 
-        Renderer::GetInstance().BindBufferData(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
+        Renderer::GetInstance().BindBufferDataUV(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }
 
     void Sprite::FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const

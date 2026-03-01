@@ -8,7 +8,7 @@ namespace basilisk
     class BASILISK_API Log
     {
     public:
-        static std::shared_ptr<spdlog::logger>& Print();
+        static std::shared_ptr<spdlog::logger>& Get();
         ~Log();
 
         Log(const Log& other) = delete; // copy constructor

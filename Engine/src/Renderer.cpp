@@ -15,16 +15,16 @@ namespace basilisk
 {
     void Renderer::InitGLFW()
     {
-        Log::Print()->info("Loading GLFW");
+        Log::Get()->info("Loading GLFW");
         if (!glfwInit())
         {
             const char* description;
             int errorCode = glfwGetError(&description);
 
-            Log::Print()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
+            Log::Get()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
             abort();        
         }
-        Log::Print()->info("GLFW loaded");
+        Log::Get()->info("GLFW loaded");
     }
     void Renderer::SetGlVersion()
     {
@@ -36,11 +36,11 @@ namespace basilisk
     void Renderer::InitGL() const
     {
         
-        Log::Print()->info("Loading GLEW");
+        Log::Get()->info("Loading GLEW");
         if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
-            Log::Print()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
-                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode)))); //huh?
+            Log::Get()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
+                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode))));
             abort();            
         }
 
@@ -48,7 +48,7 @@ namespace basilisk
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         stbi_set_flip_vertically_on_load(true);
         
-        Log::Print()->info("GLEW loaded");
+        Log::Get()->info("GLEW loaded");
     }
 
     void Renderer::LoadProjectionMatrix()
@@ -57,30 +57,30 @@ namespace basilisk
         this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
-    void Renderer::BindAndFillVbo(const unsigned int& VboID, const int& sizeArray, const float array[])
+    void Renderer::BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[])
     {
         glBindBuffer(GL_ARRAY_BUFFER, VboID);
         glBufferData(GL_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[])
+    void Renderer::BindAndFillEbo(const unsigned int EboId, const int sizeArray, const unsigned int array[])
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeArray, array, GL_STATIC_DRAW);
     }
 
-    void Renderer::SetAttribPointer(const int& index, const int& size, const int& strideAmount, const int& start)
+    void Renderer::SetAttribPointer(const int index, const int size, const int strideAmount, const int start)
     {
         glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, strideAmount * static_cast<int>(sizeof(float)),
                               (void*)(start * sizeof(float)));
         glEnableVertexAttribArray(index);
     }
 
-    void Renderer::BindBufferData(const unsigned int& vbo,
-                                  const int& amountVertices,
-                                  float* arrayData,
-                                  const int& verticesBefore,
-                                  const int& sizeDataInVbo)
+    void Renderer::BindBufferDataUV(const unsigned int vbo,
+                                    const int amountVertices,
+                                    float* arrayData,
+                                    const int verticesBefore,
+                                    const int sizeDataInVbo)
     {
         BindAndFillVbo(vbo, amountVertices, arrayData);
         SetAttribPointer(2, sizeDataInVbo, sizeDataInVbo + verticesBefore, verticesBefore);
@@ -186,20 +186,4 @@ namespace basilisk
         const auto right = glm::normalize(glm::cross(glm::vec3(0, 1.0, 0), invDirection));
         this->CameraUp = glm::cross(invDirection, right);
     }
-
-
-#pragma region deprecated
-    void Renderer::Draw(const SPProc& shaderProg, unsigned int& vao, const int amountIndices, const Color& color) const
-    {
-        const int vertexColorLocation = glGetUniformLocation(shaderProg, "SolidColor");
-        glUseProgram(shaderProg);
-        glUniform4f(vertexColorLocation,
-                    static_cast<float>(color.R) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.G) / static_cast<float>(Color::MaxValue),
-                    static_cast<float>(color.B) / static_cast<float>(Color::MaxValue),
-                    color.A);
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, amountIndices, GL_UNSIGNED_INT, nullptr);
-    }
-#pragma endregion
 } // basilisk

@@ -9,7 +9,7 @@ namespace basilisk
     Window::Window(const char* windowName, const glm::ivec2& size) :
         Size(size)
     {
-        Log::Print()->info("Creating window");
+        Log::Get()->info("Creating window");
         
         /* Create a windowed mode window and its OpenGL context */
         this->WindowP = glfwCreateWindow(size.x, size.y, windowName, nullptr, nullptr);
@@ -17,7 +17,7 @@ namespace basilisk
         if (!this->WindowP)
         {
             glfwTerminate();
-            Log::Print()->error("Failed to create Window");
+            Log::Get()->error("Failed to create Window");
             abort();
         }
         glfwMakeContextCurrent(this->WindowP);

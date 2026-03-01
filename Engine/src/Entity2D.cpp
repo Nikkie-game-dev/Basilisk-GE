@@ -47,7 +47,6 @@ namespace basilisk
         if (!mat->IsProjectionSent)
         {
             Renderer::GetInstance().LoadProjectionMatrix();
-            mat->UpdateGLMatrix(Renderer::GetInstance().GetProjectionMatrix(), "projection");
             mat->IsProjectionSent = true;
         }
     }

@@ -37,8 +37,8 @@ namespace basilisk
         void GenUVFrames(const glm::vec2& frameBottomLeft,
                          const glm::vec2& frameSize,
                          const glm::vec2& textureSize,
-                         const float& animationDuration,
-                         const int& frameCount);
+                         const float animationDuration,
+                         const int frameCount);
 
         /// <summary>
         /// Replaces frames vector and animation duration. It's useful when you need to manually define each frame.

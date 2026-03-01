@@ -36,6 +36,6 @@ namespace basilisk
     
     private:
         GLFWwindow* WindowP = nullptr;
-        glm::ivec2 Size;
+        glm::ivec2 Size = glm::ivec2{0, 0};
     };
 } // basilisk 

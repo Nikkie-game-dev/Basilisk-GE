@@ -47,11 +47,11 @@ namespace basilisk
 
     unsigned char* TextureImporter::ImportImage(const std::string& imageDir, int& width, int& height, int& outColorChannels)
     {
-        Log::Print()->info("Loading Image at {}", imageDir);
+        Log::Get()->info("Loading Image at {}", imageDir);
 
         if (!std::filesystem::exists(imageDir))
         {
-            Log::Print()->error("Image at {} not found", imageDir);
+            Log::Get()->error("Image at {} not found", imageDir);
             return nullptr;
         }
         
@@ -59,7 +59,7 @@ namespace basilisk
 
         if (!data)
         {
-            Log::Print()->error("Could not load data at {}", imageDir);
+            Log::Get()->error("Could not load data at {}", imageDir);
             return nullptr;        
         }
 
@@ -73,7 +73,7 @@ namespace basilisk
                                              const Filters& filter,
                                              const FitMode& fit)
     {
-        Log::Print()->info("Generating texture");
+        Log::Get()->info("Generating texture");
         unsigned int texture;
 
         glGenTextures(1, &texture);
@@ -82,7 +82,7 @@ namespace basilisk
 
         glBindTexture(GL_TEXTURE_2D, texture);
         
-        Log::Print()->info("Texture Id: {}", texture);
+        Log::Get()->info("Texture Id: {}", texture);
 
         SetFit(fit);
         SetFilter(filter);

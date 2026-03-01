@@ -49,8 +49,12 @@ namespace basilisk
         /// <param name="array">Array of data</param>
         static void BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[]);
         
-        /// <copydoc href="BindAndFill">
-        static void BindAndFillEbo(const unsigned int& EboId, const int& sizeArray, const unsigned int array[]);
+        /// <summary>
+        /// Binds and fills the EBO.
+        /// </summary>
+        /// <param name="EboID">Id of buffer to fill and bind</param>
+        /// <param name="sizeArray">Size of array to fill buffer with</param>
+        /// <param name="array">Array of data</param>
         static void BindAndFillEbo(const unsigned int EboId, const int sizeArray, const unsigned int array[]);
 
         /// <summary>

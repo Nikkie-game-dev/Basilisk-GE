@@ -135,6 +135,8 @@ namespace basilisk
         /// <param name="amountIndices">Amount of indices</param>
         void FillIndices(unsigned int indices[], int amountIndices);
         
+        void InitMaterial(bool is3D = false);
+        
         glm::mat4 ModelMatrix = glm::mat4(1.0f);
 
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);

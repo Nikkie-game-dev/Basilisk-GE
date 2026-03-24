@@ -35,20 +35,10 @@ namespace basilisk
         this->PreviousPos = this->GetPosition2D();
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
     }
-
+    
     void Entity2D::Init()
     {
-        const auto mat = this->GetMaterial();
-        this->UpdateBuffers();
-
-        if (!mat->IsMaterialBuilt())
-            mat->BuildShader();
-
-        if (!mat->IsProjectionSent)
-        {
-            Renderer::GetInstance().LoadProjectionMatrix();
-            mat->IsProjectionSent = true;
-        }
+        InitMaterial();
     }
 
     void Entity2D::Draw()

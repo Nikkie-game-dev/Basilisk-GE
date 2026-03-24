@@ -9,7 +9,7 @@
 
 namespace basilisk
 {
-    
+
     Entity::~Entity()
     {
         delete[] this->buffers.Vertices;
@@ -145,6 +145,21 @@ namespace basilisk
         }
 
         this->buffers.AmountIndices = amountIndices;
+    }
+    
+    void Entity::InitMaterial(const bool is3D)
+    {
+        const auto mat = this->GetMaterial();
+        this->UpdateBuffers();
+
+        if (!mat->IsMaterialBuilt())
+            mat->BuildShader();
+
+        if (!mat->IsProjectionSent)
+        {
+            Renderer::GetInstance().LoadProjectionMatrix(is3D);
+            mat->IsProjectionSent = true;
+        }
     }
 
     void Entity::UpdateRotationMatrix()

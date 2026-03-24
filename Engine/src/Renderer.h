@@ -39,7 +39,7 @@ namespace basilisk
         /// <summary>
         /// Loads an orthogonal projection matrix. Should be called once.
         /// </summary>
-        void LoadProjectionMatrix();
+        void LoadProjectionMatrix(bool is3D, float aperture = 45.0f, float farPlane = 100.0f);
 
         /// <summary>
         /// Binds and fills the VBO.

@@ -22,7 +22,7 @@ namespace basilisk
             int errorCode = glfwGetError(&description);
 
             Log::Get()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
-            abort();        
+            abort();
         }
         Log::Get()->info("GLFW loaded");
     }
@@ -35,26 +35,35 @@ namespace basilisk
 
     void Renderer::InitGL() const
     {
-        
+
         Log::Get()->info("Loading GLEW");
         if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
             Log::Get()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
-                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode))));
-            abort();            
+                              std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode))));
+            abort();
         }
 
         glEnable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         stbi_set_flip_vertically_on_load(true);
-        
+
         Log::Get()->info("GLEW loaded");
     }
 
-    void Renderer::LoadProjectionMatrix()
+    void Renderer::LoadProjectionMatrix(const bool is3D, const float aperture, const float farPlane)
     {
         const auto size = this->Window->GetSize();
-        this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
+        if (is3D)
+        {
+            this->ProjectionMatrix = glm::perspective(glm::radians(aperture), static_cast<float>(size.x) / static_cast<float>(size.y), 0.1f,
+                                                      farPlane);
+        }
+        else
+        {
+            this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, farPlane);
+        }
     }
 
     void Renderer::BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[])
@@ -125,7 +134,7 @@ namespace basilisk
 
     void Renderer::StartDraw()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void Renderer::EndDraw() const

@@ -50,10 +50,9 @@ Game/lib/Basilisk-GE.dll
 # VCX 
 *.vcxproj.user
 
-Engine/obj/
-Engine/bin/
-Game/obj/
-Game/bin/
+*/obj/
+*/bin/
+
 Game/lib/Basilisk-GE.lib
 
 Game/lib/.void

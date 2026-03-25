@@ -1,7 +1,5 @@
 #include "Animation.h"
 
-#include <iostream>
-
 namespace basilisk
 {
     int Animation::IdsCounter = 0;
@@ -65,39 +63,22 @@ namespace basilisk
 
     void Animation::Play()
     {
-
-#ifdef CONSOLE_OUTPUT_ENABLED
-        std::cout << "Animation playing. ID: " << this->Id << ". Address: " << this << "/n";
-#endif
-
         this->IsPlaying = true;
     }
 
     void Animation::Pause()
     {
-#ifdef CONSOLE_OUTPUT_ENABLED
-        std::cout << "Animation pausing. ID: " << this->Id << ". Address: " << this << "/n";
-#endif
-
         this->IsPlaying = false;
     }
 
     void Animation::Stop()
     {
-#ifdef CONSOLE_OUTPUT_ENABLED
-        std::cout << "Animation stopping. ID: " << this->Id << ". Address: " << this << "/n";
-#endif
-
         this->IsPlaying = false;
         this->Reset();
     }
 
     void Animation::Reset()
     {
-#ifdef CONSOLE_OUTPUT_ENABLED
-        std::cout << "Animation resetting. ID: " << this->Id << ". Address: " << this << "/n";
-#endif
-
         this->CurrentFrameIndex = 0;
     }
 

@@ -5,6 +5,9 @@
 
 namespace basilisk
 {
+    using namespace utils;
+    using namespace rendering;
+    
     /// <summary>
     /// A 2D sprite. It's a textured entity that can have animations.
     /// </summary>

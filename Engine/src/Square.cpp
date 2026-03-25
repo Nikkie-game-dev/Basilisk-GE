@@ -1,6 +1,8 @@
 #include "Square.h"
 
 #include <array>
+
+#include "Colors.h"
 #include "Entity.h"
 
 namespace basilisk
@@ -9,7 +11,7 @@ namespace basilisk
     Square::Square(const glm::vec2& center,
                    const glm::vec2& size,
                    const bool isSolidColor,
-                   const basilisk::Color color = basilisk::Color(0, 0, 0)) :
+                   const utils::Color color = utils::Color(0, 0, 0)) :
         Shape(color, isSolidColor)
     {
         this->Entity2D::SetPosition(center);

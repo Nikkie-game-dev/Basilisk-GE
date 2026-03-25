@@ -8,7 +8,7 @@ namespace basilisk
     {
         this->Id = IdsCounter;
         IdsCounter++;
-        this->Frames = std::vector<Frame>();
+        this->Frames = std::vector<utils::Frame>();
     }
 
     void Animation::Update(float delta, bool& outHasChanged)
@@ -45,18 +45,18 @@ namespace basilisk
             const float x = frameBottomLeft.x + frameSize.x * static_cast<float>(i);
             const float y = frameBottomLeft.y;
 
-            Frame frame = Frame({x, y}, frameSize, textureSize);
+            utils::Frame frame = utils::Frame({x, y}, frameSize, textureSize);
             this->Frames[i] = frame;
         }
     }
 
-    void Animation::ReplaceFrames(const std::vector<Frame>& frames, const float animationDuration)
+    void Animation::ReplaceFrames(const std::vector<utils::Frame>& frames, const float animationDuration)
     {
         this->AnimationDurationMs = animationDuration * 1000;
         this->Frames = frames;
     }
 
-    Frame Animation::GetCurrentFrame() const
+    utils::Frame Animation::GetCurrentFrame() const
     {
         return this->Frames.at(this->CurrentFrameIndex == -1 ? 0 : this->CurrentFrameIndex);
     }

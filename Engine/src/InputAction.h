@@ -4,8 +4,11 @@
 
 namespace basilisk
 {
-    class Window;
-    
+    namespace rendering
+    {
+        class Window;
+    }
+
     enum class Keys
     {
         UNSET,
@@ -71,7 +74,7 @@ namespace basilisk
         /// </summary>
         /// <param name="window">Window to associate context</param>
         /// <param name="key">Key to associate</param>
-        InputAction(Window* window, const Keys& key);
+        InputAction(rendering::Window* window, const Keys& key);
 
         /// <summary>
         /// Checks if the key is currently not pressed.
@@ -100,7 +103,7 @@ namespace basilisk
         static int ConvertKeys(Keys key);
         bool IsCurrentlyDown = false;
         bool WasDown = false;
-        Window* Window;
+        rendering::Window* Window;
         int Key;
     };
 } // namespace basilisk 

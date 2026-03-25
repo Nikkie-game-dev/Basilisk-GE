@@ -1,17 +1,18 @@
 #pragma once
 
-
-
 #include "Export.h"
 #include "Input.h"
 
 namespace basilisk
 {
-    class Window;
-    class Renderer;
+    namespace rendering
+    {
+        class Window;
+        class Renderer;
+    }
 
     /// <summary>
-    /// Abstract class to be inherited by Game
+    /// Abstract class to be inherited by ExampleGame
     /// </summary>
     class BASILISK_API BaseGame
     {
@@ -59,17 +60,17 @@ namespace basilisk
 
     protected:
         /// <summary>
-        /// Abstract function to be implemented by Game. Called last in engine loop, between EndDraw and StartDraw
+        /// Abstract function to be implemented by ExampleGame. Called last in engine loop, between EndDraw and StartDraw
         /// </summary>
         virtual void Draw() = 0;
 
         /// <summary>
-        /// Abstract function to be implemented by Game. Called before the engine loop
+        /// Abstract function to be implemented by ExampleGame. Called before the engine loop
         /// </summary>
         virtual void Init() = 0;
 
         /// <summary>
-        /// Abstract function to be implemented by Game. Called before Draw() in engine loop
+        /// Abstract function to be implemented by ExampleGame. Called before Draw() in engine loop
         /// </summary>
         virtual void Update() = 0;
 
@@ -88,17 +89,15 @@ namespace basilisk
         float GetDelta();
 
         Input& GetInputSystem();
-        
-        Renderer& Renderer;
-    
 
+        rendering::Renderer& Renderer;
 
     private:
         const char* WindowName;
         int X;
         int Y;
         float Delta = 0;
-        Window* Window;
+        rendering::Window* Window;
         Input InputSystem;
     };
 

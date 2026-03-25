@@ -1,11 +1,12 @@
 #include "Triangle.h"
 
+#include <Colors.h>
 #include <array>
 
 namespace basilisk
 {
 
-    Triangle::Triangle(const glm::vec2& center, const glm::vec2& size, const bool isSolid, const basilisk::Color& color) :
+    Triangle::Triangle(const glm::vec2& center, const glm::vec2& size, const bool isSolid, const utils::Color& color) :
         Shape(color, isSolid)
     {
         this->Entity2D::SetPosition(center);
@@ -26,7 +27,7 @@ namespace basilisk
         constexpr int amountVert = 3;
         constexpr int amountDim = 3;
 
-        std::array<float, amountVert * (amountDim + Color::ColorParamsAmount)> vertices;
+        std::array<float, amountVert * (amountDim + utils::Color::ColorParamsAmount)> vertices;
 
         if (!this->IsSolid)
         {
@@ -41,7 +42,7 @@ namespace basilisk
         }
         else
         {
-            const auto color = Color::Normalize(this->Color);
+            const auto color = utils::Color::Normalize(this->Color);
             //@formatter:off
             vertices = 
             {

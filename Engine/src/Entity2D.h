@@ -56,7 +56,8 @@ namespace basilisk
         Entity2D() = default;
         virtual ~Entity2D() = default;
 
-        Color Color = Color::Red;
+        utils::Color Color = utils::Color::Red;
+        char test = utils::Color::MaxValue;
         glm::vec2 PreviousPos = {0.0f, 0.0f};
 
     private:

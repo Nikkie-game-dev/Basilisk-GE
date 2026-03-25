@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Colors.h"
 #include "Entity2D.h"
-#include "Export.h"
 
 namespace basilisk
 {
@@ -15,7 +13,7 @@ namespace basilisk
         virtual ~Shape() = default;
 
     protected:
-        explicit Shape(const basilisk::Color& color, bool isSolid);
+        explicit Shape(const utils::Color& color, bool isSolid);
         
         /// <summary>
         /// Initializes the vertices that will be used for drawing.

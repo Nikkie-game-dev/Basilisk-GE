@@ -5,6 +5,9 @@
 
 namespace basilisk
 {
+    using namespace utils;
+    using namespace rendering;
+    
     Sprite::Sprite(const std::string& textureDir, const glm::vec2& center, const glm::vec2& size, 
                    const Filters filter, const FitMode fitMode)
     {

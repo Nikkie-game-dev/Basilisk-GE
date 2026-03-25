@@ -45,13 +45,13 @@ namespace basilisk
         /// </summary>
         /// <param name="frames"></param>
         /// <param name="animationDuration"></param>
-        void ReplaceFrames(const std::vector<Frame>& frames, float animationDuration);
+        void ReplaceFrames(const std::vector<utils::Frame>& frames, float animationDuration);
 
         /// <summary>
         /// Returns current Frame
         /// </summary>
         /// <returns>Current Frame</returns>
-        [[nodiscard]] Frame GetCurrentFrame() const;
+        [[nodiscard]] utils::Frame GetCurrentFrame() const;
 
         /// <summary>
         /// Enables update of animation.
@@ -90,7 +90,7 @@ namespace basilisk
         int CurrentFrameIndex = -1;
         float ElapsedTimeMs = 0;
         float AnimationDurationMs = 0;
-        std::vector<Frame> Frames;
+        std::vector<utils::Frame> Frames;
         bool IsPlaying = false;
 
         static int IdsCounter;

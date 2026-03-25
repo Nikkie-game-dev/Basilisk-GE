@@ -1,14 +1,19 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <memory>
 #include <string>
 
 #include "Export.h"
 #include "Renderer.h"
-#include "glm/glm.hpp"
 
 namespace basilisk
 {
+    namespace utils
+    {
+        class Color;
+    }
+
     using SPProc = unsigned int;
 
     /// <summary>
@@ -35,7 +40,7 @@ namespace basilisk
         /// Sets a color as a filter.
         /// </summary>
         /// <param name="color"></param>
-        void OverrideColorFilter(const Color& color) const;
+        void OverrideColorFilter(const utils::Color& color) const;
 
         /// <summary>
         /// Builds and compiles shaders.
@@ -74,7 +79,7 @@ namespace basilisk
         bool IsMaterialBuilt();
 
     private:
-        [[noreturn]] static void ShaderCompileError(const ShaderProc& shader);
+        [[noreturn]] static void ShaderCompileError(const rendering::ShaderProc& shader);
         [[noreturn]] static void ProgramCompileError(const SPProc& program);
         bool IsMatBuilt = false;
         bool IsTextured;

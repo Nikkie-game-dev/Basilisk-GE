@@ -7,7 +7,11 @@
 
 namespace basilisk
 {
-    class Window;
+    namespace rendering
+    {
+        class Window;
+    }
+
     /// <summary>
     /// Input system that handles updating and constructing all input actions.
     /// </summary>
@@ -18,8 +22,8 @@ namespace basilisk
         /// Constructs the input system. It is not needed to create it in a game, as BaseGame already comes with one.
         /// </summary>
         /// <param name="window">Window to provide context</param>
-        explicit Input(Window* window);
-        
+        explicit Input(rendering::Window* window);
+
         ~Input();
 
         /// <summary>
@@ -41,7 +45,7 @@ namespace basilisk
         void UpdateInputs();
 
     private:
-        Window* Window = nullptr;
+        rendering::Window* Window = nullptr;
         std::list<InputAction*> InputActions;
     };
 } // namespace basilisk 

@@ -9,6 +9,8 @@
 
 namespace basilisk
 {
+    using namespace rendering;
+    using namespace utils;
 
     Entity::~Entity()
     {

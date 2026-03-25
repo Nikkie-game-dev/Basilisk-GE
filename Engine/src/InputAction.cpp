@@ -1,5 +1,6 @@
 #include "InputAction.h"
 
+#include <GLFW/glfw3.h>
 #include <unordered_map>
 
 #include "Window.h"
@@ -58,7 +59,7 @@ namespace basilisk
         this->Key = ConvertKeys(Keys::UNSET);
     }
 
-    InputAction::InputAction(basilisk::Window* window, const Keys& key) :
+    InputAction::InputAction(rendering::Window* window, const Keys& key) :
         Window(window),
         Key(ConvertKeys(key))
     {

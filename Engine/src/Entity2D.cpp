@@ -44,7 +44,7 @@ namespace basilisk
     void Entity2D::Draw()
     {
         const auto mat = this->GetMaterial();
-        auto& renderer = Renderer::GetInstance();
+        auto& renderer = rendering::Renderer::GetInstance();
 
         renderer.UpdateViewMatrix();
         const auto matrix = renderer.GetProjectionMatrix() * renderer.GetViewMatrix() * this->ModelMatrix;

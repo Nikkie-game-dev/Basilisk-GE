@@ -1,5 +1,6 @@
 #include "BaseGame.h"
 
+#include <GLFW/glfw3.h>
 #include <chrono>
 #include <glm/glm.hpp>
 
@@ -11,16 +12,16 @@ namespace basilisk
 {
 
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
-        Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
+        Renderer(rendering::Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-        
-        Log::Get()->info("Loading Basilisk Engine");
+
+        utils::Log::Get()->info("Loading Basilisk Engine");
         
         this->Renderer.InitGLFW();
 
         this->Renderer.SetGlVersion();
 
-        this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+        this->Window = new rendering::Window(windowName, glm::ivec2(sizeX, sizeY));
 
         this->WindowName = windowName;
 
@@ -30,7 +31,7 @@ namespace basilisk
 
         this->InputSystem = Input(this->Window);
         
-        Log::Get()->info("Loading Complete");
+        utils::Log::Get()->info("Loading Complete");
 
     }
 
@@ -40,18 +41,18 @@ namespace basilisk
     }
 
     BaseGame::BaseGame(const BaseGame& other) :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
+        Renderer(rendering::Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
 
         this->WindowName = other.WindowName;
-        this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+        this->Window = new rendering::Window(other.WindowName, glm::vec2(other.X, other.Y));
         this->Renderer.SetWindowRef(*this->Window);
         this->InputSystem = Input(this->Window);
 
     }
 
     BaseGame::BaseGame(BaseGame&& other) noexcept :
-        Renderer(Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
+        Renderer(rendering::Renderer::GetInstance()), X(other.X), Y(other.Y), InputSystem(nullptr)
     {
 
         this->WindowName = other.WindowName;
@@ -73,7 +74,7 @@ namespace basilisk
             this->X = other.X;
             this->Y = other.Y;
             this->WindowName = other.WindowName;
-            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+            this->Window = new rendering::Window(other.WindowName, glm::vec2(other.X, other.Y));
             Renderer.SetWindowRef(*this->Window);
             this->InputSystem = Input(this->Window);
         }
@@ -110,7 +111,7 @@ namespace basilisk
         auto old = std::chrono::system_clock::now();
         std::chrono::time_point<std::chrono::system_clock> now = old;
 
-        Log::Get()->info("Running game...");
+        utils::Log::Get()->info("Running game...");
         while (!this->WindowShouldClose())
         {
             this->InputSystem.UpdateInputs();

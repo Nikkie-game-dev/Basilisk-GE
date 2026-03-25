@@ -9,6 +9,9 @@
 
 namespace basilisk
 {
+    using namespace utils;
+    using namespace rendering;
+    
     using ShaderProc = unsigned int;
     
     Material::Material(const bool isTextured, const bool hasFilter) : 
@@ -16,7 +19,7 @@ namespace basilisk
     {
     }
 
-    void Material::OverrideColorFilter(const Color& color) const
+    void Material::OverrideColorFilter(const utils::Color& color) const
     {
         glUseProgram(this->ShaderProgram);
 

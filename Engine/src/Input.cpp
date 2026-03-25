@@ -3,7 +3,7 @@
 namespace basilisk
 {
 
-    Input::Input(basilisk::Window* window) :
+    Input::Input(rendering::Window* window) :
         Window(window)
     {
     }

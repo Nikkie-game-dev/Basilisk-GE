@@ -5,7 +5,7 @@
 
 namespace basilisk
 {
-
+    
     /// <summary>
     /// 2D entity, all 2d entities must inherit from this class.
     /// </summary>
@@ -51,12 +51,14 @@ namespace basilisk
         void Draw() override;
 
         void CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos);
+
     protected:
         Entity2D() = default;
         virtual ~Entity2D() = default;
 
         Color Color = Color::Red;
         glm::vec2 PreviousPos = {0.0f, 0.0f};
+
     private:
         // These functions are private to make 2D entities use 2D corresponding functions
         [[nodiscard]] glm::vec3 GetPosition() const override;

@@ -33,11 +33,11 @@ namespace basilisk
 
         std::ifstream file(mapFilePath.string(), std::ios::in);
 
-        TextureImporter::TextureData textureData = TextureImporter::MakeTextureData(texturePath.string(), filter, fitMode);
-        this->Texture = textureData.textureID;
+        auto [TextureId, Width, Height] = TextureImporter::MakeTextureData(texturePath.string(), filter, fitMode);
+        this->Texture = TextureId;
 
         this->TextureSize = (textureSize.x <= 0.0f || textureSize.y <= 0.0f)
-            ? glm::vec2{textureData.width, textureData.height}
+            ? glm::vec2{Width, Height}
             : textureSize;
         this->PathToTexture = texturePath;
 

@@ -11,9 +11,9 @@ namespace basilisk
         this->Entity2D::SetPosition(center);
         this->Entity2D::SetScaling(size);
 
-        this->Texture = TextureImporter::MakeTextureData(textureDir, filter, fitMode).textureID;
+        this->Texture = TextureImporter::MakeTextureData(textureDir, filter, fitMode).TextureId;
 
-        float vertices[] = 
+        float vertices[] =
         {
             //@formatter:off
             // positions            // colors                    // texture coords
@@ -83,16 +83,16 @@ namespace basilisk
 
         FlipSprite(topRightUV, topLeftUV, bottomLeftUV, bottomRightUV);
 
-        this->buffers.Vertices[start] = topRightUV.x;
-        this->buffers.Vertices[start + 1] = topRightUV.y;
-        this->buffers.Vertices[start + stride] = bottomRightUV.x;
-        this->buffers.Vertices[start + stride + 1] = bottomRightUV.y;
-        this->buffers.Vertices[start + stride * 2] = bottomLeftUV.x;
-        this->buffers.Vertices[start + stride * 2 + 1] = bottomLeftUV.y;
-        this->buffers.Vertices[start + stride * 3] = topLeftUV.x;
-        this->buffers.Vertices[start + stride * 3 + 1] = topLeftUV.y;
+        this->Buffers.Vertices[start] = topRightUV.x;
+        this->Buffers.Vertices[start + 1] = topRightUV.y;
+        this->Buffers.Vertices[start + stride] = bottomRightUV.x;
+        this->Buffers.Vertices[start + stride + 1] = bottomRightUV.y;
+        this->Buffers.Vertices[start + stride * 2] = bottomLeftUV.x;
+        this->Buffers.Vertices[start + stride * 2 + 1] = bottomLeftUV.y;
+        this->Buffers.Vertices[start + stride * 3] = topLeftUV.x;
+        this->Buffers.Vertices[start + stride * 3 + 1] = topLeftUV.y;
 
-        Renderer::GetInstance().BindBufferDataUV(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
+        Renderer::GetInstance().BindBufferDataUV(Buffers.Vbo, Buffers.AmountVertices, Buffers.Vertices, start, 2);
     }
 
     void Sprite::FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const

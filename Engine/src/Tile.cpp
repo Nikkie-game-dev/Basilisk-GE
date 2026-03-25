@@ -2,8 +2,8 @@
 
 namespace basilisk
 {
-    Tile::Tile(const Frame& frame, const short col, const short row) : 
-        Col(col), Row(row), HasCollision(false)
+    Tile::Tile(const Frame& frame, const short col, const short row) :
+        HasCollision(false), Col(col), Row(row)
     {
         float vertices[] = {
             //@formatter:off

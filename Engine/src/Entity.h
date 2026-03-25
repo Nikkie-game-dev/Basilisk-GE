@@ -142,12 +142,11 @@ namespace basilisk
         glm::mat4 TranslateMatrix = glm::mat4(1.0f);
         glm::mat4 ScaleMatrix = glm::mat4(1.0f);
         glm::mat4 RotationMatrix = glm::mat4(1.0f);
-        Buffers buffers;
+        rendering::Buffers Buffers;
 
     private:
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
-        
         void UpdateModelMatrix();
         
         std::shared_ptr<Material> Mat = nullptr;

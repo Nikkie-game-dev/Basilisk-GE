@@ -50,7 +50,7 @@ namespace basilisk
         const auto matrix = renderer.GetProjectionMatrix() * renderer.GetViewMatrix() * this->ModelMatrix;
         mat->UpdateGLMatrix(matrix, "matrix");
 
-        renderer.Draw(mat->GetShaderProgram(), buffers.Vao, buffers.AmountIndices);
+        renderer.Draw(mat->GetShaderProgram(), Buffers.Vao, Buffers.AmountIndices);
 
     }
 

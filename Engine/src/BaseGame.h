@@ -86,11 +86,13 @@ namespace basilisk
         void Close() const;
 
         float GetDelta();
-        
+
         Input& GetInputSystem();
         
         Renderer& Renderer;
     
+
+
     private:
         const char* WindowName;
         int X;

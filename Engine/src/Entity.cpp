@@ -12,8 +12,8 @@ namespace basilisk
 
     Entity::~Entity()
     {
-        delete[] this->buffers.Vertices;
-        delete[] this->buffers.Indices;
+        delete[] this->Buffers.Vertices;
+        delete[] this->Buffers.Indices;
     }
 
     void Entity::SetRotation(float angle, const Axis& rotationAxis, const bool isRads)
@@ -116,35 +116,35 @@ namespace basilisk
 
     void Entity::UpdateBuffers()
     {
-        Renderer::GetInstance().GenerateVBs(buffers, this->Mat->GetIsTextured());
+        Renderer::GetInstance().GenerateVBs(Buffers, this->Mat->GetIsTextured());
     }
 
     void Entity::FillVertices(float vertices[], const int amountVertices)
     {
-        delete[] this->buffers.Vertices;
+        delete[] this->Buffers.Vertices;
 
-        this->buffers.Vertices = new float[amountVertices];
+        this->Buffers.Vertices = new float[amountVertices];
 
         for (int i = 0; i < amountVertices; ++i)
         {
-            this->buffers.Vertices[i] = vertices[i];
+            this->Buffers.Vertices[i] = vertices[i];
         }
 
-        this->buffers.AmountVertices = amountVertices;
+        this->Buffers.AmountVertices = amountVertices;
     }
 
     void Entity::FillIndices(unsigned int indices[], const int amountIndices)
     {
-        delete[] buffers.Indices;
+        delete[] Buffers.Indices;
 
-        this->buffers.Indices = new unsigned int[amountIndices];
+        this->Buffers.Indices = new unsigned int[amountIndices];
 
         for (int i = 0; i < amountIndices; ++i)
         {
-            this->buffers.Indices[i] = indices[i];
+            this->Buffers.Indices[i] = indices[i];
         }
 
-        this->buffers.AmountIndices = amountIndices;
+        this->Buffers.AmountIndices = amountIndices;
     }
     
     void Entity::InitMaterial(const bool is3D)

@@ -15,9 +15,8 @@ namespace basilisk
     void Triangle::SetVertices()
     {
         constexpr int amountVert = 3;
-        constexpr int amountDim = 3;
 
-        std::array<float, amountVert * (amountDim + Color::ColorParamsAmount)> vertices;
+        std::array<float, amountVert * (AMOUND_DIM + Color::ColorParamsAmount)> vertices;
 
         if (!this->IsSolid)
         {
@@ -46,7 +45,7 @@ namespace basilisk
         this->FillVertices(vertices.data(), sizeof(vertices));
 
     }
-    
+
     void Triangle::SetIndices()
     {
         unsigned int indices[]

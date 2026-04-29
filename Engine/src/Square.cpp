@@ -20,8 +20,7 @@ namespace basilisk
     void Square::SetVertices()
     {
         constexpr int amountVert = 4;
-        constexpr int amountDim = 3;
-        std::array<float, amountVert * (amountDim + Color::ColorParamsAmount)> vertices;
+        std::array<float, amountVert * (AMOUND_DIM + Color::ColorParamsAmount)> vertices;
 
         if (!this->IsSolid)
         {

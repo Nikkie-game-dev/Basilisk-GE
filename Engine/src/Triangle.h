@@ -11,7 +11,7 @@ namespace basilisk
     class BASILISK_API Triangle : public Shape2D
     {
     protected:
-        explicit Triangle(const vec2& center, const vec2& size, bool isSolid, const basilisk::Color& color);
+        Triangle(const vec2& center, const vec2& size, bool isSolid, const basilisk::Color& color);
 
     private:
         void SetVertices() override;

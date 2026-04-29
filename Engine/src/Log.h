@@ -1,7 +1,7 @@
 #pragma once
 #include <spdlog/spdlog.h>
 
-#include "Export.h"
+#include "Macros.h"
 
 namespace basilisk
 {

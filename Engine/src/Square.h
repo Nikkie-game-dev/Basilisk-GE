@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Export.h"
+#include "Macros.h"
 #include "Shape2D.h"
 
 namespace basilisk

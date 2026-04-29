@@ -10,20 +10,10 @@ namespace basilisk
                    const vec2& size,
                    const bool isSolidColor,
                    const basilisk::Color color = basilisk::Color(0, 0, 0)) :
-        Shape(color, isSolidColor)
+        Shape2D(isSolidColor, center, size, color)
     {
-        this->Entity2D::SetPosition(center);
-        this->Entity2D::SetScaling(size);
-
         Square::SetVertices();
-
-        unsigned int indices[]
-        {
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
-        };
-
-        this->FillIndices(indices, sizeof(indices));
+        Square::SetIndices();
     }
 
 
@@ -61,6 +51,17 @@ namespace basilisk
         }
         
         this->FillVertices(vertices.data(), sizeof(vertices));
+    }
+    
+    void Square::SetIndices()
+    {
+        unsigned int indices[]
+        {
+            0, 1, 3, // first triangle
+            1, 2, 3 // second triangle
+        };
+
+        this->FillIndices(indices, sizeof(indices));
     }
 
 } // namespace basilisk

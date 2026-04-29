@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Colors.h"
-#include "Entity2D.h"
 #include "Export.h"
 
 namespace basilisk
@@ -9,18 +7,16 @@ namespace basilisk
     /// <summary>
     /// Abstract class for primitive shapes.
     /// </summary>
-    class BASILISK_API Shape : public Entity2D
+    class BASILISK_API Shape
     {
-    public:
-        virtual ~Shape() = default;
-
     protected:
-        explicit Shape(const basilisk::Color& color, bool isSolid);
+        explicit Shape(bool isSolid);
         
         /// <summary>
         /// Initializes the vertices that will be used for drawing.
         /// </summary>
         virtual void SetVertices() = 0;
+        virtual void SetIndices() = 0;
         bool IsSolid;
     };
 } // basilisk 

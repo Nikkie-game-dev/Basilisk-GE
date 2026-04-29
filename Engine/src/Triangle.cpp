@@ -6,19 +6,10 @@ namespace basilisk
 {
 
     Triangle::Triangle(const vec2& center, const vec2& size, const bool isSolid, const basilisk::Color& color) :
-        Shape(color, isSolid)
+        Shape2D(isSolid, center, size, color)
     {
-        this->Entity2D::SetPosition(center);
-        this->Entity2D::SetScaling(size);
-
         Triangle::SetVertices();
-
-        unsigned int indices[]
-        {
-            0, 1, 2, // triangle
-        };
-
-        this->FillIndices(indices, sizeof(indices));
+        Triangle::SetIndices();
     }
 
     void Triangle::SetVertices()
@@ -54,5 +45,15 @@ namespace basilisk
 
         this->FillVertices(vertices.data(), sizeof(vertices));
 
+    }
+    
+    void Triangle::SetIndices()
+    {
+        unsigned int indices[]
+        {
+            0, 1, 2, // triangle
+        };
+
+        this->FillIndices(indices, sizeof(indices));
     }
 }

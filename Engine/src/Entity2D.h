@@ -22,13 +22,13 @@ namespace basilisk
         /// Getter for scale vector
         /// </summary>
         /// <returns>Returns 2D scale vector.</returns>
-        [[nodiscard]] glm::vec2 GetScale2D() const;
+        [[nodiscard]] vec2 GetScale2D() const;
 
         /// <summary>
         /// Getter for position vector
         /// </summary>
         /// <returns>Returns 2d position vector.</returns>
-        [[nodiscard]] glm::vec2 GetPosition2D() const;
+        [[nodiscard]] vec2 GetPosition2D() const;
 
         /// <summary>
         /// Setter for rotation angle.
@@ -40,27 +40,27 @@ namespace basilisk
         /// Setter for scale vector.
         /// </summary>
         /// <param name="scaling">Scaling vector.</param>
-        virtual void SetScaling(const glm::vec2& scaling);
+        virtual void SetScaling(const vec2& scaling);
         /// <summary>
         /// Setter for position vector.
         /// </summary>
         /// <param name="newPosition">Position vector</param>
-        virtual void SetPosition(const glm::vec2& newPosition);
+        virtual void SetPosition(const vec2& newPosition);
 
         void Init() override;
         void Draw() override;
 
-        void CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos);
+        void CollideAndMove(const CollisionManager::CollisionData& data, vec2 newPos);
     protected:
         Entity2D() = default;
         virtual ~Entity2D() = default;
 
         Color Color = Color::Red;
-        glm::vec2 PreviousPos = {0.0f, 0.0f};
+        vec2 PreviousPos = {0.0f, 0.0f};
     private:
         // These functions are private to make 2D entities use 2D corresponding functions
-        [[nodiscard]] glm::vec3 GetPosition() const override;
-        [[nodiscard]] glm::vec3 GetScale() const override;
-        [[nodiscard]] glm::vec3 GetRotation(bool isRads = false) const override;
+        [[nodiscard]] vec3 GetPosition() const override;
+        [[nodiscard]] vec3 GetScale() const override;
+        [[nodiscard]] vec3 GetRotation(bool isRads = false) const override;
     };
 } // namespace basilisk

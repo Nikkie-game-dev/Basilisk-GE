@@ -59,7 +59,7 @@ namespace basilisk
         /// </summary>
         /// <param name="matrix">Matrix to send to OpenGl.</param>
         /// <param name="name">Name of Matrix in Shader source</param>
-        void UpdateGLMatrix(const glm::mat4& matrix, const std::string& name) const;
+        void UpdateGLMatrix(const mat4& matrix, const std::string& name) const;
 
         /// <summary>
         /// Has the projection matrix been sent.

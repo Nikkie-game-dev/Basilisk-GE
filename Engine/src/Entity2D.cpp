@@ -10,12 +10,12 @@ namespace basilisk
         return GetRotation(isRads).z;
     }
 
-    glm::vec2 Entity2D::GetScale2D() const
+    vec2 Entity2D::GetScale2D() const
     {
         return GetScale();
     }
 
-    glm::vec2 Entity2D::GetPosition2D() const
+    vec2 Entity2D::GetPosition2D() const
     {
         return GetPosition();
     }
@@ -25,12 +25,12 @@ namespace basilisk
         this->Entity::SetRotation(angle, Axis::Z, isRads);
     }
 
-    void Entity2D::SetScaling(const glm::vec2& scaling)
+    void Entity2D::SetScaling(const vec2& scaling)
     {
         this->Entity::SetScaling({scaling.x, scaling.y, 1.0f});
     }
 
-    void Entity2D::SetPosition(const glm::vec2& newPosition)
+    void Entity2D::SetPosition(const vec2& newPosition)
     {
         this->PreviousPos = this->GetPosition2D();
         this->Entity::SetPosition({newPosition.x, newPosition.y, 0.0f});
@@ -56,7 +56,6 @@ namespace basilisk
         const auto mat = this->GetMaterial();
         auto& renderer = Renderer::GetInstance();
 
-        renderer.UpdateViewMatrix();
         const auto matrix = renderer.GetProjectionMatrix() * renderer.GetViewMatrix() * this->ModelMatrix;
         mat->UpdateGLMatrix(matrix, "matrix");
 
@@ -64,22 +63,22 @@ namespace basilisk
 
     }
 
-    glm::vec3 Entity2D::GetPosition() const
+    vec3 Entity2D::GetPosition() const
     {
         return Entity::GetPosition();
     }
 
-    glm::vec3 Entity2D::GetScale() const
+    vec3 Entity2D::GetScale() const
     {
         return Entity::GetScale();
     }
 
-    glm::vec3 Entity2D::GetRotation(const bool isRads) const
+    vec3 Entity2D::GetRotation(const bool isRads) const
     {
         return Entity::GetRotation(isRads);
     }
 
-    void Entity2D::CollideAndMove(const CollisionManager::CollisionData& data, glm::vec2 newPos)
+    void Entity2D::CollideAndMove(const CollisionManager::CollisionData& data, vec2 newPos)
     {
         if (data.HorizontalDir != CollisionManager::CollisionDir::NONE)
             newPos.x = this->PreviousPos.x;

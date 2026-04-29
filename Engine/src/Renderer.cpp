@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <stb_image.h>
 
+#include "Camera.h"
 #include "Colors.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
@@ -22,7 +23,7 @@ namespace basilisk
             int errorCode = glfwGetError(&description);
 
             Log::Get()->error("GLFW failed to initialize with error code {}.\n Error description: {}", errorCode, std::string(description));
-            abort();        
+            abort();
         }
         Log::Get()->info("GLFW loaded");
     }
@@ -35,26 +36,26 @@ namespace basilisk
 
     void Renderer::InitGL() const
     {
-        
+
         Log::Get()->info("Loading GLEW");
         if (const unsigned int errorCode = glewInit(); errorCode != GLEW_OK)
         {
             Log::Get()->error("GLEW failed to initialize with error code {}.\n Error description: {}", errorCode,
-                          std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode))));
-            abort();            
+                              std::string(reinterpret_cast<const char*>(glewGetErrorString(errorCode))));
+            abort();
         }
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         stbi_set_flip_vertically_on_load(true);
-        
+
         Log::Get()->info("GLEW loaded");
     }
 
     void Renderer::LoadProjectionMatrix()
     {
         const auto size = this->Window->GetSize();
-        this->ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
+        this->ProjectionMatrix = ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
     }
 
     void Renderer::BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[])
@@ -136,7 +137,16 @@ namespace basilisk
 
     void Renderer::UpdateViewMatrix()
     {
-        this->ViewMatrix = glm::lookAt(this->CameraPos, this->CameraTarget, this->CameraUp);
+        this->ViewMatrix = lookAt(this->Cameras[this->ActiveCamera]->GetPosition(), this->Cameras[this->ActiveCamera]->GetTarget(),
+                                  this->Cameras[this->ActiveCamera]->GetUp());
+    }
+
+    void Renderer::UpdateCameras() const
+    {
+        if (const auto& camera = this->Cameras[this->ActiveCamera]; camera)
+        {
+            camera->Update();
+        }
     }
 
     Renderer& Renderer::GetInstance()
@@ -145,28 +155,12 @@ namespace basilisk
         return instance;
     }
 
-    glm::vec3 Renderer::GetCameraUp() const
-    {
-        return this->CameraUp;
-    }
-
-
-    glm::vec3 Renderer::GetCameraTarget() const
-    {
-        return this->CameraTarget;
-    }
-
-    glm::vec3 Renderer::GetCameraPos() const
-    {
-        return this->CameraPos;
-    }
-
-    glm::mat4 Renderer::GetProjectionMatrix() const
+    mat4 Renderer::GetProjectionMatrix() const
     {
         return this->ProjectionMatrix;
     }
 
-    glm::mat4 Renderer::GetViewMatrix() const
+    mat4 Renderer::GetViewMatrix() const
     {
         return this->ViewMatrix;
     }
@@ -177,13 +171,49 @@ namespace basilisk
         this->Window = &window;
     }
 
-    Renderer::Renderer() :
-        CameraPos(0, 0, 3.0f),
-        CameraTarget(0, 0, 0),
-        Window(nullptr)
+    void Renderer::SetCameraActive(const unsigned cameraId)
     {
-        const auto invDirection = glm::normalize(CameraPos - CameraTarget);
-        const auto right = glm::normalize(glm::cross(glm::vec3(0, 1.0, 0), invDirection));
-        this->CameraUp = glm::cross(invDirection, right);
+        if (cameraId > Cameras.size())
+        {
+            Log::Get()->warn("Camera Id out of bounds.");
+        }
+        else
+        {
+            ActiveCamera = cameraId;
+        }
+    }
+
+    void Renderer::AddCamera(const std::shared_ptr<Camera>& camera)
+    {
+        if (this->Cameras.capacity() <= this->Cameras.size())
+        {
+            this->Cameras.reserve(this->Cameras.size() + 10);
+            this->Cameras.emplace_back(camera);
+        }
+        for (auto& spot : this->Cameras)
+        {
+            if (spot == nullptr)
+            {
+                spot = camera;
+                return;
+            }
+        }
+    }
+    
+    void Renderer::RemoveCamera(const std::shared_ptr<Camera>& camera)
+    {
+        for (auto& spot : this->Cameras)
+        {
+            if (spot == camera)
+            {
+                spot = nullptr;
+                return;
+            }
+        }
+    }
+    
+    void Renderer::RemoveCamera(const int cameraIndex)
+    {
+        this->Cameras[cameraIndex] = nullptr;
     }
 } // basilisk

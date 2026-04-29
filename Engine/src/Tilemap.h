@@ -17,18 +17,18 @@ namespace basilisk
 
         TileMap(const path& mapFilePath,
                 const path& texturePath,
-                const glm::vec2& screenSize,
+                const vec2& screenSize,
                 Filters filter = Filters::NEAREST,
                 FitMode fitMode = FitMode::REPEAT,
-                const glm::vec2& textureSize = {-1.0f, -1.0f});
+                const vec2& textureSize = {-1.0f, -1.0f});
 
         ~TileMap();
         void Init();
         void Draw() const;
         [[nodiscard]] float GetTileSize() const;
-        CollisionManager::CollisionData CheckCollision(const glm::vec2& entityPos, const glm::vec2& entityScale) const;
-        glm::ivec2 ConvertToTileMapPos(const glm::vec2& pos) const;
-        glm::vec2 ConvertToScreenPos(const glm::ivec2& pos) const;
+        CollisionManager::CollisionData CheckCollision(const vec2& entityPos, const vec2& entityScale) const;
+        ivec2 ConvertToTileMapPos(const vec2& pos) const;
+        vec2 ConvertToScreenPos(const ivec2& pos) const;
 
     private:
         struct Key
@@ -44,7 +44,7 @@ namespace basilisk
             const std::string Collider;
             const std::string Layer;
         };
-        void ClampCorners(glm::vec2& topLeftCorner, glm::vec2& bottomRightCorner) const;
+        void ClampCorners(vec2& topLeftCorner, vec2& bottomRightCorner) const;
         void GenerateFrames();
         void GenerateTiles();
 
@@ -58,9 +58,9 @@ namespace basilisk
 
         json Data;
 
-        glm::ivec2 TextureSize;
-        glm::ivec2 TilesAmount;
-        glm::ivec2 ScreenSize;
+        ivec2 TextureSize;
+        ivec2 TilesAmount;
+        ivec2 ScreenSize;
 
         static const Key Keys;
     };

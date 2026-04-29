@@ -1,8 +1,12 @@
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include "Export.h"
 #include "glm/glm.hpp"
 #include "Buffers.h"
+#include "Camera.h"
 
 
 namespace basilisk
@@ -101,6 +105,8 @@ namespace basilisk
         /// </summary>
         void UpdateViewMatrix();
         
+        void UpdateCameras() const;
+        
 #pragma endregion
 
 #pragma region Getters
@@ -111,34 +117,16 @@ namespace basilisk
         static Renderer& GetInstance();
 
         /// <summary>
-        /// Getter for the up vector of the camera.
-        /// </summary>
-        /// <returns>Camera's Up Vector</returns>
-        [[nodiscard]] glm::vec3 GetCameraUp() const;
-
-        /// <summary>
-        /// Getter for the targeted position of the camera.
-        /// </summary>
-        /// <returns>Camera's targeted position</returns>
-        [[nodiscard]] glm::vec3 GetCameraTarget() const;
-
-        /// <summary>
-        /// Getter for the position of the camera.
-        /// </summary>
-        /// <returns>Camera's Position</returns>
-        [[nodiscard]] glm::vec3 GetCameraPos() const;
-
-        /// <summary>
         /// Getter for the projection matrix.
         /// </summary>
         /// <returns>Projection Matrix</returns>
-        [[nodiscard]] glm::mat4 GetProjectionMatrix() const;
+        [[nodiscard]] mat4 GetProjectionMatrix() const;
 
         /// <summary>
         /// Getter for the view matrix.
         /// </summary>
         /// <returns>View Matrix</returns>
-        [[nodiscard]] glm::mat4 GetViewMatrix() const;
+        [[nodiscard]] mat4 GetViewMatrix() const;
 #pragma endregion
 
 #pragma region Setters
@@ -147,6 +135,13 @@ namespace basilisk
         /// </summary>
         /// <param name="window">Window to work on</param>
         void SetWindowRef(Window& window);
+        
+        void SetCameraActive(unsigned cameraId);
+        
+        void AddCamera(const std::shared_ptr<Camera>& camera);
+        
+        void RemoveCamera(const std::shared_ptr<Camera>& camera);
+        void RemoveCamera(int cameraIndex);
         
 #pragma endregion
 
@@ -157,17 +152,16 @@ namespace basilisk
         Renderer& operator=(Renderer&& other) = delete;      // move assignment
 
     private:
-        Renderer();
+        Renderer() = default;
         ~Renderer() = default;
         
-        glm::vec3 CameraPos;
-        glm::vec3 CameraUp;
-        glm::vec3 CameraTarget;
+        unsigned ActiveCamera = 0;
+        std::vector<std::shared_ptr<Camera>> Cameras;
         
-        glm::mat4 ProjectionMatrix = glm::mat4(1.0f);
-        glm::mat4 ViewMatrix = glm::mat4(1.0f);
+        mat4 ProjectionMatrix = mat4(1.0f);
+        mat4 ViewMatrix = mat4(1.0f);
 
-        Window* Window;
+        Window* Window = nullptr;
     };
 
     

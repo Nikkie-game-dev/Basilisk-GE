@@ -6,7 +6,7 @@
 namespace basilisk
 {
     
-    Window::Window(const char* windowName, const glm::ivec2& size) :
+    Window::Window(const char* windowName, const ivec2& size) :
         Size(size)
     {
         Log::Get()->info("Creating window");
@@ -33,7 +33,7 @@ namespace basilisk
     {
         return glfwWindowShouldClose(this->WindowP);
     }
-    glm::ivec2 Window::GetSize() const
+    ivec2 Window::GetSize() const
     {
         return this->Size;
     }

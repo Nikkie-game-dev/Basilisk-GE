@@ -20,8 +20,8 @@ namespace basilisk
         /// <param name="filter">A filter for texture rendering</param>
         /// <param name="fitMode">The fit mode. It tells the texture how it should fit in the size limits</param>
         Sprite(const std::string& textureDir,
-               const glm::vec2& center,
-               const glm::vec2& size,
+               const vec2& center,
+               const vec2& size,
                Filters filter = Filters::NEAREST,
                FitMode fitMode = FitMode::REPEAT);
         
@@ -56,7 +56,7 @@ namespace basilisk
        
     private:
         void UpdateCurrentFrame() const;
-        void FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const;
+        void FlipSprite(vec2& topRightUV, vec2& topLeftUV, vec2& bottomLeftUV, vec2& bottomRightUV) const;
         
         unsigned int Texture;
         Animation* Animation = nullptr;

@@ -13,14 +13,14 @@ namespace basilisk
     BaseGame::BaseGame(const char* windowName, const int sizeX, const int sizeY) :
         Renderer(Renderer::GetInstance()), X(sizeX), Y(sizeY), InputSystem(nullptr)
     {
-        
+
         Log::Get()->info("Loading Basilisk Engine");
-        
+
         this->Renderer.InitGLFW();
 
         this->Renderer.SetGlVersion();
 
-        this->Window = new basilisk::Window(windowName, glm::ivec2(sizeX, sizeY));
+        this->Window = new basilisk::Window(windowName, ivec2(sizeX, sizeY));
 
         this->WindowName = windowName;
 
@@ -29,7 +29,7 @@ namespace basilisk
         this->Renderer.SetWindowRef(*this->Window);
 
         this->InputSystem = Input(this->Window);
-        
+
         Log::Get()->info("Loading Complete");
 
     }
@@ -44,7 +44,7 @@ namespace basilisk
     {
 
         this->WindowName = other.WindowName;
-        this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+        this->Window = new basilisk::Window(other.WindowName, vec2(other.X, other.Y));
         this->Renderer.SetWindowRef(*this->Window);
         this->InputSystem = Input(this->Window);
 
@@ -73,7 +73,7 @@ namespace basilisk
             this->X = other.X;
             this->Y = other.Y;
             this->WindowName = other.WindowName;
-            this->Window = new basilisk::Window(other.WindowName, glm::vec2(other.X, other.Y));
+            this->Window = new basilisk::Window(other.WindowName, vec2(other.X, other.Y));
             Renderer.SetWindowRef(*this->Window);
             this->InputSystem = Input(this->Window);
         }
@@ -120,6 +120,10 @@ namespace basilisk
             old = now;
 
             this->Update();
+            
+            this->Renderer.UpdateCameras();
+            this->Renderer.UpdateViewMatrix();
+
             this->Renderer.StartDraw();
             this->Draw();
             this->Renderer.EndDraw();

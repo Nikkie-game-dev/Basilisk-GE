@@ -63,11 +63,13 @@ namespace basilisk
 
     void Camera::SetPosition(const vec3& pos)
     {
-        this->Position = pos;
-
-        if (!this->IsTargetLock)
+        if (!this->IsPositionLock)
         {
-            this->InternalTarget += this->Position;
+            this->Position = pos;
+        }
+        else
+        {
+            Log::Get()->warn("Position is locked!.");
         }
     }
 
@@ -121,6 +123,16 @@ namespace basilisk
             this->IsTargetLock = false;
         }
     }
+    
+    void Camera::UnlockPosition()
+    {
+        if (this->IsPositionLock)
+        {
+            this->Position = *this->PositionTarget;
+            this->PositionTarget = nullptr;
+            this->IsPositionLock = false;
+        }
+    }
 
     void Camera::SetTargetLock(const vec3* target)
     {
@@ -130,6 +142,15 @@ namespace basilisk
         this->Target = target;
         this->IsTargetLock = true;
 
+    }
+    
+    void Camera::SetPositionLock(const vec3* target)
+    {
+        if (!target)
+            return;
+
+        this->PositionTarget = target;
+        this->IsPositionLock = true;
     }
 
     void Camera::Update()
@@ -141,6 +162,11 @@ namespace basilisk
         else
         {
             this->YawPitchToTarget();
+        }
+        
+        if (this->IsPositionLock)
+        {
+            this->Position = *this->PositionTarget;
         }
     }
 

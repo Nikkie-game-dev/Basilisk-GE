@@ -32,8 +32,10 @@ namespace basilisk
         [[nodiscard]] bool IsTargetExternallyProvided() const;
         
         void UnlockTarget();
+        void UnlockPosition();
 
         void SetTargetLock(const vec3* target);
+        void SetPositionLock(const vec3* target);
         
         void Update();
 
@@ -45,12 +47,14 @@ namespace basilisk
         vec3 Position;
         vec3 InternalTarget;
         const vec3* Target;
+        const vec3* PositionTarget;
 
         float Yaw;
         float Pitch;
         float Roll;
 
         bool IsTargetLock = false;
+        bool IsPositionLock = false;
         
         
     };

@@ -55,7 +55,15 @@ namespace basilisk
     void Renderer::LoadProjectionMatrix()
     {
         const auto size = this->Window->GetSize();
-        this->ProjectionMatrix = ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
+
+        if (this->IsOrtho)
+        {
+            this->ProjectionMatrix = ortho(0.0f, static_cast<float>(size.x), 0.0f, static_cast<float>(size.y), 0.1f, 100.0f);
+        }
+        else
+        {
+            this->ProjectionMatrix = perspective(radians(45.0f), static_cast<float>(size.x) / static_cast<float>(size.y), 0.1f, 1000.0f);
+        }
     }
 
     void Renderer::BindAndFillVbo(const unsigned int VboID, const int sizeArray, const float array[])
@@ -199,7 +207,7 @@ namespace basilisk
             }
         }
     }
-    
+
     void Renderer::RemoveCamera(const std::shared_ptr<Camera>& camera)
     {
         for (auto& spot : this->Cameras)
@@ -211,9 +219,15 @@ namespace basilisk
             }
         }
     }
-    
+
     void Renderer::RemoveCamera(const int cameraIndex)
     {
         this->Cameras[cameraIndex] = nullptr;
+    }
+
+    void Renderer::SetOrtho(bool isOrtho)
+    {
+        this->IsOrtho = isOrtho;
+        this->LoadProjectionMatrix();
     }
 } // basilisk

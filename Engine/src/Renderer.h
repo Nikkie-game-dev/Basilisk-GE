@@ -143,6 +143,8 @@ namespace basilisk
         void RemoveCamera(const std::shared_ptr<Camera>& camera);
         void RemoveCamera(int cameraIndex);
         
+        void SetOrtho(bool isOrtho);
+        
 #pragma endregion
 
         
@@ -152,6 +154,8 @@ namespace basilisk
         Renderer& operator=(Renderer&& other) = delete;      // move assignment
 
     private:
+        bool IsOrtho = false;
+        
         Renderer() = default;
         ~Renderer() = default;
         

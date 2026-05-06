@@ -30,21 +30,6 @@ namespace basilisk
         this->InternalTarget = target;
     }
 
-    Camera::Camera(const vec3& initPos, const vec3& initRight, const vec3* target)
-    {
-        this->SetPosition(initPos);
-        this->Right = initRight;
-
-        if (target)
-        {
-            this->SetTargetLock(target);
-        }
-        else
-        {
-            this->UnlockTarget();
-        }
-    }
-
 
     void Camera::SetYaw(const float yaw)
     {

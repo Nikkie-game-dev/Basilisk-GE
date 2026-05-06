@@ -13,7 +13,6 @@ namespace basilisk
     public:
         explicit Camera(const vec3& initPos, const vec3* target = nullptr, float initYaw = 0);
         explicit Camera(const vec3& initPos, const vec3& target, float initYaw = 0);
-        Camera(const vec3& initPos, const vec3& initRight, const vec3* target = nullptr);
 
 
         void SetYaw(float yaw);

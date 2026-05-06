@@ -44,7 +44,6 @@ namespace basilisk
         void TargetToYawPitch();
         
         vec3 Position;
-        vec3 Right;
         vec3 InternalTarget;
         const vec3* Target;
 

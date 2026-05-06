@@ -20,13 +20,13 @@ namespace basilisk
             this->UnlockTarget();
         }
     }
-    
-    
+
+
     Camera::Camera(const vec3& initPos, const vec3& target, float initYaw)
     {
         this->SetPosition(initPos);
         this->SetYaw(initYaw);
-        
+
         this->InternalTarget = target;
     }
 
@@ -102,22 +102,25 @@ namespace basilisk
         return this->Roll;
 
     }
-    
+
     vec3 Camera::GetUp() const
     {
-        return cross(this->Position - *this->Target, this->Right);
+        constexpr vec3 worldUp = {0,1,0};
+        const auto dir = normalize((this->Target ? *this->Target : this->InternalTarget) - this->Position);
+        const auto right = cross(worldUp, dir);
+        return cross(dir, right);
     }
-    
+
     vec3 Camera::GetPosition() const
     {
         return this->Position;
     }
-    
+
     vec3 Camera::GetTarget() const
     {
         return *this->Target;
     }
-    
+
     bool Camera::IsTargetExternallyProvided() const
     {
         return this->IsTargetLock;
@@ -128,7 +131,7 @@ namespace basilisk
         if (this->IsTargetLock)
         {
             //copy last target position and point Target to internal target
-            this->InternalTarget = *this->Target; 
+            this->InternalTarget = *this->Target;
             this->Target = &this->InternalTarget;
             this->IsTargetLock = false;
         }

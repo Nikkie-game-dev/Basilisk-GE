@@ -151,6 +151,12 @@ namespace basilisk
 
     void Renderer::UpdateCameras() const
     {
+
+        if (Cameras.empty())
+        {
+            Log::Get()->error("No Camara present!");
+        }
+
         if (const auto& camera = this->Cameras[this->ActiveCamera]; camera)
         {
             camera->Update();
@@ -203,11 +209,6 @@ namespace basilisk
 
     void Renderer::AddCamera(const std::shared_ptr<Camera>& camera)
     {
-        if (this->Cameras.capacity() <= this->Cameras.size())
-        {
-            this->Cameras.reserve(this->Cameras.size() + 10);
-            this->Cameras.emplace_back(camera);
-        }
         for (auto& spot : this->Cameras)
         {
             if (spot == nullptr)
@@ -215,6 +216,16 @@ namespace basilisk
                 spot = camera;
                 return;
             }
+        }
+
+        if (this->Cameras.capacity() <= this->Cameras.size())
+        {
+            this->Cameras.reserve(this->Cameras.size() + 10);
+            this->Cameras.emplace_back(camera);
+        }
+        else
+        {
+            this->Cameras.push_back(camera);
         }
     }
 

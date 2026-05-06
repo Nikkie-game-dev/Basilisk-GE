@@ -7,7 +7,7 @@
 
 namespace basilisk
 {
-    class Shape3D : public Shape, public Entity
+    class BASILISK_API Shape3D : public Shape, public Entity
     {
     protected:
         Shape3D(bool isSolid,

@@ -3,12 +3,9 @@
 
 namespace basilisk
 {
-    class BASILISK_API Cube : Shape3D
+    class BASILISK_API Cube : public Shape3D
     {
     protected:
-
-
-    public:
         Cube(bool isSolid, const vec3& center, const vec3& size, const basilisk::Color& color);
 
     private:

@@ -21,10 +21,10 @@ namespace basilisk
             //@formatter:off
             vertices = 
             {
-                0.5f,  0.5f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f, // front top right
-                0.5f, -0.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f, // front bottom right
-               -0.5f, -0.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // front bottom left
-               -0.5f,  0.5f, 0.0f,       1.0f, 1.0f, 1.0f, 0.0f, // front top left
+                0.5f,  0.5f, 0.5f,       1.0f, 0.0f, 0.0f, 1.0f, // front top right
+                0.5f, -0.5f, 0.5f,       0.0f, 1.0f, 0.0f, 1.0f, // front bottom right
+               -0.5f, -0.5f, 0.5f,       0.0f, 0.0f, 1.0f, 1.0f, // front bottom left
+               -0.5f,  0.5f, 0.5f,       1.0f, 1.0f, 1.0f, 0.0f, // front top left
                 
                 0.5f,  0.5f, -0.5f,      1.0f, 0.0f, 0.0f, 1.0f, // back top right
                 0.5f, -0.5f, -0.5f,      0.0f, 1.0f, 0.0f, 1.0f, // back bottom right
@@ -40,15 +40,15 @@ namespace basilisk
             //@formatter:off
             vertices =
             {
-                0.5f,  0.5f, 0.0f,       color.R, color.G, color.B, color.A, // front top right
-                0.5f, -0.5f, 0.0f,       color.R, color.G, color.B, color.A, // front bottom right
-               -0.5f, -0.5f, 0.0f,       color.R, color.G, color.B, color.A, // front bottom left
-               -0.5f,  0.5f, 0.0f,       color.R, color.G, color.B, color.A, // front top left
+                0.5f,  0.5f, 0.5f,       color.R, color.G, color.B, color.A, // back top right
+                0.5f, -0.5f, 0.5f,       color.R, color.G, color.B, color.A, // back bottom right
+               -0.5f, -0.5f, 0.5f,       color.R, color.G, color.B, color.A, // back bottom left
+               -0.5f,  0.5f, 0.5f,       color.R, color.G, color.B, color.A, // back top left
                 
-                0.5f,  0.5f, -0.5f,      color.R, color.G, color.B, color.A, // back top right
-                0.5f, -0.5f, -0.5f,      color.R, color.G, color.B, color.A, // back bottom right
-               -0.5f, -0.5f, -0.5f,      color.R, color.G, color.B, color.A, // back bottom left
-               -0.5f,  0.5f, -0.5f,      color.R, color.G, color.B, color.A, // back top left
+                0.5f,  0.5f, -0.5f,      color.R, color.G, color.B, color.A, // front top right
+                0.5f, -0.5f, -0.5f,      color.R, color.G, color.B, color.A, // front bottom right
+               -0.5f, -0.5f, -0.5f,      color.R, color.G, color.B, color.A, // front bottom left
+               -0.5f,  0.5f, -0.5f,      color.R, color.G, color.B, color.A, // front top left
            };
             //@formatter:on
         }
@@ -73,12 +73,12 @@ namespace basilisk
             6, 2, 3,
 
             //right
-            0, 3, 4,
-            5, 1, 6,
+            0, 1, 5,
+            5, 4, 0,
 
             //top
             3, 7, 4,
-            3, 4, 0,
+            3, 0, 4,
 
             //bottom
             1, 2, 6,

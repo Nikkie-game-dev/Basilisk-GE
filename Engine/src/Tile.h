@@ -5,7 +5,7 @@
 
 namespace basilisk
 {
-    class Tile final : public Entity2D
+    class Tile final : public Shape, public Entity2D
     {
     public:
         Tile(const Frame& frame, 
@@ -13,12 +13,19 @@ namespace basilisk
              short row);
 
         void Update() override;
-        void Draw() override;
-
-        bool HasCollision;
         short Col;
         short Row;
+        bool HasCollision;
         std::string LayerName;
+
+    protected:
+        void SetVertices() override;
+        void SetIndices() override;
+
+    private:
+        Frame Frame;
+
+       
     };
 
 } // namespace basilisk

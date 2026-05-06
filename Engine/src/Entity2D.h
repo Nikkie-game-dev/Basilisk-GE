@@ -47,9 +47,6 @@ namespace basilisk
         /// <param name="newPosition">Position vector</param>
         virtual void SetPosition(const vec2& newPosition);
 
-        void Init() override;
-        void Draw() override;
-
         void CollideAndMove(const CollisionManager::CollisionData& data, vec2 newPos);
     protected:
         Entity2D() = default;

@@ -9,6 +9,9 @@ namespace basilisk
     /// </summary>
     class BASILISK_API Shape
     {
+    public:
+        virtual ~Shape() = default;
+
     protected:
         explicit Shape(bool isSolid);
         

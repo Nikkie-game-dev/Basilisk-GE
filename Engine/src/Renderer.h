@@ -127,6 +127,11 @@ namespace basilisk
         /// </summary>
         /// <returns>View Matrix</returns>
         [[nodiscard]] mat4 GetViewMatrix() const;
+        
+        [[nodiscard]] unsigned GetActiveCamera();
+        
+        [[nodiscard]] std::vector<std::shared_ptr<Camera>>& GetCameras();
+        
 #pragma endregion
 
 #pragma region Setters
@@ -141,6 +146,7 @@ namespace basilisk
         void AddCamera(const std::shared_ptr<Camera>& camera);
         
         void RemoveCamera(const std::shared_ptr<Camera>& camera);
+        
         void RemoveCamera(int cameraIndex);
         
         void SetOrtho(bool isOrtho);

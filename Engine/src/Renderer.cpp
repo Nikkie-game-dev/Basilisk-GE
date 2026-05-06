@@ -173,6 +173,16 @@ namespace basilisk
         return this->ViewMatrix;
     }
 
+    unsigned Renderer::GetActiveCamera()
+    {
+        return this->ActiveCamera;
+    }
+
+    std::vector<std::shared_ptr<Camera>>& Renderer::GetCameras()
+    {
+        return this->Cameras;
+    }
+
 
     void Renderer::SetWindowRef(basilisk::Window& window)
     {

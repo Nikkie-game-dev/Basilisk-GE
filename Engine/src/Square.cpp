@@ -6,32 +6,21 @@
 namespace basilisk
 {
 
-    Square::Square(const glm::vec2& center,
-                   const glm::vec2& size,
+    Square::Square(const vec2& center,
+                   const vec2& size,
                    const bool isSolidColor,
                    const basilisk::Color color = basilisk::Color(0, 0, 0)) :
-        Shape(color, isSolidColor)
+        Shape2D(isSolidColor, center, size, color)
     {
-        this->Entity2D::SetPosition(center);
-        this->Entity2D::SetScaling(size);
-
         Square::SetVertices();
-
-        unsigned int indices[]
-        {
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
-        };
-
-        this->FillIndices(indices, sizeof(indices));
+        Square::SetIndices();
     }
 
 
     void Square::SetVertices()
     {
         constexpr int amountVert = 4;
-        constexpr int amountDim = 3;
-        std::array<float, amountVert * (amountDim + Color::ColorParamsAmount)> vertices;
+        std::array<float, amountVert * (AMOUND_DIM + Color::ColorParamsAmount)> vertices;
 
         if (!this->IsSolid)
         {
@@ -61,6 +50,17 @@ namespace basilisk
         }
         
         this->FillVertices(vertices.data(), sizeof(vertices));
+    }
+    
+    void Square::SetIndices()
+    {
+        unsigned int indices[]
+        {
+            0, 1, 3, // first triangle
+            1, 2, 3 // second triangle
+        };
+
+        this->FillIndices(indices, sizeof(indices));
     }
 
 } // namespace basilisk

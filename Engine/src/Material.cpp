@@ -104,13 +104,13 @@ namespace basilisk
         return IsTextured;
     }
 
-    void Material::UpdateGLMatrix(const glm::mat4& matrix, const std::string& name) const
+    void Material::UpdateGLMatrix(const mat4& matrix, const std::string& name) const
     {
         glUseProgram(this->ShaderProgram);
 
         const GLint location = glGetUniformLocation(this->ShaderProgram, name.c_str());
 
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+        glUniformMatrix4fv(location, 1, GL_FALSE, value_ptr(matrix));
     }
 
     bool Material::IsMaterialBuilt()

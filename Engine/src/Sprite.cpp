@@ -5,7 +5,7 @@
 
 namespace basilisk
 {
-    Sprite::Sprite(const std::string& textureDir, const glm::vec2& center, const glm::vec2& size, 
+    Sprite::Sprite(const std::string& textureDir, const vec2& center, const vec2& size, 
                    const Filters filter, const FitMode fitMode)
     {
         this->Entity2D::SetPosition(center);
@@ -95,21 +95,21 @@ namespace basilisk
         Renderer::GetInstance().BindBufferDataUV(buffers.Vbo, buffers.AmountVertices, buffers.Vertices, start, 2);
     }
 
-    void Sprite::FlipSprite(glm::vec2& topRightUV, glm::vec2& topLeftUV, glm::vec2& bottomLeftUV, glm::vec2& bottomRightUV) const
+    void Sprite::FlipSprite(vec2& topRightUV, vec2& topLeftUV, vec2& bottomLeftUV, vec2& bottomRightUV) const
     {
         if (!this->FlipSpriteX && !this->FlipSpriteY)
             return;
 
-        glm::vec2 topLeftUVFlipped = {this->FlipSpriteX ? topRightUV.x : topLeftUV.x, 
+        vec2 topLeftUVFlipped = {this->FlipSpriteX ? topRightUV.x : topLeftUV.x, 
                                       this->FlipSpriteY ? bottomLeftUV.y : topLeftUV.y};
 
-        glm::vec2 topRightUVFlipped = {this->FlipSpriteX ? topLeftUV.x : topRightUV.x, 
+        vec2 topRightUVFlipped = {this->FlipSpriteX ? topLeftUV.x : topRightUV.x, 
                                        this->FlipSpriteY ? bottomRightUV.y : topRightUV.y};
 
-        glm::vec2 bottomLeftUVFlipped = {this->FlipSpriteX ? bottomRightUV.x : bottomLeftUV.x,
+        vec2 bottomLeftUVFlipped = {this->FlipSpriteX ? bottomRightUV.x : bottomLeftUV.x,
                                          this->FlipSpriteY ? topLeftUV.y : bottomLeftUV.y};
 
-        glm::vec2 bottomRightUVFlipped = {this->FlipSpriteX ? bottomLeftUV.x : bottomRightUV.x,
+        vec2 bottomRightUVFlipped = {this->FlipSpriteX ? bottomLeftUV.x : bottomRightUV.x,
                                           this->FlipSpriteY ? topRightUV.y : bottomRightUV.y};
 
         topLeftUV = topLeftUVFlipped;

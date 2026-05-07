@@ -2,35 +2,39 @@
 
 namespace basilisk
 {
-    Tile::Tile(const Frame& frame, const short col, const short row) : 
-        Col(col), Row(row), HasCollision(false)
+    Tile::Tile(const basilisk::Frame& frame, const short col, const short row) :
+        Shape(false),
+        HasCollision(false), Col(col), Row(row), Frame(frame)
     {
-        float vertices[] = {
-            //@formatter:off
-            // positions            // colors                    // texture coords
-            0.5f,  0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopRight.x,    frame.TopRight.y,
-            0.5f,  -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomRight.x, frame.BottomRight.y,
-            -0.5f, -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.BottomLeft.x,  frame.BottomLeft.y,
-            -0.5f, 0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     frame.TopLeft.x,     frame.TopLeft.y
-            //@formatter:on
-        };
 
-        unsigned int indices[]{
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
-        };
-
-        this->FillVertices(vertices, sizeof(vertices));
-        this->FillIndices(indices, sizeof(indices));
     }
 
     void Tile::Update()
     {
     }
 
-    void Tile::Draw()
+    void Tile::SetVertices()
     {
-        Entity2D::Draw();
+        float vertices[] = {
+            //@formatter:off
+            // positions            // colors                    // texture coords
+            0.5f,  0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     this->Frame.TopRight.x,    this->Frame.TopRight.y,
+            0.5f,  -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     this->Frame.BottomRight.x, this->Frame.BottomRight.y,
+            -0.5f, -0.5f, 0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     this->Frame.BottomLeft.x,  this->Frame.BottomLeft.y,
+            -0.5f, 0.5f,  0.0f,      1.0f, 1.0f, 1.0f, 1.0f,     this->Frame.TopLeft.x,     this->Frame.TopLeft.y
+            //@formatter:on
+        };
+        this->FillVertices(vertices, sizeof(vertices));
+    }
+
+    void Tile::SetIndices()
+    {
+        unsigned int indices[]{
+            0, 1, 3, // first triangle
+            1, 2, 3 // second triangle
+        };
+
+        this->FillIndices(indices, sizeof(indices));
     }
 
 } // namespace basilisk

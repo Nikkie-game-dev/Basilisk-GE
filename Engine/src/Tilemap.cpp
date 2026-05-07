@@ -25,10 +25,10 @@ namespace basilisk
 
     TileMap::TileMap(const path& mapFilePath,
                      const path& texturePath,
-                     const glm::vec2& screenSize,
+                     const vec2& screenSize,
                      const Filters filter,
                      const FitMode fitMode,
-                     const glm::vec2& textureSize)
+                     const vec2& textureSize)
     {
 
         std::ifstream file(mapFilePath.string(), std::ios::in);
@@ -37,7 +37,7 @@ namespace basilisk
         this->Texture = textureData.textureID;
 
         this->TextureSize = (textureSize.x <= 0.0f || textureSize.y <= 0.0f)
-            ? glm::vec2{textureData.width, textureData.height}
+            ? vec2{textureData.width, textureData.height}
             : textureSize;
         this->PathToTexture = texturePath;
 
@@ -96,7 +96,7 @@ namespace basilisk
         return TileSize;
     }
 
-    void TileMap::ClampCorners(glm::vec2& topLeftCorner, glm::vec2& bottomRightCorner) const
+    void TileMap::ClampCorners(vec2& topLeftCorner, vec2& bottomRightCorner) const
     {
         bottomRightCorner.x = std::max<float>(bottomRightCorner.x, 0);
         bottomRightCorner.y = std::max<float>(bottomRightCorner.y, 0);
@@ -117,17 +117,17 @@ namespace basilisk
         topLeftCorner.y = std::max<float>(topLeftCorner.y, 0);
     }
     
-    CollisionManager::CollisionData TileMap::CheckCollision(const glm::vec2& entityPos, const glm::vec2& entityScale) const
+    CollisionManager::CollisionData TileMap::CheckCollision(const vec2& entityPos, const vec2& entityScale) const
     {
-        glm::vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
-        glm::vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
+        vec2 topLeftCorner = {entityPos.x - entityScale.x / 2, entityPos.y + entityScale.y / 2};
+        vec2 bottomRightCorner = {entityPos.x + entityScale.x / 2, entityPos.y - entityScale.y / 2};
 
         ClampCorners(topLeftCorner, bottomRightCorner);
 
-        const glm::ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
-        const glm::ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
+        const ivec2 topLeftTilePos = this->ConvertToTileMapPos(topLeftCorner);
+        const ivec2 bottomRightTilePos = this->ConvertToTileMapPos(bottomRightCorner);
 
-        std::list<glm::ivec2> checkedTiles;
+        std::list<ivec2> checkedTiles;
 
         for (const auto& layer : this->Tiles)
         {
@@ -201,7 +201,7 @@ namespace basilisk
 
         this->Tiles.resize(layersAmount);
 
-        const glm::vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
+        const vec2 scale = {std::ceil(this->ScreenSize.x / this->TilesAmount.x), std::ceil(this->ScreenSize.y / this->TilesAmount.y)};
 
         short id;
         short row;
@@ -249,18 +249,18 @@ namespace basilisk
         }
     }
 
-    glm::ivec2 TileMap::ConvertToTileMapPos(const glm::vec2& pos) const
+    ivec2 TileMap::ConvertToTileMapPos(const vec2& pos) const
     {
-        const glm::vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x) * static_cast<float>(this->TilesAmount.x),
+        const vec2 newPos = {pos.x / static_cast<float>(this->ScreenSize.x) * static_cast<float>(this->TilesAmount.x),
                                   static_cast<float>(this->TilesAmount.y) -
                                   pos.y / static_cast<float>(this->ScreenSize.y) * static_cast<float>(this->TilesAmount.y)};
 
         return {static_cast<int>(newPos.x), static_cast<int>(newPos.y)};
     }
 
-    glm::vec2 TileMap::ConvertToScreenPos(const glm::ivec2& pos) const
+    vec2 TileMap::ConvertToScreenPos(const ivec2& pos) const
     {
-        const glm::vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
+        const vec2 newPos = {pos.x * ScreenSize.x / TilesAmount.x, pos.y * ScreenSize.y / TilesAmount.y};
         return newPos;
     }
 

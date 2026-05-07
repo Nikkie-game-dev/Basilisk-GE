@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "Export.h"
+#include "Macros.h"
 #include "Material.h"
 #include "glm/glm.hpp"
 #include "Buffers.h"
@@ -24,12 +24,12 @@ namespace basilisk
     public:
         Entity() = default;
         virtual ~Entity();
-        
-#pragma region Abstracts
+
+#pragma region Loop
         /// <summary>
         /// Initializes the entity. Should be called inside an implemented Init call from base game.
         /// </summary>
-        virtual void Init() = 0;
+        virtual void Init();
 
         /// <summary>
         /// Updates the entity. Should be called inside an implemented Update call from base game.
@@ -39,8 +39,8 @@ namespace basilisk
         /// <summary>
         /// Draws the entity. Should be called inside an implemented Draw call from base game.
         /// </summary>
-        virtual void Draw() = 0;
-        
+        virtual void Draw();
+
 #pragma endregion
 
 #pragma region Setters
@@ -56,7 +56,7 @@ namespace basilisk
         /// Sets scale vector and scales accordingly.
         /// </summary>
         /// <param name="scaling">Saling Vector</param>
-        void SetScaling(const glm::vec3& scaling);
+        void SetScaling(const vec3& scaling);
 
         /// <summary>
         /// Scales in a particular axis and updates the scaling vector.
@@ -69,7 +69,7 @@ namespace basilisk
         /// Moves entity to a particular position.
         /// </summary>
         /// <param name="newPosition">Position to which to move entity</param>
-        void SetPosition(const glm::vec3& newPosition);
+        void SetPosition(const vec3& newPosition);
 
 
         /// <summary>
@@ -85,19 +85,19 @@ namespace basilisk
         /// Getter for the position vector.
         /// </summary>
         /// <returns>Position vector</returns>
-        [[nodiscard]] virtual glm::vec3 GetPosition() const;
+        [[nodiscard]] virtual vec3 GetPosition() const;
 
         /// <summary>
         /// Getter for the position vector.
         /// </summary>
         /// <returns>Position vector</returns>
-        [[nodiscard]] virtual glm::vec3 GetScale() const;
+        [[nodiscard]] virtual vec3 GetScale() const;
 
         /// <summary>
         /// Getter for the Rotation vector.
         /// </summary>
         /// <returns>Rotation vector</returns>
-        [[nodiscard]] virtual glm::vec3 GetRotation(bool isRads = false) const;
+        [[nodiscard]] virtual vec3 GetRotation(bool isRads = false) const;
 
         /// <summary>
         /// Returns a Shared pointer to a material object
@@ -109,11 +109,13 @@ namespace basilisk
         /// Gets a matrix with the model.
         /// </summary>
         /// <returns>Matrix model</returns>
-        [[nodiscard]] glm::mat4 GetModelMatrix() const;
-        
+        [[nodiscard]] mat4 GetModelMatrix() const;
+
 #pragma endregion
-        
+
         bool IsActive = true;
+
+        const vec3* GetPositionPtr() const;
 
     protected:
         /// <summary>
@@ -134,24 +136,24 @@ namespace basilisk
         /// <param name="indices">Array with indices</param>
         /// <param name="amountIndices">Amount of indices</param>
         void FillIndices(unsigned int indices[], int amountIndices);
-        
-        glm::mat4 ModelMatrix = glm::mat4(1.0f);
 
-        glm::mat4 TranslateMatrix = glm::mat4(1.0f);
-        glm::mat4 ScaleMatrix = glm::mat4(1.0f);
-        glm::mat4 RotationMatrix = glm::mat4(1.0f);
+        mat4 ModelMatrix = mat4(1.0f);
+
+        mat4 TranslateMatrix = mat4(1.0f);
+        mat4 ScaleMatrix = mat4(1.0f);
+        mat4 RotationMatrix = mat4(1.0f);
         Buffers buffers;
 
     private:
         void UpdateRotationMatrix();
         void UpdateTranslateMatrix();
-        
+
         void UpdateModelMatrix();
-        
+
         std::shared_ptr<Material> Mat = nullptr;
 
-        glm::vec3 Position = {0, 0, 0};
-        glm::vec3 Scaling = {1, 1, 1};
-        glm::vec3 Rotation = {0, 0, 0};
+        vec3 Position = {0, 0, 0};
+        vec3 Scaling = {1, 1, 1};
+        vec3 Rotation = {0, 0, 0};
     };
 } // basilisk 
